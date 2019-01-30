@@ -760,3 +760,118 @@ java.lang.NullPointerException
 2019-01-28 18:52:50 INFO  RosterTabDropDownBehaviour:49 - Marian Cross School
 2019-01-28 18:52:55 INFO  RosterTabDropDownBehaviour:60 - Handwriting 103
 2019-01-28 18:53:04 INFO  RosterTabDropDownBehaviour:71 - HW 131 Brecky Brodski
+2019-01-30 21:56:59 INFO  Hooks:25 - ***********************************************************************************************************
+2019-01-30 21:57:00 INFO  Hooks:34 -  Launch Browser: "safari" on Environment:crossbrowser
+2019-01-30 21:57:11 INFO  FlyInMenuBehaviourSteps:31 - User is on sso portal's home page
+2019-01-30 21:57:19 INFO  FlyInMenuBehaviourSteps:44 - executing Scenario 1
+2019-01-30 21:57:30 ERROR UtilityMethods:36 - 
+For documentation on this error, please visit: http://seleniumhq.org/exceptions/no_such_element.html
+Build info: version: '3.4.0', revision: 'unknown', time: 'unknown'
+System info: host: 'HARSHAL-PC', ip: '192.168.56.1', os.name: 'Windows 8.1', os.arch: 'amd64', os.version: '6.3', java.version: '1.8.0_141'
+Driver info: org.openqa.selenium.remote.RemoteWebDriver
+Capabilities [{webdriver.remote.sessionid=D3076DB0-E9EE-4E2B-8ACA-9FD034499A46, browserVersion=12.0, acceptInsecureCerts=false, browserName=Safari, javascriptEnabled=true, platformName=macOS, setWindowRect=true, platform=ANY}]
+Session ID: D3076DB0-E9EE-4E2B-8ACA-9FD034499A46
+*** Element info: {Using=xpath, value=//i[contains(text(),'chevron_right')]/ancestor::span[@class='float-right']}
+2019-01-30 21:57:39 INFO  Hooks:25 - ***********************************************************************************************************
+2019-01-30 21:57:39 INFO  Hooks:34 -  Launch Browser: "safari" on Environment:crossbrowser
+2019-01-30 21:57:39 INFO  FlyInMenuBehaviourSteps:31 - User is on sso portal's home page
+2019-01-30 21:57:44 INFO  FlyInMenuBehaviourSteps:44 - executing Scenario 1
+2019-01-30 21:57:55 ERROR UtilityMethods:36 - 
+For documentation on this error, please visit: http://seleniumhq.org/exceptions/no_such_element.html
+Build info: version: '3.4.0', revision: 'unknown', time: 'unknown'
+System info: host: 'HARSHAL-PC', ip: '192.168.56.1', os.name: 'Windows 8.1', os.arch: 'amd64', os.version: '6.3', java.version: '1.8.0_141'
+Driver info: org.openqa.selenium.remote.RemoteWebDriver
+Capabilities [{webdriver.remote.sessionid=D3076DB0-E9EE-4E2B-8ACA-9FD034499A46, browserVersion=12.0, acceptInsecureCerts=false, browserName=Safari, javascriptEnabled=true, platformName=macOS, setWindowRect=true, platform=ANY}]
+Session ID: D3076DB0-E9EE-4E2B-8ACA-9FD034499A46
+*** Element info: {Using=xpath, value=//i[contains(text(),'chevron_right')]/ancestor::span[@class='float-right']}
+2019-01-30 21:58:01 INFO  Hooks:25 - ***********************************************************************************************************
+2019-01-30 21:58:01 INFO  Hooks:34 -  Launch Browser: "safari" on Environment:crossbrowser
+2019-01-30 21:58:01 INFO  FlyInMenuBehaviourSteps:31 - User is on sso portal's home page
+2019-01-30 21:58:07 INFO  FlyInMenuBehaviourSteps:44 - executing Scenario 1
+2019-01-30 21:58:18 ERROR UtilityMethods:36 - 
+For documentation on this error, please visit: http://seleniumhq.org/exceptions/no_such_element.html
+Build info: version: '3.4.0', revision: 'unknown', time: 'unknown'
+System info: host: 'HARSHAL-PC', ip: '192.168.56.1', os.name: 'Windows 8.1', os.arch: 'amd64', os.version: '6.3', java.version: '1.8.0_141'
+Driver info: org.openqa.selenium.remote.RemoteWebDriver
+Capabilities [{webdriver.remote.sessionid=D3076DB0-E9EE-4E2B-8ACA-9FD034499A46, browserVersion=12.0, acceptInsecureCerts=false, browserName=Safari, javascriptEnabled=true, platformName=macOS, setWindowRect=true, platform=ANY}]
+Session ID: D3076DB0-E9EE-4E2B-8ACA-9FD034499A46
+*** Element info: {Using=xpath, value=//i[contains(text(),'chevron_right')]/ancestor::span[@class='float-right']}
+2019-01-30 21:58:28 INFO  Hooks:25 - ***********************************************************************************************************
+2019-01-30 21:58:28 INFO  Hooks:34 -  Launch Browser: "safari" on Environment:crossbrowser
+2019-01-30 21:58:28 INFO  FlyInMenuBehaviourSteps:31 - User is on sso portal's home page
+2019-01-30 21:58:34 INFO  FlyInMenuBehaviourSteps:99 - executing Scenario 2
+2019-01-30 21:58:50 ERROR UtilityMethods:36 - 
+For documentation on this error, please visit: http://seleniumhq.org/exceptions/no_such_element.html
+Build info: version: '3.4.0', revision: 'unknown', time: 'unknown'
+System info: host: 'HARSHAL-PC', ip: '192.168.56.1', os.name: 'Windows 8.1', os.arch: 'amd64', os.version: '6.3', java.version: '1.8.0_141'
+Driver info: org.openqa.selenium.remote.RemoteWebDriver
+Capabilities [{webdriver.remote.sessionid=D3076DB0-E9EE-4E2B-8ACA-9FD034499A46, browserVersion=12.0, acceptInsecureCerts=false, browserName=Safari, javascriptEnabled=true, platformName=macOS, setWindowRect=true, platform=ANY}]
+Session ID: D3076DB0-E9EE-4E2B-8ACA-9FD034499A46
+*** Element info: {Using=xpath, value=//div[@class='menu-title' and contains(text(),'School')]/following-sibling::div//div[@class='menu-dropdown-list-inr']/ul//li[contains(text(),'Marian Cross School')]}
+2019-01-30 21:59:09 INFO  Hooks:25 - ***********************************************************************************************************
+2019-01-30 21:59:09 INFO  Hooks:34 -  Launch Browser: "safari" on Environment:crossbrowser
+2019-01-30 21:59:09 INFO  FlyInMenuBehaviourSteps:31 - User is on sso portal's home page
+2019-01-30 21:59:16 INFO  FlyInMenuBehaviourSteps:99 - executing Scenario 2
+2019-01-30 21:59:32 ERROR UtilityMethods:36 - 
+For documentation on this error, please visit: http://seleniumhq.org/exceptions/no_such_element.html
+Build info: version: '3.4.0', revision: 'unknown', time: 'unknown'
+System info: host: 'HARSHAL-PC', ip: '192.168.56.1', os.name: 'Windows 8.1', os.arch: 'amd64', os.version: '6.3', java.version: '1.8.0_141'
+Driver info: org.openqa.selenium.remote.RemoteWebDriver
+Capabilities [{webdriver.remote.sessionid=D3076DB0-E9EE-4E2B-8ACA-9FD034499A46, browserVersion=12.0, acceptInsecureCerts=false, browserName=Safari, javascriptEnabled=true, platformName=macOS, setWindowRect=true, platform=ANY}]
+Session ID: D3076DB0-E9EE-4E2B-8ACA-9FD034499A46
+*** Element info: {Using=xpath, value=//div[@class='menu-title' and contains(text(),'School')]/following-sibling::div//div[@class='menu-dropdown-list-inr']/ul//li[contains(text(),'Bedford School')]}
+2019-01-30 21:59:50 INFO  Hooks:25 - ***********************************************************************************************************
+2019-01-30 21:59:50 INFO  Hooks:34 -  Launch Browser: "safari" on Environment:crossbrowser
+2019-01-30 21:59:51 INFO  FlyInMenuBehaviourSteps:31 - User is on sso portal's home page
+2019-01-30 21:59:56 INFO  FlyInMenuBehaviourSteps:175 - executing Scenario 3
+2019-01-30 22:00:12 ERROR UtilityMethods:36 - 
+For documentation on this error, please visit: http://seleniumhq.org/exceptions/no_such_element.html
+Build info: version: '3.4.0', revision: 'unknown', time: 'unknown'
+System info: host: 'HARSHAL-PC', ip: '192.168.56.1', os.name: 'Windows 8.1', os.arch: 'amd64', os.version: '6.3', java.version: '1.8.0_141'
+Driver info: org.openqa.selenium.remote.RemoteWebDriver
+Capabilities [{webdriver.remote.sessionid=D3076DB0-E9EE-4E2B-8ACA-9FD034499A46, browserVersion=12.0, acceptInsecureCerts=false, browserName=Safari, javascriptEnabled=true, platformName=macOS, setWindowRect=true, platform=ANY}]
+Session ID: D3076DB0-E9EE-4E2B-8ACA-9FD034499A46
+*** Element info: {Using=xpath, value=//label[@title='Select All Tests']}
+2019-01-30 22:00:28 INFO  Hooks:25 - ***********************************************************************************************************
+2019-01-30 22:00:28 INFO  Hooks:34 -  Launch Browser: "safari" on Environment:crossbrowser
+2019-01-30 22:00:28 INFO  FlyInMenuBehaviourSteps:31 - User is on sso portal's home page
+2019-01-30 22:00:34 INFO  FlyInMenuBehaviourSteps:175 - executing Scenario 3
+2019-01-30 22:00:52 ERROR UtilityMethods:36 - 
+For documentation on this error, please visit: http://seleniumhq.org/exceptions/no_such_element.html
+Build info: version: '3.4.0', revision: 'unknown', time: 'unknown'
+System info: host: 'HARSHAL-PC', ip: '192.168.56.1', os.name: 'Windows 8.1', os.arch: 'amd64', os.version: '6.3', java.version: '1.8.0_141'
+Driver info: org.openqa.selenium.remote.RemoteWebDriver
+Capabilities [{webdriver.remote.sessionid=D3076DB0-E9EE-4E2B-8ACA-9FD034499A46, browserVersion=12.0, acceptInsecureCerts=false, browserName=Safari, javascriptEnabled=true, platformName=macOS, setWindowRect=true, platform=ANY}]
+Session ID: D3076DB0-E9EE-4E2B-8ACA-9FD034499A46
+*** Element info: {Using=xpath, value=//label[@title='Select All Tests']}
+2019-01-30 22:01:14 INFO  Hooks:25 - ***********************************************************************************************************
+2019-01-30 22:01:14 INFO  Hooks:34 -  Launch Browser: "safari" on Environment:crossbrowser
+2019-01-30 22:01:14 INFO  FlyInMenuBehaviourSteps:31 - User is on sso portal's home page
+2019-01-30 22:01:20 INFO  FlyInMenuBehaviourSteps:250 - executing Scenario 4
+2019-01-30 22:01:53 ERROR UtilityMethods:36 - 
+For documentation on this error, please visit: http://seleniumhq.org/exceptions/no_such_element.html
+Build info: version: '3.4.0', revision: 'unknown', time: 'unknown'
+System info: host: 'HARSHAL-PC', ip: '192.168.56.1', os.name: 'Windows 8.1', os.arch: 'amd64', os.version: '6.3', java.version: '1.8.0_141'
+Driver info: org.openqa.selenium.remote.RemoteWebDriver
+Capabilities [{webdriver.remote.sessionid=D3076DB0-E9EE-4E2B-8ACA-9FD034499A46, browserVersion=12.0, acceptInsecureCerts=false, browserName=Safari, javascriptEnabled=true, platformName=macOS, setWindowRect=true, platform=ANY}]
+Session ID: D3076DB0-E9EE-4E2B-8ACA-9FD034499A46
+*** Element info: {Using=xpath, value=//div[@class='menu-title' and contains(text(),'District Term')]}
+2019-01-30 22:02:15 INFO  Hooks:25 - ***********************************************************************************************************
+2019-01-30 22:02:15 INFO  Hooks:34 -  Launch Browser: "safari" on Environment:crossbrowser
+2019-01-30 22:02:15 INFO  FlyInMenuBehaviourSteps:31 - User is on sso portal's home page
+2019-01-30 22:02:21 INFO  FlyInMenuBehaviourSteps:303 - executing Scenario 5
+2019-01-30 22:02:38 INFO  Hooks:25 - ***********************************************************************************************************
+2019-01-30 22:02:38 INFO  Hooks:34 -  Launch Browser: "safari" on Environment:crossbrowser
+2019-01-30 22:02:38 INFO  FlyInMenuBehaviourSteps:31 - User is on sso portal's home page
+2019-01-30 22:02:46 INFO  FlyInMenuBehaviourSteps:303 - executing Scenario 5
+2019-01-30 22:03:06 INFO  Hooks:25 - ***********************************************************************************************************
+2019-01-30 22:03:06 INFO  Hooks:34 -  Launch Browser: "safari" on Environment:crossbrowser
+2019-01-30 22:03:06 INFO  FlyInMenuBehaviourSteps:31 - User is on sso portal's home page
+2019-01-30 22:03:11 INFO  FlyInMenuBehaviourSteps:303 - executing Scenario 5
+2019-01-30 22:03:37 INFO  Hooks:25 - ***********************************************************************************************************
+2019-01-30 22:03:37 INFO  Hooks:34 -  Launch Browser: "safari" on Environment:crossbrowser
+2019-01-30 22:03:38 INFO  FlyInMenuBehaviourSteps:31 - User is on sso portal's home page
+2019-01-30 22:03:43 INFO  RosterTabDropDownBehaviour:24 - executing Scenario 2
+2019-01-30 22:03:53 INFO  RosterTabDropDownBehaviour:49 - School IveePh5E
+2019-01-30 22:03:58 INFO  RosterTabDropDownBehaviour:60 - School VeiNgi2a Trainer ...School VeiNgi2a Trainer Class (PD)
+2019-01-30 22:04:03 INFO  RosterTabDropDownBehaviour:71 - All
