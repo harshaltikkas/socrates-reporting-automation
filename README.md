@@ -1,9 +1,6 @@
 # Socrates-Reporting-Automation
 Project to automate the UI testcases of Socrates-Reporting-Automation 
 
-<img src="https://bec-reporting.cf/img/benchmark_logo_2.e0a765418e2a8f64b17c0d3f7c35ded8.png" />
-_______________________________________
-
 ## 1. Download the project.
 
 In order to start using the project you need to create your own Fork on Github and then clone the project:
