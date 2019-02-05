@@ -1,3 +1,28 @@
+/*
+ * Copyright Benchmark Education Company
+ *
+ * (C) Copyright BEC - All rights reserved.
+ *
+ * NOTICE:  All information contained herein or attendant here to is,
+ *          and remains, the property of Benchmark.  Many of the
+ *          intellectual and technical concepts contained herein are
+ *          proprietary to Benchmark. Any dissemination of this
+ *          information or reproduction of this material is strictly
+ *          forbidden unless prior written permission is obtained
+ *          from Benchmark.
+ *
+ * ------------------------------------------------------------------------
+ *
+ * ========================================================================
+ * Revision History
+ * ========================================================================
+ * DATE				: PROGRAMMER  : DESCRIPTION
+ * ========================================================================
+ * JAN 03 2019		: BEC         : CREATED.
+ * ------------------------------------------------------------------------
+ *
+ * ========================================================================
+ */
 package com.bec.reporting.utils;
 
 import java.io.File;
@@ -9,7 +34,6 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 import org.apache.commons.io.FileUtils;
-import org.apache.log4j.Logger;
 import org.junit.Assert;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.OutputType;
@@ -28,23 +52,24 @@ import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.safari.SafariDriver;
 import com.bec.reporting.steps.Hooks;
 import com.bec.reporting.tests.TestRunner;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public class Driver {
-	 /******** Log Attribute ********/
-    private static Logger log = Logger.getLogger(Driver.class);
+	
 	static String resourceFolder="resources/files/software/";
 	public static RemoteWebDriver webdriver = null;
 	public static DesiredCapabilities caps;
 	public static boolean crossbrwr=false;
 	
-	/** This method close the all running instance of browser  */
+	/** 
+	 * This method close the all running instance of browser 
+	 */
 	private static class BrowserCleanup implements Runnable {
 		public void run() {
-			System.out.println("Cleaning up the browser");
+			log.info("Cleaning up the browser");
 			try { 
 				Driver.webdriver.quit();
-				//Runtime.getRuntime().exec("C:\\AutoIt scripts\\closeallbrowsers.exe"); 
-				//OR
 				Runtime.getRuntime().exec("taskkill /F /IM chromedriver.exe /T");
 			} catch (NullPointerException e) {
 				log.error("Browser already shut down.");
@@ -55,6 +80,9 @@ public class Driver {
 		}
 	}
 	
+	/** 
+	 * This method get current driver instance of browser 
+	 */
 	public synchronized static RemoteWebDriver getCurrentDriver(String seleniumEnv, String browserName) throws FileNotFoundException, IOException {
 		if (webdriver == null) {
 			webdriver = createWebdriver(seleniumEnv, browserName);
@@ -63,7 +91,9 @@ public class Driver {
 		return webdriver;
 	}
 	
-	/** This method create the web driver with the property specifies */	
+	/** 
+	 * This method create the web driver with the property specifies 
+	 */	
 	public static RemoteWebDriver createWebdriver(String seleniumEnv, String browserName) throws FileNotFoundException, IOException {
 		Properties p =FileRead.readProperties();
 		URL seleniumHub = null;
@@ -118,9 +148,14 @@ public class Driver {
 		return null;
 	}
 
+	/**
+	 * This method used to select local browser in system 
+	 * @param browserName
+	 * @return
+	 */
 	private static RemoteWebDriver selectLocalBrowser(String browserName) {
 		String os = System.getProperty("os.name");
-		System.out.println(os);
+		log.info("OS "+os);
 
 		switch (browserName) {
 		case "firefox":
@@ -160,8 +195,6 @@ public class Driver {
 			IEcaps.setCapability(InternetExplorerDriver.INTRODUCE_FLAKINESS_BY_IGNORING_SECURITY_DOMAINS, true);
 			System.setProperty("webdriver.ie.driver", "C://Program Files//Internet Explorer//IEDriverServer.exe");
 			webdriver = new InternetExplorerDriver(IEcaps);
-/*			 System.setProperty("webdriver.ie.driver", "C://Program Files//Internet Explorer//IEDriverServer.exe");
-			 webdriver = new InternetExplorerDriver();*/
 			break;
 		case "opera":
 			webdriver=new OperaDriver();
@@ -175,6 +208,11 @@ public class Driver {
 		return webdriver;
 	}
 
+	/**
+	 * This method launch the browser with the specified url
+	 * @param url
+	 * @return
+	 */
 	public static boolean launch_browser(String url) {
 		try {
 			webdriver.get(url);
@@ -192,16 +230,25 @@ public class Driver {
 		return true;
 	}
 
+	/**
+	 *This is used to close single instance of driver/browser 
+	 */
 	public static void close_browser() {
 		webdriver.close();
 	}
 
+	/**
+	 *This is used to close all live instance of driver/browser 
+	 */
 	public static void quit_browser() {
 		webdriver.quit();
 	}
-
+	
+	/**
+	 *This is used to take screenshot in local machine 
+	 */
 	public static String takeScreenshot(String filename) throws IOException {
-
+		log.info("Taking ScreenShot");
 		try {
 			File file = ((TakesScreenshot) webdriver).getScreenshotAs(OutputType.FILE);
 			String filePath = ("./screenshot/" + filename + ".jpg");
@@ -213,7 +260,11 @@ public class Driver {
 		}
 	}
 
+	/**
+	 *This is used to embed screenshot while running scenario 
+	 */
 	public static void embedScreenshot() {
+		log.info("embedScreenshot");
 		try {
 			byte[] screenshot = ((TakesScreenshot) webdriver).getScreenshotAs(OutputType.BYTES);
 			TestRunner.scenario.embed(screenshot, "image/png");
@@ -222,11 +273,15 @@ public class Driver {
 		}
 	}
 
+	/**
+	 *This is used to write text while report generation 
+	 */
 	public static void writeToReport(String string) {
 		TestRunner.scenario.write(string);
 	}
 
 	public static void crossBrowserSetting() throws FileNotFoundException, IOException {
+		log.info("Calling Cross-Browser Testing and Extent-Report-Generation");
 		Properties p =FileRead.readProperties();
 		String username = p.getProperty("CROSSBROWSER_USERNAME");
 		String authkey = p.getProperty("CROSSBROWSER_AUTH_KEY");

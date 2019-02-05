@@ -25,3 +25,22 @@ git clone https://github.com/benchmarkeducation/socrates-reporting-automation.gi
 * Need to set classpath for maven,make till bin(folder).
 * `make -j 2 test_firefox test_ie .... n` , make -j 2 saying two instances of browser will launch (firefox & ie).
 * You can view your test results on the [CrossBrowser Automate dashboard](https://app.crossbrowsertesting.com/selenium?tab=recent)
+
+## 3.Lombok Cnfiguration for Logging.
+
+* Add the following to your POM file:
+```
+	<dependency>
+		<groupId>org.projectlombok</groupId>
+		<artifactId>lombok</artifactId>
+		<version>1.16.20</version>
+		<scope>provided</scope>
+	</dependency>
+	```
+* Update your project
+* Go to maven repository in your local system: e.g.C:\Users\HarshalT\.m2\repository\org\projectlombok\lombok\1.16.20
+copy the path
+* Open cmd and go to the above path location and paste the following command:
+java -jar lombok-1.16.20.jar
+enter.
+* Restart your eclipse and update the project.
