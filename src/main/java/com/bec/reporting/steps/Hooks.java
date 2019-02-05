@@ -1,24 +1,51 @@
+/*
+ * Copyright Benchmark Education Company
+ *
+ * (C) Copyright BEC - All rights reserved.
+ *
+ * NOTICE:  All information contained herein or attendant here to is,
+ *          and remains, the property of Benchmark.  Many of the
+ *          intellectual and technical concepts contained herein are
+ *          proprietary to Benchmark. Any dissemination of this
+ *          information or reproduction of this material is strictly
+ *          forbidden unless prior written permission is obtained
+ *          from Benchmark.
+ *
+ * ------------------------------------------------------------------------
+ *
+ * ========================================================================
+ * Revision History
+ * ========================================================================
+ * DATE				: PROGRAMMER  : DESCRIPTION
+ * ========================================================================
+ * JAN 04 2019		: BEC         : CREATED.
+ * ------------------------------------------------------------------------
+ *
+ * ========================================================================
+ */
 package com.bec.reporting.steps;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Properties;
-
-import org.apache.log4j.Logger;
-
 import com.bec.reporting.utils.Driver;
 import com.bec.reporting.utils.FileRead;
 import com.bec.reporting.utils.Reporter;
-
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public class Hooks {
-	/******** Log Attribute ********/
-	private static Logger log = Logger.getLogger(Hooks.class);
+
 	public static String reportBrowser;
 	
+	/**
+	 * This is pre scenario executing method to launch the browser 
+	 * @throws InterruptedException
+	 * @throws IOException
+	 */
 	@Before
 	public void openBrowser() throws InterruptedException, IOException {
 		try {
@@ -41,6 +68,12 @@ public class Hooks {
 		}
 	}
 
+	/**
+	 * This is post scenario executing method to capture screenshot and crossbrowser testing
+	 * @param scenario
+	 * @throws FileNotFoundException
+	 * @throws IOException
+	 */
 	@After
 	public void after(Scenario scenario) throws FileNotFoundException, IOException {
 		if (Driver.crossbrwr) {
