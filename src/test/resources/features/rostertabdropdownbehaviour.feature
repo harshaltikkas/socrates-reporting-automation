@@ -1,4 +1,4 @@
-@Feature1 
+@Feature 
 Feature: Roster Tab Dropdown Behaviour
 
 #  @Scenario9 @TC12
@@ -18,7 +18,7 @@ Feature: Roster Tab Dropdown Behaviour
 #      | School Admin 	 		|												|
 #      | District Admin 		|												|
 
-#This will fail because UI is not implemented as required.
+#This will fail because UI is not implemented as requirement.
   @Scenario10 @TC16
   Scenario: Verify that the selected option should appear at the top of the list and the user should select one option from the dropdown list at a time. 
     Given User is on sso portal's home page

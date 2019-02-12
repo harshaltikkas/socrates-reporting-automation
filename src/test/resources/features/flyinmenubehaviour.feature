@@ -42,7 +42,6 @@ Feature: Fly In Menu Behaviour
       | testtype |
       | single   |
       | multiple |
-  #   |		  all				|
   
   @Scenario5 @TC6
   Scenario: Verify to close the Fly-In menu of the Test Tab.

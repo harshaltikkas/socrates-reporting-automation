@@ -1,21 +1,23 @@
-@Feature1 
+@Feature 
 Feature: Pagination of Dropdown List
 
-#  @Scenario14 @TC22 @TC24 @TC26
-#  Scenario Outline: verifying list size and paginator features of Roster tab
-#  Given User is on sso portal's home page
-#	When user clicks on Roster tab and clicks on "<rostertabdropdownlist>" dropdown list
-#	Then Paginator will be displayed beneath the list if "<rostertabdropdownlist>" returns more than "<itemssize>" items
-#	When list items are more than 30
-#	Then arrows will appear in both side of circle in paginator
+  @Scenario14 @TC22 @TC24 @TC26 @TC38 @TC41
+  Scenario Outline: verifying list size and paginator features of Roster tab
+  Given User is on sso portal's home page
+	When user clicks on Roster tab and clicks on "<rostertabdropdownlist>" dropdown list,list items are more than 30
+	Then Paginator will be displayed beneath the list if "<rostertabdropdownlist>" returns more than "<itemssizeperpage>" items and arrows will appear in both side of circle in paginator
+	
+   Examples: 
+      |rostertabdropdownlist|	itemssizeperpage	|																												
+      | School   				  	|		10			|
+      | Class 				 			|		10			|
+      | Student	 						|		10			|	
 
-#   Examples: 
-#      |rostertabdropdownlist|	itemssize	|																												
-#      | School   				  	|		10			|
-#      | Class 				 			|		10			|
-#      | Student	 						|		10			|	
-
-#  @Scenario15 @TC23 @TC25 @TC27
+  @Scenario15 @TC23 @TC25 @TC27
+  Scenario: verifying list size and paginator features of Test tab
+  Given User is on sso portal's home page
+	When User Click on Test tab within the Universal Selector Tab
+  Then Paginator will be displayed,test list items per page should be 10 and totalitemlist more than 30 items, arrows will appear in both side of circle in paginator
       
     @Scenario16 @TC28
   Scenario Outline: verifying Pagination disappears when selection is made and the list is closed
