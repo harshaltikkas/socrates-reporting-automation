@@ -194,7 +194,6 @@ public class RosterTabDropDownBehaviour {
 	}
 
 	/**
-	 * 
 	 * This method is used to verify All option should be in top in student dropdown and once selected it show All as selected text in dropdown
 	 * @throws Throwable
 	 */

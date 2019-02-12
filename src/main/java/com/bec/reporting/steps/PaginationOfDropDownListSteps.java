@@ -47,16 +47,19 @@ public class PaginationOfDropDownListSteps {
 	 *This is used to initialize webelement of the webpages 
 	 */
 	HomePage homePage = PageFactory.initElements(Driver.webdriver, HomePage.class);
-	static int listCount=0;
+	static int listCount=0,AllPagetotalListItem=0;
+	int countPerPage = 0, pageCount = 0,totalCount=0;
 	
 	/**
 	 * This method used to click on roster tab and click on school,class and student drop down 
 	 * @param rosterDropDown
+	 * @param totalListItem
 	 * @throws Throwable
 	 */
-	@When("^user clicks on Roster tab and clicks on \"([^\"]*)\" dropdown list$")
-	public void user_clicks_on_Roster_tab_and_clicks_on_dropdown_list(String rosterDropDown) throws Throwable {
+	@When("^user clicks on Roster tab and clicks on \"([^\"]*)\" dropdown list,list items are more than (\\d+)$")
+	public void user_clicks_on_Roster_tab_and_clicks_on_dropdown_list_list_items_are_more_than(String rosterDropDown, int totalListItem) throws Throwable {
 		try {
+			AllPagetotalListItem=totalListItem;
 			homePage.rostertab.click();
 			IWait.explicit_wait(Driver.webdriver, homePage.schoolTitleOnSliderMenu);
 			Verify.verify(homePage.schoolTitleOnSliderMenu.isDisplayed());
@@ -72,35 +75,14 @@ public class PaginationOfDropDownListSteps {
 	/**
 	 * This method used to verify display paginator in school,class and student dropdown with LHS and RHS arrows and circles 
 	 * @param rosterDropDown
-	 * @param listSize
+	 * @param itemssizeperpage
 	 * @throws Throwable
 	 */
-	@Then("^Paginator will be displayed beneath the list if \"([^\"]*)\" returns more than (\\d+) items$")
-	public void paginator_will_be_displayed_beneath_the_list_if_returns_more_than_items(String rosterDropDown, int listSize) throws Throwable {
+	@Then("^Paginator will be displayed beneath the list if \"([^\"]*)\" returns more than \"([^\"]*)\" items and arrows will appear in both side of circle in paginator$")
+	public void paginator_will_be_displayed_beneath_the_list_if_returns_more_than_items_and_arrows_will_appear_in_both_side_of_circle_in_paginator(String rosterDropDown, String itemssizeperpage) throws Throwable {
 		try {
-			List<WebElement> itemlist=Driver.webdriver.findElements(By.xpath("//div[@class='menu-title' and contains(text(),'"+rosterDropDown+"')]/following-sibling::div//div[@class='menu-dropdown-list-inr']/ul//div//li"));
-			Assert.assertTrue(itemlist.size()<=listSize);
-			if(itemlist.size()==listSize) {
-				WebElement paginator=Driver.webdriver.findElement(By.xpath("//div[@class='menu-title' and contains(text(),'"+rosterDropDown+"')]/following-sibling::div//div[@class='selector-pagination']"));
-				Assert.assertTrue(paginator.isDisplayed());
-			//TODO need to verify pagination element here i.e. both arrows and circle
-				WebElement leftArrow=Driver.webdriver.findElement(By.xpath("//div[@class='menu-title' and contains(text(),'"+rosterDropDown+"')]/following-sibling::div//span[@class='scroll-left float-left scroll-disable']"));
-				WebElement rightArrow=Driver.webdriver.findElement(By.xpath("//div[@class='menu-title' and contains(text(),'"+rosterDropDown+"')]/following-sibling::div//span[@class='scroll-right scroll-active float-right']"));
-				List<WebElement> circleList=Driver.webdriver.findElements(By.xpath("//div[@class='menu-title' and contains(text(),'"+rosterDropDown+"')]/following-sibling::div//div[@class='PaginationBubblesAndCount']//ul[@class='m-0 page-circle-list']//li"));
-				do {
-					for (int i = 0; i < circleList.size(); i++) {
-						circleList.get(i).click();
-						Thread.sleep(500);
-					}
-					rightArrow.click();
-				}while(rightArrow.isEnabled());
-			}
-			CBTConfiguration.score = "pass";				
-			if(itemlist.size()>listSize) {
-				CBTConfiguration.score = "fail";				
-				Assert.fail();
-			}
-
+			checkPagination(rosterDropDown,itemssizeperpage);
+			CBTConfiguration.score = "pass";
 		} catch (Exception e) {
 			UtilityMethods.processException(e);
 		}
@@ -108,22 +90,105 @@ public class PaginationOfDropDownListSteps {
 	}
 
 	/**
-	 * This method will count the total list items on each page 
-	 * @param listItemSize
+	 * This method used to verify display paginator in test tab with LHS and RHS arrows and circles 
+	 * @param listItemPerPage
+	 * @param itemLimitForPagination
 	 * @throws Throwable
 	 */
-	@When("^list items are more than (\\d+)$")
-	public void list_items_are_more_than(int listItemSize) throws Throwable {
-	}
+	@Then("^Paginator will be displayed,test list items per page should be (\\d+) and totalitemlist more than (\\d+) items, arrows will appear in both side of circle in paginator$")
+	public void paginator_will_be_displayed_test_list_items_per_page_should_be_and_totalitemlist_more_than_items_arrows_will_appear_in_both_side_of_circle_in_paginator(int listItemPerPage, int itemLimitForPagination) throws Throwable {
+		try {
+			int pageCount=0;
+			boolean doneWithThreeCircle = false, disableRightArrowFound = false, enabledRightArrowFound = false,
+					paginatorFound = false;
+			WebElement  enabledRightArrow = null,enabledLeftArrow=null;
+			List<WebElement> circleList = null;
+			try {
+				homePage.testpaginator.isDisplayed();
+				paginatorFound=true;
+			}
+			catch(Exception e) {
+				System.out.println("Paginator Not Found");
+			}
+			if (paginatorFound) {
+				try {
+					circleList=homePage.testpaginationcirclelist;
+					enabledRightArrow=homePage.testenabledrightarrow;
+					enabledRightArrow.isDisplayed();
+					enabledRightArrowFound=true;
+				}
+				catch(Exception e) {
+					System.out.println("Enabled Right Arrow on Paginator is not found");
+				}
+				if (enabledRightArrowFound) {
+					do {
+						try {
+							homePage.testdisabledrightarrow.isDisplayed();
+							disableRightArrowFound=true;
+						}
+						catch(Exception e) {
+							System.out.println("Disabled Right Arrow on Paginator is not found");
+						}
+						if(doneWithThreeCircle) {
+							circleList.get(2).click();
+							Thread.sleep(500);
+							pageCount++;
+							countPerPage = homePage.testscheckboxlist.size();
+							totalCount+=countPerPage;
+							System.out.println(" list size on page:"+pageCount+" is "+countPerPage);
+							Assert.assertTrue(countPerPage<=listItemPerPage);
+						}
+						else {
+						for (int i = 0; i < circleList.size(); i++) {
+							circleList.get(i).click();
+							Thread.sleep(500);
+							pageCount++;
+							countPerPage = homePage.testscheckboxlist.size();
+							totalCount+=countPerPage;
+							System.out.println(" list size on page:"+pageCount+" is "+countPerPage);
+							Assert.assertTrue(countPerPage<=listItemPerPage);
+						}
+						doneWithThreeCircle=true;
+						}
+						try {
+						enabledRightArrow.click();
+						Thread.sleep(500);
+						enabledLeftArrow=homePage.testenabledleftarrow;
+						enabledLeftArrow.isDisplayed();
+						}
+						catch(Exception e) {}
+					}
+					while(!disableRightArrowFound);
+				} 
+				else {
+					for (int i = 0; i < circleList.size(); i++) {
+						circleList.get(i).click();
+						Thread.sleep(500);
+						pageCount++;
+						countPerPage = homePage.testscheckboxlist.size();
+						totalCount+=countPerPage;
+						System.out.println(" list size on page:"+pageCount+" is "+countPerPage);
+						Assert.assertTrue(countPerPage<=listItemPerPage);
 
-	/**
-	 * This method will show Arrows on both side
-	 * @throws Throwable
-	 */
-	@Then("^arrows will appear in both side of circle in paginator$")
-	public void arrows_will_appear_in_both_side_of_circle_in_paginator() throws Throwable {
-	}
+					}
+				}
 
+			}
+			else {
+				pageCount++;
+				countPerPage = homePage.testscheckboxlist.size();
+				totalCount+=countPerPage;
+				System.out.println(" list size on page:"+pageCount+" is "+countPerPage);
+				Assert.assertTrue(countPerPage<=listItemPerPage);
+
+			}
+			CBTConfiguration.score = "pass";
+		} catch (Exception e) {
+			UtilityMethods.processException(e);
+		}
+		log.info("Scenario 15 Completed");
+	}
+	
 	/**
 	 * This method click on roster tab,select options from school,class and student dropdown 
 	 * @param rosterDropDown
@@ -178,5 +243,98 @@ public class PaginationOfDropDownListSteps {
 	}
 	log.info("Scenario 16 Completed");
 	}
+	
+	/**
+	 * This method called when checkpagination calling from the scenario method
+	 * @param rosterDropDown
+	 * @param itemssizeperpage
+	 * @throws InterruptedException
+	 */
+	public void checkPagination(String rosterDropDown,String itemssizeperpage) throws InterruptedException {
+		
+		boolean doneWithThreeCircle = false, disableRightArrowFound = false, enabledRightArrowFound = false,
+				paginatorFound = false;
+		WebElement enabledRightArrow = null,paginator=null,enabledLeftArrow=null;
+		List<WebElement> circleList = null,listItems;
+		try {
+			paginator=Driver.webdriver.findElement(By.xpath("//div[@class='menu-title' and contains(text(),'"+rosterDropDown+"')]/following-sibling::div//div[@class='selector-pagination']"));
+			paginator.isDisplayed();
+			paginatorFound = true;
+		} catch (Exception e) {
+ 			System.out.println("Paginator Not Found on "+rosterDropDown);
+		}
+		if (paginatorFound) {
+			try {
+				circleList = Driver.webdriver.findElements(By.xpath("//div[@class='menu-title' and contains(text(),'"+rosterDropDown+"')]/following-sibling::div//div[@class='PaginationBubblesAndCount']//ul[@class='m-0 page-circle-list']//span"));;
+				Assert.assertTrue(circleList.size()==3);
+				enabledRightArrow =Driver.webdriver.findElement(By.xpath("//div[@class='menu-title' and contains(text(),'"+rosterDropDown+"')]/following-sibling::div//span[@class='scroll-right scroll-active float-right']"));
+				enabledRightArrowFound = true;
+			} catch (Exception e) {
+				System.out.println("Enabled Right Arrow on Paginator is not found");
+			}
+			if (enabledRightArrowFound) {
+				do {
+					try {
+						Driver.webdriver.findElement(By.xpath("//div[@class='menu-title' and contains(text(),'"+rosterDropDown+"')]/following-sibling::div//span[@class='scroll-right float-right scroll-disable']")).isDisplayed();
+						disableRightArrowFound = true;
+					} catch (Exception e) {
+						System.out.println("Disabled Right Arrow on Paginator is not found");
+					}
+					if (doneWithThreeCircle) {
+						circleList.get(2).click();
+						Thread.sleep(500);
+						pageCount++;
+						listItems=Driver.webdriver.findElements(By.xpath(
+								"//div[@class='menu-title' and contains(text(),'"+rosterDropDown+"')]/following-sibling::div//div[@class='menu-dropdown-list-inr']/ul//div//li"));
+						countPerPage = listItems.size();
+						totalCount+=countPerPage;
+						System.out.println(rosterDropDown+" list size on page:"+pageCount+" is "+countPerPage);
+						Assert.assertTrue(countPerPage<=Integer.parseInt(itemssizeperpage));
+					} else {
+						for (int i = 0; i < circleList.size(); i++) {
+							circleList.get(i).click();
+							Thread.sleep(500);
+							pageCount++;
+							listItems=Driver.webdriver.findElements(By.xpath(
+									"//div[@class='menu-title' and contains(text(),'"+rosterDropDown+"')]/following-sibling::div//div[@class='menu-dropdown-list-inr']/ul//div//li"));
+							countPerPage = listItems.size();
+							totalCount+=countPerPage;
+							System.out.println(rosterDropDown+" list size on page:"+pageCount+" is "+countPerPage);
+							Assert.assertTrue(countPerPage<=Integer.parseInt(itemssizeperpage));
+						}
+						doneWithThreeCircle = true;
+					}
+					try {
+						enabledRightArrow.click();
+						Thread.sleep(500);
+						enabledLeftArrow =Driver.webdriver.findElement(By.xpath("//div[@class='menu-title' and contains(text(),'"+rosterDropDown+"')]/following-sibling::div//span[@class='scroll-left float-left scroll-active ']"));
+						Assert.assertTrue(enabledLeftArrow.isDisplayed());
+					} catch (Exception e) {
+					}
+				} while (!disableRightArrowFound);
+			} else {
+				for (int i = 0; i < circleList.size(); i++) {
+					circleList.get(i).click();
+					Thread.sleep(500);
+					listItems=Driver.webdriver.findElements(By.xpath(
+							"//div[@class='menu-title' and contains(text(),'"+rosterDropDown+"')]/following-sibling::div//div[@class='menu-dropdown-list-inr']/ul//div//li"));
+					countPerPage = listItems.size();
+					System.out.println(rosterDropDown+" list size on page:"+pageCount+" is "+countPerPage);
+					Assert.assertTrue(countPerPage<=Integer.parseInt(itemssizeperpage));
+				}
+			}
 
+		} else {
+			pageCount++;
+			listItems=Driver.webdriver.findElements(By.xpath(
+					"//div[@class='menu-title' and contains(text(),'"+rosterDropDown+"')]/following-sibling::div//div[@class='menu-dropdown-list-inr']/ul//div//li"));
+			countPerPage = listItems.size();
+			System.out.println(rosterDropDown+" list size on page:"+pageCount+" is "+countPerPage);
+			Assert.assertTrue(countPerPage<=Integer.parseInt(itemssizeperpage));
+		}
+		if(paginatorFound) {
+			Assert.assertTrue(AllPagetotalListItem<=totalCount);
+			totalCount=0;
+		}
+	}
 }

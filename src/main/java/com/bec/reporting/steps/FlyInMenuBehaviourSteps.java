@@ -100,8 +100,8 @@ public class FlyInMenuBehaviourSteps {
 				IWait.explicit_wait(Driver.webdriver, homePage.schoolTitleOnSliderMenu);
 				Verify.verify(homePage.schoolTitleOnSliderMenu.isDisplayed());
 			} else if (tabName.equals("Test")) {
-				IWait.explicit_wait(Driver.webdriver, homePage.searchOnSliderMenu);
-				Verify.verify(homePage.searchOnSliderMenu.isDisplayed());
+				IWait.explicit_wait(Driver.webdriver, homePage.searchbarontesttab);
+				Verify.verify(homePage.searchbarontesttab.isDisplayed());
 			} else {
 				IWait.explicit_wait(Driver.webdriver, homePage.districtNameOnSliderMenu);
 				Verify.verify(homePage.districtNameOnSliderMenu.isDisplayed());
@@ -199,7 +199,7 @@ public class FlyInMenuBehaviourSteps {
 			selectStudent.click();
 			String studentName = homePage.studentdropdownbtn.getText();
 			Thread.sleep(1000);
-			homePage.rosterapplyfilterbtn.click();
+			homePage.rosterapplybtn.click();
 			Thread.sleep(1000);
 			/**
 			 * verifying class and school and student on context menu by comparing dropdown
@@ -213,7 +213,9 @@ public class FlyInMenuBehaviourSteps {
 			if (!(studentName.equals("All"))) {
 				studentTextOnContextHeader=homePage.studentnameoncontextheader.getText().trim();
 				Assert.assertTrue(studentName.contains(UtilityMethods.elipsisRemoval(studentTextOnContextHeader)));
+				Assert.assertTrue(homePage.activestudent.isDisplayed());
 			}
+			Assert.assertTrue(homePage.activeclass.isDisplayed());
 			CBTConfiguration.score = "pass";
 		} catch (Exception e) {
 			UtilityMethods.processException(e);
@@ -246,8 +248,9 @@ public class FlyInMenuBehaviourSteps {
 	public void user_Click_on_Test_tab_within_the_Universal_Selector_Tab() throws Throwable {
 		try {
 			homePage.testtab.click();
-			IWait.explicit_wait(Driver.webdriver, homePage.searchOnSliderMenu);
-			Verify.verify(homePage.searchOnSliderMenu.isDisplayed());
+			IWait.explicit_wait(Driver.webdriver, homePage.searchbarontesttab);
+			Verify.verify(homePage.searchbarontesttab.isDisplayed());
+			Thread.sleep(500);
 		} catch (Exception e) {
 			UtilityMethods.processException(e);
 		}
@@ -262,16 +265,16 @@ public class FlyInMenuBehaviourSteps {
 		try {
 			String selectedTest;
 			int count = 0, selectcheckbox = 0;
-			count = homePage.testnamecheckboxlist.size();
+			count = homePage.testscheckboxlist.size();
 			selectcheckbox = (int) (Math.random() * count);
 			homePage.allcheckbox.click();
 			Thread.sleep(500);
 			switch (testType) {
 			case "single":
-				homePage.testnamecheckboxlist.get(selectcheckbox).click();
+				homePage.testscheckboxlist.get(selectcheckbox).click();
 				selectedTest=homePage.testnameslist.get(selectcheckbox).getText();
 				Thread.sleep(500);
-				homePage.testapplyfilterbtn.click();
+				homePage.testapplybtn.click();
 				Thread.sleep(500);
 				UtilityMethods.scrollPageUp(Driver.webdriver);
 				Thread.sleep(500);
@@ -280,25 +283,22 @@ public class FlyInMenuBehaviourSteps {
 			case "multiple":
 				int noOfSelectedTest=0;
 				for (int i = 0; i < count; i = i + 2) {
-					homePage.testnamecheckboxlist.get(i).click();
+					homePage.testscheckboxlist.get(i).click();
 					Thread.sleep(500);
 					noOfSelectedTest++;
 				}
-				homePage.testapplyfilterbtn.click();
+				homePage.testapplybtn.click();
 				Thread.sleep(500);
 				UtilityMethods.scrollPageUp(Driver.webdriver);
 				Thread.sleep(500);
 				Assert.assertTrue(homePage.nooftestoncontextheader.getText().equals("Custom Selection ("+noOfSelectedTest+")"));
 				break;
 			default:
-				do {
-					/**
-					 * logic: fetch total count of each page , iterate each checkbox till all
-					 * checkboxes on all pages and verify whether all checkbox is checked or not
-					 */
-					count = homePage.testnamecheckboxlist.size();
-
-				} while (homePage.rightarrowofpaginationontesttab.isEnabled());
+				/**
+				 * This block can not be executed ,earlier we keep this clicking on all checkbox and then apply filter but now
+				 * if by default all checkbox are selected then no apply button is enable.
+				 */
+				//Default end here
 				break;
 			}
 			CBTConfiguration.score = "pass";
@@ -318,7 +318,7 @@ public class FlyInMenuBehaviourSteps {
 			homePage.testcancelbtn.click();
 			Thread.sleep(500);
 			UtilityMethods.scrollPageUp(Driver.webdriver);
-			Assert.assertEquals(false, homePage.searchOnSliderMenu.isDisplayed());
+			Assert.assertEquals(false, homePage.searchbarontesttab.isDisplayed());
 			CBTConfiguration.score = "pass";
 		} catch (Exception e) {
 			UtilityMethods.processException(e);
@@ -357,7 +357,7 @@ public class FlyInMenuBehaviourSteps {
 			Thread.sleep(500);
 			String districtterm = homePage.districttermdropdownbtn.getText();
 			Thread.sleep(500);
-			homePage.dateapplyfilterbtn.click();
+			homePage.dateapplybtn.click();
 			Thread.sleep(500);
 			/**
 			 * Verifying District Term on context menu by comparing dropdown text and
