@@ -5889,3 +5889,561 @@ Session ID: 7709153f8ca309fb11ebe5bc9f65c4fd
 *** Element info: {Using=xpath, value=//span[@class='test-count' and contains(text(),16)]}
 2019-02-12 13:14:03 INFO  Driver:267 - embedScreenshot
 2019-02-12 13:14:05 INFO  Driver:70 - Cleaning up the browser
+2019-02-13 14:34:16 INFO  Hooks:52 - ***********************************************************************************************************
+2019-02-13 14:34:16 INFO  Hooks:61 -  Launch Browser: "chrome" on Environment:local
+2019-02-13 14:34:16 INFO  Driver:158 - OS Windows 8.1
+2019-02-13 14:34:20 ERROR Hooks:67 - initConfig Error
+java.lang.NullPointerException
+	at com.bec.reporting.utils.Reporter.assignAuthor(Reporter.java:148)
+	at com.bec.reporting.steps.Hooks.openBrowser(Hooks.java:65)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at cucumber.runtime.Utils$1.call(Utils.java:40)
+	at cucumber.runtime.Timeout.timeout(Timeout.java:16)
+	at cucumber.runtime.Utils.invoke(Utils.java:34)
+	at cucumber.runtime.java.JavaHookDefinition.execute(JavaHookDefinition.java:60)
+	at cucumber.runtime.Runtime.runHookIfTagsMatch(Runtime.java:224)
+	at cucumber.runtime.Runtime.runHooks(Runtime.java:212)
+	at cucumber.runtime.Runtime.runBeforeHooks(Runtime.java:202)
+	at cucumber.runtime.model.CucumberScenario.run(CucumberScenario.java:40)
+	at cucumber.runtime.model.CucumberFeature.run(CucumberFeature.java:165)
+	at cucumber.runtime.Runtime.run(Runtime.java:122)
+	at cucumber.api.cli.Main.run(Main.java:36)
+	at cucumber.api.cli.Main.main(Main.java:18)
+2019-02-13 14:34:20 INFO  FlyInMenuBehaviourSteps:63 - User is on sso portal's home page
+2019-02-13 14:34:28 INFO  Driver:70 - Cleaning up the browser
+2019-02-13 14:41:38 INFO  Hooks:52 - ***********************************************************************************************************
+2019-02-13 14:41:38 INFO  Hooks:61 -  Launch Browser: "chrome" on Environment:local
+2019-02-13 14:41:38 INFO  Driver:158 - OS Windows 8.1
+2019-02-13 14:41:41 INFO  FlyInMenuBehaviourSteps:63 - User is on sso portal's home page
+2019-02-13 14:42:21 INFO  Line_Chart_Test_Scores_vs_Time_Steps:? - Scenario 22 Completed
+2019-02-13 14:42:22 INFO  Driver:70 - Cleaning up the browser
+2019-02-13 14:43:13 INFO  Hooks:52 - ***********************************************************************************************************
+2019-02-13 14:43:13 INFO  Hooks:61 -  Launch Browser: "chrome" on Environment:local
+2019-02-13 14:43:13 INFO  Driver:158 - OS Windows 8.1
+2019-02-13 14:43:16 INFO  FlyInMenuBehaviourSteps:63 - User is on sso portal's home page
+2019-02-13 14:43:48 INFO  Hooks:52 - ***********************************************************************************************************
+2019-02-13 14:43:48 INFO  Hooks:61 -  Launch Browser: "chrome" on Environment:local
+2019-02-13 14:43:48 INFO  Driver:158 - OS Windows 8.1
+2019-02-13 14:43:51 INFO  FlyInMenuBehaviourSteps:63 - User is on sso portal's home page
+2019-02-13 14:44:10 INFO  Line_Chart_Test_Scores_vs_Time_Steps:30 - Scenario 31 Completed
+2019-02-13 14:44:10 INFO  Driver:70 - Cleaning up the browser
+2019-02-13 15:07:31 INFO  Hooks:52 - ***********************************************************************************************************
+2019-02-13 15:07:31 INFO  Hooks:61 -  Launch Browser: "chrome" on Environment:local
+2019-02-13 15:07:31 INFO  Driver:158 - OS Windows 8.1
+2019-02-13 15:07:35 INFO  FlyInMenuBehaviourSteps:63 - User is on sso portal's home page
+2019-02-13 15:08:48 INFO  Line_Chart_Test_Scores_vs_Time_Steps:39 - Scenario 31 Completed
+2019-02-13 15:08:49 INFO  Driver:70 - Cleaning up the browser
+2019-02-13 15:13:03 INFO  Hooks:52 - ***********************************************************************************************************
+2019-02-13 15:13:03 INFO  Hooks:61 -  Launch Browser: "chrome" on Environment:local
+2019-02-13 15:13:03 INFO  Driver:158 - OS Windows 8.1
+2019-02-13 15:13:06 ERROR Hooks:67 - initConfig Error
+java.lang.NullPointerException
+	at com.bec.reporting.utils.Reporter.assignAuthor(Reporter.java:148)
+	at com.bec.reporting.steps.Hooks.openBrowser(Hooks.java:65)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at cucumber.runtime.Utils$1.call(Utils.java:40)
+	at cucumber.runtime.Timeout.timeout(Timeout.java:16)
+	at cucumber.runtime.Utils.invoke(Utils.java:34)
+	at cucumber.runtime.java.JavaHookDefinition.execute(JavaHookDefinition.java:60)
+	at cucumber.runtime.Runtime.runHookIfTagsMatch(Runtime.java:224)
+	at cucumber.runtime.Runtime.runHooks(Runtime.java:212)
+	at cucumber.runtime.Runtime.runBeforeHooks(Runtime.java:202)
+	at cucumber.runtime.model.CucumberScenario.run(CucumberScenario.java:40)
+	at cucumber.runtime.model.CucumberFeature.run(CucumberFeature.java:165)
+	at cucumber.runtime.Runtime.run(Runtime.java:122)
+	at cucumber.api.cli.Main.run(Main.java:36)
+	at cucumber.api.cli.Main.main(Main.java:18)
+2019-02-13 15:13:06 INFO  FlyInMenuBehaviourSteps:63 - User is on sso portal's home page
+2019-02-13 15:13:14 INFO  Driver:70 - Cleaning up the browser
+2019-02-13 19:26:10 INFO  Hooks:52 - ***********************************************************************************************************
+2019-02-13 19:26:10 INFO  Hooks:61 -  Launch Browser: "chrome" on Environment:local
+2019-02-13 19:26:10 INFO  Driver:158 - OS Windows 8.1
+2019-02-13 19:26:13 INFO  FlyInMenuBehaviourSteps:63 - User is on sso portal's home page
+2019-02-13 19:26:27 INFO  Driver:267 - embedScreenshot
+2019-02-13 19:26:28 INFO  Driver:70 - Cleaning up the browser
+2019-02-13 19:27:09 INFO  Hooks:52 - ***********************************************************************************************************
+2019-02-13 19:27:09 INFO  Hooks:61 -  Launch Browser: "chrome" on Environment:local
+2019-02-13 19:27:09 INFO  Driver:158 - OS Windows 8.1
+2019-02-13 19:27:13 INFO  FlyInMenuBehaviourSteps:63 - User is on sso portal's home page
+2019-02-13 19:28:42 INFO  Hooks:52 - ***********************************************************************************************************
+2019-02-13 19:28:42 INFO  Hooks:61 -  Launch Browser: "chrome" on Environment:local
+2019-02-13 19:28:42 INFO  Driver:158 - OS Windows 8.1
+2019-02-13 19:28:46 INFO  FlyInMenuBehaviourSteps:63 - User is on sso portal's home page
+2019-02-13 19:29:23 INFO  Driver:267 - embedScreenshot
+2019-02-13 19:29:26 INFO  Driver:70 - Cleaning up the browser
+2019-02-13 19:29:29 ERROR Driver:78 - org.apache.http.conn.HttpHostConnectException: Connect to localhost:22169 [localhost/127.0.0.1, localhost/0:0:0:0:0:0:0:1] failed: Connection refused: connect
+Build info: version: '3.4.0', revision: 'unknown', time: 'unknown'
+System info: host: 'HARSHAL-PC', ip: '192.168.56.1', os.name: 'Windows 8.1', os.arch: 'amd64', os.version: '6.3', java.version: '1.8.0_141'
+Driver info: driver.version: RemoteWebDriver
+ Problem Occurs to close browsers
+2019-02-13 19:29:30 INFO  Hooks:52 - ***********************************************************************************************************
+2019-02-13 19:29:30 INFO  Hooks:61 -  Launch Browser: "chrome" on Environment:local
+2019-02-13 19:29:30 INFO  Driver:158 - OS Windows 8.1
+2019-02-13 19:29:33 INFO  FlyInMenuBehaviourSteps:63 - User is on sso portal's home page
+2019-02-13 19:48:23 INFO  Hooks:52 - ***********************************************************************************************************
+2019-02-13 19:48:23 INFO  Hooks:61 -  Launch Browser: "chrome" on Environment:local
+2019-02-13 19:48:23 INFO  Driver:158 - OS Windows 8.1
+2019-02-13 19:48:27 INFO  FlyInMenuBehaviourSteps:63 - User is on sso portal's home page
+2019-02-13 21:01:37 INFO  Hooks:52 - ***********************************************************************************************************
+2019-02-13 21:01:37 INFO  Hooks:61 -  Launch Browser: "chrome" on Environment:local
+2019-02-13 21:01:37 INFO  Driver:158 - OS Windows 8.1
+2019-02-13 21:01:41 INFO  FlyInMenuBehaviourSteps:63 - User is on sso portal's home page
+2019-02-13 21:03:20 INFO  Hooks:52 - ***********************************************************************************************************
+2019-02-13 21:03:20 INFO  Hooks:61 -  Launch Browser: "chrome" on Environment:local
+2019-02-13 21:03:20 INFO  Driver:158 - OS Windows 8.1
+2019-02-13 21:03:24 INFO  FlyInMenuBehaviourSteps:63 - User is on sso portal's home page
+2019-02-13 21:04:21 INFO  Driver:267 - embedScreenshot
+2019-02-13 21:04:22 INFO  Driver:70 - Cleaning up the browser
+2019-02-13 21:04:50 INFO  Hooks:52 - ***********************************************************************************************************
+2019-02-13 21:04:50 INFO  Hooks:61 -  Launch Browser: "chrome" on Environment:local
+2019-02-13 21:04:50 INFO  Driver:158 - OS Windows 8.1
+2019-02-13 21:04:53 INFO  FlyInMenuBehaviourSteps:63 - User is on sso portal's home page
+2019-02-13 21:05:27 INFO  Driver:267 - embedScreenshot
+2019-02-13 21:05:28 INFO  Driver:70 - Cleaning up the browser
+2019-02-13 21:05:34 INFO  Hooks:52 - ***********************************************************************************************************
+2019-02-13 21:05:34 INFO  Hooks:61 -  Launch Browser: "chrome" on Environment:local
+2019-02-13 21:05:34 INFO  Driver:158 - OS Windows 8.1
+2019-02-13 21:05:37 INFO  FlyInMenuBehaviourSteps:63 - User is on sso portal's home page
+2019-02-13 21:08:31 INFO  Hooks:52 - ***********************************************************************************************************
+2019-02-13 21:08:31 INFO  Hooks:61 -  Launch Browser: "chrome" on Environment:local
+2019-02-13 21:08:31 INFO  Driver:158 - OS Windows 8.1
+2019-02-13 21:08:35 INFO  FlyInMenuBehaviourSteps:63 - User is on sso portal's home page
+2019-02-13 21:09:58 INFO  Hooks:52 - ***********************************************************************************************************
+2019-02-13 21:09:58 INFO  Hooks:61 -  Launch Browser: "chrome" on Environment:local
+2019-02-13 21:09:58 INFO  Driver:158 - OS Windows 8.1
+2019-02-13 21:10:01 INFO  FlyInMenuBehaviourSteps:63 - User is on sso portal's home page
+2019-02-13 21:11:12 INFO  Hooks:52 - ***********************************************************************************************************
+2019-02-13 21:11:12 INFO  Hooks:61 -  Launch Browser: "chrome" on Environment:local
+2019-02-13 21:11:13 INFO  Driver:158 - OS Windows 8.1
+2019-02-13 21:11:16 INFO  FlyInMenuBehaviourSteps:63 - User is on sso portal's home page
+2019-02-13 21:13:02 INFO  Hooks:52 - ***********************************************************************************************************
+2019-02-13 21:13:02 INFO  Hooks:61 -  Launch Browser: "chrome" on Environment:local
+2019-02-13 21:13:02 INFO  Driver:158 - OS Windows 8.1
+2019-02-13 21:13:06 INFO  FlyInMenuBehaviourSteps:63 - User is on sso portal's home page
+2019-02-13 21:15:21 INFO  Hooks:52 - ***********************************************************************************************************
+2019-02-13 21:15:21 INFO  Hooks:61 -  Launch Browser: "chrome" on Environment:local
+2019-02-13 21:15:21 INFO  Driver:158 - OS Windows 8.1
+2019-02-13 21:15:24 INFO  FlyInMenuBehaviourSteps:63 - User is on sso portal's home page
+2019-02-13 21:17:36 INFO  Hooks:52 - ***********************************************************************************************************
+2019-02-13 21:17:36 INFO  Hooks:61 -  Launch Browser: "chrome" on Environment:local
+2019-02-13 21:17:36 INFO  Driver:158 - OS Windows 8.1
+2019-02-13 21:17:39 INFO  FlyInMenuBehaviourSteps:63 - User is on sso portal's home page
+2019-02-13 22:22:07 INFO  Hooks:52 - ***********************************************************************************************************
+2019-02-13 22:22:08 INFO  Hooks:61 -  Launch Browser: "chrome" on Environment:local
+2019-02-13 22:22:08 INFO  Driver:158 - OS Windows 8.1
+2019-02-13 22:22:11 INFO  FlyInMenuBehaviourSteps:63 - User is on sso portal's home page
+2019-02-14 00:03:26 ERROR UtilityMethods:79 - no such element: Unable to locate element: {"method":"xpath","selector":"//div[@class='line_chart_graph']//*[name()='g' and @class='vx-group vx-axis-tick custom_tick']//*[name()='svg']//*[name()='text']"}
+  (Session info: chrome=72.0.3626.71)
+  (Driver info: chromedriver=2.38.552522 (437e6fbedfa8762dec75e2c5b3ddb86763dc9dcb),platform=Windows NT 6.3.9600 x86_64) (WARNING: The server did not provide any stacktrace information)
+Command duration or timeout: 10.25 seconds
+For documentation on this error, please visit: http://seleniumhq.org/exceptions/no_such_element.html
+Build info: version: '3.4.0', revision: 'unknown', time: 'unknown'
+System info: host: 'HARSHAL-PC', ip: '192.168.56.1', os.name: 'Windows 8.1', os.arch: 'amd64', os.version: '6.3', java.version: '1.8.0_141'
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities [{applicationCacheEnabled=false, rotatable=false, mobileEmulationEnabled=false, networkConnectionEnabled=false, chrome={chromedriverVersion=2.38.552522 (437e6fbedfa8762dec75e2c5b3ddb86763dc9dcb), userDataDir=C:\Users\HarshalT\AppData\Local\Temp\scoped_dir12976_13647}, takesHeapSnapshot=true, pageLoadStrategy=normal, databaseEnabled=false, handlesAlerts=true, hasTouchScreen=false, version=72.0.3626.71, platform=WIN8_1, browserConnectionEnabled=false, nativeEvents=true, acceptSslCerts=false, acceptInsecureCerts=false, locationContextEnabled=true, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, cssSelectorsEnabled=true, setWindowRect=true, unexpectedAlertBehaviour=}]
+Session ID: 8f81e7e6882a554e036a815e82d4b992
+*** Element info: {Using=xpath, value=//div[@class='line_chart_graph']//*[name()='g' and @class='vx-group vx-axis-tick custom_tick']//*[name()='svg']//*[name()='text']}
+2019-02-14 00:03:26 INFO  Driver:267 - embedScreenshot
+2019-02-14 00:03:28 INFO  Driver:70 - Cleaning up the browser
+2019-02-14 00:03:34 INFO  Hooks:52 - ***********************************************************************************************************
+2019-02-14 00:03:34 INFO  Hooks:61 -  Launch Browser: "chrome" on Environment:local
+2019-02-14 00:03:34 INFO  Driver:158 - OS Windows 8.1
+2019-02-14 00:03:38 INFO  FlyInMenuBehaviourSteps:63 - User is on sso portal's home page
+2019-02-14 00:34:31 INFO  Hooks:52 - ***********************************************************************************************************
+2019-02-14 00:34:31 INFO  Hooks:61 -  Launch Browser: "chrome" on Environment:local
+2019-02-14 00:34:31 INFO  Driver:158 - OS Windows 8.1
+2019-02-14 00:34:35 INFO  FlyInMenuBehaviourSteps:63 - User is on sso portal's home page
+2019-02-14 00:37:55 INFO  Line_Chart_Test_Scores_vs_Time_Steps:166 - Scenario 32 Completed
+2019-02-14 00:37:56 INFO  Driver:70 - Cleaning up the browser
+2019-02-14 00:39:22 INFO  Hooks:52 - ***********************************************************************************************************
+2019-02-14 00:39:22 INFO  Hooks:61 -  Launch Browser: "chrome" on Environment:local
+2019-02-14 00:39:22 INFO  Driver:158 - OS Windows 8.1
+2019-02-14 00:39:26 INFO  FlyInMenuBehaviourSteps:63 - User is on sso portal's home page
+2019-02-14 00:40:46 INFO  Hooks:52 - ***********************************************************************************************************
+2019-02-14 00:40:46 INFO  Hooks:61 -  Launch Browser: "chrome" on Environment:local
+2019-02-14 00:40:46 INFO  Driver:158 - OS Windows 8.1
+2019-02-14 00:40:50 INFO  FlyInMenuBehaviourSteps:63 - User is on sso portal's home page
+2019-02-14 00:44:32 INFO  Hooks:52 - ***********************************************************************************************************
+2019-02-14 00:44:32 INFO  Hooks:61 -  Launch Browser: "chrome" on Environment:local
+2019-02-14 00:44:32 INFO  Driver:158 - OS Windows 8.1
+2019-02-14 00:44:35 INFO  FlyInMenuBehaviourSteps:63 - User is on sso portal's home page
+2019-02-14 00:46:29 INFO  Hooks:52 - ***********************************************************************************************************
+2019-02-14 00:46:29 INFO  Hooks:61 -  Launch Browser: "chrome" on Environment:local
+2019-02-14 00:46:29 INFO  Driver:158 - OS Windows 8.1
+2019-02-14 00:46:33 INFO  FlyInMenuBehaviourSteps:63 - User is on sso portal's home page
+2019-02-14 00:50:20 INFO  Hooks:52 - ***********************************************************************************************************
+2019-02-14 00:50:20 INFO  Hooks:61 -  Launch Browser: "chrome" on Environment:local
+2019-02-14 00:50:20 INFO  Driver:158 - OS Windows 8.1
+2019-02-14 00:50:23 INFO  FlyInMenuBehaviourSteps:63 - User is on sso portal's home page
+2019-02-14 00:53:48 INFO  Hooks:52 - ***********************************************************************************************************
+2019-02-14 00:53:48 INFO  Hooks:61 -  Launch Browser: "chrome" on Environment:local
+2019-02-14 00:53:48 INFO  Driver:158 - OS Windows 8.1
+2019-02-14 00:53:51 INFO  FlyInMenuBehaviourSteps:63 - User is on sso portal's home page
+2019-02-14 00:56:28 INFO  Hooks:52 - ***********************************************************************************************************
+2019-02-14 00:56:28 INFO  Hooks:61 -  Launch Browser: "chrome" on Environment:local
+2019-02-14 00:56:28 INFO  Driver:158 - OS Windows 8.1
+2019-02-14 00:56:32 INFO  FlyInMenuBehaviourSteps:63 - User is on sso portal's home page
+2019-02-14 01:08:20 INFO  Hooks:52 - ***********************************************************************************************************
+2019-02-14 01:08:21 INFO  Hooks:61 -  Launch Browser: "chrome" on Environment:local
+2019-02-14 01:08:21 INFO  Driver:158 - OS Windows 8.1
+2019-02-14 01:08:26 INFO  FlyInMenuBehaviourSteps:63 - User is on sso portal's home page
+2019-02-14 01:11:51 INFO  Hooks:52 - ***********************************************************************************************************
+2019-02-14 01:11:51 INFO  Hooks:61 -  Launch Browser: "chrome" on Environment:local
+2019-02-14 01:11:52 INFO  Driver:158 - OS Windows 8.1
+2019-02-14 01:11:55 INFO  FlyInMenuBehaviourSteps:63 - User is on sso portal's home page
+2019-02-14 01:15:09 INFO  Hooks:52 - ***********************************************************************************************************
+2019-02-14 01:15:09 INFO  Hooks:61 -  Launch Browser: "chrome" on Environment:local
+2019-02-14 01:15:09 INFO  Driver:158 - OS Windows 8.1
+2019-02-14 01:15:13 INFO  FlyInMenuBehaviourSteps:63 - User is on sso portal's home page
+2019-02-14 01:17:58 INFO  Hooks:52 - ***********************************************************************************************************
+2019-02-14 01:17:58 INFO  Hooks:61 -  Launch Browser: "chrome" on Environment:local
+2019-02-14 01:17:58 INFO  Driver:158 - OS Windows 8.1
+2019-02-14 01:18:02 INFO  FlyInMenuBehaviourSteps:63 - User is on sso portal's home page
+2019-02-14 01:19:40 INFO  Hooks:52 - ***********************************************************************************************************
+2019-02-14 01:19:40 INFO  Hooks:61 -  Launch Browser: "chrome" on Environment:local
+2019-02-14 01:19:40 INFO  Driver:158 - OS Windows 8.1
+2019-02-14 01:19:43 INFO  FlyInMenuBehaviourSteps:63 - User is on sso portal's home page
+2019-02-14 01:29:28 INFO  Hooks:52 - ***********************************************************************************************************
+2019-02-14 01:29:28 INFO  Hooks:61 -  Launch Browser: "chrome" on Environment:local
+2019-02-14 01:29:28 INFO  Driver:158 - OS Windows 8.1
+2019-02-14 01:29:32 INFO  FlyInMenuBehaviourSteps:63 - User is on sso portal's home page
+2019-02-14 01:35:25 INFO  Hooks:52 - ***********************************************************************************************************
+2019-02-14 01:35:25 INFO  Hooks:61 -  Launch Browser: "chrome" on Environment:local
+2019-02-14 01:35:25 INFO  Driver:158 - OS Windows 8.1
+2019-02-14 01:35:28 INFO  FlyInMenuBehaviourSteps:63 - User is on sso portal's home page
+2019-02-14 01:36:50 INFO  Line_Chart_Test_Scores_vs_Time_Steps:187 - Scenario 32 Completed
+2019-02-14 01:36:52 INFO  Driver:70 - Cleaning up the browser
+2019-02-14 01:36:56 INFO  Hooks:52 - ***********************************************************************************************************
+2019-02-14 01:36:56 INFO  Hooks:61 -  Launch Browser: "chrome" on Environment:local
+2019-02-14 01:36:56 INFO  Driver:158 - OS Windows 8.1
+2019-02-14 01:36:59 INFO  FlyInMenuBehaviourSteps:63 - User is on sso portal's home page
+2019-02-14 01:37:28 INFO  Line_Chart_Test_Scores_vs_Time_Steps:187 - Scenario 32 Completed
+2019-02-14 01:37:28 INFO  Driver:70 - Cleaning up the browser
+2019-02-14 01:40:42 INFO  Hooks:52 - ***********************************************************************************************************
+2019-02-14 01:40:42 INFO  Hooks:61 -  Launch Browser: "chrome" on Environment:local
+2019-02-14 01:40:42 INFO  Driver:158 - OS Windows 8.1
+2019-02-14 01:40:46 ERROR Hooks:67 - initConfig Error
+java.lang.NullPointerException
+	at com.bec.reporting.utils.Reporter.assignAuthor(Reporter.java:148)
+	at com.bec.reporting.steps.Hooks.openBrowser(Hooks.java:65)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at cucumber.runtime.Utils$1.call(Utils.java:40)
+	at cucumber.runtime.Timeout.timeout(Timeout.java:16)
+	at cucumber.runtime.Utils.invoke(Utils.java:34)
+	at cucumber.runtime.java.JavaHookDefinition.execute(JavaHookDefinition.java:60)
+	at cucumber.runtime.Runtime.runHookIfTagsMatch(Runtime.java:224)
+	at cucumber.runtime.Runtime.runHooks(Runtime.java:212)
+	at cucumber.runtime.Runtime.runBeforeHooks(Runtime.java:202)
+	at cucumber.runtime.model.CucumberScenario.run(CucumberScenario.java:40)
+	at cucumber.runtime.model.CucumberFeature.run(CucumberFeature.java:165)
+	at cucumber.runtime.Runtime.run(Runtime.java:122)
+	at cucumber.api.cli.Main.run(Main.java:36)
+	at cucumber.api.cli.Main.main(Main.java:18)
+2019-02-14 01:40:46 INFO  FlyInMenuBehaviourSteps:63 - User is on sso portal's home page
+2019-02-14 01:40:59 INFO  Driver:70 - Cleaning up the browser
+2019-02-14 10:55:58 INFO  Hooks:52 - ***********************************************************************************************************
+2019-02-14 10:55:58 INFO  Hooks:61 -  Launch Browser: "chrome" on Environment:local
+2019-02-14 10:55:58 INFO  Driver:158 - OS Windows 8.1
+2019-02-14 10:56:01 INFO  FlyInMenuBehaviourSteps:63 - User is on sso portal's home page
+2019-02-14 10:56:12 INFO  Line_Chart_Test_Scores_vs_Time_Steps:202 - Scenario 33 Completed
+2019-02-14 10:56:13 INFO  Driver:70 - Cleaning up the browser
+2019-02-14 11:13:46 INFO  Hooks:52 - ***********************************************************************************************************
+2019-02-14 11:13:46 INFO  Hooks:61 -  Launch Browser: "chrome" on Environment:local
+2019-02-14 11:13:46 INFO  Driver:158 - OS Windows 8.1
+2019-02-14 11:13:49 ERROR Hooks:67 - initConfig Error
+java.lang.NullPointerException
+	at com.bec.reporting.utils.Reporter.assignAuthor(Reporter.java:148)
+	at com.bec.reporting.steps.Hooks.openBrowser(Hooks.java:65)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at cucumber.runtime.Utils$1.call(Utils.java:40)
+	at cucumber.runtime.Timeout.timeout(Timeout.java:16)
+	at cucumber.runtime.Utils.invoke(Utils.java:34)
+	at cucumber.runtime.java.JavaHookDefinition.execute(JavaHookDefinition.java:60)
+	at cucumber.runtime.Runtime.runHookIfTagsMatch(Runtime.java:224)
+	at cucumber.runtime.Runtime.runHooks(Runtime.java:212)
+	at cucumber.runtime.Runtime.runBeforeHooks(Runtime.java:202)
+	at cucumber.runtime.model.CucumberScenario.run(CucumberScenario.java:40)
+	at cucumber.runtime.model.CucumberFeature.run(CucumberFeature.java:165)
+	at cucumber.runtime.Runtime.run(Runtime.java:122)
+	at cucumber.api.cli.Main.run(Main.java:36)
+	at cucumber.api.cli.Main.main(Main.java:18)
+2019-02-14 11:13:49 INFO  FlyInMenuBehaviourSteps:63 - User is on sso portal's home page
+2019-02-14 11:13:58 INFO  Line_Chart_Test_Scores_vs_Time_Steps:202 - Scenario 33 Completed
+2019-02-14 11:13:58 INFO  Driver:70 - Cleaning up the browser
+2019-02-14 12:22:59 INFO  Hooks:52 - ***********************************************************************************************************
+2019-02-14 12:22:59 INFO  Hooks:61 -  Launch Browser: "chrome" on Environment:local
+2019-02-14 12:22:59 INFO  Driver:158 - OS Windows 8.1
+2019-02-14 12:23:03 INFO  FlyInMenuBehaviourSteps:63 - User is on sso portal's home page
+2019-02-14 12:25:15 INFO  Line_Chart_Test_Scores_vs_Time_Steps:281 - Scenario 33 Completed
+2019-02-14 12:25:16 INFO  Driver:70 - Cleaning up the browser
+2019-02-14 12:36:33 INFO  Hooks:52 - ***********************************************************************************************************
+2019-02-14 12:36:33 INFO  Hooks:61 -  Launch Browser: "chrome" on Environment:local
+2019-02-14 12:36:33 INFO  Driver:158 - OS Windows 8.1
+2019-02-14 12:36:36 INFO  FlyInMenuBehaviourSteps:63 - User is on sso portal's home page
+2019-02-14 12:36:57 INFO  Line_Chart_Test_Scores_vs_Time_Steps:281 - Scenario 33 Completed
+2019-02-14 12:36:58 INFO  Driver:70 - Cleaning up the browser
+2019-02-14 12:39:22 INFO  Hooks:52 - ***********************************************************************************************************
+2019-02-14 12:39:22 INFO  Hooks:61 -  Launch Browser: "chrome" on Environment:local
+2019-02-14 12:39:22 INFO  Driver:158 - OS Windows 8.1
+2019-02-14 12:39:25 ERROR Hooks:67 - initConfig Error
+java.lang.NullPointerException
+	at com.bec.reporting.utils.Reporter.assignAuthor(Reporter.java:148)
+	at com.bec.reporting.steps.Hooks.openBrowser(Hooks.java:65)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at cucumber.runtime.Utils$1.call(Utils.java:40)
+	at cucumber.runtime.Timeout.timeout(Timeout.java:16)
+	at cucumber.runtime.Utils.invoke(Utils.java:34)
+	at cucumber.runtime.java.JavaHookDefinition.execute(JavaHookDefinition.java:60)
+	at cucumber.runtime.Runtime.runHookIfTagsMatch(Runtime.java:224)
+	at cucumber.runtime.Runtime.runHooks(Runtime.java:212)
+	at cucumber.runtime.Runtime.runBeforeHooks(Runtime.java:202)
+	at cucumber.runtime.model.CucumberScenario.run(CucumberScenario.java:40)
+	at cucumber.runtime.model.CucumberFeature.run(CucumberFeature.java:165)
+	at cucumber.runtime.Runtime.run(Runtime.java:122)
+	at cucumber.api.cli.Main.run(Main.java:36)
+	at cucumber.api.cli.Main.main(Main.java:18)
+2019-02-14 12:39:25 INFO  FlyInMenuBehaviourSteps:63 - User is on sso portal's home page
+2019-02-14 12:39:33 INFO  Driver:70 - Cleaning up the browser
+2019-02-14 13:46:18 INFO  Hooks:52 - ***********************************************************************************************************
+2019-02-14 13:46:18 INFO  Hooks:61 -  Launch Browser: "chrome" on Environment:local
+2019-02-14 13:46:18 INFO  Driver:158 - OS Windows 8.1
+2019-02-14 13:46:22 INFO  FlyInMenuBehaviourSteps:63 - User is on sso portal's home page
+2019-02-14 13:55:21 INFO  Hooks:52 - ***********************************************************************************************************
+2019-02-14 13:55:21 INFO  Hooks:61 -  Launch Browser: "chrome" on Environment:local
+2019-02-14 13:55:21 INFO  Driver:158 - OS Windows 8.1
+2019-02-14 13:55:25 INFO  FlyInMenuBehaviourSteps:63 - User is on sso portal's home page
+2019-02-14 13:56:21 INFO  Driver:70 - Cleaning up the browser
+2019-02-14 14:13:36 INFO  Hooks:52 - ***********************************************************************************************************
+2019-02-14 14:13:36 INFO  Hooks:61 -  Launch Browser: "chrome" on Environment:local
+2019-02-14 14:13:36 INFO  Driver:158 - OS Windows 8.1
+2019-02-14 14:13:40 ERROR Hooks:67 - initConfig Error
+java.lang.NullPointerException
+	at com.bec.reporting.utils.Reporter.assignAuthor(Reporter.java:148)
+	at com.bec.reporting.steps.Hooks.openBrowser(Hooks.java:65)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at cucumber.runtime.Utils$1.call(Utils.java:40)
+	at cucumber.runtime.Timeout.timeout(Timeout.java:16)
+	at cucumber.runtime.Utils.invoke(Utils.java:34)
+	at cucumber.runtime.java.JavaHookDefinition.execute(JavaHookDefinition.java:60)
+	at cucumber.runtime.Runtime.runHookIfTagsMatch(Runtime.java:224)
+	at cucumber.runtime.Runtime.runHooks(Runtime.java:212)
+	at cucumber.runtime.Runtime.runBeforeHooks(Runtime.java:202)
+	at cucumber.runtime.model.CucumberScenario.run(CucumberScenario.java:40)
+	at cucumber.runtime.model.CucumberFeature.run(CucumberFeature.java:165)
+	at cucumber.runtime.Runtime.run(Runtime.java:122)
+	at cucumber.api.cli.Main.run(Main.java:36)
+	at cucumber.api.cli.Main.main(Main.java:18)
+2019-02-14 14:13:40 INFO  FlyInMenuBehaviourSteps:63 - User is on sso portal's home page
+2019-02-14 14:13:48 ERROR UtilityMethods:79 - unknown error: Element <div class="single-filter-icon">...</div> is not clickable at point (602, 129). Other element would receive the click: <div class="display-loading-main" style="display: block;">...</div>
+  (Session info: chrome=72.0.3626.71)
+  (Driver info: chromedriver=2.38.552522 (437e6fbedfa8762dec75e2c5b3ddb86763dc9dcb),platform=Windows NT 6.3.9600 x86_64) (WARNING: The server did not provide any stacktrace information)
+Command duration or timeout: 64 milliseconds
+Build info: version: '3.4.0', revision: 'unknown', time: 'unknown'
+System info: host: 'HARSHAL-PC', ip: '192.168.56.1', os.name: 'Windows 8.1', os.arch: 'amd64', os.version: '6.3', java.version: '1.8.0_141'
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities [{applicationCacheEnabled=false, rotatable=false, mobileEmulationEnabled=false, networkConnectionEnabled=false, chrome={chromedriverVersion=2.38.552522 (437e6fbedfa8762dec75e2c5b3ddb86763dc9dcb), userDataDir=C:\Users\HarshalT\AppData\Local\Temp\scoped_dir14144_234}, takesHeapSnapshot=true, pageLoadStrategy=normal, databaseEnabled=false, handlesAlerts=true, hasTouchScreen=false, version=72.0.3626.71, platform=WIN8_1, browserConnectionEnabled=false, nativeEvents=true, acceptSslCerts=false, acceptInsecureCerts=false, locationContextEnabled=true, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, cssSelectorsEnabled=true, setWindowRect=true, unexpectedAlertBehaviour=}]
+Session ID: 744b779bb25e053a21f830cb9361579f
+2019-02-14 14:13:48 INFO  Driver:267 - embedScreenshot
+2019-02-14 14:13:48 INFO  Driver:70 - Cleaning up the browser
+2019-02-14 14:39:15 INFO  Hooks:52 - ***********************************************************************************************************
+2019-02-14 14:39:15 INFO  Hooks:61 -  Launch Browser: "chrome" on Environment:local
+2019-02-14 14:39:15 INFO  Driver:158 - OS Windows 8.1
+2019-02-14 14:39:18 ERROR Hooks:67 - initConfig Error
+java.lang.NullPointerException
+	at com.bec.reporting.utils.Reporter.assignAuthor(Reporter.java:148)
+	at com.bec.reporting.steps.Hooks.openBrowser(Hooks.java:65)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at cucumber.runtime.Utils$1.call(Utils.java:40)
+	at cucumber.runtime.Timeout.timeout(Timeout.java:16)
+	at cucumber.runtime.Utils.invoke(Utils.java:34)
+	at cucumber.runtime.java.JavaHookDefinition.execute(JavaHookDefinition.java:60)
+	at cucumber.runtime.Runtime.runHookIfTagsMatch(Runtime.java:224)
+	at cucumber.runtime.Runtime.runHooks(Runtime.java:212)
+	at cucumber.runtime.Runtime.runBeforeHooks(Runtime.java:202)
+	at cucumber.runtime.model.CucumberScenario.run(CucumberScenario.java:40)
+	at cucumber.runtime.model.CucumberFeature.run(CucumberFeature.java:165)
+	at cucumber.runtime.Runtime.run(Runtime.java:122)
+	at cucumber.api.cli.Main.run(Main.java:36)
+	at cucumber.api.cli.Main.main(Main.java:18)
+2019-02-14 14:39:19 INFO  FlyInMenuBehaviourSteps:63 - User is on sso portal's home page
+2019-02-14 14:39:27 ERROR UtilityMethods:79 - unknown error: Element <div class="single-filter-icon">...</div> is not clickable at point (602, 129). Other element would receive the click: <div class="display-loading-main" style="display: block;">...</div>
+  (Session info: chrome=72.0.3626.71)
+  (Driver info: chromedriver=2.38.552522 (437e6fbedfa8762dec75e2c5b3ddb86763dc9dcb),platform=Windows NT 6.3.9600 x86_64) (WARNING: The server did not provide any stacktrace information)
+Command duration or timeout: 76 milliseconds
+Build info: version: '3.4.0', revision: 'unknown', time: 'unknown'
+System info: host: 'HARSHAL-PC', ip: '192.168.56.1', os.name: 'Windows 8.1', os.arch: 'amd64', os.version: '6.3', java.version: '1.8.0_141'
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities [{applicationCacheEnabled=false, rotatable=false, mobileEmulationEnabled=false, networkConnectionEnabled=false, chrome={chromedriverVersion=2.38.552522 (437e6fbedfa8762dec75e2c5b3ddb86763dc9dcb), userDataDir=C:\Users\HarshalT\AppData\Local\Temp\scoped_dir10616_27842}, takesHeapSnapshot=true, pageLoadStrategy=normal, databaseEnabled=false, handlesAlerts=true, hasTouchScreen=false, version=72.0.3626.71, platform=WIN8_1, browserConnectionEnabled=false, nativeEvents=true, acceptSslCerts=false, acceptInsecureCerts=false, locationContextEnabled=true, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, cssSelectorsEnabled=true, setWindowRect=true, unexpectedAlertBehaviour=}]
+Session ID: 06eff093d94fd11bfaa9718b63c41b03
+2019-02-14 14:39:27 INFO  Driver:267 - embedScreenshot
+2019-02-14 14:39:27 INFO  Driver:70 - Cleaning up the browser
+2019-02-14 14:58:34 INFO  Hooks:52 - ***********************************************************************************************************
+2019-02-14 14:58:34 INFO  Hooks:61 -  Launch Browser: "chrome" on Environment:local
+2019-02-14 14:58:34 INFO  Driver:158 - OS Windows 8.1
+2019-02-14 14:58:37 ERROR Hooks:67 - initConfig Error
+java.lang.NullPointerException
+	at com.bec.reporting.utils.Reporter.assignAuthor(Reporter.java:148)
+	at com.bec.reporting.steps.Hooks.openBrowser(Hooks.java:65)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at cucumber.runtime.Utils$1.call(Utils.java:40)
+	at cucumber.runtime.Timeout.timeout(Timeout.java:16)
+	at cucumber.runtime.Utils.invoke(Utils.java:34)
+	at cucumber.runtime.java.JavaHookDefinition.execute(JavaHookDefinition.java:60)
+	at cucumber.runtime.Runtime.runHookIfTagsMatch(Runtime.java:224)
+	at cucumber.runtime.Runtime.runHooks(Runtime.java:212)
+	at cucumber.runtime.Runtime.runBeforeHooks(Runtime.java:202)
+	at cucumber.runtime.model.CucumberScenario.run(CucumberScenario.java:40)
+	at cucumber.runtime.model.CucumberFeature.run(CucumberFeature.java:165)
+	at cucumber.runtime.Runtime.run(Runtime.java:122)
+	at cucumber.api.cli.Main.run(Main.java:36)
+	at cucumber.api.cli.Main.main(Main.java:18)
+2019-02-14 14:58:37 INFO  FlyInMenuBehaviourSteps:63 - User is on sso portal's home page
+2019-02-14 14:58:46 ERROR UtilityMethods:79 - unknown error: Element <div class="single-filter-icon">...</div> is not clickable at point (602, 129). Other element would receive the click: <div class="display-loading-main" style="display: block;">...</div>
+  (Session info: chrome=72.0.3626.71)
+  (Driver info: chromedriver=2.38.552522 (437e6fbedfa8762dec75e2c5b3ddb86763dc9dcb),platform=Windows NT 6.3.9600 x86_64) (WARNING: The server did not provide any stacktrace information)
+Command duration or timeout: 56 milliseconds
+Build info: version: '3.4.0', revision: 'unknown', time: 'unknown'
+System info: host: 'HARSHAL-PC', ip: '192.168.56.1', os.name: 'Windows 8.1', os.arch: 'amd64', os.version: '6.3', java.version: '1.8.0_141'
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities [{applicationCacheEnabled=false, rotatable=false, mobileEmulationEnabled=false, networkConnectionEnabled=false, chrome={chromedriverVersion=2.38.552522 (437e6fbedfa8762dec75e2c5b3ddb86763dc9dcb), userDataDir=C:\Users\HarshalT\AppData\Local\Temp\scoped_dir8220_15618}, takesHeapSnapshot=true, pageLoadStrategy=normal, databaseEnabled=false, handlesAlerts=true, hasTouchScreen=false, version=72.0.3626.71, platform=WIN8_1, browserConnectionEnabled=false, nativeEvents=true, acceptSslCerts=false, acceptInsecureCerts=false, locationContextEnabled=true, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, cssSelectorsEnabled=true, setWindowRect=true, unexpectedAlertBehaviour=}]
+Session ID: d1663be62b631ff1353c60af21dd8c98
+2019-02-14 14:58:46 INFO  Driver:267 - embedScreenshot
+2019-02-14 14:58:47 INFO  Driver:70 - Cleaning up the browser
+2019-02-14 15:01:58 INFO  Hooks:52 - ***********************************************************************************************************
+2019-02-14 15:01:58 INFO  Hooks:61 -  Launch Browser: "chrome" on Environment:local
+2019-02-14 15:01:58 INFO  Driver:158 - OS Windows 8.1
+2019-02-14 15:02:01 ERROR Hooks:67 - initConfig Error
+java.lang.NullPointerException
+	at com.bec.reporting.utils.Reporter.assignAuthor(Reporter.java:148)
+	at com.bec.reporting.steps.Hooks.openBrowser(Hooks.java:65)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at cucumber.runtime.Utils$1.call(Utils.java:40)
+	at cucumber.runtime.Timeout.timeout(Timeout.java:16)
+	at cucumber.runtime.Utils.invoke(Utils.java:34)
+	at cucumber.runtime.java.JavaHookDefinition.execute(JavaHookDefinition.java:60)
+	at cucumber.runtime.Runtime.runHookIfTagsMatch(Runtime.java:224)
+	at cucumber.runtime.Runtime.runHooks(Runtime.java:212)
+	at cucumber.runtime.Runtime.runBeforeHooks(Runtime.java:202)
+	at cucumber.runtime.model.CucumberScenario.run(CucumberScenario.java:40)
+	at cucumber.runtime.model.CucumberFeature.run(CucumberFeature.java:165)
+	at cucumber.runtime.Runtime.run(Runtime.java:122)
+	at cucumber.api.cli.Main.run(Main.java:36)
+	at cucumber.api.cli.Main.main(Main.java:18)
+2019-02-14 15:02:01 INFO  FlyInMenuBehaviourSteps:63 - User is on sso portal's home page
+2019-02-14 15:02:11 INFO  Driver:267 - embedScreenshot
+2019-02-14 15:02:11 INFO  Driver:70 - Cleaning up the browser
+2019-02-14 15:24:47 INFO  Hooks:52 - ***********************************************************************************************************
+2019-02-14 15:24:47 INFO  Hooks:61 -  Launch Browser: "chrome" on Environment:local
+2019-02-14 15:24:47 INFO  Driver:158 - OS Windows 8.1
+2019-02-14 15:24:52 INFO  Hooks:52 - ***********************************************************************************************************
+2019-02-14 15:24:52 INFO  Hooks:61 -  Launch Browser: "chrome" on Environment:local
+2019-02-14 15:24:52 INFO  Driver:158 - OS Windows 8.1
+2019-02-14 15:24:55 INFO  FlyInMenuBehaviourSteps:63 - User is on sso portal's home page
+2019-02-14 15:25:03 ERROR UtilityMethods:79 - unknown error: Element <div class="single-filter-icon">...</div> is not clickable at point (602, 129). Other element would receive the click: <div class="display-loading-main" style="display: block;">...</div>
+  (Session info: chrome=72.0.3626.71)
+  (Driver info: chromedriver=2.38.552522 (437e6fbedfa8762dec75e2c5b3ddb86763dc9dcb),platform=Windows NT 6.3.9600 x86_64) (WARNING: The server did not provide any stacktrace information)
+Command duration or timeout: 52 milliseconds
+Build info: version: '3.4.0', revision: 'unknown', time: 'unknown'
+System info: host: 'HARSHAL-PC', ip: '192.168.56.1', os.name: 'Windows 8.1', os.arch: 'amd64', os.version: '6.3', java.version: '1.8.0_141'
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities [{applicationCacheEnabled=false, rotatable=false, mobileEmulationEnabled=false, networkConnectionEnabled=false, chrome={chromedriverVersion=2.38.552522 (437e6fbedfa8762dec75e2c5b3ddb86763dc9dcb), userDataDir=C:\Users\HarshalT\AppData\Local\Temp\scoped_dir3468_17230}, takesHeapSnapshot=true, pageLoadStrategy=normal, databaseEnabled=false, handlesAlerts=true, hasTouchScreen=false, version=72.0.3626.71, platform=WIN8_1, browserConnectionEnabled=false, nativeEvents=true, acceptSslCerts=false, acceptInsecureCerts=false, locationContextEnabled=true, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, cssSelectorsEnabled=true, setWindowRect=true, unexpectedAlertBehaviour=}]
+Session ID: a6b1cb1006d7a3e766e09c8bb7e34c1f
+2019-02-14 15:25:03 INFO  Driver:267 - embedScreenshot
+2019-02-14 15:25:04 INFO  Driver:70 - Cleaning up the browser
+2019-02-14 15:25:11 INFO  Hooks:52 - ***********************************************************************************************************
+2019-02-14 15:25:11 INFO  Hooks:61 -  Launch Browser: "chrome" on Environment:local
+2019-02-14 15:25:11 INFO  Driver:158 - OS Windows 8.1
+2019-02-14 15:25:15 INFO  FlyInMenuBehaviourSteps:63 - User is on sso portal's home page
+2019-02-14 15:25:22 ERROR UtilityMethods:79 - unknown error: Element <div class="single-filter-icon">...</div> is not clickable at point (602, 129). Other element would receive the click: <div class="display-loading-main" style="display: block;">...</div>
+  (Session info: chrome=72.0.3626.71)
+  (Driver info: chromedriver=2.38.552522 (437e6fbedfa8762dec75e2c5b3ddb86763dc9dcb),platform=Windows NT 6.3.9600 x86_64) (WARNING: The server did not provide any stacktrace information)
+Command duration or timeout: 56 milliseconds
+Build info: version: '3.4.0', revision: 'unknown', time: 'unknown'
+System info: host: 'HARSHAL-PC', ip: '192.168.56.1', os.name: 'Windows 8.1', os.arch: 'amd64', os.version: '6.3', java.version: '1.8.0_141'
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities [{applicationCacheEnabled=false, rotatable=false, mobileEmulationEnabled=false, networkConnectionEnabled=false, chrome={chromedriverVersion=2.38.552522 (437e6fbedfa8762dec75e2c5b3ddb86763dc9dcb), userDataDir=C:\Users\HarshalT\AppData\Local\Temp\scoped_dir800_32382}, takesHeapSnapshot=true, pageLoadStrategy=normal, databaseEnabled=false, handlesAlerts=true, hasTouchScreen=false, version=72.0.3626.71, platform=WIN8_1, browserConnectionEnabled=false, nativeEvents=true, acceptSslCerts=false, acceptInsecureCerts=false, locationContextEnabled=true, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, cssSelectorsEnabled=true, setWindowRect=true, unexpectedAlertBehaviour=}]
+Session ID: b9e68f7350fd8bb6b7af8e37c70f9bc4
+2019-02-14 15:25:22 INFO  Driver:267 - embedScreenshot
+2019-02-14 15:25:23 INFO  Driver:70 - Cleaning up the browser
+2019-02-14 15:25:46 INFO  Hooks:52 - ***********************************************************************************************************
+2019-02-14 15:25:46 INFO  Hooks:61 -  Launch Browser: "chrome" on Environment:local
+2019-02-14 15:25:46 INFO  Driver:158 - OS Windows 8.1
+2019-02-14 15:25:50 INFO  FlyInMenuBehaviourSteps:63 - User is on sso portal's home page
+2019-02-14 15:25:58 ERROR UtilityMethods:79 - unknown error: Element <div class="single-filter-icon">...</div> is not clickable at point (602, 129). Other element would receive the click: <div class="display-loading-main" style="display: block;">...</div>
+  (Session info: chrome=72.0.3626.71)
+  (Driver info: chromedriver=2.38.552522 (437e6fbedfa8762dec75e2c5b3ddb86763dc9dcb),platform=Windows NT 6.3.9600 x86_64) (WARNING: The server did not provide any stacktrace information)
+Command duration or timeout: 56 milliseconds
+Build info: version: '3.4.0', revision: 'unknown', time: 'unknown'
+System info: host: 'HARSHAL-PC', ip: '192.168.56.1', os.name: 'Windows 8.1', os.arch: 'amd64', os.version: '6.3', java.version: '1.8.0_141'
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities [{applicationCacheEnabled=false, rotatable=false, mobileEmulationEnabled=false, networkConnectionEnabled=false, chrome={chromedriverVersion=2.38.552522 (437e6fbedfa8762dec75e2c5b3ddb86763dc9dcb), userDataDir=C:\Users\HarshalT\AppData\Local\Temp\scoped_dir13472_4318}, takesHeapSnapshot=true, pageLoadStrategy=normal, databaseEnabled=false, handlesAlerts=true, hasTouchScreen=false, version=72.0.3626.71, platform=WIN8_1, browserConnectionEnabled=false, nativeEvents=true, acceptSslCerts=false, acceptInsecureCerts=false, locationContextEnabled=true, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, cssSelectorsEnabled=true, setWindowRect=true, unexpectedAlertBehaviour=}]
+Session ID: 1b0f6f330025a51260924b4c096836c4
+2019-02-14 15:25:58 INFO  Driver:267 - embedScreenshot
+2019-02-14 15:25:59 INFO  Driver:70 - Cleaning up the browser
+2019-02-14 16:45:19 INFO  Hooks:52 - ***********************************************************************************************************
+2019-02-14 16:45:19 INFO  Hooks:61 -  Launch Browser: "chrome" on Environment:local
+2019-02-14 16:45:19 INFO  Driver:158 - OS Windows 8.1
+2019-02-14 16:45:23 INFO  FlyInMenuBehaviourSteps:63 - User is on sso portal's home page
+2019-02-14 16:46:55 INFO  Hooks:52 - ***********************************************************************************************************
+2019-02-14 16:46:55 INFO  Hooks:61 -  Launch Browser: "chrome" on Environment:local
+2019-02-14 16:46:55 INFO  Driver:158 - OS Windows 8.1
+2019-02-14 16:46:59 INFO  FlyInMenuBehaviourSteps:63 - User is on sso portal's home page
+2019-02-14 16:48:20 INFO  Hooks:52 - ***********************************************************************************************************
+2019-02-14 16:48:20 INFO  Hooks:61 -  Launch Browser: "chrome" on Environment:local
+2019-02-14 16:48:20 INFO  Driver:158 - OS Windows 8.1
+2019-02-14 16:48:23 INFO  FlyInMenuBehaviourSteps:63 - User is on sso portal's home page
+2019-02-14 16:48:59 INFO  Driver:267 - embedScreenshot
+2019-02-14 16:49:00 INFO  Driver:70 - Cleaning up the browser
+2019-02-14 16:49:59 INFO  Hooks:52 - ***********************************************************************************************************
+2019-02-14 16:49:59 INFO  Hooks:61 -  Launch Browser: "chrome" on Environment:local
+2019-02-14 16:49:59 INFO  Driver:158 - OS Windows 8.1
+2019-02-14 16:50:02 ERROR Hooks:67 - initConfig Error
+java.lang.NullPointerException
+	at com.bec.reporting.utils.Reporter.assignAuthor(Reporter.java:148)
+	at com.bec.reporting.steps.Hooks.openBrowser(Hooks.java:65)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at cucumber.runtime.Utils$1.call(Utils.java:40)
+	at cucumber.runtime.Timeout.timeout(Timeout.java:16)
+	at cucumber.runtime.Utils.invoke(Utils.java:34)
+	at cucumber.runtime.java.JavaHookDefinition.execute(JavaHookDefinition.java:60)
+	at cucumber.runtime.Runtime.runHookIfTagsMatch(Runtime.java:224)
+	at cucumber.runtime.Runtime.runHooks(Runtime.java:212)
+	at cucumber.runtime.Runtime.runBeforeHooks(Runtime.java:202)
+	at cucumber.runtime.model.CucumberScenario.run(CucumberScenario.java:40)
+	at cucumber.runtime.model.CucumberFeature.run(CucumberFeature.java:165)
+	at cucumber.runtime.Runtime.run(Runtime.java:122)
+	at cucumber.api.cli.Main.run(Main.java:36)
+	at cucumber.api.cli.Main.main(Main.java:18)
+2019-02-14 16:50:02 INFO  FlyInMenuBehaviourSteps:63 - User is on sso portal's home page
+2019-02-14 16:50:50 INFO  Driver:267 - embedScreenshot
+2019-02-14 16:50:50 INFO  Driver:70 - Cleaning up the browser
