@@ -314,4 +314,53 @@ public class HomePage {
 	
 	@FindBy(xpath="//div[@class='footer-key-btn']/span/i")
 	public WebElement reportingkey;
+	
+	/**
+	 * Xpath list for Line_Chart_Test_Scores_vs_Time
+	 */
+	
+	@FindBy(xpath="//*[name()='text' and @class='vx-axis-label y---axis']/*[name()='tspan']")
+	public WebElement yaxistexton_linecharttestscorevstime;
+	
+	@FindBy(xpath="//*[name()='line' and @class='vx-line' and @stroke-width='1']")
+	public List<WebElement> horizontalline_onlinecharttestscorevstime;
+	
+	@FindBy(xpath="//*[name()='line' and @class='vx-line']/following-sibling::*[name()='svg']//*[name()='tspan']")
+	public List<WebElement> yaxislabelsonhorizontalline_onlinecharttestscorevstime;
+	
+	@FindBy(xpath="//div[@class='Test_names_label']")
+	public WebElement xaxistexton_linecharttestscorevstime;
+	
+	@FindBy(xpath="//*[@class='vx-group vx-axis vx-axis-bottom']//*[name()='text']")
+	public List<WebElement> testnameslist_onlinecharttestscorevstime;
+	
+	@FindBy(xpath="//div[@class='line_chart_graph']/following-sibling::div[@class='test-results-pagination']")
+	public WebElement paginator_onlinecharttestscorevstime;
+	
+	@FindBy(xpath="//div[@class='line_chart_graph']/following-sibling::div[@class='test-results-pagination']//ul[@class='page-circle-list']//span")
+	public List<WebElement> paginationcirclelist_onlinecharttestscorevstime;
+	
+	@FindBy(xpath="//div[@class='line_chart_graph']/following-sibling::div[@class='test-results-pagination']//span[@class='scroll-right float-right scroll-active']")
+	public WebElement enabledrightarrow_onlinecharttestscorevstime;
+	
+	@FindBy(xpath="//div[@class='line_chart_graph']/following-sibling::div[@class='test-results-pagination']//span[@class='scroll-right float-right scroll-disable']")
+	public WebElement disabledrightarrow_onlinecharttestscorevstime;
+
+	@FindBy(xpath="//div[@class='line_chart_graph']//*[name()='g' and @class='vx-group vx-axis-tick custom_tick']//*[name()='text']")
+	public List<WebElement> testNamesonPerPage_onlinecharttestscorevstime;
+	
+	@FindBy(xpath="//div[@class='line_chart_graph']//*[name()='g' and @class='vx-group vx-axis-tick custom_tick']//*[name()='svg']//*[name()='text']")
+	public WebElement tooltip_onlinecharttestscorevstime;
+	
+	@FindBy(xpath="//div[@class='line_chart_graph']/following-sibling::div[@class='test-results-pagination']//ul[@class='page-circle-list']//span[@style]")
+	public WebElement disabledpaginationcircle_onlinecharttestscorevstime;
+
+	@FindBy(xpath="//*[name()='g']//*[name()='circle' and @fill]/following-sibling::*[name()='text']")
+	public List<WebElement> testScoresonPerPage_onlinecharttestscorevstime;
+	
+	@FindBy(xpath="//*[name()='g']//*[name()='circle' and @fill]")
+	public List<WebElement> testScoreCircleClronPerPage_onlinecharttestscorevstime;
+
+	@FindBy(xpath="//div[@class='tooltip_row_cmp_percentage']")
+	public WebElement tooltiprowpercent_onlinecharttestscorevstime;
 }

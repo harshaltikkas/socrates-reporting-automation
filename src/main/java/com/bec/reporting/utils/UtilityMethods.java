@@ -92,6 +92,11 @@ public class UtilityMethods {
 		return text;
 	}
 
+	/**
+	 * This method is used to generate random string based on the length of string u want.
+	 * @param strLength
+	 * @return
+	 */
 	public static String generateRandomString(int strLength) {
 		String aToZ = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
 		Random random = new Random();
@@ -102,7 +107,12 @@ public class UtilityMethods {
 		}
 		return stringBuilder.toString();
 	}
-
+	
+	/**
+	 * This method is used to generate randm number of the desire length
+	 * @param numberLength
+	 * @return
+	 */
 	public static long generateRandomNumber(int numberLength) {
 		Random random = new Random();
 		StringBuilder sb = new StringBuilder();
@@ -112,5 +122,28 @@ public class UtilityMethods {
 			sb.append(random.nextInt(10));
 		}
 		return Long.valueOf(sb.toString()).longValue();
+	}
+	
+	/**
+	 * This method is used to compare the test score value with the range and return true if color match with the circle value
+	 * @param element
+	 * @param scoreValue
+	 * @return
+	 */
+	public static boolean verifyColorAndScore(WebElement element, int scoreValue) {
+		try {
+			if (scoreValue < 40) {
+				Assert.assertTrue(element.getAttribute("fill").equalsIgnoreCase("#FF5B5B"));
+			} else if (scoreValue >= 40 && scoreValue <= 59) {
+				Assert.assertTrue(element.getAttribute("fill").equalsIgnoreCase("#FF8E2D"));
+			} else if (scoreValue >= 60 && scoreValue <= 79) {
+				Assert.assertTrue(element.getAttribute("fill").equalsIgnoreCase("#FFC52D"));
+			} else {
+				Assert.assertTrue(element.getAttribute("fill").equalsIgnoreCase("#32AC41"));
+			}
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
 	}
 }
