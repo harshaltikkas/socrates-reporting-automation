@@ -33,6 +33,16 @@ public class HomePage {
 	/**
 	 *This saction contains page object/webelemet of Universal Selector 
 	 */
+	
+	@FindBy(xpath="//input[@name='username']")
+	public WebElement username;
+	
+	@FindBy(xpath="//input[@name='password']")
+	public WebElement password;
+	
+	@FindBy(xpath="//input[@id='login']")
+	public WebElement loginbtn;
+	
 	@FindBy(xpath="//i[contains(text(),'chevron_right')]/ancestor::span[@class='float-right']")
 	public WebElement openarrow;
 	
