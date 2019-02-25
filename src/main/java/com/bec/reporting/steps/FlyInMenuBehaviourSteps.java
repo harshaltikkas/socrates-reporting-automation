@@ -58,13 +58,19 @@ public class FlyInMenuBehaviourSteps {
 	 * method used to launch the browser with the url
 	 * @throws Throwable
 	 */
-	@Given("^User is on sso portal's home page$")
-	public void user_is_on_sso_portal_s_home_page() throws Throwable {
-		log.info("User is on sso portal's home page");
+	@Given("^User is on portal's login screen with username as \"([^\"]*)\" and password as \"([^\"]*)\"$")
+	public void user_is_on_portal_s_login_screen_with_username_as_and_password_as(String username, String password) throws Throwable {
+		log.info("User is on portal's login screen");
 		try {
 			prop = FileRead.readProperties();
 			Driver.launch_browser(prop.getProperty("portalUrl"));
 			Thread.sleep(3000);
+			homePage.username.clear();
+			homePage.username.sendKeys(username);
+			homePage.password.clear();
+			homePage.password.sendKeys(password);
+			homePage.loginbtn.click();
+			Thread.sleep(2000);
 			IWait.explicit_wait(Driver.webdriver, homePage.overviewtext);
 			Assert.assertTrue("User is on SSO portal's home screen", homePage.overviewtext.isDisplayed());
 		} catch (Exception e) {
@@ -80,6 +86,7 @@ public class FlyInMenuBehaviourSteps {
 	@When("^User Click on open arrows of \"([^\"]*)\" tab within the Universal Selector Tab$")
 	public void user_Click_on_open_arrows_of_tab_within_the_Universal_Selector_Tab(String tabName) throws Throwable {
 		try {
+			IWait.explicit_wait(Driver.webdriver, homePage.openarrow);
 			Verify.verify(homePage.openarrow.isDisplayed());
 			Driver.webdriver.findElement(By.xpath("//span[@class='menu-name' and contains(text(),'" + tabName + "')]"))
 					.click();
@@ -180,14 +187,14 @@ public class FlyInMenuBehaviourSteps {
 			IWait.explicit_wait(Driver.webdriver, selectSchool);
 			selectSchool.click();
 			String schoolName = homePage.schooldropdownbtn.getText();
-			Thread.sleep(1000);
+			Thread.sleep(2000);
 			// selecting class from dropdown
 			homePage.classdropdownbtn.click();
 			WebElement selectClass = Driver.webdriver.findElement(By.xpath(
 					"//div[@class='menu-title' and contains(text(),'Class')]/following-sibling::div//div[@class='menu-dropdown-list-inr']/ul//li[contains(text(),'"
 							+ classNm + "')]"));
-			IWait.explicit_wait(Driver.webdriver, selectClass);
-			selectClass.click();
+			IWait.explicit_wait(Driver.webdriver, selectClass);		
+			selectClass.click();			
 			String className = homePage.classdropdownbtn.getText();
 			Thread.sleep(1000);
 			// selecting student from dropdown
