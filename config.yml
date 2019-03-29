@@ -1,0 +1,467 @@
+version: 2
+jobs:
+  build:  
+    docker:
+      - image: circleci/openjdk:8-jdk-browsers
+    steps:
+      - checkout
+      - setup_remote_docker
+      - run:
+          name: Make the executable
+          command: |
+            mvn package
+      - run:
+          name: Setup common environment variables
+          command: |
+            if [ "${CIRCLE_BRANCH}" == "bec_staging" -o "${CIRCLE_BRANCH}" == "bec_production" ]; then               
+              
+              echo 'export BEC_ECR_REPOSITORY_NAME="aar-api"' >> $BASH_ENV
+              echo 'export FULL_IMAGE_NAME="529710539400.dkr.ecr.us-east-1.amazonaws.com/aar-api:${CIRCLE_SHA1}"' >> $BASH_ENV
+              
+            else              
+              
+              echo 'export ECR_REPOSITORY_NAME="ear-api"' >> $BASH_ENV
+              echo 'export FULL_IMAGE_NAME="837248477235.dkr.ecr.us-east-1.amazonaws.com/ear-api:${CIRCLE_SHA1}"' >> $BASH_ENV
+
+            fi
+
+      - run:
+          name: Build image
+          command: |
+            echo $FULL_IMAGE_NAME
+            docker build -t $FULL_IMAGE_NAME .
+      - run:
+          name: Save image to an archive
+          command: |
+            echo $FULL_IMAGE_NAME
+            mkdir docker-image
+            docker save -o docker-image/image.tar $FULL_IMAGE_NAME
+      - persist_to_workspace:
+          root: .
+          paths:
+            - docker-image
+  deploy:  
+    docker:
+      - image: circleci/python:3.6.1
+    environment:
+      AWS_DEFAULT_OUTPUT: json
+    steps:
+      - checkout
+      - setup_remote_docker
+      - attach_workspace:
+          at: workspace
+      - restore_cache:
+          key: v1-{{ checksum "requirements.txt" }}
+      
+      - run:
+          name: Install awscli
+          command: |
+            if [ "${CIRCLE_BRANCH}" == "bec_staging" -o "${CIRCLE_BRANCH}" == "bec_production" ]; then
+              
+              echo "************in IF loop*************"
+
+              sudo python3 -m venv venv
+              . venv/bin/activate
+              sudo pip install --upgrade pip  
+              sudo -H pip install awscli --upgrade --ignore-installed six              
+              
+              aws configure set aws_access_key_id $BEC_AWS_ACCESS_KEY_ID
+              aws configure set aws_secret_access_key $BEC_AWS_SECRET_ACCESS_KEY
+              aws configure set default.region $AWS_DEFAULT_REGION
+       
+              aws s3 ls
+            
+            elif [ "${CIRCLE_BRANCH}" == "master" -o "${CIRCLE_BRANCH}" == "develop" ]; then
+              
+              echo "************in ELSE loop************* "
+
+              sudo python3 -m venv venv
+              . venv/bin/activate
+              sudo pip install --upgrade pip  
+              sudo -H pip install awscli --upgrade --ignore-installed six
+              
+              aws configure set aws_access_key_id $INE_AWS_ACCESS_KEY_ID
+              aws configure set aws_secret_access_key $INE_AWS_SECRET_ACCESS_KEY
+              aws configure set default.region $AWS_DEFAULT_REGION
+              
+              aws s3 ls
+            fi
+            
+      - save_cache:
+          key: v1-{{ checksum "requirements.txt" }}
+          paths:
+            - "venv"
+      - run:
+          name: Load image
+          command: |
+            docker load --input workspace/docker-image/image.tar
+      - run:
+          name: Push image
+          command: |
+            . venv/bin/activate
+
+            
+            if [ "${CIRCLE_BRANCH}" == "bec_staging" -o "${CIRCLE_BRANCH}" == "bec_production" ]; then  
+            
+              echo "************in IF loop*************"             
+              echo $(aws ecr get-login --region $AWS_DEFAULT_REGION --no-include-email)
+              eval $(aws ecr get-login --region $AWS_DEFAULT_REGION --no-include-email)
+              docker push 529710539400.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/aar-api:$CIRCLE_SHA1
+
+            else
+            
+              echo "************in ELSE loop*************"
+              echo $(aws ecr get-login --region $AWS_DEFAULT_REGION --no-include-email)
+              eval $(aws ecr get-login --region $AWS_DEFAULT_REGION --no-include-email)
+              docker push 837248477235.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/ear-api:$CIRCLE_SHA1
+          
+            fi
+
+      - run:
+          name: Deploy
+          command: |
+            . venv/bin/activate
+            
+            if [ "${CIRCLE_BRANCH}" == "master" ]; then 
+                
+                export ECR_REPOSITORY_NAME="ear-api"
+                export ECS_CLUSTER_NAME="sdb-ecs-fargate-vpc-ECSCluster-1I7M6Y24TI6G"
+                export ECS_TASK_FAMILY_NAME="bu-api-sdb"
+                export ECS_CONTAINER_DEFINITION_NAME="bu-api-sdb"
+                export ECS_SERVICE_NAME="bu-api-sdb"
+                export EXECUTION_ROLE_ARN="arn:aws:iam::837248477235:role/sdb-ecs-fargate-vpc-ECSTaskExecutionRole-1VDPKH6AUPVVW"
+                export ECS_ENVIRONMENT="sandbox"
+                
+            elif [ "${CIRCLE_BRANCH}" == "bec_staging" ]; then
+                
+                export ECR_REPOSITORY_NAME="aar-api"
+                export ECS_CLUSTER_NAME="staging-ar-api-cluster"
+                export ECS_TASK_FAMILY_NAME="bu-api-stg"
+                export ECS_CONTAINER_DEFINITION_NAME="bu-api-stg"
+                export ECS_SERVICE_NAME="bu-api-stg"
+                export EXECUTION_ROLE_ARN="arn:aws:iam::529710539400:role/stg-ecs-ECSTaskExecutionRole-1GT847W6I4PKS"
+
+            elif [ "${CIRCLE_BRANCH}" == "bec_production" ]; then
+                
+                export ECR_REPOSITORY_NAME="aar-api"
+                export ECS_CLUSTER_NAME="production-ar-api-cluster"
+                export ECS_TASK_FAMILY_NAME=""
+                export ECS_CONTAINER_DEFINITION_NAME=""
+                export ECS_SERVICE_NAME=""
+                export EXECUTION_ROLE_ARN=""
+
+            else
+                
+                export ECR_REPOSITORY_NAME="ear-api"
+                export ECS_CLUSTER_NAME="dev-ecs-vpc-ECSCluster-VO0VGZ2PP9Q3"
+                export ECS_TASK_FAMILY_NAME="bu-api-dev"
+                export ECS_CONTAINER_DEFINITION_NAME="bu-api-dev"
+                export ECS_SERVICE_NAME="bu-api-dev"
+                export EXECUTION_ROLE_ARN="arn:aws:iam::837248477235:role/dev-ecs-vpc-ECSTaskExecutionRole-1UNM4RGO384B5"
+                
+            fi       
+            
+            JQ="jq --raw-output --exit-status"    
+            
+            deploy_cluster() 
+            {
+                make_task_def   
+                register_definition
+                
+                if $(aws ecs update-service --cluster $ECS_CLUSTER_NAME --service $ECS_SERVICE_NAME --task-definition $revision | $JQ '.service.taskDefinition') != $revision; 
+                then
+                    echo "Error updating service"
+                    return 1
+                else 
+                    echo "Deployed!"
+                    return 0
+                    break
+                fi
+                
+            } 
+                
+            make_task_def()
+            { 
+            
+            if [ "${CIRCLE_BRANCH}" == "bec_staging" ]; then              
+              
+              task_template='[
+                {
+                  "name": "%s",
+                  "image": "%s.dkr.ecr.%s.amazonaws.com/%s:%s",
+                  "environment": "sandbox",
+                  "essential": true,
+                  "logConfiguration": 
+                    {
+                      "logDriver": "awslogs",
+                         "options": {
+                             "awslogs-group": "/aws/docker/staging-bu-api",
+                             "awslogs-region": "us-east-1",
+                             "awslogs-stream-prefix": "staging-bu-api"
+                                     }
+                    },
+                  "portMappings": [
+                    {
+                      "containerPort": 5020
+                    }
+                  ],
+                  "environment" : [
+                    {
+                      "name": "environment_name",
+                      "value": "staging"
+                    }
+                  ],
+                  "secrets": [
+                    {
+                      "name": "STAGING_DB_PASSWORD",
+                      "valueFrom": "arn:aws:ssm:us-east-1:837248477235:parameter/STAGING_DB_PASSWORD"
+                    },
+                    {
+                      "name": "STAGING_JWT_SECRET_KEY",
+                      "valueFrom": "arn:aws:ssm:us-east-1:837248477235:parameter/STAGING_JWT_SECRET_KEY"
+                    },
+                    {
+                      "name": "STAGING_DATASOURCE",
+                      "valueFrom": "arn:aws:ssm:us-east-1:837248477235:parameter/STAGING_DATASOURCE"
+                    },
+                    {
+                      "name": "STAGING_DB_USERNAME",
+                      "valueFrom": "arn:aws:ssm:us-east-1:837248477235:parameter/STAGING_DB_USERNAME"
+                    },
+                    {
+                      "name": "STAGING_DB_SCHEMA",
+                      "valueFrom": "arn:aws:ssm:us-east-1:837248477235:parameter/STAGING_DB_SCHEMA"
+                    },
+                    {
+                      "name": "STAGING_APOLLO_URL",
+                      "valueFrom": "arn:aws:ssm:us-east-1:837248477235:parameter/STAGING_APOLLO_URL"
+                    },
+                    {
+                      "name": "STAGING_ATLANTIS_URL",
+                      "valueFrom": "arn:aws:ssm:us-east-1:837248477235:parameter/STAGING_ATLANTIS_URL"
+                    }                          
+                  ]                  
+                }
+              ]'              
+            task_def=$(printf "$task_template" $ECS_CONTAINER_DEFINITION_NAME $BEC_AWS_ACCOUNT_ID $AWS_DEFAULT_REGION $ECR_REPOSITORY_NAME $CIRCLE_SHA1)            
+            echo "task template: " $task_template
+            echo "this is all:" $ECS_CONTAINER_DEFINITION_NAME $BEC_AWS_ACCOUNT_ID $AWS_DEFAULT_REGION $ECR_REPOSITORY_NAME $CIRCLE_SHA1
+
+            elif [ "${CIRCLE_BRANCH}" == "bec_production" ]; then     
+            
+              task_template='[
+                {
+                  "name": "%s",
+                  "image": "%s.dkr.ecr.%s.amazonaws.com/%s:%s",
+                  "essential": true,
+                  "logConfiguration": 
+                    {
+                      "logDriver": "awslogs",
+                         "options": {
+                             "awslogs-group": "/aws/docker/production-bu-api",
+                             "awslogs-region": "us-east-1",
+                             "awslogs-stream-prefix": "production-bu-api"
+                                     }
+                    },
+                  "portMappings": [
+                    {
+                      "containerPort": 5020
+                    }
+                  ],
+                  "environment" : [
+                    {
+                      "name": "environment_name",
+                      "value": "production"
+                    }
+                  ],
+                  "secrets": [
+                    {
+                      "name": "PRODUCTION_DB_PASSWORD",
+                      "valueFrom": "arn:aws:ssm:us-east-1:837248477235:parameter/PRODUCTION_DB_PASSWORD"
+                    },
+                    {
+                      "name": "PRODUCTION_JWT_SECRET_KEY",
+                      "valueFrom": "arn:aws:ssm:us-east-1:837248477235:parameter/PRODUCTION_JWT_SECRET_KEY"
+                    },
+                    {
+                      "name": "PRODUCTION_DATASOURCE",
+                      "valueFrom": "arn:aws:ssm:us-east-1:837248477235:parameter/PRODUCTION_DATASOURCE"
+                    },
+                    {
+                      "name": "PRODUCTION_DB_USERNAME",
+                      "valueFrom": "arn:aws:ssm:us-east-1:837248477235:parameter/PRODUCTION_DB_USERNAME"
+                    },
+                    {
+                      "name": "PRODUCTION_DB_SCHEMA",
+                      "valueFrom": "arn:aws:ssm:us-east-1:837248477235:parameter/PRODUCTION_DB_SCHEMA"
+                    },
+                    {
+                      "name": "PRODUCTION_APOLLO_URL",
+                      "valueFrom": "arn:aws:ssm:us-east-1:837248477235:parameter/PRODUCTION_APOLLO_URL"
+                    },
+                    {
+                      "name": "PRODUCTION_ATLANTIS_URL",
+                      "valueFrom": "arn:aws:ssm:us-east-1:837248477235:parameter/PRODUCTION_ATLANTIS_URL"
+                    }                        
+                  ]
+                }
+              ]'              
+            task_def=$(printf "$task_template" $ECS_CONTAINER_DEFINITION_NAME $BEC_AWS_ACCOUNT_ID $AWS_DEFAULT_REGION $ECR_REPOSITORY_NAME $CIRCLE_SHA1)            
+            echo "task template: " $task_template
+            echo "this is all:" $ECS_CONTAINER_DEFINITION_NAME $BEC_AWS_ACCOUNT_ID $AWS_DEFAULT_REGION $ECR_REPOSITORY_NAME $CIRCLE_SHA1
+           
+            
+            elif [ "${CIRCLE_BRANCH}" == "master" ]; then     
+            
+              task_template='[
+                {
+                  "name": "%s",
+                  "image": "%s.dkr.ecr.%s.amazonaws.com/%s:%s",
+                  "essential": true,
+                  "logConfiguration": 
+                    {
+                      "logDriver": "awslogs",
+                         "options": {
+                             "awslogs-group": "/aws/docker/sandbox-bu-api",
+                             "awslogs-region": "us-east-1",
+                             "awslogs-stream-prefix": "sandbox-bu-api"
+                                     }
+                    },
+                  "portMappings": [
+                    {
+                      "containerPort": 5020
+                    }
+                  ],
+                  "environment" : [
+                    {
+                      "name": "environment_name",
+                      "value": "sandbox"
+                    }
+                  ],
+                  "secrets": [
+                    {
+                      "name": "SANDBOX_DB_PASSWORD",
+                      "valueFrom": "arn:aws:ssm:us-east-1:837248477235:parameter/SANDBOX_DB_PASSWORD"
+                    },
+                    {
+                      "name": "SANDBOX_JWT_SECRET_KEY",
+                      "valueFrom": "arn:aws:ssm:us-east-1:837248477235:parameter/SANDBOX_JWT_SECRET_KEY"
+                    },
+                    {
+                      "name": "SANDBOX_DATASOURCE",
+                      "valueFrom": "arn:aws:ssm:us-east-1:837248477235:parameter/SANDBOX_DATASOURCE"
+                    },
+                    {
+                      "name": "SANDBOX_DB_USERNAME",
+                      "valueFrom": "arn:aws:ssm:us-east-1:837248477235:parameter/SANDBOX_DB_USERNAME"
+                    },
+                    {
+                      "name": "SANDBOX_DB_SCHEMA",
+                      "valueFrom": "arn:aws:ssm:us-east-1:837248477235:parameter/SANDBOX_DB_SCHEMA"
+                    },
+                    {
+                      "name": "SANDBOX_APOLLO_URL",
+                      "valueFrom": "arn:aws:ssm:us-east-1:837248477235:parameter/SANDBOX_APOLLO_URL"
+                    },
+                    {
+                      "name": "SANDBOX_ATLANTIS_URL",
+                      "valueFrom": "arn:aws:ssm:us-east-1:837248477235:parameter/SANDBOX_ATLANTIS_URL"
+                    }    
+                    
+                  ]
+                }
+              ]'              
+            task_def=$(printf "$task_template" $ECS_CONTAINER_DEFINITION_NAME $AWS_ACCOUNT_ID $AWS_DEFAULT_REGION $ECR_REPOSITORY_NAME $CIRCLE_SHA1)            
+            echo "task template: " $task_template
+            echo "this is all:" $ECS_CONTAINER_DEFINITION_NAME $AWS_ACCOUNT_ID $AWS_DEFAULT_REGION $ECR_REPOSITORY_NAME $CIRCLE_SHA1 $ECS_ENVIRONMENT
+            
+            else    
+            
+              task_template='[
+                {
+                  "name": "%s",
+                  "image": "%s.dkr.ecr.%s.amazonaws.com/%s:%s",
+                  "essential": true,
+                  "logConfiguration": 
+                    {
+                      "logDriver": "awslogs",
+                         "options": {
+                             "awslogs-group": "/aws/docker/development-bu-api",
+                             "awslogs-region": "us-east-1",
+                             "awslogs-stream-prefix": "development-bu-api"
+                                     }
+                    },
+                  "portMappings": [
+                    {
+                      "containerPort": 5020
+                    }
+                  ],
+                  "environment" : [
+                    {
+                      "name": "environment_name",
+                      "value": "development"
+                    }
+                  ],
+                  "secrets": [
+                    {
+                      "name": "DEVELOPMENT_DB_PASSWORD",
+                      "valueFrom": "arn:aws:ssm:us-east-1:837248477235:parameter/DEVELOPMENT_DB_PASSWORD"
+                    },
+                    {
+                      "name": "DEVELOPMENT_JWT_SECRET_KEY",
+                      "valueFrom": "arn:aws:ssm:us-east-1:837248477235:parameter/DEVELOPMENT_JWT_SECRET_KEY"
+                    },
+                    {
+                      "name": "DEVELOPMENT_DATASOURCE",
+                      "valueFrom": "arn:aws:ssm:us-east-1:837248477235:parameter/DEVELOPMENT_DATASOURCE"
+                    },
+                    {
+                      "name": "DEVELOPMENT_DB_USERNAME",
+                      "valueFrom": "arn:aws:ssm:us-east-1:837248477235:parameter/DEVELOPMENT_DB_USERNAME"
+                    },
+                    {
+                      "name": "DEVELOPMENT_DB_SCHEMA",
+                      "valueFrom": "arn:aws:ssm:us-east-1:837248477235:parameter/DEVELOPMENT_DB_SCHEMA"
+                    },
+                    {
+                      "name": "DEVELOPMENT_APOLLO_URL",
+                      "valueFrom": "arn:aws:ssm:us-east-1:837248477235:parameter/DEVELOPMENT_APOLLO_URL"
+                    },
+                    {
+                      "name": "DEVELOPMENT_ATLANTIS_URL",
+                      "valueFrom": "arn:aws:ssm:us-east-1:837248477235:parameter/DEVELOPMENT_ATLANTIS_URL"
+                    }    
+                    
+                  ]
+                }
+              ]'              
+            task_def=$(printf "$task_template" $ECS_CONTAINER_DEFINITION_NAME $AWS_ACCOUNT_ID $AWS_DEFAULT_REGION $ECR_REPOSITORY_NAME $CIRCLE_SHA1)            
+            echo "task template: " $task_template
+            echo "this is all::" $ECS_CONTAINER_DEFINITION_NAME $AWS_ACCOUNT_ID $AWS_DEFAULT_REGION $ECR_REPOSITORY_NAME $CIRCLE_SHA1
+           
+            fi
+
+            } 
+
+            register_definition() 
+
+            { 
+                if revision=$(aws ecs register-task-definition --requires-compatibilities FARGATE --cpu 256 --memory 1024 --network-mode awsvpc --execution-role-arn $EXECUTION_ROLE_ARN --container-definitions "$task_def" --family $ECS_TASK_FAMILY_NAME | $JQ '.taskDefinition.taskDefinitionArn'); then
+                    echo "New deployment: $revision"
+                else
+                    echo "Failed to register task definition."
+                    return 1
+                fi 
+              
+              } 
+            
+            deploy_cluster      
+workflows:
+  version: 2
+  build-deploy:
+    jobs:
+      - build
+      - deploy:
+          requires:
+            - build
+
