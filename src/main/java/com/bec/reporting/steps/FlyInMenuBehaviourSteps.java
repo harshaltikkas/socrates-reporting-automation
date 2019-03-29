@@ -32,6 +32,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.Select;
 import com.bec.reporting.pageobjects.HomePage;
 import com.bec.reporting.utils.CBTConfiguration;
 import com.bec.reporting.utils.Driver;
@@ -52,14 +53,14 @@ public class FlyInMenuBehaviourSteps {
 	 */
 	HomePage homePage = PageFactory.initElements(Driver.webdriver, HomePage.class);
 	public static Properties prop;
-	public static String toolTipText="";
+	public static String toolTipText="";	
 	
 	/**
-	 * method used to launch the browser with the url
+	 * method used to launch the browser with the url and provide the username,password and usertype 
 	 * @throws Throwable
 	 */
-	@Given("^User is on portal's login screen with username as \"([^\"]*)\" and password as \"([^\"]*)\"$")
-	public void user_is_on_portal_s_login_screen_with_username_as_and_password_as(String username, String password) throws Throwable {
+	@Given("^User is on portal's login screen with username as \"([^\"]*)\" and password as \"([^\"]*)\" and usertype as \"([^\"]*)\"$")
+	public void user_is_on_portal_s_login_screen_with_username_as_and_password_as_and_usertype_as(String username, String password,String usertype) throws Throwable {
 		log.info("User is on portal's login screen");
 		try {
 			prop = FileRead.readProperties();
@@ -69,9 +70,12 @@ public class FlyInMenuBehaviourSteps {
 			homePage.username.sendKeys(username);
 			homePage.password.clear();
 			homePage.password.sendKeys(password);
+			Select select=new Select(homePage.usertypedropdown);
+			select.selectByVisibleText(usertype);
+			Thread.sleep(2000);
 			homePage.loginbtn.click();
 			Thread.sleep(2000);
-			IWait.explicit_wait(Driver.webdriver, homePage.overviewtext);
+			IWait.explicit_wait(Driver.webdriver, homePage.overviewtext);					
 			Assert.assertTrue("User is on SSO portal's home screen", homePage.overviewtext.isDisplayed());
 		} catch (Exception e) {
 			UtilityMethods.processException(e);
@@ -159,6 +163,7 @@ public class FlyInMenuBehaviourSteps {
 	@When("^User Click on Roster tab within the Universal Selector Tab$")
 	public void user_Click_on_Roster_tab_within_the_Universal_Selector_Tab() throws Throwable {
 		try {
+			IWait.explicit_wait(Driver.webdriver, homePage.rostertab);
 			homePage.rostertab.click();
 			IWait.explicit_wait(Driver.webdriver, homePage.schoolTitleOnSliderMenu);
 			Verify.verify(homePage.schoolTitleOnSliderMenu.isDisplayed());
@@ -187,7 +192,7 @@ public class FlyInMenuBehaviourSteps {
 			IWait.explicit_wait(Driver.webdriver, selectSchool);
 			selectSchool.click();
 			String schoolName = homePage.schooldropdownbtn.getText();
-			Thread.sleep(2000);
+			Thread.sleep(1000);
 			// selecting class from dropdown
 			homePage.classdropdownbtn.click();
 			WebElement selectClass = Driver.webdriver.findElement(By.xpath(
@@ -219,10 +224,12 @@ public class FlyInMenuBehaviourSteps {
 			Assert.assertTrue(className.contains(UtilityMethods.elipsisRemoval(classTextOnContextHeader)));
 			if (!(studentName.equals("All"))) {
 				studentTextOnContextHeader=homePage.studentnameoncontextheader.getText().trim();
-				Assert.assertTrue(studentName.contains(UtilityMethods.elipsisRemoval(studentTextOnContextHeader)));
-				Assert.assertTrue(homePage.activestudent.isDisplayed());
+				Assert.assertTrue(UtilityMethods.elipsisRemoval(studentTextOnContextHeader).contains(studentName));
+				Assert.assertTrue(homePage.activestudentmenu.isDisplayed());
 			}
+			else {
 			Assert.assertTrue(homePage.activeclass.isDisplayed());
+			}
 			CBTConfiguration.score = "pass";
 		} catch (Exception e) {
 			UtilityMethods.processException(e);
@@ -254,6 +261,7 @@ public class FlyInMenuBehaviourSteps {
 	@When("^User Click on Test tab within the Universal Selector Tab$")
 	public void user_Click_on_Test_tab_within_the_Universal_Selector_Tab() throws Throwable {
 		try {
+			IWait.explicit_wait(Driver.webdriver,homePage.testtab);
 			homePage.testtab.click();
 			IWait.explicit_wait(Driver.webdriver, homePage.searchbarontesttab);
 			Verify.verify(homePage.searchbarontesttab.isDisplayed());
@@ -298,7 +306,7 @@ public class FlyInMenuBehaviourSteps {
 				Thread.sleep(500);
 				UtilityMethods.scrollPageUp(Driver.webdriver);
 				Thread.sleep(500);
-				Assert.assertTrue(homePage.nooftestoncontextheader.getText().equals("Custom Selection ("+noOfSelectedTest+")"));
+				Assert.assertTrue(homePage.nooftestoncontextheader.getText().equals("Custom ("+noOfSelectedTest+")"));
 				break;
 			default:
 				/**
@@ -403,12 +411,13 @@ public class FlyInMenuBehaviourSteps {
 	@When("^User mousehover on \"([^\"]*)\" tab within the Universal Selector Tab$")
 	public void user_mousehover_on_tab_within_the_Universal_Selector_Tab(String tabName) throws Throwable {
 		try {
+			IWait.explicit_wait(Driver.webdriver,homePage.rostertab);
 			WebElement el = Driver.webdriver.findElement(By.xpath("//span[@class='menu-name' and contains(text(),'"
 					+ tabName + "')]/ancestor::div[@class='menu-item']"));
 			Actions builder = new Actions(Driver.webdriver);
 			Action mouseOver = builder.moveToElement(el).build();
 			mouseOver.perform();
-			WebElement ttt=Driver.webdriver.findElement(By.xpath("//span[@class='menu-name' and contains(text(),'"+tabName+"')]/following-sibling::span[@class='tooltiptext']"));
+			WebElement ttt=Driver.webdriver.findElement(By.xpath("//span[@class='menu-name' and contains(text(),'"+tabName+"')]/ancestor::div[@class='menu-item']//div[@class='bec_tooltip_content']"));
 			toolTipText=ttt.getText();
 		} catch (Exception e) {
 			UtilityMethods.processException(e);

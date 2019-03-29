@@ -172,7 +172,7 @@ public class PaginationOfDropDownListSteps {
 
 					}
 				}
-
+				paginatorFound=false;
 			}
 			else {
 				pageCount++;

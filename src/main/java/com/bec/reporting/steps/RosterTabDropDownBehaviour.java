@@ -84,11 +84,11 @@ public class RosterTabDropDownBehaviour {
 			//**selecting student from dropdown*//
 			homePage.studentdropdownbtn.click();
 			Thread.sleep(500);
-			studentcount=homePage.studentlist.size();
+			studentcount=homePage.studentlistondropdown.size();
 			selectedstudent=(int) (Math.random()*studentcount);
 			UtilityMethods.scrollPageDown(Driver.webdriver,selectedstudent);
 			Thread.sleep(500);
-			homePage.studentlist.get(selectedstudent).click();
+			homePage.studentlistondropdown.get(selectedstudent).click();
 			selectedStudentText=homePage.studentdropdownbtn.getText();
 			System.out.println("Selected Student Name: "+selectedStudentText);
 			UtilityMethods.scrollPageUp(Driver.webdriver);
@@ -113,7 +113,7 @@ public class RosterTabDropDownBehaviour {
 			Assert.assertTrue(homePage.classlist.get(0).getText().equals(selectedclassText));
 			homePage.studentdropdownbtn.click();
 			Thread.sleep(500);
-			Assert.assertTrue(homePage.studentlist.get(0).getText().equals(selectedStudentText));
+			Assert.assertTrue(homePage.studentlistondropdown.get(0).getText().equals(selectedStudentText));
 			CBTConfiguration.score = "pass";
 		} catch (Exception e) {
 			UtilityMethods.processException(e);
@@ -174,15 +174,15 @@ public class RosterTabDropDownBehaviour {
 			homePage.searchbaronstudentdropdown.sendKeys(UtilityMethods.generateRandomString(1));
 			Thread.sleep(500);
 			Verify.verify(homePage.searchcancelonstudentdropdown.isDisplayed());
-			if(homePage.studentlist.get(0).getText().equals("No Records Available")) {
+			if(homePage.studentlistondropdown.get(0).getText().equals("No Records Available")) {
 				homePage.searchcancelonstudentdropdown.click();
 			}
 			else {
-				studentcount=homePage.studentlist.size();
+				studentcount=homePage.studentlistondropdown.size();
 				selectedstudent=(int) (Math.random()*studentcount);
 				UtilityMethods.scrollPageDown(Driver.webdriver,selectedstudent);
 				Thread.sleep(500);
-				homePage.studentlist.get(selectedstudent).click();	
+				homePage.studentlistondropdown.get(selectedstudent).click();	
 			}
 			Thread.sleep(500);
 			homePage.studentdropdownbtn.click();

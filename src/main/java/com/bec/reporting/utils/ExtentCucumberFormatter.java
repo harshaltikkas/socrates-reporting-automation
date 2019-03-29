@@ -47,6 +47,7 @@ public class ExtentCucumberFormatter implements Reporter, Formatter {
         new InheritableThreadLocal<>();
     static ThreadLocal<ExtentTest> stepTestThreadLocal = new InheritableThreadLocal<>();
     private boolean scenarioOutlineFlag;
+    public static String exeDateTime;
 
     public ExtentCucumberFormatter(File file) throws IOException {
         setExtentHtmlReport(file);
@@ -66,17 +67,17 @@ public class ExtentCucumberFormatter implements Reporter, Formatter {
             file.getParentFile().mkdirs();
         }
         File newFile=null;
-        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");  
-        Date date = new Date();  
-        System.out.println(formatter.format(date));  
+        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy_HH_mm_ss");  
+        Date date = new Date(); 
+        exeDateTime=formatter.format(date);  
 		if (System.getProperty("browser") == null) {
 			FileReader reader = new FileReader("src//main//resources//configuration.properties");
 			Properties p = new Properties();
 			p.load(reader);
-	        newFile=new File(file.getAbsolutePath().replace("report.html", "report_"+p.getProperty("default_browser_Name")+"_"+formatter.format(date)+".html"));
+	        newFile=new File(file.getAbsolutePath().replace("report.html", "report_"+p.getProperty("default_browser_Name")+"_"+exeDateTime+".html"));
 		} else {
 	        newFile=new File(file.getAbsolutePath().replace("report.html", "report_"+System.getProperty("browser")+"_"+formatter.format(date)+".html"));
-		}	
+		}		
         htmlReporter = new ExtentHtmlReporter(newFile);
     }
 
