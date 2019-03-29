@@ -19,10 +19,53 @@
 		<surefire.maven.plugin.version>2.19.1</surefire.maven.plugin.version>
 		<acceptance.test.parallel.count>1</acceptance.test.parallel.count>
 		<jdk.compiler.path>C:\Program Files\Java\jdk1.8.0_141\bin\javac.exe</jdk.compiler.path>
-
+		<restassured.verson>2.9.0</restassured.verson>
 	</properties>
 
+	<repositories>
+		<repository>
+			<id>redshift</id>
+			<url>http://redshift-maven-repository.s3-website-us-east-1.amazonaws.com/release</url>
+		</repository>
+	</repositories>
+
 	<dependencies>
+
+		<!-- https://mvnrepository.com/artifact/com.jayway.restassured/rest-assured -->
+		<dependency>
+			<groupId>com.jayway.restassured</groupId>
+			<artifactId>rest-assured</artifactId>
+			<version>${restassured.verson}</version>
+			<scope>provided</scope>
+		</dependency>
+		
+		<dependency>
+			<groupId>com.jayway.restassured</groupId>
+			<artifactId>json-path</artifactId>
+			<version>${restassured.verson}</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>com.jayway.restassured</groupId>
+			<artifactId>xml-path</artifactId>
+			<version>${restassured.verson}</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>com.jayway.restassured</groupId>
+			<artifactId>json-schema-validator</artifactId>
+			<version>${restassured.verson}</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>javax.json</groupId>
+			<artifactId>javax.json-api</artifactId>
+			<version>1.0</version>
+			<scope>provided</scope>
+		</dependency>
 
 		<!--Logging external dependencies -->
 		<dependency>
@@ -145,6 +188,13 @@
 			<artifactId>extentreports</artifactId>
 			<version>3.1.5</version>
 			<scope>provided</scope>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/com.amazon.redshift/redshift-jdbc42 -->
+		<dependency>
+			<groupId>com.amazon.redshift</groupId>
+			<artifactId>redshift-jdbc42</artifactId>
+			<version>1.2.10.1009</version>
 		</dependency>
 
 	</dependencies>

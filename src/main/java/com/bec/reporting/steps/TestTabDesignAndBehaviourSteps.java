@@ -192,8 +192,7 @@ public class TestTabDesignAndBehaviourSteps {
 			Action mouseOver = builder.moveToElement(el).build();
 			mouseOver.perform();
 			String ttt=Driver.webdriver.findElement(By.xpath("//div[@class='test-results-header']/div/span[.='"+headerName+"']/following-sibling::span[@class='tooltiptext']")).getText();
-			Assert.assertTrue(ttt.equals(toolTipText));
-			
+			Assert.assertTrue(ttt.equals(toolTipText));			
 			CBTConfiguration.score = "pass";
 		} catch (Exception e) {
 			UtilityMethods.processException(e);

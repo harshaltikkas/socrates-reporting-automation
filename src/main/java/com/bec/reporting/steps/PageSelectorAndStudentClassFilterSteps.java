@@ -62,8 +62,6 @@ public class PageSelectorAndStudentClassFilterSteps {
 		try {
 			Verify.verify(homePage.activeclass.isEnabled());
 			Verify.verify(homePage.activestandardperformancebtn.isEnabled());
-		   // Verify.verify(homePage.activetestscoresbtn.isEnabled());//this is default selection in UI
-			
 		} catch (Exception e) {
 			UtilityMethods.processException(e);
 		}
@@ -86,8 +84,7 @@ public class PageSelectorAndStudentClassFilterSteps {
 			catch(NoSuchElementException e) {
 				System.out.println("Only one button is enable/selectable at a time");
 				CBTConfiguration.score = "pass";
-			}
-			
+			}			
 		} catch (Exception e) {
 			UtilityMethods.processException(e);
 		}
@@ -122,8 +119,8 @@ public class PageSelectorAndStudentClassFilterSteps {
 			Assert.assertTrue(homePage.alallwithgraycolor.isDisplayed());
 			Assert.assertTrue(homePage.albelow40withredcolor.isDisplayed());
 			Assert.assertTrue(homePage.al40_59withorangecolor.isDisplayed());
-			Assert.assertTrue(homePage.al60_79withorangecolor.isDisplayed());
-			Assert.assertTrue(homePage.al80pluswithorangecolor.isDisplayed());
+			Assert.assertTrue(homePage.al60_79withyellowcolor.isDisplayed());
+			Assert.assertTrue(homePage.al80pluswithgreencolor.isDisplayed());
 			homePage.reportingkey.click();
 			CBTConfiguration.score="pass";
 		}catch (Exception e) {

@@ -52,6 +52,8 @@ import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.safari.SafariDriver;
 import com.bec.reporting.steps.Hooks;
 import com.bec.reporting.tests.TestRunner;
+
+import cucumber.api.Scenario;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -153,6 +155,7 @@ public class Driver {
 	 * @param browserName
 	 * @return
 	 */
+	@SuppressWarnings("deprecation")
 	private static RemoteWebDriver selectLocalBrowser(String browserName) {
 		String os = System.getProperty("os.name");
 		log.info("OS "+os);
@@ -263,18 +266,23 @@ public class Driver {
 	/**
 	 *This is used to embed screenshot while running scenario 
 	 */
-	public static void embedScreenshot() {
+	public static void embedScreenshot(Scenario scenario) {
 		log.info("embedScreenshot");
-		try {
-			byte[] screenshot = ((TakesScreenshot) webdriver).getScreenshotAs(OutputType.BYTES);
-			TestRunner.scenario.embed(screenshot, "image/png");
-		} catch (WebDriverException somePlatformsDontSupportScreenshots) {
-			System.err.println(somePlatformsDontSupportScreenshots.getMessage());
+		String screenshotName = scenario.getName().replaceAll(" ", "_");
+		try {			 
+			TakesScreenshot ts = (TakesScreenshot) Driver.webdriver;
+			File sourcePath = ts.getScreenshotAs(OutputType.FILE);
+			File destinationPath = new File(System.getProperty("user.dir") + "\\target\\cucumber-reports\\screenshots\\"
+					+ screenshotName +"_"+ExtentCucumberFormatter.exeDateTime+ ".png");
+			FileUtils.copyFile(sourcePath, destinationPath);
+			Reporter.addScreenCaptureFromPath(destinationPath.toString());
+		} catch (Exception e) {
+			log.error("Unable to Capture ScreenShot " + e.getMessage());
 		}
 	}
 
 	/**
-	 *This is used to write text while report generation 
+	 *This is used to text Scenario while report generation 
 	 */
 	public static void writeToReport(String string) {
 		TestRunner.scenario.write(string);
