@@ -269,6 +269,9 @@ public class HomePage {
 	@FindBy(xpath="//div[@class='context-header-main']//span[contains(text(),'Student:')]/following-sibling::span")
 	public WebElement studentnameoncontextheader;
 	
+	@FindBy(xpath="//div[@class='context-header-main']//span[contains(text(),'Student:')]/following-sibling::span//div[@class='bec_tooltip_content']")
+	public WebElement studentnameoncontextheadertooltiptext;
+	
 	@FindBy(xpath="//div[@class='context-header-main']//span[contains(text(),'Tests:')]/following-sibling::span")
 	public WebElement nooftestoncontextheader;
 	

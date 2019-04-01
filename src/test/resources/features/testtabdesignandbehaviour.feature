@@ -1,4 +1,4 @@
-@Feature
+@Feature1
 Feature: Test Tab Design and Behaviour
 
   @Scenario18 @TC31

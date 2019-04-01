@@ -1,4 +1,4 @@
-@Feature
+@Feature1
 Feature: Fly In Menu Behaviour
 
   @Scenario1 @TC2

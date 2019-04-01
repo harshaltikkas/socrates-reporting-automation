@@ -1,4 +1,4 @@
-@Feature
+@Feature1
 Feature: Pagination of Dropdown List
 
   @Scenario14 @TC22 @TC24 @TC26 @TC38 @TC41

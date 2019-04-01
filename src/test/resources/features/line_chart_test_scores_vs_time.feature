@@ -1,4 +1,4 @@
-@Feature
+@Feature1
 Feature: Line Chart Test Scores vs Time
 
   @Scenario31 @TC_0019

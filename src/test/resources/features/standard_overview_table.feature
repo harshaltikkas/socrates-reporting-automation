@@ -4,21 +4,23 @@ Feature: Standard Overview Table and Chart
 	##Story 5a) Standards in Achievement Bands and Y axis / Calculating Cells
 	#@Scenario36 @TC_0001 @TC_0002 @TC_0003 @TC_0005 @TC_0006 @TC_0007 @TC_0008 @TC_0009 @TC_00010
   Scenario: Verify The Y-axis UI representation
-    Given User is on portal's login screen with username as "superadmin" and password as "password" and usertype as "techsupport"
+    #Given User is on portal's login screen with username as "superadmin" and password as "password" and usertype as "techsupport"
     #When User Click on Standard Performance tab within the Class Context
+    ## TC-1
     #Then The Y-axis of the table should be labeled as "Achievement Level" 
+    ## TC-2
     #And The Y-axis should have the groupings strip of colours with the respective ranges in %
 				##<40%” (red), "40-59%” (orange), "60-79%” (yellow) and "≥80%” (green)
 		##TC-6
 		#And user should able to see sort arrows with the red and green colours and when the user clicks on that arrow sorting should happen
 		##e.g. 1)the colored triangles will flip to reflect the order of the Achievement Bands.
 		##2)the data also sorts within the respective groupings with the high range % at the top and low range % at the bottom.
-		##DB & UI TC-5,TC-8,TC-3 
-		When User Click on Standard Performance tab within the Class Context
-		Then click the standard and verify The colour should be changed to that of the achievement level where that standard is present
-	  ##DB & UI TC-7
-	  #When User Click on Standard Performance tab within the Class Context
-	  #Then verify that the tool tip is showing when hover over the perticular standard's cell and the strand
+		## TC-3,TC-5,TC-7,TC-8,TC-10
+		#When User Click on Standard Performance tab within the Class Context
+		#Then click the standard and verify The colour should be changed to that of the achievement level where that standard is present
+		## TC-9 ,Intermittenly Failing 
+		##When User Click on Standard Performance tab within the Student Context
+		##Then The user should able to see the list of all the standards from different grades in the standards table
 	
 	##Story 5b) Strand Averages and table X axis
  #@Scenario37 @TC_0012 @TC_0013_DB @TC_0014 @TC_0015 @TC_0016 @TC_0022
