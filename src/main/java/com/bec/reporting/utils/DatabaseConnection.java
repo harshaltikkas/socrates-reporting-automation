@@ -185,8 +185,34 @@ public class DatabaseConnection {
 		return list;
 	}
 	
+	public static List<Model> getStandardAvgPerListInStudentContext(Connection con,Integer schoolId,Integer classId,String strandName,Integer studentId) {
+		List<Model> list=new ArrayList<Model>();	
+		try {
+			Statement stmt = con.createStatement();
+			ResultSet rs = null;
+			String str="Select round(SUM(sd.score)/SUM(sd.max_score)*100) as avg_per,cscc.standard_shortvalue,cscc.standard_category,cscc.standard_subcategory,cscc.standard_description from  bec_edw_dev.bu_strand_details_vw sd inner join bec_edw_dev.content_standard_common_core cscc \r\n" + 
+					"on cscc.standard_id=sd.standard_id and " + 
+					"sd.component_title in (select distinct component_title from bec_edw_dev.bu_assessment_reporting_detail where bu_school_id="+schoolId+" and collective_noun_id="+classId+" and student_id="+studentId+") and " + 
+					"sd.bu_school_id="+schoolId+" and sd.collective_noun_id="+classId+" and sd.student_id="+studentId+" and " + 
+					"sd.standard_id IN (select DISTINCT standard_id from bec_edw_dev.content_standard_common_core where standard_category='"+strandName+"') group by cscc.standard_shortvalue, cscc.standard_category,cscc.standard_subcategory,cscc.standard_description  order by avg_per desc";
+			rs = stmt.executeQuery(str);
+			while (rs.next()) {
+				Model m=new Model();
+				m.setAvg_per(rs.getInt(1));
+				m.setStandard_shortvalue(rs.getString(2));
+				m.setStandard_category(rs.getString(3));
+				m.setStandard_subcategory(rs.getString(2)+": "+rs.getString(4));
+				m.setStandard_description(rs.getString(5));
+				list.add(m);
+			}
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+		return list;
+	}
 	
 	public static void main(String args[]) {
+		
 		List<Model> lm=getStandardAvgPerListInClassContext(ConnectionPool.getDBConnection(), 509446, 1213286, "Language");
 		for (Model model : lm) {
 			System.out.println(model.getAvg_per());

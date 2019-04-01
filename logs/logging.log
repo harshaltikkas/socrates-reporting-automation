@@ -15713,3 +15713,194 @@ java.lang.NullPointerException
 2019-03-29 21:51:18 INFO  FlyInMenuBehaviourSteps:64 - User is on portal's login screen
 2019-03-29 21:53:21 INFO  Standard_Overview_Table_Steps:333 - Scenario 36_4 completed
 2019-03-29 21:53:22 INFO  Driver:72 - Cleaning up the browser
+2019-03-30 00:33:54 INFO  DatabaseConnection:77 - Get Access token
+2019-03-30 00:33:58 WARN  RequestSpecificationImpl$RestAssuredHttpBuilder:534 - Could not parse content-type: Response does not have a content-type header
+2019-03-30 00:34:03 INFO  Hooks:64 - ***********************************************************************************************************
+2019-03-30 00:34:03 INFO  Hooks:73 -  Launch Browser: "chrome" on Environment:local
+2019-03-30 00:34:03 INFO  Driver:161 - OS Windows 8.1
+2019-03-30 00:34:05 ERROR Hooks:79 - initConfig Error
+java.lang.NullPointerException
+	at com.bec.reporting.utils.Reporter.assignAuthor(Reporter.java:148)
+	at com.bec.reporting.steps.Hooks.openBrowser(Hooks.java:77)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at cucumber.runtime.Utils$1.call(Utils.java:40)
+	at cucumber.runtime.Timeout.timeout(Timeout.java:16)
+	at cucumber.runtime.Utils.invoke(Utils.java:34)
+	at cucumber.runtime.java.JavaHookDefinition.execute(JavaHookDefinition.java:60)
+	at cucumber.runtime.Runtime.runHookIfTagsMatch(Runtime.java:224)
+	at cucumber.runtime.Runtime.runHooks(Runtime.java:212)
+	at cucumber.runtime.Runtime.runBeforeHooks(Runtime.java:202)
+	at cucumber.runtime.model.CucumberScenario.run(CucumberScenario.java:40)
+	at cucumber.runtime.model.CucumberFeature.run(CucumberFeature.java:165)
+	at cucumber.runtime.Runtime.run(Runtime.java:122)
+	at cucumber.api.cli.Main.run(Main.java:36)
+	at cucumber.api.cli.Main.main(Main.java:18)
+2019-03-30 00:34:05 INFO  FlyInMenuBehaviourSteps:64 - User is on portal's login screen
+2019-03-30 00:34:29 INFO  Driver:72 - Cleaning up the browser
+2019-03-30 00:53:54 INFO  DatabaseConnection:77 - Get Access token
+2019-03-30 00:53:58 WARN  RequestSpecificationImpl$RestAssuredHttpBuilder:534 - Could not parse content-type: Response does not have a content-type header
+2019-03-30 00:54:04 INFO  Hooks:64 - ***********************************************************************************************************
+2019-03-30 00:54:04 INFO  Hooks:73 -  Launch Browser: "chrome" on Environment:local
+2019-03-30 00:54:04 INFO  Driver:161 - OS Windows 8.1
+2019-03-30 00:54:07 INFO  FlyInMenuBehaviourSteps:64 - User is on portal's login screen
+2019-03-30 00:55:11 ERROR UtilityMethods:89 - 
+2019-03-30 00:55:16 INFO  Driver:270 - embedScreenshot
+2019-03-30 00:55:17 INFO  Driver:72 - Cleaning up the browser
+2019-03-30 00:56:11 INFO  DatabaseConnection:77 - Get Access token
+2019-03-30 00:56:15 WARN  RequestSpecificationImpl$RestAssuredHttpBuilder:534 - Could not parse content-type: Response does not have a content-type header
+2019-03-30 00:56:19 INFO  Hooks:64 - ***********************************************************************************************************
+2019-03-30 00:56:19 INFO  Hooks:73 -  Launch Browser: "chrome" on Environment:local
+2019-03-30 00:56:19 INFO  Driver:161 - OS Windows 8.1
+2019-03-30 00:56:22 INFO  FlyInMenuBehaviourSteps:64 - User is on portal's login screen
+2019-03-30 00:56:51 ERROR UtilityMethods:89 - 
+2019-03-30 00:56:51 INFO  Driver:270 - embedScreenshot
+2019-03-30 00:56:52 INFO  Driver:72 - Cleaning up the browser
+2019-03-30 00:57:54 INFO  DatabaseConnection:77 - Get Access token
+2019-03-30 00:57:58 WARN  RequestSpecificationImpl$RestAssuredHttpBuilder:534 - Could not parse content-type: Response does not have a content-type header
+2019-03-30 00:58:03 INFO  Hooks:64 - ***********************************************************************************************************
+2019-03-30 00:58:03 INFO  Hooks:73 -  Launch Browser: "chrome" on Environment:local
+2019-03-30 00:58:03 INFO  Driver:161 - OS Windows 8.1
+2019-03-30 00:58:05 INFO  FlyInMenuBehaviourSteps:64 - User is on portal's login screen
+2019-03-30 00:58:53 ERROR UtilityMethods:89 - String index out of range: -1
+2019-03-30 00:58:53 INFO  Driver:270 - embedScreenshot
+2019-03-30 00:58:55 INFO  Driver:72 - Cleaning up the browser
+2019-03-30 00:59:04 INFO  DatabaseConnection:77 - Get Access token
+2019-03-30 00:59:08 WARN  RequestSpecificationImpl$RestAssuredHttpBuilder:534 - Could not parse content-type: Response does not have a content-type header
+2019-03-30 00:59:13 INFO  Hooks:64 - ***********************************************************************************************************
+2019-03-30 00:59:13 INFO  Hooks:73 -  Launch Browser: "chrome" on Environment:local
+2019-03-30 00:59:13 INFO  Driver:161 - OS Windows 8.1
+2019-03-30 00:59:16 INFO  FlyInMenuBehaviourSteps:64 - User is on portal's login screen
+2019-03-30 01:02:16 INFO  Driver:270 - embedScreenshot
+2019-03-30 01:02:17 INFO  Driver:72 - Cleaning up the browser
+2019-03-30 01:02:52 INFO  DatabaseConnection:77 - Get Access token
+2019-03-30 01:02:56 WARN  RequestSpecificationImpl$RestAssuredHttpBuilder:534 - Could not parse content-type: Response does not have a content-type header
+2019-03-30 01:03:01 INFO  Hooks:64 - ***********************************************************************************************************
+2019-03-30 01:03:01 INFO  Hooks:73 -  Launch Browser: "chrome" on Environment:local
+2019-03-30 01:03:01 INFO  Driver:161 - OS Windows 8.1
+2019-03-30 01:03:03 INFO  FlyInMenuBehaviourSteps:64 - User is on portal's login screen
+2019-03-30 01:04:39 INFO  Driver:270 - embedScreenshot
+2019-03-30 01:04:40 INFO  Driver:72 - Cleaning up the browser
+2019-03-30 01:04:51 INFO  DatabaseConnection:77 - Get Access token
+2019-03-30 01:04:56 WARN  RequestSpecificationImpl$RestAssuredHttpBuilder:534 - Could not parse content-type: Response does not have a content-type header
+2019-03-30 01:05:00 INFO  Hooks:64 - ***********************************************************************************************************
+2019-03-30 01:05:00 INFO  Hooks:73 -  Launch Browser: "chrome" on Environment:local
+2019-03-30 01:05:00 INFO  Driver:161 - OS Windows 8.1
+2019-03-30 01:05:03 INFO  FlyInMenuBehaviourSteps:64 - User is on portal's login screen
+2019-03-30 01:11:10 INFO  Driver:270 - embedScreenshot
+2019-03-30 01:11:11 INFO  Driver:72 - Cleaning up the browser
+2019-03-30 01:11:16 INFO  DatabaseConnection:77 - Get Access token
+2019-03-30 01:11:20 WARN  RequestSpecificationImpl$RestAssuredHttpBuilder:534 - Could not parse content-type: Response does not have a content-type header
+2019-03-30 01:11:25 INFO  Hooks:64 - ***********************************************************************************************************
+2019-03-30 01:11:25 INFO  Hooks:73 -  Launch Browser: "chrome" on Environment:local
+2019-03-30 01:11:25 INFO  Driver:161 - OS Windows 8.1
+2019-03-30 01:11:27 INFO  FlyInMenuBehaviourSteps:64 - User is on portal's login screen
+2019-03-30 01:12:28 ERROR UtilityMethods:89 - String index out of range: -1
+2019-03-30 01:12:28 INFO  Driver:270 - embedScreenshot
+2019-03-30 01:12:29 INFO  Driver:72 - Cleaning up the browser
+2019-03-30 01:12:36 INFO  DatabaseConnection:77 - Get Access token
+2019-03-30 01:12:40 WARN  RequestSpecificationImpl$RestAssuredHttpBuilder:534 - Could not parse content-type: Response does not have a content-type header
+2019-03-30 01:12:46 INFO  Hooks:64 - ***********************************************************************************************************
+2019-03-30 01:12:46 INFO  Hooks:73 -  Launch Browser: "chrome" on Environment:local
+2019-03-30 01:12:46 INFO  Driver:161 - OS Windows 8.1
+2019-03-30 01:12:49 INFO  FlyInMenuBehaviourSteps:64 - User is on portal's login screen
+2019-03-30 01:15:43 INFO  Driver:270 - embedScreenshot
+2019-03-30 01:15:43 INFO  Driver:72 - Cleaning up the browser
+2019-03-30 01:15:49 INFO  DatabaseConnection:77 - Get Access token
+2019-03-30 01:15:53 WARN  RequestSpecificationImpl$RestAssuredHttpBuilder:534 - Could not parse content-type: Response does not have a content-type header
+2019-03-30 01:15:58 INFO  Hooks:64 - ***********************************************************************************************************
+2019-03-30 01:15:58 INFO  Hooks:73 -  Launch Browser: "chrome" on Environment:local
+2019-03-30 01:15:58 INFO  Driver:161 - OS Windows 8.1
+2019-03-30 01:16:01 INFO  FlyInMenuBehaviourSteps:64 - User is on portal's login screen
+2019-03-30 01:16:38 ERROR UtilityMethods:89 - String index out of range: -1
+2019-03-30 01:16:38 INFO  Driver:270 - embedScreenshot
+2019-03-30 01:16:39 INFO  Driver:72 - Cleaning up the browser
+2019-03-30 01:16:59 INFO  DatabaseConnection:77 - Get Access token
+2019-03-30 01:17:03 WARN  RequestSpecificationImpl$RestAssuredHttpBuilder:534 - Could not parse content-type: Response does not have a content-type header
+2019-03-30 01:17:11 INFO  Hooks:64 - ***********************************************************************************************************
+2019-03-30 01:17:11 INFO  Hooks:73 -  Launch Browser: "chrome" on Environment:local
+2019-03-30 01:17:11 INFO  Driver:161 - OS Windows 8.1
+2019-03-30 01:17:14 INFO  FlyInMenuBehaviourSteps:64 - User is on portal's login screen
+2019-03-30 01:18:23 INFO  Driver:270 - embedScreenshot
+2019-03-30 01:18:24 INFO  Driver:72 - Cleaning up the browser
+2019-03-30 01:18:31 INFO  DatabaseConnection:77 - Get Access token
+2019-03-30 01:18:35 WARN  RequestSpecificationImpl$RestAssuredHttpBuilder:534 - Could not parse content-type: Response does not have a content-type header
+2019-03-30 01:18:40 INFO  Hooks:64 - ***********************************************************************************************************
+2019-03-30 01:18:40 INFO  Hooks:73 -  Launch Browser: "chrome" on Environment:local
+2019-03-30 01:18:40 INFO  Driver:161 - OS Windows 8.1
+2019-03-30 01:18:43 INFO  FlyInMenuBehaviourSteps:64 - User is on portal's login screen
+2019-03-30 01:21:45 INFO  Driver:270 - embedScreenshot
+2019-03-30 01:21:46 INFO  Driver:72 - Cleaning up the browser
+2019-03-30 01:22:09 INFO  DatabaseConnection:77 - Get Access token
+2019-03-30 01:22:14 WARN  RequestSpecificationImpl$RestAssuredHttpBuilder:534 - Could not parse content-type: Response does not have a content-type header
+2019-03-30 01:22:19 INFO  Hooks:64 - ***********************************************************************************************************
+2019-03-30 01:22:19 INFO  Hooks:73 -  Launch Browser: "chrome" on Environment:local
+2019-03-30 01:22:19 INFO  Driver:161 - OS Windows 8.1
+2019-03-30 01:22:22 INFO  FlyInMenuBehaviourSteps:64 - User is on portal's login screen
+2019-03-30 01:24:39 INFO  DatabaseConnection:77 - Get Access token
+2019-03-30 01:24:43 WARN  RequestSpecificationImpl$RestAssuredHttpBuilder:534 - Could not parse content-type: Response does not have a content-type header
+2019-03-30 01:24:48 INFO  Hooks:64 - ***********************************************************************************************************
+2019-03-30 01:24:48 INFO  Hooks:73 -  Launch Browser: "chrome" on Environment:local
+2019-03-30 01:24:48 INFO  Driver:161 - OS Windows 8.1
+2019-03-30 01:24:51 INFO  FlyInMenuBehaviourSteps:64 - User is on portal's login screen
+2019-03-30 01:25:50 INFO  Driver:270 - embedScreenshot
+2019-03-30 01:25:51 INFO  Driver:72 - Cleaning up the browser
+2019-03-30 01:25:56 INFO  DatabaseConnection:77 - Get Access token
+2019-03-30 01:25:59 WARN  RequestSpecificationImpl$RestAssuredHttpBuilder:534 - Could not parse content-type: Response does not have a content-type header
+2019-03-30 01:26:04 INFO  Hooks:64 - ***********************************************************************************************************
+2019-03-30 01:26:04 INFO  Hooks:73 -  Launch Browser: "chrome" on Environment:local
+2019-03-30 01:26:04 INFO  Driver:161 - OS Windows 8.1
+2019-03-30 01:26:07 INFO  FlyInMenuBehaviourSteps:64 - User is on portal's login screen
+2019-03-30 01:26:58 INFO  Driver:270 - embedScreenshot
+2019-03-30 01:26:59 INFO  Driver:72 - Cleaning up the browser
+2019-03-30 17:37:20 INFO  DatabaseConnection:77 - Get Access token
+2019-03-30 17:37:24 WARN  RequestSpecificationImpl$RestAssuredHttpBuilder:534 - Could not parse content-type: Response does not have a content-type header
+2019-03-30 17:37:28 INFO  Hooks:64 - ***********************************************************************************************************
+2019-03-30 17:37:28 INFO  Hooks:73 -  Launch Browser: "chrome" on Environment:local
+2019-03-30 17:37:28 INFO  Driver:161 - OS Windows 8.1
+2019-03-30 17:37:35 INFO  FlyInMenuBehaviourSteps:64 - User is on portal's login screen
+2019-03-30 17:37:51 INFO  Standard_Overview_Table_Steps:91 - Scenario 36_1 completed
+2019-03-30 17:38:13 INFO  Driver:270 - embedScreenshot
+2019-03-30 17:38:14 INFO  Driver:72 - Cleaning up the browser
+2019-03-30 17:39:18 INFO  DatabaseConnection:77 - Get Access token
+2019-03-30 17:39:21 WARN  RequestSpecificationImpl$RestAssuredHttpBuilder:534 - Could not parse content-type: Response does not have a content-type header
+2019-03-30 17:39:28 INFO  Hooks:64 - ***********************************************************************************************************
+2019-03-30 17:39:28 INFO  Hooks:73 -  Launch Browser: "chrome" on Environment:local
+2019-03-30 17:39:28 INFO  Driver:161 - OS Windows 8.1
+2019-03-30 17:39:30 INFO  FlyInMenuBehaviourSteps:64 - User is on portal's login screen
+2019-03-30 17:41:23 INFO  Standard_Overview_Table_Steps:333 - Scenario 36_4 completed
+2019-03-30 17:41:23 INFO  Driver:72 - Cleaning up the browser
+2019-03-30 17:43:31 INFO  DatabaseConnection:77 - Get Access token
+2019-03-30 17:43:34 WARN  RequestSpecificationImpl$RestAssuredHttpBuilder:534 - Could not parse content-type: Response does not have a content-type header
+2019-03-30 17:43:38 INFO  Hooks:64 - ***********************************************************************************************************
+2019-03-30 17:43:38 INFO  Hooks:73 -  Launch Browser: "chrome" on Environment:local
+2019-03-30 17:43:38 INFO  Driver:161 - OS Windows 8.1
+2019-03-30 17:43:41 INFO  FlyInMenuBehaviourSteps:64 - User is on portal's login screen
+2019-03-30 17:45:33 INFO  Standard_Overview_Table_Steps:333 - Scenario 36_4 completed
+2019-03-30 17:45:33 INFO  Driver:72 - Cleaning up the browser
+2019-04-01 00:12:37 INFO  DatabaseConnection:77 - Get Access token
+2019-04-01 00:12:42 WARN  RequestSpecificationImpl$RestAssuredHttpBuilder:534 - Could not parse content-type: Response does not have a content-type header
+2019-04-01 00:12:47 INFO  Hooks:64 - ***********************************************************************************************************
+2019-04-01 00:12:47 INFO  Hooks:73 -  Launch Browser: "chrome" on Environment:local
+2019-04-01 00:12:47 INFO  Driver:161 - OS Windows 8.1
+2019-04-01 00:12:53 INFO  FlyInMenuBehaviourSteps:64 - User is on portal's login screen
+2019-04-01 00:13:23 ERROR UtilityMethods:89 - unknown error: Element <span>...</span> is not clickable at point (253, 608). Other element would receive the click: <div class="footer-left">...</div>
+  (Session info: chrome=73.0.3683.75)
+  (Driver info: chromedriver=2.38.552522 (437e6fbedfa8762dec75e2c5b3ddb86763dc9dcb),platform=Windows NT 6.3.9600 x86_64) (WARNING: The server did not provide any stacktrace information)
+Command duration or timeout: 116 milliseconds
+Build info: version: '3.4.0', revision: 'unknown', time: 'unknown'
+System info: host: 'HARSHAL-PC', ip: '192.168.56.1', os.name: 'Windows 8.1', os.arch: 'amd64', os.version: '6.3', java.version: '1.8.0_141'
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities [{applicationCacheEnabled=false, rotatable=false, mobileEmulationEnabled=false, networkConnectionEnabled=false, chrome={chromedriverVersion=2.38.552522 (437e6fbedfa8762dec75e2c5b3ddb86763dc9dcb), userDataDir=C:\Users\HarshalT\AppData\Local\Temp\scoped_dir17588_3149}, takesHeapSnapshot=true, pageLoadStrategy=normal, databaseEnabled=false, handlesAlerts=true, hasTouchScreen=false, version=73.0.3683.75, platform=WIN8_1, browserConnectionEnabled=false, nativeEvents=true, acceptSslCerts=false, acceptInsecureCerts=false, locationContextEnabled=true, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, cssSelectorsEnabled=true, setWindowRect=true, unexpectedAlertBehaviour=}]
+Session ID: b8f4a7fef2cd4330e801cfdb200f8594
+2019-04-01 00:13:24 INFO  Driver:270 - embedScreenshot
+2019-04-01 00:13:24 INFO  DatabaseConnection:77 - Get Access token
+2019-04-01 00:13:25 WARN  RequestSpecificationImpl$RestAssuredHttpBuilder:534 - Could not parse content-type: Response does not have a content-type header
+2019-04-01 00:13:25 INFO  Hooks:64 - ***********************************************************************************************************
+2019-04-01 00:13:25 INFO  Hooks:73 -  Launch Browser: "chrome" on Environment:local
+2019-04-01 00:13:25 INFO  FlyInMenuBehaviourSteps:64 - User is on portal's login screen
+2019-04-01 00:13:44 INFO  TestTabDesignAndBehaviourSteps:178 - Scenario 19 Completed
+2019-04-01 00:13:44 INFO  DatabaseConnection:77 - Get Access token
+2019-04-01 00:13:45 WARN  RequestSpecificationImpl$RestAssuredHttpBuilder:534 - Could not parse content-type: Response does not have a content-type header

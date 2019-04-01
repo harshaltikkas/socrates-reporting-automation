@@ -1,4 +1,4 @@
-@Feature
+@Feature1
 Feature: Page Selector and Class Student Filter
 
 #This TC1 will fail because the default selection is not set as performance selector button.

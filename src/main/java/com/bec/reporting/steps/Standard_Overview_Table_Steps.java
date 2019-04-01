@@ -333,6 +333,103 @@ public class Standard_Overview_Table_Steps {
 		log.info("Scenario 36_4 completed");
 	}
 	
+	/**
+	 * This method is used to see the standard list in strand from student context
+	 * @throws Throwable
+	 */
+	
+	@Then("^The user should able to see the list of all the standards from different grades in the standards table$")
+	public void the_user_should_able_to_see_the_list_of_all_the_standards_from_different_grades_in_the_standards_table() throws Throwable {
+		try {
+			WebElement rightArrowEnable = null;
+			boolean enabledRightArrowFound = false;
+			String schoolName, className, strandName;
+			List<Model> lm=new ArrayList<Model>();
+			List<WebElement> standardList;
+			Integer schoolId, classId,studentId;
+			String studentTextonCH;
+			do {
+				new Actions(Driver.webdriver).moveToElement(homePage.schoolnameoncontextheader).build().perform();
+				schoolName = homePage.tooltipofschoolnameoncontextheader.getText();
+				schoolId = DatabaseConnection.getSchoolIDBySchoolName(schoolName);
+				new Actions(Driver.webdriver).moveToElement(homePage.overviewtext).build().perform();
+				new Actions(Driver.webdriver).moveToElement(homePage.classnameoncontextheader).build().perform();
+				className = homePage.tooltipofclassnameoncontextheader.getText();
+				classId = DatabaseConnection.getClassIDBySchoolNameAndClassName(schoolName, className);
+				new Actions(Driver.webdriver).moveToElement(homePage.overviewtext).build().perform();
+				new Actions(Driver.webdriver).moveToElement(homePage.studentnameoncontextheader).build().perform();
+				studentTextonCH=homePage.studentnameoncontextheadertooltiptext.getText();
+				studentId=Integer.parseInt(studentTextonCH.substring(studentTextonCH.indexOf("(")+1, studentTextonCH.indexOf(" )")));
+				
+				if (enabledRightArrowFound) {
+					int lastStrandIndex = homePage.strandnameslist.size() - 1;
+					new Actions(Driver.webdriver).moveToElement(homePage.strandnameslist.get(lastStrandIndex)).click().build()
+							.perform();
+					Thread.sleep(3000);
+					standardList = Driver.webdriver.findElements(By.xpath(
+							"//div[@class='overview-table-body']//div[@class='overview-table-row']//div[@class='overview-table-col']["
+									+ (lastStrandIndex + 2) + "]//li[not(contains(@class,'StandardsNotAvailable'))]"));
+					if (homePage.strandnameslist.get(lastStrandIndex).getText().contains("...")) {
+						strandName = homePage.strandnamestooltip.getText();
+					} else {
+						strandName = homePage.strandnameslist.get(lastStrandIndex).getText();
+					}
+					lm=DatabaseConnection.getStandardAvgPerListInStudentContext(Hooks.conn, schoolId, classId,
+							strandName,studentId);	
+					Iterator<Model> iterator = lm.iterator();
+					int standardIndex = 0;
+					while (iterator.hasNext()) {
+						Model m = (Model)iterator.next();
+						Assert.assertTrue(m.getStandard_shortvalue().equals(standardList.get(standardIndex).getText()));
+						standardIndex++;	
+					}
+					new Actions(Driver.webdriver).moveToElement(homePage.overviewtext).build().perform();
+					Thread.sleep(1000);
+				} else {
+					for (int strandIndex = 0; strandIndex < homePage.strandnameslist.size(); strandIndex++) {
+						new Actions(Driver.webdriver).moveToElement(homePage.strandnameslist.get(strandIndex)).click().build()
+								.perform();
+						Thread.sleep(3000);
+						standardList = Driver.webdriver.findElements(By.xpath(
+								"//div[@class='overview-table-body']//div[@class='overview-table-row']//div[@class='overview-table-col']["
+										+ (strandIndex + 2) + "]//li[not(contains(@class,'StandardsNotAvailable'))]"));
+						if (homePage.strandnameslist.get(strandIndex).getText().contains("...")) {
+							strandName = homePage.strandnamestooltip.getText();
+						} else {
+							strandName = homePage.strandnameslist.get(strandIndex).getText();
+						}
+						lm=DatabaseConnection.getStandardAvgPerListInStudentContext(Hooks.conn, schoolId, classId,
+								strandName,studentId);					
+						Iterator<Model> iterator = lm.iterator();
+						
+						int standardIndex = 0;
+						while (iterator.hasNext()) {
+							Model m = (Model)iterator.next();
+							Assert.assertTrue(m.getStandard_shortvalue().equals(standardList.get(standardIndex).getText()));
+							standardIndex++;
+						}
+						new Actions(Driver.webdriver).moveToElement(homePage.overviewtext).build().perform();
+						Thread.sleep(1000);
+					}
+				}
+				try {
+					rightArrowEnable = homePage.enabledrightarrow;
+					rightArrowEnable.isEnabled();
+					enabledRightArrowFound = true;
+					rightArrowEnable.click();
+					Thread.sleep(500);
+				} catch (Exception e) {
+					enabledRightArrowFound = false;
+				}
+
+			} while (enabledRightArrowFound);
+			CBTConfiguration.score = "pass";
+
+		} catch (Exception e) {
+			UtilityMethods.processException(e);
+		}
+		log.info("Scenario 36_5 completed");
+	}
 	
 	/**
 	 * This method is used to verify the x-axis Strands names in alphabetical order
