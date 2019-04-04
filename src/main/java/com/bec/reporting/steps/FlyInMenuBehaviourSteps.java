@@ -74,7 +74,7 @@ public class FlyInMenuBehaviourSteps {
 			select.selectByVisibleText(usertype);
 			Thread.sleep(2000);
 			homePage.loginbtn.click();
-			Thread.sleep(2000);
+			Thread.sleep(5000);
 			IWait.explicit_wait(Driver.webdriver, homePage.overviewtext);					
 			Assert.assertTrue("User is on SSO portal's home screen", homePage.overviewtext.isDisplayed());
 		} catch (Exception e) {
@@ -186,22 +186,46 @@ public class FlyInMenuBehaviourSteps {
 		try {
 			// selecting school from dropdown
 			homePage.schooldropdownbtn.click();
+			UtilityMethods.scrollPageDown(Driver.webdriver, 3);
 			WebElement selectSchool = Driver.webdriver.findElement(By.xpath(
 					"//div[@class='menu-title' and contains(text(),'School')]/following-sibling::div//div[@class='menu-dropdown-list-inr']/ul//li[contains(text(),'"
 							+ school + "')]"));
 			IWait.explicit_wait(Driver.webdriver, selectSchool);
 			selectSchool.click();
 			String schoolName = homePage.schooldropdownbtn.getText();
-			Thread.sleep(1000);
+			Thread.sleep(500);
+			Assert.assertTrue(homePage.classRefreshIcon.isDisplayed());
+			int count = 1;
+			try {
+				do {
+					log.info("Thread sleep called for class Loading :" + count +" Times");
+					Thread.sleep(2000);
+					count++;
+				} while (homePage.classRefreshIcon.isDisplayed());
+			} catch (Exception e) {
+				log.info("Class Refresh Icon Display off");
+				count = 1;
+			}
 			// selecting class from dropdown
 			homePage.classdropdownbtn.click();
+			UtilityMethods.scrollPageDown(Driver.webdriver, 3);
 			WebElement selectClass = Driver.webdriver.findElement(By.xpath(
 					"//div[@class='menu-title' and contains(text(),'Class')]/following-sibling::div//div[@class='menu-dropdown-list-inr']/ul//li[contains(text(),'"
 							+ classNm + "')]"));
 			IWait.explicit_wait(Driver.webdriver, selectClass);		
 			selectClass.click();			
 			String className = homePage.classdropdownbtn.getText();
-			Thread.sleep(1000);
+			Thread.sleep(500);
+			Assert.assertTrue(homePage.studentRefreshIcon.isDisplayed());
+			try {
+				do {
+					log.info("Thread sleep called for Student Loading :" + count +" Times");
+					Thread.sleep(2000);
+					count++;
+				} while (homePage.studentRefreshIcon.isDisplayed());
+			} catch (Exception e) {
+				log.info("Student Refresh Icon Display off");
+			}
 			// selecting student from dropdown
 			homePage.studentdropdownbtn.click();
 			WebElement selectStudent = Driver.webdriver.findElement(By.xpath(
@@ -278,27 +302,30 @@ public class FlyInMenuBehaviourSteps {
 	@Then("^User should be able to select \"([^\"]*)\" Test and click on apply filter button$")
 	public void user_should_be_able_to_select_Test_and_click_on_apply_filter_button(String testType) throws Throwable {
 		try {
-			String selectedTest;
-			int count = 0, selectcheckbox = 0;
-			count = homePage.testscheckboxlist.size();
-			selectcheckbox = (int) (Math.random() * count);
+			String selectedTestName;
+			int testCheckBoxListSize = 0, randomNumber = 0;
+			testCheckBoxListSize = homePage.testscheckboxlist.size();
+			randomNumber = (int) (Math.random() * testCheckBoxListSize);
 			homePage.allcheckbox.click();
 			Thread.sleep(500);
 			switch (testType) {
 			case "single":
-				homePage.testscheckboxlist.get(selectcheckbox).click();
-				selectedTest=homePage.testnameslist.get(selectcheckbox).getText();
+				UtilityMethods.scrollPageDown(Driver.webdriver, randomNumber+1);
+				homePage.testscheckboxlist.get(randomNumber).click();
+				selectedTestName=homePage.testnameslist.get(randomNumber).getText();
+				Thread.sleep(500);				
+				new Actions(Driver.webdriver).moveToElement(homePage.testapplybtn).build().perform();
+				UtilityMethods.scrollPageDown(Driver.webdriver, 10);
 				Thread.sleep(500);
 				homePage.testapplybtn.click();
-				Thread.sleep(500);
-				UtilityMethods.scrollPageUp(Driver.webdriver);
-				Thread.sleep(500);
-				Assert.assertTrue(selectedTest.contains(UtilityMethods.elipsisRemoval(homePage.nooftestoncontextheader.getText())));
+				new Actions(Driver.webdriver).moveToElement(homePage.nooftestoncontextheader).build().perform();
+				Assert.assertTrue(selectedTestName.equals(homePage.tooltipoftestnameoncontextheader.getText()));
 				break;
 			case "multiple":
 				int noOfSelectedTest=0;
-				for (int i = 0; i < count; i = i + 2) {
+				for (int i = 0; i < testCheckBoxListSize; i = i + 2) {
 					homePage.testscheckboxlist.get(i).click();
+					UtilityMethods.scrollPageDown(Driver.webdriver, i + 2);
 					Thread.sleep(500);
 					noOfSelectedTest++;
 				}
@@ -311,7 +338,7 @@ public class FlyInMenuBehaviourSteps {
 			default:
 				/**
 				 * This block can not be executed ,earlier we keep this clicking on all checkbox and then apply filter but now
-				 * if by default all checkbox are selected then no apply button is enable.
+				 * if by default all checkbox are selected then apply button is  not enable.
 				 */
 				//Default end here
 				break;
@@ -330,6 +357,7 @@ public class FlyInMenuBehaviourSteps {
 	@Then("^User should be able to click on cancel button to close the Test Tab\\.$")
 	public void user_should_be_able_to_click_on_cancel_button_to_close_the_Test_Tab() throws Throwable {
 		try {
+			UtilityMethods.scrollPageDown(Driver.webdriver, 11);
 			homePage.testcancelbtn.click();
 			Thread.sleep(500);
 			UtilityMethods.scrollPageUp(Driver.webdriver);

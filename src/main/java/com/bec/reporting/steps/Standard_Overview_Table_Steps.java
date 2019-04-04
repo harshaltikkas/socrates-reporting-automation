@@ -36,6 +36,7 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.PageFactory;
 import com.bec.reporting.pageobjects.HomePage;
 import com.bec.reporting.utils.CBTConfiguration;
+import com.bec.reporting.utils.ConnectionPool;
 import com.bec.reporting.utils.DatabaseConnection;
 import com.bec.reporting.utils.Driver;
 import com.bec.reporting.utils.Model;
@@ -54,7 +55,7 @@ public class Standard_Overview_Table_Steps {
 	HomePage homePage = PageFactory.initElements(Driver.webdriver, HomePage.class);
 	static boolean performanceMenuClicked = false;
 	static String headerOnToolTip, subHeaderOnToolTip;
-
+	public static String token;
 	/**
 	 * This method is used to click on standard performance tab in class context
 	 * 
@@ -62,7 +63,7 @@ public class Standard_Overview_Table_Steps {
 	 */
 	@When("^User Click on Standard Performance tab within the Class Context$")
 	public void user_Click_on_Standard_Performance_tab_within_the_Class_Context() throws Throwable {
-		try {
+		try {			
 			Thread.sleep(10000);
 			homePage.classmenu.click();
 			Thread.sleep(500);
@@ -216,6 +217,7 @@ public class Standard_Overview_Table_Steps {
 	public void click_the_standard_and_verify_The_colour_should_be_changed_to_that_of_the_achievement_level_where_that_standard_is_present()
 			throws Throwable {
 		try {
+			token=DatabaseConnection.getToken();
 			WebElement rightArrowEnable = null;
 			boolean enabledRightArrowFound = false;
 			String schoolName, className, strandName;
@@ -244,7 +246,7 @@ public class Standard_Overview_Table_Steps {
 					} else {
 						strandName = homePage.strandnameslist.get(lastStrandIndex).getText();
 					}
-					lm=DatabaseConnection.getStandardAvgPerListInClassContext(Hooks.conn, schoolId, classId,
+					lm=DatabaseConnection.getStandardAvgPerListInClassContext(ConnectionPool.getDBConnection(), schoolId, classId,
 							strandName);
 
 					Iterator<Model> iterator = lm.iterator();
@@ -286,7 +288,7 @@ public class Standard_Overview_Table_Steps {
 						} else {
 							strandName = homePage.strandnameslist.get(strandIndex).getText();
 						}
-						lm=DatabaseConnection.getStandardAvgPerListInClassContext(Hooks.conn, schoolId, classId,
+						lm=DatabaseConnection.getStandardAvgPerListInClassContext(ConnectionPool.getDBConnection(), schoolId, classId,
 								strandName);					
 						Iterator<Model> iterator = lm.iterator();
 						
@@ -374,7 +376,7 @@ public class Standard_Overview_Table_Steps {
 					} else {
 						strandName = homePage.strandnameslist.get(lastStrandIndex).getText();
 					}
-					lm=DatabaseConnection.getStandardAvgPerListInStudentContext(Hooks.conn, schoolId, classId,
+					lm=DatabaseConnection.getStandardAvgPerListInStudentContext(ConnectionPool.getDBConnection(), schoolId, classId,
 							strandName,studentId);	
 					Iterator<Model> iterator = lm.iterator();
 					int standardIndex = 0;
@@ -398,7 +400,7 @@ public class Standard_Overview_Table_Steps {
 						} else {
 							strandName = homePage.strandnameslist.get(strandIndex).getText();
 						}
-						lm=DatabaseConnection.getStandardAvgPerListInStudentContext(Hooks.conn, schoolId, classId,
+						lm=DatabaseConnection.getStandardAvgPerListInStudentContext(ConnectionPool.getDBConnection(), schoolId, classId,
 								strandName,studentId);					
 						Iterator<Model> iterator = lm.iterator();
 						
@@ -652,6 +654,26 @@ public class Standard_Overview_Table_Steps {
 			UtilityMethods.processException(e);
 		}
 	}
+	
+
+	/** 
+	 * This method is used to verify the first alpha last name student based on class and student selection  
+	 * @throws Throwable
+	 */
+	@Then("^first alphabetical student is the one picked when the teacher hits the student button$")
+	public void first_alphabetical_student_is_the_one_picked_when_the_teacher_hits_the_student_button()
+			throws Throwable {
+		try {
+			new Actions(Driver.webdriver).moveToElement(homePage.studentnameoncontextheader).build().perform();
+			String studentNameonUI=homePage.studentnameoncontextheadertooltiptext.getText();
+			Assert.assertTrue(DatabaseConnection.getFirstAlphaLastNameStudentByAlphaClassAndSchoolName().equals(studentNameonUI));
+			CBTConfiguration.score = "pass";
+		} catch (Exception e) {
+			UtilityMethods.processException(e);
+		}
+		log.info("Scenario 37_5 completed");
+	}
+
 
 	/**
 	 * This method is used to verify the performance over time minimize and maximize
@@ -1276,7 +1298,6 @@ public class Standard_Overview_Table_Steps {
 	@Then("^Verify the right most column header should be 'Score'$")
 	public void verify_the_right_most_column_header_should_be_Score() throws Throwable {
 		try {
-			// DB
 			int score = 0;
 			boolean doneWithThreeCircle = false, disableRightArrowFound = false, enabledRightArrowFound = false,
 					paginatorFound = false;

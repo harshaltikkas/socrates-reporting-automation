@@ -34,6 +34,12 @@ public class HomePage {
 	 *This saction contains page object/webelemet of Universal Selector 
 	 */
 	
+	@FindBy(xpath="//div[@class='menu-title' and contains(text(),'Class')]/span[@class='data-refresh']//i[@class='material-icons' and contains(text(),'autorenew')]")
+	public WebElement classRefreshIcon;
+	
+	@FindBy(xpath="//div[@class='menu-title' and contains(text(),'Student')]/span[@class='data-refresh']//i[@class='material-icons' and contains(text(),'autorenew')]")
+	public WebElement studentRefreshIcon;
+	
 	@FindBy(xpath="//input[@name='username']")
 	public WebElement username;
 	
@@ -76,8 +82,14 @@ public class HomePage {
 	@FindBy(xpath="//div[@class='menu-title' and contains(text(),'School')]/following-sibling::div/button")
 	public WebElement schooldropdownbtn;
 	
+	@FindBy(xpath="//div[@class='menu-title' and contains(text(),'School')]/following-sibling::div/button//div[@class='bec_tooltip_content']")
+	public WebElement schooldropdownbtntooltip;
+	
 	@FindBy(xpath="//div[@class='menu-title' and contains(text(),'Class')]/following-sibling::div/button")
 	public WebElement classdropdownbtn;
+	
+	@FindBy(xpath="//div[@class='menu-title' and contains(text(),'Class')]/following-sibling::div/button//div[@class='bec_tooltip_content']")
+	public WebElement classdropdownbtntooltip;
 	
 	@FindBy(xpath="//div[@class='menu-title' and contains(text(),'Student')]/following-sibling::div/button")
 	public WebElement studentdropdownbtn;
@@ -135,6 +147,9 @@ public class HomePage {
 	
 	@FindBy(xpath="//div[@class='menu-title' and contains(text(),'Class')]/following-sibling::div//div[@class='menu-dropdown-list-inr']/ul//li")
 	public List<WebElement> classlist;
+	
+	@FindBy(xpath="//div[@class='menu-title' and contains(text(),'Class')]/following-sibling::div//div[@class='menu-dropdown-list-inr']/ul//div[contains(@style,'position: relative; display: block; width: 100%; cursor: pointer; border-radius: inherit; background-color: rgba(0, 0, 0, 0.2); height: 139px; transform: translateY(0px);')]")
+	public WebElement classlistScroll;
 	
 	@FindBy(xpath="//div[@class='menu-title' and contains(text(),'Student')]/following-sibling::div//div[@class='menu-dropdown-list-inr']//ul//div/li")
 	public List<WebElement> studentlistondropdown;
@@ -271,6 +286,9 @@ public class HomePage {
 	
 	@FindBy(xpath="//div[@class='context-header-main']//span[contains(text(),'Student:')]/following-sibling::span//div[@class='bec_tooltip_content']")
 	public WebElement studentnameoncontextheadertooltiptext;
+	
+	@FindBy(xpath="//div[@class='context-header-main']//span[contains(text(),'Tests:')]/following-sibling::span//div[@class='bec_tooltip_content']")
+	public WebElement tooltipoftestnameoncontextheader;
 	
 	@FindBy(xpath="//div[@class='context-header-main']//span[contains(text(),'Tests:')]/following-sibling::span")
 	public WebElement nooftestoncontextheader;
