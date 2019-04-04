@@ -27,12 +27,8 @@ package com.bec.reporting.steps;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Properties;
-
-import com.bec.reporting.utils.ConnectionPool;
-import com.bec.reporting.utils.DatabaseConnection;
 import com.bec.reporting.utils.Driver;
 import com.bec.reporting.utils.FileRead;
 import com.bec.reporting.utils.Reporter;
@@ -45,8 +41,6 @@ import lombok.extern.slf4j.Slf4j;
 public class Hooks {
 
 	public static String reportBrowser;
-	public static Connection conn;
-	public static String token ;
 
 	/**
 	 * This is pre scenario executing method to launch the browser 
@@ -59,8 +53,8 @@ public class Hooks {
 			/**
 			 * Initializing DB details and required Data from DB and API
 			 */
-			token=DatabaseConnection.getToken();
-			conn=ConnectionPool.getDBConnection();
+			/**/
+			
 			log.info(
 					"***********************************************************************************************************");
 			String browser;
@@ -95,7 +89,6 @@ public class Hooks {
 		if (scenario.isFailed()) {
 			Driver.embedScreenshot(scenario);
 		}
-		conn.close();
 	}
 
 }

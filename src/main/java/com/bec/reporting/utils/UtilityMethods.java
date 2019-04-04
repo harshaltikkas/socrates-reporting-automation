@@ -40,7 +40,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class UtilityMethods {
-
+	static int ctr = 0;
 	/**
 	 * This method is used to scroll to element using mousehover
 	 * 
@@ -191,7 +191,8 @@ public class UtilityMethods {
 	}
 
 	/**
-	 * This method is used to verify the date format is MM/dd/YYYY using reguler expression
+	 * This method is used to verify the date format is MM/dd/YYYY using reguler
+	 * expression
 	 * 
 	 * @param submissionDate
 	 */
@@ -206,14 +207,16 @@ public class UtilityMethods {
 		}
 	}
 
-	/*public static void printDateTime() {
-		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-		Date date = new Date();
-		System.out.println(formatter.format(date));
-	}*/
+	/*
+	 * public static void printDateTime() { SimpleDateFormat formatter = new
+	 * SimpleDateFormat("dd/MM/yyyy HH:mm:ss"); Date date = new Date();
+	 * System.out.println(formatter.format(date)); }
+	 */
 
 	/**
-	 * This method is used to Veriy the Colour of the Standards records belong to that average percentage
+	 * This method is used to Veriy the Colour of the Standards records belong to
+	 * that average percentage
+	 * 
 	 * @param element
 	 * @param avgPer
 	 * @return
@@ -238,6 +241,7 @@ public class UtilityMethods {
 
 	/**
 	 * This method is to verify the two List are reverse to each other.
+	 * 
 	 * @param a
 	 * @param b
 	 * @return
@@ -253,28 +257,83 @@ public class UtilityMethods {
 	}
 
 	/**
-	 * This is recursive method used to search,on focus & click for the specific element till page end,if element found return true 
+	 * This is recursive method used to search,on focus & click for the specific
+	 * element till page end,if element found return true
+	 * 
 	 * @param standardList
 	 * @return
 	 */
-	public static boolean searchandClickonELement(WebElement standardList,Model m,int standardIndex,String cat,String subcat,String desc,int strandIndex) {
-		try {									
+	public static boolean searchandClickonELement(WebElement standardList, Model m, int standardIndex, String cat,
+			String subcat, String desc, int strandIndex) {
+		try {
 			new Actions(Driver.webdriver)
 					.moveToElement(Driver.webdriver.findElement(By.xpath("//li[contains(text(),'Overview')]"))).build()
 					.perform();
 			standardList.click();
-			cat=Driver.webdriver.findElements(By.xpath("//div[@class='overview-table-body']//div[@class='overview-table-row']//div[@class='overview-table-col']["+(strandIndex+2)+"]//li[not(contains(@class,'StandardsNotAvailable'))]//span[@class='strand_Definition']")).get(standardIndex).getText();								
-			subcat=Driver.webdriver.findElements(By.xpath("//div[@class='overview-table-body']//div[@class='overview-table-row']//div[@class='overview-table-col']["+(strandIndex+2)+"]//li[not(contains(@class,'StandardsNotAvailable'))]//span[@class='standard_sub_Definition']")).get(standardIndex).getText();
-			desc=Driver.webdriver.findElements(By.xpath("//div[@class='overview-table-body']//div[@class='overview-table-row']//div[@class='overview-table-col']["+(strandIndex+2)+"]//li[not(contains(@class,'StandardsNotAvailable'))]//span[@class='strand_Description']")).get(standardIndex).getText();
-		
+			cat = Driver.webdriver.findElements(By.xpath(
+					"//div[@class='overview-table-body']//div[@class='overview-table-row']//div[@class='overview-table-col']["
+							+ (strandIndex + 2)
+							+ "]//li[not(contains(@class,'StandardsNotAvailable'))]//span[@class='strand_Definition']"))
+					.get(standardIndex).getText();
+			subcat = Driver.webdriver.findElements(By.xpath(
+					"//div[@class='overview-table-body']//div[@class='overview-table-row']//div[@class='overview-table-col']["
+							+ (strandIndex + 2)
+							+ "]//li[not(contains(@class,'StandardsNotAvailable'))]//span[@class='standard_sub_Definition']"))
+					.get(standardIndex).getText();
+			desc = Driver.webdriver.findElements(By.xpath(
+					"//div[@class='overview-table-body']//div[@class='overview-table-row']//div[@class='overview-table-col']["
+							+ (strandIndex + 2)
+							+ "]//li[not(contains(@class,'StandardsNotAvailable'))]//span[@class='strand_Description']"))
+					.get(standardIndex).getText();
+
 			Assert.assertTrue(cat.equals(m.getStandard_category()));
 			Assert.assertTrue(subcat.equals(m.getStandard_subcategory()));
 			Assert.assertTrue(desc.equals(m.getStandard_description()));
 		} catch (Exception e) {
 			UtilityMethods.scrollPageDown(Driver.webdriver, 1);
-			searchandClickonELement(standardList,m,standardIndex,cat,subcat,desc,strandIndex);
+			searchandClickonELement(standardList, m, standardIndex, cat, subcat, desc, strandIndex);
 		}
 		return true;
 	}
 	
+	/**
+	 * This method is used to skip the specific index position while generating random number
+	 * @param numberLength
+	 * @return
+	 */
+	public static int generateRandomNumberBySkippingIndex(int numberLength) {
+		int skipIndex = 7; // Number to exclude
+		int number = (int) (Math.random() * numberLength);
+		while (number == skipIndex) {
+			number = (int) (Math.random() * numberLength);
+		}
+		return number;
+	}
+
+	
+	/**
+	 * This method is used to scroll down the div(vertical scroll bar) in Student,class and student Dropdown
+	 * @param webelement
+	 * @param scrollPoints
+	 * @return
+	 */
+	public static boolean scroll_Div(WebElement webelement, int scrollPoints) {
+		try {
+			Actions dragger = new Actions(Driver.webdriver);
+			if (ctr >= 1) {
+				scrollPageDown(Driver.webdriver, 2);
+			}
+			ctr++;
+			dragger.moveToElement(webelement).clickAndHold().moveByOffset(0, scrollPoints).build().perform();
+			Thread.sleep(500);
+			if(webelement.getText().equals("")) {
+				scroll_Div(webelement, scrollPoints);
+			}			
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+		ctr=0;
+		return true;
+	}
 }
