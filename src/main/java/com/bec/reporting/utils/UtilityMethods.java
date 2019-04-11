@@ -25,10 +25,15 @@
  */
 package com.bec.reporting.utils;
 
+import java.sql.Connection;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
@@ -36,6 +41,10 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.PageFactory;
+
+import com.bec.reporting.pageobjects.HomePage;
+
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -63,6 +72,19 @@ public class UtilityMethods {
 		builder.sendKeys(Keys.PAGE_UP).build().perform();
 	}
 
+	
+
+	public static void scrollPageUp(WebDriver driver,int count) {
+		Actions builder = new Actions(driver);
+		for (int i = 0; i < count; i++) {
+			builder.sendKeys(Keys.ARROW_UP).build().perform();
+			try {
+				Thread.sleep(500);
+			} catch (Exception e) {
+			}
+		}
+	}
+	
 	/**
 	 * This method used to arrow down till the no. of count
 	 * 
@@ -264,7 +286,7 @@ public class UtilityMethods {
 	 * @return
 	 */
 	public static boolean searchandClickonELement(WebElement standardList, Model m, int standardIndex, String cat,
-			String subcat, String desc, int strandIndex) {
+			String subcat, String desc, int strandIndex,Connection conn,String standardId,int schoolId,int classId) {
 		try {
 			new Actions(Driver.webdriver)
 					.moveToElement(Driver.webdriver.findElement(By.xpath("//li[contains(text(),'Overview')]"))).build()
@@ -289,9 +311,11 @@ public class UtilityMethods {
 			Assert.assertTrue(cat.equals(m.getStandard_category()));
 			Assert.assertTrue(subcat.equals(m.getStandard_subcategory()));
 			Assert.assertTrue(desc.equals(m.getStandard_description()));
+			//code here
+			Assert.assertTrue(UtilityMethods.VerifyTestScore(conn,standardId,schoolId,classId));
 		} catch (Exception e) {
 			UtilityMethods.scrollPageDown(Driver.webdriver, 1);
-			searchandClickonELement(standardList, m, standardIndex, cat, subcat, desc, strandIndex);
+				searchandClickonELement(standardList, m, standardIndex, cat, subcat, desc, strandIndex,conn,standardId,schoolId, classId);
 		}
 		return true;
 	}
@@ -336,4 +360,66 @@ public class UtilityMethods {
 		ctr=0;
 		return true;
 	}
+	
+	public static boolean VerifyTestScore(Connection con,String standardId,Integer schoolId,Integer classId) {
+		try {
+			String tooltipText = "Note: Average Score for all standards reports equals (earned points/total points)*100";
+			HomePage homePage = PageFactory.initElements(Driver.webdriver, HomePage.class);
+			UtilityMethods.scrollPageUp(Driver.webdriver);
+			Thread.sleep(1000);
+			new Actions(Driver.webdriver).moveToElement(homePage.performanceovrtimeicon).click().build().perform();
+			Thread.sleep(2000);
+			new Actions(Driver.webdriver).moveToElement(homePage.xaxistexton_linechart).build().perform();
+			Thread.sleep(1000);
+			List<String> testNamesList=new ArrayList<>();
+			int avgPerOnSubHeading=0,totalQuestionCount=0,tsum=0,TestCount=0;
+			
+			for (int i = 0; i < homePage.testNamesonPerPage_onlinechart.size(); i++) {
+				new Actions(Driver.webdriver).moveToElement(homePage.testNamesonPerPage_onlinechart.get(i)).build().perform();
+				testNamesList.add(homePage.testNametooltip_onlinechart.getText());
+				Thread.sleep(500);
+				new Actions(Driver.webdriver).moveToElement(homePage.xaxistexton_linechart).build().perform();
+			}
+			UtilityMethods.scrollPageUp(Driver.webdriver,3);
+			List<Model> lm=new ArrayList<>();
+			for (int j = 0; j < testNamesList.size(); j++) {
+				lm = DatabaseConnection.getTestScoreDetailsInClassContext(con, schoolId, classId, testNamesList.get(j),
+						standardId);
+				Iterator<Model> iterator = lm.iterator();
+				while (iterator.hasNext()) {
+					TestCount++;
+					Model m = (Model) iterator.next();
+					tsum+=m.getAvg_per();
+					Assert.assertTrue(testNamesList.get(j).contains(m.getComponent_title()));
+					Assert.assertTrue(homePage.testScoreValueInCircle_onlinechart.get(j).getText()
+							.equals(String.valueOf(m.getAvg_per())));
+					Thread.sleep(1000);
+					new Actions(Driver.webdriver).moveToElement(homePage.testScoreValueInCircle_onlinechart.get(j)).click().build().perform();
+					Thread.sleep(2500);
+					Assert.assertTrue(homePage.testnameontooltip.getText().equals(m.getComponent_title()));
+					for (int i = 0; i < homePage.questionlistontooltip.size(); i++) {
+						Assert.assertTrue(homePage.questionlistontooltip.get(i).getText().equals(String.valueOf(m.getQuestion_no().get(i))));
+						totalQuestionCount++;
+					}
+					String submittedDateText = homePage.submitteddateontooltip.getText();
+					Assert.assertTrue(new SimpleDateFormat("MM/dd/yyyy").format(m.getMinDate()).equals(submittedDateText.substring(12, 22)));
+					Assert.assertTrue(new SimpleDateFormat("MM/dd/yyyy").format(m.getMaxDate()).equals(submittedDateText.substring(24)));
+					new Actions(Driver.webdriver).moveToElement(homePage.testscoreovertimetext).click().build().perform();
+					Thread.sleep(1000);
+				}
+			}
+			new Actions(Driver.webdriver).moveToElement(homePage.infoicononperformanceovrtimeheader).click().build().perform();
+			Thread.sleep(1000);
+			Assert.assertTrue(homePage.tooltip.getText().equals(tooltipText));
+			new Actions(Driver.webdriver).moveToElement(homePage.defaultstrandnameinpotchart).click().build().perform();
+			avgPerOnSubHeading=(tsum/TestCount);
+			WebElement avgInfo=Driver.webdriver.findElement(By.xpath("//span[.='Average Score: "+avgPerOnSubHeading+"% based on "+totalQuestionCount+" questions']"));
+			Assert.assertTrue(avgInfo.isDisplayed());
+		} catch (Exception e) {
+			processException(e);
+			return false;
+		}		
+		return true;
+	}
+
 }
