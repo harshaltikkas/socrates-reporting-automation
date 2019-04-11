@@ -141,7 +141,7 @@ public class Line_Chart_Test_Scores_vs_Time_Steps {
 								testName = UtilityMethods
 										.elipsisRemoval(homePage.testNamesonPerPage_onlinechart.get(j).getText());
 								action.moveToElement(homePage.testNamesonPerPage_onlinechart.get(j)).build().perform();
-								tooltiptext = homePage.tooltip_onlinechart.getText();
+								tooltiptext = homePage.testNametooltip_onlinechart.getText();
 								Assert.assertTrue(tooltiptext.contains(testName));
 								Thread.sleep(500);
 								action.moveToElement(homePage.overviewtext).build().perform();
@@ -162,7 +162,7 @@ public class Line_Chart_Test_Scores_vs_Time_Steps {
 												homePage.testNamesonPerPage_onlinechart.get(j).getText());
 										action.moveToElement(homePage.testNamesonPerPage_onlinechart.get(j)).build()
 												.perform();
-										tooltiptext = homePage.tooltip_onlinechart.getText();
+										tooltiptext = homePage.testNametooltip_onlinechart.getText();
 										Assert.assertTrue(tooltiptext.contains(testName));
 										Thread.sleep(500);
 										action.moveToElement(homePage.overviewtext).build().perform();
@@ -190,7 +190,7 @@ public class Line_Chart_Test_Scores_vs_Time_Steps {
 								testName = UtilityMethods
 										.elipsisRemoval(homePage.testNamesonPerPage_onlinechart.get(j).getText());
 								action.moveToElement(homePage.testNamesonPerPage_onlinechart.get(j)).build().perform();
-								tooltiptext = homePage.tooltip_onlinechart.getText();
+								tooltiptext = homePage.testNametooltip_onlinechart.getText();
 								Assert.assertTrue(tooltiptext.contains(testName));
 								Thread.sleep(500);
 								action.moveToElement(homePage.overviewtext).build().perform();
@@ -205,7 +205,7 @@ public class Line_Chart_Test_Scores_vs_Time_Steps {
 				for (int i = testNamesSizeOnPerPage - 1; i >= 0; i--) {
 					testName = UtilityMethods.elipsisRemoval(homePage.testNamesonPerPage_onlinechart.get(i).getText());
 					action.moveToElement(homePage.testNamesonPerPage_onlinechart.get(i)).build().perform();
-					tooltiptext = homePage.tooltip_onlinechart.getText();
+					tooltiptext = homePage.testNametooltip_onlinechart.getText();
 					Assert.assertTrue(tooltiptext.contains(testName));
 					Thread.sleep(500);
 					action.moveToElement(homePage.overviewtext).build().perform();

@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.TreeMap;
-
 import com.bec.reporting.steps.Standard_Overview_Table_Steps;
 import com.google.common.base.Verify;
 import com.jayway.restassured.RestAssured;
@@ -265,6 +264,8 @@ public class DatabaseConnection {
 		//System.out.println(getClassIDBySchoolNameAndClassName("Church of England Primary School", "School V Trainer Class (PD)"));
 		//System.out.println(getAllStudentsByClassNameAndSchoolName("Church of England Primary School", "School V Trainer Class (PD)"));
 		//System.out.println(getFirstAlphaLastNameStudentByAlphaClassAndSchoolName());
+		//System.out.println(getStandardAvgPerListInClassContext(ConnectionPool.getDBConnection(), 509446, 1213286, "Language"));
+		System.out.println(getTestScoreDetailsInClassContext(ConnectionPool.getDBConnection(), 509446, 1213286, "Grade 4 Unit 1 Assessment", "CCSS.ELA-Literacy.L.4.2"));
 	}
 	
 	
@@ -287,7 +288,7 @@ public class DatabaseConnection {
 			while (rs.next()) {
 				strandlist.add(rs.getString(1));
 			}
-			con.close();
+			//con.close();
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}		
@@ -308,11 +309,11 @@ public class DatabaseConnection {
 		try {
 			Statement stmt = con.createStatement();
 			ResultSet rs = null;
-			String str="Select round(SUM(sd.score)/SUM(sd.max_score)*100) as avg_per,cscc.standard_shortvalue,cscc.standard_category,cscc.standard_subcategory,cscc.standard_description from  bec_edw_dev.bu_strand_details_vw sd inner join bec_edw_dev.content_standard_common_core cscc \r\n" + 
+			String str="Select round(SUM(sd.score)/SUM(sd.max_score)*100) as avg_per,cscc.standard_shortvalue,cscc.standard_category,cscc.standard_subcategory,cscc.standard_description, cscc.standard_id from  bec_edw_dev.bu_strand_details_vw sd inner join bec_edw_dev.content_standard_common_core cscc \r\n" + 
 					"on cscc.standard_id=sd.standard_id and " + 
 					"sd.component_title in (select distinct component_title from bec_edw_dev.bu_assessment_reporting_detail where bu_school_id="+schoolId+" and collective_noun_id="+classId+") and " + 
 					"sd.bu_school_id="+schoolId+" and sd.collective_noun_id="+classId+" and " + 
-					"sd.standard_id IN (select DISTINCT standard_id from bec_edw_dev.content_standard_common_core where standard_category='"+strandName+"') group by cscc.standard_shortvalue, cscc.standard_category,cscc.standard_subcategory,cscc.standard_description  order by avg_per desc";
+					"sd.standard_id IN (select DISTINCT standard_id from bec_edw_dev.content_standard_common_core where standard_category='"+strandName+"') group by cscc.standard_shortvalue, cscc.standard_category,cscc.standard_subcategory,cscc.standard_description,cscc.standard_id order by avg_per desc";
 			rs = stmt.executeQuery(str);
 			while (rs.next()) {
 				Model m=new Model();
@@ -321,9 +322,10 @@ public class DatabaseConnection {
 				m.setStandard_category(rs.getString(3));
 				m.setStandard_subcategory(rs.getString(2)+": "+rs.getString(4));
 				m.setStandard_description(rs.getString(5));
+				m.setStandard_id(rs.getString(6));
 				list.add(m);
 			}
-			con.close();
+			//con.close();
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
@@ -359,12 +361,57 @@ public class DatabaseConnection {
 				m.setStandard_description(rs.getString(5));
 				list.add(m);
 			}
-			con.close();
+			//con.close();
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
 		return list;
 	}
+	
+	/***
+	 * This method is used to return the avg score and component title on performance over time line chart in class context
+	 * @param con
+	 * @param schoolId
+	 * @param classId
+	 * @param component_title
+	 * @param standard_id
+	 * @return
+	 */
+	public static List<Model> getTestScoreDetailsInClassContext(Connection con,Integer schoolId,Integer classId,String component_title,String standard_id) {
+		List<Model> list=new ArrayList<Model>();
+		List<Integer> qList=new ArrayList<>(); 
+		try {
+			Statement stmt = con.createStatement();
+			ResultSet rs = null;
+			String questionStr = "select distinct question_no   from bec_edw_dev.bu_strand_details_vw  WHERE bu_school_id = "+schoolId+" " + 
+					"AND collective_noun_id = "+classId+" and component_title='"+component_title+"'  AND " + 
+					"standard_id='"+standard_id+"' order by question_no ";
+			rs = stmt.executeQuery(questionStr);
+			while(rs.next()) {
+				qList.add(rs.getInt(1));
+			}
+			String str="select component_title,round(SUM(score)/SUM(max_score)*100) as avg_per, min(updatedat),max(updatedat) from bec_edw_dev.bu_strand_details_vw  WHERE bu_school_id = "+schoolId+" " + 
+					"AND collective_noun_id = "+classId+" and component_title='"+component_title+"'  AND" + 
+					" standard_id='"+standard_id+"' group by component_title order by avg_per desc";
+			rs = stmt.executeQuery(str);
+			while (rs.next()) {
+				Model m=new Model();
+				m.setComponent_title(rs.getString(1));
+				m.setAvg_per(rs.getInt(2));
+				m.setMinDate(rs.getDate(3));
+				m.setMaxDate(rs.getDate(4));
+				m.setQuestion_no(qList);
+				list.add(m);
+			}
+				
+			//con.close();
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+		return list;
+	}
+	
+	
 }
 	
 

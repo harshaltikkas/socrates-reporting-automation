@@ -374,9 +374,6 @@ public class HomePage {
 	@FindBy(xpath="//div[@class='Test_names_label']")
 	public WebElement xaxistexton_linechart;
 	
-	@FindBy(xpath="//*[@class='vx-group vx-axis vx-axis-bottom']//*[name()='text']")
-	public List<WebElement> testnameslist_onlinechart;
-	
 	@FindBy(xpath="//div[@class='test-results-pagination']")
 	public WebElement paginator_onlinechart;
 	
@@ -393,7 +390,7 @@ public class HomePage {
 	public List<WebElement> testNamesonPerPage_onlinechart;
 	
 	@FindBy(xpath="//div[@class='graph_tooltip_content']")
-	public WebElement tooltip_onlinechart;
+	public WebElement testNametooltip_onlinechart;
 	
 	@FindBy(xpath="//div[@class='line_chart_graph']/following-sibling::div[@class='test-results-pagination']//ul[@class='page-circle-list']//span[@style]")
 	public WebElement disabledpaginationcircle_onlinechart;
@@ -461,7 +458,7 @@ public class HomePage {
 	@FindBy(xpath="//span[@class='infoIconBlock']")
 	public WebElement infoicononperformanceovrtimeheader;
 	
-	@FindBy(xpath="//span[@class='infoIconBlock']//div[@class='infoIconTooltipBlockInr']")
+	@FindBy(xpath="//div[@class='infoIconTooltipBlockInr']")
 	public WebElement tooltip;
 	
 	@FindBy(xpath="//div[@class='float-left widget-base-block-title text-center']/span")
