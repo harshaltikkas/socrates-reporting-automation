@@ -371,6 +371,7 @@ public class UtilityMethods {
 			Thread.sleep(2000);
 			new Actions(Driver.webdriver).moveToElement(homePage.xaxistexton_linechart).build().perform();
 			Thread.sleep(1000);
+			
 			List<String> testNamesList=new ArrayList<>();
 			int avgPerOnSubHeading=0,totalQuestionCount=0,tsum=0,TestCount=0;
 			
