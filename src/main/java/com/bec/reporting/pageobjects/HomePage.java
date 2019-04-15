@@ -602,4 +602,6 @@ public class HomePage {
 	@FindBy(xpath="//span[@class='student-list-col-head-name' and contains(text(),'Score')]/following-sibling::span//i[contains(text(),'expand_more')]")
 	public WebElement studentListscoredownarrow;
 
+	@FindBy(xpath="//div[@class='Test_names_label']")
+	public WebElement testNamesLabelOnLineChart;
 }
