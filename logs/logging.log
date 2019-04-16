@@ -21790,3 +21790,24 @@ Session ID: a24a7e6b9622ed5f048436a8c8479890
 2019-04-15 12:23:17 INFO  Hooks:58 - ***********************************************************************************************************
 2019-04-15 12:23:17 INFO  Hooks:67 -  Launch Browser: "chrome" on Environment:local
 2019-04-15 12:23:19 INFO  Driver:72 - Cleaning up the browser
+2019-04-16 14:26:37 INFO  Hooks:58 - ***********************************************************************************************************
+2019-04-16 14:26:37 INFO  Hooks:67 -  Launch Browser: "chrome" on Environment:local
+2019-04-16 14:26:37 INFO  Driver:161 - OS Windows 10
+2019-04-16 14:27:02 INFO  FlyInMenuBehaviourSteps:64 - User is on portal's login screen
+2019-04-16 14:27:46 INFO  DatabaseConnection:32 - Get Access token
+2019-04-16 14:27:55 WARN  RequestSpecificationImpl$RestAssuredHttpBuilder:534 - Could not parse content-type: Response does not have a content-type header
+2019-04-16 14:28:09 ERROR UtilityMethods:110 - no such element: Unable to locate element: {"method":"xpath","selector":"//div[@class='single-filter-text' and contains(text(),'Class')]/preceding-sibling::div"}
+  (Session info: chrome=73.0.3683.103)
+  (Driver info: chromedriver=73.0.3683.68 (47787ec04b6e38e22703e856e101e840b65afe72),platform=Windows NT 10.0.17134 x86_64) (WARNING: The server did not provide any stacktrace information)
+Command duration or timeout: 10.06 seconds
+For documentation on this error, please visit: http://seleniumhq.org/exceptions/no_such_element.html
+Build info: version: '3.4.0', revision: 'unknown', time: 'unknown'
+System info: host: 'HARSHALT-PC', ip: '10.0.75.1', os.name: 'Windows 10', os.arch: 'amd64', os.version: '10.0', java.version: '1.8.0_202'
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities [{mobileEmulationEnabled=false, timeouts={implicit=0.0, pageLoad=300000.0, script=30000.0}, hasTouchScreen=false, platform=XP, acceptSslCerts=false, goog:chromeOptions={debuggerAddress=localhost:53099}, acceptInsecureCerts=false, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, setWindowRect=true, unexpectedAlertBehaviour=ignore, applicationCacheEnabled=false, rotatable=false, networkConnectionEnabled=false, chrome={chromedriverVersion=73.0.3683.68 (47787ec04b6e38e22703e856e101e840b65afe72), userDataDir=C:\Users\htikkas\AppData\Local\Temp\scoped_dir1824_19824}, takesHeapSnapshot=true, pageLoadStrategy=normal, strictFileInteractability=false, databaseEnabled=false, handlesAlerts=true, version=73.0.3683.103, browserConnectionEnabled=false, proxy=Proxy(), nativeEvents=true, locationContextEnabled=true, cssSelectorsEnabled=true}]
+Session ID: 1d7f9f18cc1ee6d243cbbe0dfaea0892
+*** Element info: {Using=xpath, value=//div[@class='single-filter-text' and contains(text(),'Class')]/preceding-sibling::div}
+2019-04-16 14:28:09 INFO  Driver:270 - embedScreenshot
+2019-04-16 14:28:10 INFO  Hooks:58 - ***********************************************************************************************************
+2019-04-16 14:28:10 INFO  Hooks:67 -  Launch Browser: "chrome" on Environment:local
+2019-04-16 14:28:11 INFO  Driver:72 - Cleaning up the browser
