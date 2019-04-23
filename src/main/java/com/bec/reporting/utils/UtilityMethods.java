@@ -328,14 +328,14 @@ public class UtilityMethods {
 	 * @param numberLength
 	 * @return
 	 */
-	public static int generateRandomNumberBySkippingIndex(int numberLength) {
+	/*public static int generateRandomNumberBySkippingIndex(int numberLength) {
 		int skipIndex = 7; // Number to exclude
 		int number = (int) (Math.random() * numberLength);
 		while (number == skipIndex) {
 			number = (int) (Math.random() * numberLength);
 		}
 		return number;
-	}
+	}*/
 
 	/**
 	 * This method is used to scroll down the div(vertical scroll bar) in
@@ -365,6 +365,15 @@ public class UtilityMethods {
 		return true;
 	}
 
+	/**
+	 * This method is used to click on performance icon on line chart and verify on line chart test name,test score, questions
+	 * Submitted Date
+	 * @param con
+	 * @param standardId
+	 * @param schoolId
+	 * @param classId
+	 * @return
+	 */
 	public static boolean VerifyTestScore(Connection con, String standardId, Integer schoolId, Integer classId) {
 		try {
 			String tooltipText = "Note: Average Score for all standards reports equals (earned points/total points)*100";
@@ -421,7 +430,7 @@ public class UtilityMethods {
 							}
 							UtilityMethods.scrollPageUp(Driver.webdriver, 3);
 							for (int j = 0; j < testNamesList.size(); j++) {
-								lm = DatabaseConnection.getTestScoreDetailsInClassContext(con, schoolId, classId,
+								lm = DatabaseConnection.getTestScoreDetailsInSPInClassContext(con, schoolId, classId,
 										testNamesList.get(j), standardId);
 								Iterator<Model> iterator = lm.iterator();
 								while (iterator.hasNext()) {
@@ -470,7 +479,7 @@ public class UtilityMethods {
 								}
 								UtilityMethods.scrollPageUp(Driver.webdriver, 3);
 								for (int j = 0; j < testNamesList.size(); j++) {
-									lm = DatabaseConnection.getTestScoreDetailsInClassContext(con, schoolId, classId,
+									lm = DatabaseConnection.getTestScoreDetailsInSPInClassContext(con, schoolId, classId,
 											testNamesList.get(j), standardId);
 									Iterator<Model> iterator = lm.iterator();
 									while (iterator.hasNext()) {
@@ -530,7 +539,7 @@ public class UtilityMethods {
 						UtilityMethods.scrollPageUp(Driver.webdriver, 2);
 
 						for (int j = 0; j < testNamesList.size(); j++) {
-							lm = DatabaseConnection.getTestScoreDetailsInClassContext(con, schoolId, classId,
+							lm = DatabaseConnection.getTestScoreDetailsInSPInClassContext(con, schoolId, classId,
 									testNamesList.get(j), standardId);
 							Iterator<Model> iterator = lm.iterator();
 							while (iterator.hasNext()) {
@@ -578,7 +587,7 @@ public class UtilityMethods {
 				UtilityMethods.scrollPageUp(Driver.webdriver, 3);
 
 				for (int j = 0; j < testNamesList.size(); j++) {
-					lm = DatabaseConnection.getTestScoreDetailsInClassContext(con, schoolId, classId,
+					lm = DatabaseConnection.getTestScoreDetailsInSPInClassContext(con, schoolId, classId,
 							testNamesList.get(j), standardId);
 					Iterator<Model> iterator = lm.iterator();
 					while (iterator.hasNext()) {
@@ -619,6 +628,11 @@ public class UtilityMethods {
 			avgPerOnSubHeading = (tsum / TestCount);
 			WebElement avgInfo = Driver.webdriver.findElement(By.xpath("//span[.='Average Score: " + avgPerOnSubHeading
 					+ "% based on " + totalQuestionCount + " questions']"));
+			Assert.assertTrue(avgInfo.isDisplayed());
+			Thread.sleep(1000);
+			new Actions(Driver.webdriver).moveToElement(homePage.performanceovrtimeicon).click().build().perform();
+			Thread.sleep(2000);
+			//Verifying avg info on student list as well
 			Assert.assertTrue(avgInfo.isDisplayed());
 		} catch (Exception e) {
 			processException(e);

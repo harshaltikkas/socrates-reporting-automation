@@ -21811,3 +21811,629 @@ Session ID: 1d7f9f18cc1ee6d243cbbe0dfaea0892
 2019-04-16 14:28:10 INFO  Hooks:58 - ***********************************************************************************************************
 2019-04-16 14:28:10 INFO  Hooks:67 -  Launch Browser: "chrome" on Environment:local
 2019-04-16 14:28:11 INFO  Driver:72 - Cleaning up the browser
+2019-04-18 12:28:51 INFO  Hooks:58 - ***********************************************************************************************************
+2019-04-18 12:28:51 INFO  Hooks:67 -  Launch Browser: "chrome" on Environment:local
+2019-04-18 12:28:51 INFO  Driver:161 - OS Windows 10
+2019-04-18 12:29:13 INFO  FlyInMenuBehaviourSteps:64 - User is on portal's login screen
+2019-04-18 12:29:42 INFO  DatabaseConnection:34 - Get Access token
+2019-04-18 12:29:45 WARN  RequestSpecificationImpl$RestAssuredHttpBuilder:534 - Could not parse content-type: Response does not have a content-type header
+2019-04-18 12:32:01 ERROR UtilityMethods:110 - unknown error: Element <text x="-8" y="4" fill="#000" font-size="12" font-weight="500">...</text> is not clickable at point (1138, 7). Other element would receive the click: <ul class="m-0 context-header-for-class">...</ul>
+  (Session info: chrome=73.0.3683.103)
+  (Driver info: chromedriver=73.0.3683.68 (47787ec04b6e38e22703e856e101e840b65afe72),platform=Windows NT 10.0.17134 x86_64) (WARNING: The server did not provide any stacktrace information)
+Command duration or timeout: 70 milliseconds
+Build info: version: '3.4.0', revision: 'unknown', time: 'unknown'
+System info: host: 'HARSHALT-PC', ip: '10.0.75.1', os.name: 'Windows 10', os.arch: 'amd64', os.version: '10.0', java.version: '1.8.0_202'
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities [{mobileEmulationEnabled=false, timeouts={implicit=0.0, pageLoad=300000.0, script=30000.0}, hasTouchScreen=false, platform=XP, acceptSslCerts=false, goog:chromeOptions={debuggerAddress=localhost:57165}, acceptInsecureCerts=false, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, setWindowRect=true, unexpectedAlertBehaviour=ignore, applicationCacheEnabled=false, rotatable=false, networkConnectionEnabled=false, chrome={chromedriverVersion=73.0.3683.68 (47787ec04b6e38e22703e856e101e840b65afe72), userDataDir=C:\Users\htikkas\AppData\Local\Temp\scoped_dir15620_13090}, takesHeapSnapshot=true, pageLoadStrategy=normal, strictFileInteractability=false, databaseEnabled=false, handlesAlerts=true, version=73.0.3683.103, browserConnectionEnabled=false, proxy=Proxy(), nativeEvents=true, locationContextEnabled=true, cssSelectorsEnabled=true}]
+Session ID: 4a491b455ddf868581ed0923a72299d2
+2019-04-18 12:32:01 INFO  Driver:270 - embedScreenshot
+2019-04-18 12:32:03 INFO  Driver:72 - Cleaning up the browser
+2019-04-18 12:37:59 INFO  Hooks:58 - ***********************************************************************************************************
+2019-04-18 12:37:59 INFO  Hooks:67 -  Launch Browser: "chrome" on Environment:local
+2019-04-18 12:37:59 INFO  Driver:161 - OS Windows 10
+2019-04-18 12:38:09 INFO  FlyInMenuBehaviourSteps:64 - User is on portal's login screen
+2019-04-18 12:38:29 INFO  DatabaseConnection:34 - Get Access token
+2019-04-18 12:38:33 WARN  RequestSpecificationImpl$RestAssuredHttpBuilder:534 - Could not parse content-type: Response does not have a content-type header
+2019-04-18 12:41:59 ERROR UtilityMethods:110 - unknown error: Element <text x="-8" y="4" fill="#000" font-size="12" font-weight="500">...</text> is not clickable at point (1138, 7). Other element would receive the click: <ul class="m-0 context-header-for-class">...</ul>
+  (Session info: chrome=73.0.3683.103)
+  (Driver info: chromedriver=73.0.3683.68 (47787ec04b6e38e22703e856e101e840b65afe72),platform=Windows NT 10.0.17134 x86_64) (WARNING: The server did not provide any stacktrace information)
+Command duration or timeout: 80 milliseconds
+Build info: version: '3.4.0', revision: 'unknown', time: 'unknown'
+System info: host: 'HARSHALT-PC', ip: '10.0.75.1', os.name: 'Windows 10', os.arch: 'amd64', os.version: '10.0', java.version: '1.8.0_202'
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities [{mobileEmulationEnabled=false, timeouts={implicit=0.0, pageLoad=300000.0, script=30000.0}, hasTouchScreen=false, platform=XP, acceptSslCerts=false, goog:chromeOptions={debuggerAddress=localhost:57704}, acceptInsecureCerts=false, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, setWindowRect=true, unexpectedAlertBehaviour=ignore, applicationCacheEnabled=false, rotatable=false, networkConnectionEnabled=false, chrome={chromedriverVersion=73.0.3683.68 (47787ec04b6e38e22703e856e101e840b65afe72), userDataDir=C:\Users\htikkas\AppData\Local\Temp\scoped_dir15608_6931}, takesHeapSnapshot=true, pageLoadStrategy=normal, strictFileInteractability=false, databaseEnabled=false, handlesAlerts=true, version=73.0.3683.103, browserConnectionEnabled=false, proxy=Proxy(), nativeEvents=true, locationContextEnabled=true, cssSelectorsEnabled=true}]
+Session ID: e14678c72814125f83217c986296cffa
+2019-04-18 12:41:59 INFO  Driver:270 - embedScreenshot
+2019-04-18 12:42:01 INFO  Driver:72 - Cleaning up the browser
+2019-04-18 12:43:07 INFO  Hooks:58 - ***********************************************************************************************************
+2019-04-18 12:43:07 INFO  Hooks:67 -  Launch Browser: "chrome" on Environment:local
+2019-04-18 12:43:07 INFO  Driver:161 - OS Windows 10
+2019-04-18 12:43:13 INFO  FlyInMenuBehaviourSteps:64 - User is on portal's login screen
+2019-04-18 12:43:33 INFO  DatabaseConnection:34 - Get Access token
+2019-04-18 12:43:36 WARN  RequestSpecificationImpl$RestAssuredHttpBuilder:534 - Could not parse content-type: Response does not have a content-type header
+2019-04-18 15:05:26 INFO  Hooks:58 - ***********************************************************************************************************
+2019-04-18 15:05:26 INFO  Hooks:67 -  Launch Browser: "chrome" on Environment:local
+2019-04-18 15:05:26 INFO  Driver:161 - OS Windows 10
+2019-04-18 15:05:42 INFO  FlyInMenuBehaviourSteps:64 - User is on portal's login screen
+2019-04-18 15:06:05 INFO  DatabaseConnection:34 - Get Access token
+2019-04-18 15:06:11 WARN  RequestSpecificationImpl$RestAssuredHttpBuilder:534 - Could not parse content-type: Response does not have a content-type header
+2019-04-18 15:08:29 ERROR UtilityMethods:110 - unknown error: Element <text x="-8" y="4" fill="#000" font-size="12" font-weight="500">...</text> is not clickable at point (1138, 84). Other element would receive the click: <div class="widget-base-sub-title text-center">...</div>
+  (Session info: chrome=73.0.3683.103)
+  (Driver info: chromedriver=73.0.3683.68 (47787ec04b6e38e22703e856e101e840b65afe72),platform=Windows NT 10.0.17134 x86_64) (WARNING: The server did not provide any stacktrace information)
+Command duration or timeout: 82 milliseconds
+Build info: version: '3.4.0', revision: 'unknown', time: 'unknown'
+System info: host: 'HARSHALT-PC', ip: '10.0.75.1', os.name: 'Windows 10', os.arch: 'amd64', os.version: '10.0', java.version: '1.8.0_202'
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities [{mobileEmulationEnabled=false, timeouts={implicit=0.0, pageLoad=300000.0, script=30000.0}, hasTouchScreen=false, platform=XP, acceptSslCerts=false, goog:chromeOptions={debuggerAddress=localhost:62238}, acceptInsecureCerts=false, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, setWindowRect=true, unexpectedAlertBehaviour=ignore, applicationCacheEnabled=false, rotatable=false, networkConnectionEnabled=false, chrome={chromedriverVersion=73.0.3683.68 (47787ec04b6e38e22703e856e101e840b65afe72), userDataDir=C:\Users\htikkas\AppData\Local\Temp\scoped_dir11600_24409}, takesHeapSnapshot=true, pageLoadStrategy=normal, strictFileInteractability=false, databaseEnabled=false, handlesAlerts=true, version=73.0.3683.103, browserConnectionEnabled=false, proxy=Proxy(), nativeEvents=true, locationContextEnabled=true, cssSelectorsEnabled=true}]
+Session ID: 5c2cccfd66fe2f62b8bfb11c0975bb99
+2019-04-18 15:08:29 INFO  Driver:270 - embedScreenshot
+2019-04-18 15:08:34 INFO  Driver:72 - Cleaning up the browser
+2019-04-18 15:15:04 INFO  Hooks:58 - ***********************************************************************************************************
+2019-04-18 15:15:04 INFO  Hooks:67 -  Launch Browser: "chrome" on Environment:local
+2019-04-18 15:15:04 INFO  Driver:161 - OS Windows 10
+2019-04-18 15:15:12 INFO  FlyInMenuBehaviourSteps:64 - User is on portal's login screen
+2019-04-18 15:15:35 INFO  DatabaseConnection:34 - Get Access token
+2019-04-18 15:15:38 WARN  RequestSpecificationImpl$RestAssuredHttpBuilder:534 - Could not parse content-type: Response does not have a content-type header
+2019-04-18 15:15:42 INFO  Driver:270 - embedScreenshot
+2019-04-18 15:15:43 INFO  Driver:72 - Cleaning up the browser
+2019-04-18 15:26:01 INFO  Hooks:58 - ***********************************************************************************************************
+2019-04-18 15:26:01 INFO  Hooks:67 -  Launch Browser: "chrome" on Environment:local
+2019-04-18 15:26:01 INFO  Driver:161 - OS Windows 10
+2019-04-18 15:26:09 INFO  FlyInMenuBehaviourSteps:64 - User is on portal's login screen
+2019-04-18 15:26:32 INFO  DatabaseConnection:34 - Get Access token
+2019-04-18 15:26:36 WARN  RequestSpecificationImpl$RestAssuredHttpBuilder:534 - Could not parse content-type: Response does not have a content-type header
+2019-04-18 15:27:41 INFO  Driver:270 - embedScreenshot
+2019-04-18 15:27:42 INFO  Driver:72 - Cleaning up the browser
+2019-04-18 15:27:59 INFO  Hooks:58 - ***********************************************************************************************************
+2019-04-18 15:27:59 INFO  Hooks:67 -  Launch Browser: "chrome" on Environment:local
+2019-04-18 15:27:59 INFO  Driver:161 - OS Windows 10
+2019-04-18 15:28:06 INFO  FlyInMenuBehaviourSteps:64 - User is on portal's login screen
+2019-04-18 15:28:27 INFO  DatabaseConnection:34 - Get Access token
+2019-04-18 15:28:31 WARN  RequestSpecificationImpl$RestAssuredHttpBuilder:534 - Could not parse content-type: Response does not have a content-type header
+2019-04-18 15:34:20 INFO  Hooks:58 - ***********************************************************************************************************
+2019-04-18 15:34:20 INFO  Hooks:67 -  Launch Browser: "chrome" on Environment:local
+2019-04-18 15:34:20 INFO  Driver:161 - OS Windows 10
+2019-04-18 15:34:27 INFO  FlyInMenuBehaviourSteps:64 - User is on portal's login screen
+2019-04-18 15:34:48 INFO  DatabaseConnection:34 - Get Access token
+2019-04-18 15:34:51 WARN  RequestSpecificationImpl$RestAssuredHttpBuilder:534 - Could not parse content-type: Response does not have a content-type header
+2019-04-18 15:34:58 INFO  Standard_Overview_Table_Steps:1146 - Scenario 42_1 completed
+2019-04-18 15:35:35 INFO  Standard_Overview_Table_Steps:1246 - Scenario 42_2 completed
+2019-04-18 15:35:36 INFO  Driver:72 - Cleaning up the browser
+2019-04-18 15:35:46 INFO  Hooks:58 - ***********************************************************************************************************
+2019-04-18 15:35:46 INFO  Hooks:67 -  Launch Browser: "chrome" on Environment:local
+2019-04-18 15:35:46 INFO  Driver:161 - OS Windows 10
+2019-04-18 15:35:52 INFO  FlyInMenuBehaviourSteps:64 - User is on portal's login screen
+2019-04-18 15:36:12 INFO  DatabaseConnection:34 - Get Access token
+2019-04-18 15:36:15 WARN  RequestSpecificationImpl$RestAssuredHttpBuilder:534 - Could not parse content-type: Response does not have a content-type header
+2019-04-18 15:36:18 INFO  Standard_Overview_Table_Steps:1146 - Scenario 42_1 completed
+2019-04-18 15:36:55 INFO  Standard_Overview_Table_Steps:1246 - Scenario 42_2 completed
+2019-04-18 15:36:56 INFO  Driver:72 - Cleaning up the browser
+2019-04-18 15:57:23 INFO  Hooks:58 - ***********************************************************************************************************
+2019-04-18 15:57:23 INFO  Hooks:67 -  Launch Browser: "chrome" on Environment:local
+2019-04-18 15:57:23 INFO  Driver:161 - OS Windows 10
+2019-04-18 15:57:28 INFO  FlyInMenuBehaviourSteps:64 - User is on portal's login screen
+2019-04-18 15:57:49 INFO  DatabaseConnection:34 - Get Access token
+2019-04-18 15:57:52 WARN  RequestSpecificationImpl$RestAssuredHttpBuilder:534 - Could not parse content-type: Response does not have a content-type header
+2019-04-18 15:58:12 INFO  Standard_Overview_Table_Steps:1278 - Scenario 43_1 completed
+2019-04-18 15:58:13 INFO  Driver:72 - Cleaning up the browser
+2019-04-18 16:00:56 INFO  Hooks:58 - ***********************************************************************************************************
+2019-04-18 16:00:56 INFO  Hooks:67 -  Launch Browser: "chrome" on Environment:local
+2019-04-18 16:00:56 INFO  Driver:161 - OS Windows 10
+2019-04-18 16:01:09 INFO  FlyInMenuBehaviourSteps:64 - User is on portal's login screen
+2019-04-18 16:01:30 INFO  DatabaseConnection:34 - Get Access token
+2019-04-18 16:01:33 WARN  RequestSpecificationImpl$RestAssuredHttpBuilder:534 - Could not parse content-type: Response does not have a content-type header
+2019-04-18 16:01:53 INFO  Standard_Overview_Table_Steps:1277 - Scenario 43_1 completed
+2019-04-18 16:01:53 INFO  Standard_Overview_Table_Steps:1334 - Scenario 43_3 completed
+2019-04-18 16:02:03 INFO  Standard_Overview_Table_Steps:1466 - Scenario 43_5 completed
+2019-04-18 16:04:39 INFO  Driver:270 - embedScreenshot
+2019-04-18 16:04:40 INFO  Driver:72 - Cleaning up the browser
+2019-04-18 16:33:48 INFO  Hooks:58 - ***********************************************************************************************************
+2019-04-18 16:33:48 INFO  Hooks:67 -  Launch Browser: "chrome" on Environment:local
+2019-04-18 16:33:48 INFO  Driver:161 - OS Windows 10
+2019-04-18 16:33:57 INFO  FlyInMenuBehaviourSteps:64 - User is on portal's login screen
+2019-04-18 16:34:20 INFO  DatabaseConnection:34 - Get Access token
+2019-04-18 16:34:24 WARN  RequestSpecificationImpl$RestAssuredHttpBuilder:534 - Could not parse content-type: Response does not have a content-type header
+2019-04-18 16:34:26 ERROR UtilityMethods:110 - unknown error: Element <div class="single-filter-icon" style="cursor: pointer;">...</div> is not clickable at point (747, 129). Other element would receive the click: <div class="display-loading-main" style="display: block;">...</div>
+  (Session info: chrome=73.0.3683.103)
+  (Driver info: chromedriver=73.0.3683.68 (47787ec04b6e38e22703e856e101e840b65afe72),platform=Windows NT 10.0.17134 x86_64) (WARNING: The server did not provide any stacktrace information)
+Command duration or timeout: 74 milliseconds
+Build info: version: '3.4.0', revision: 'unknown', time: 'unknown'
+System info: host: 'HARSHALT-PC', ip: '10.0.75.1', os.name: 'Windows 10', os.arch: 'amd64', os.version: '10.0', java.version: '1.8.0_202'
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities [{mobileEmulationEnabled=false, timeouts={implicit=0.0, pageLoad=300000.0, script=30000.0}, hasTouchScreen=false, platform=XP, acceptSslCerts=false, goog:chromeOptions={debuggerAddress=localhost:62038}, acceptInsecureCerts=false, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, setWindowRect=true, unexpectedAlertBehaviour=ignore, applicationCacheEnabled=false, rotatable=false, networkConnectionEnabled=false, chrome={chromedriverVersion=73.0.3683.68 (47787ec04b6e38e22703e856e101e840b65afe72), userDataDir=C:\Users\htikkas\AppData\Local\Temp\scoped_dir17964_5818}, takesHeapSnapshot=true, pageLoadStrategy=normal, strictFileInteractability=false, databaseEnabled=false, handlesAlerts=true, version=73.0.3683.103, browserConnectionEnabled=false, proxy=Proxy(), nativeEvents=true, locationContextEnabled=true, cssSelectorsEnabled=true}]
+Session ID: 8c4763c29f90ced0bf84b490fe5f8e1c
+2019-04-18 16:34:26 INFO  Driver:270 - embedScreenshot
+2019-04-18 16:34:28 INFO  Driver:72 - Cleaning up the browser
+2019-04-18 16:34:51 INFO  Hooks:58 - ***********************************************************************************************************
+2019-04-18 16:34:51 INFO  Hooks:67 -  Launch Browser: "chrome" on Environment:local
+2019-04-18 16:34:51 INFO  Driver:161 - OS Windows 10
+2019-04-18 16:34:57 INFO  FlyInMenuBehaviourSteps:64 - User is on portal's login screen
+2019-04-18 16:35:17 INFO  DatabaseConnection:34 - Get Access token
+2019-04-18 16:35:20 WARN  RequestSpecificationImpl$RestAssuredHttpBuilder:534 - Could not parse content-type: Response does not have a content-type header
+2019-04-18 16:35:40 INFO  Standard_Overview_Table_Steps:1277 - Scenario 43_1 completed
+2019-04-18 16:35:41 INFO  Driver:72 - Cleaning up the browser
+2019-04-18 16:36:11 INFO  Hooks:58 - ***********************************************************************************************************
+2019-04-18 16:36:11 INFO  Hooks:67 -  Launch Browser: "chrome" on Environment:local
+2019-04-18 16:36:11 INFO  Driver:161 - OS Windows 10
+2019-04-18 16:36:16 INFO  FlyInMenuBehaviourSteps:64 - User is on portal's login screen
+2019-04-18 16:36:37 INFO  DatabaseConnection:34 - Get Access token
+2019-04-18 16:36:40 WARN  RequestSpecificationImpl$RestAssuredHttpBuilder:534 - Could not parse content-type: Response does not have a content-type header
+2019-04-18 16:36:43 INFO  Standard_Overview_Table_Steps:1334 - Scenario 43_2 completed
+2019-04-18 16:36:44 INFO  Driver:72 - Cleaning up the browser
+2019-04-18 16:37:06 INFO  Hooks:58 - ***********************************************************************************************************
+2019-04-18 16:37:06 INFO  Hooks:67 -  Launch Browser: "chrome" on Environment:local
+2019-04-18 16:37:06 INFO  Driver:161 - OS Windows 10
+2019-04-18 16:37:11 INFO  FlyInMenuBehaviourSteps:64 - User is on portal's login screen
+2019-04-18 16:37:31 INFO  DatabaseConnection:34 - Get Access token
+2019-04-18 16:37:34 WARN  RequestSpecificationImpl$RestAssuredHttpBuilder:534 - Could not parse content-type: Response does not have a content-type header
+2019-04-18 16:37:47 INFO  Standard_Overview_Table_Steps:1466 - Scenario 43_5 completed
+2019-04-18 16:37:48 INFO  Driver:72 - Cleaning up the browser
+2019-04-18 16:39:35 INFO  Hooks:58 - ***********************************************************************************************************
+2019-04-18 16:39:35 INFO  Hooks:67 -  Launch Browser: "chrome" on Environment:local
+2019-04-18 16:39:35 INFO  Driver:161 - OS Windows 10
+2019-04-18 16:39:41 INFO  FlyInMenuBehaviourSteps:64 - User is on portal's login screen
+2019-04-18 16:40:01 INFO  DatabaseConnection:34 - Get Access token
+2019-04-18 16:40:05 WARN  RequestSpecificationImpl$RestAssuredHttpBuilder:534 - Could not parse content-type: Response does not have a content-type header
+2019-04-18 16:40:39 INFO  DatabaseConnection:67 - Error occurred. status code : 504
+2019-04-18 16:40:39 ERROR UtilityMethods:110 - 
+2019-04-18 16:40:39 INFO  Driver:270 - embedScreenshot
+2019-04-18 16:40:40 INFO  Driver:72 - Cleaning up the browser
+2019-04-18 16:40:54 INFO  Hooks:58 - ***********************************************************************************************************
+2019-04-18 16:40:54 INFO  Hooks:67 -  Launch Browser: "chrome" on Environment:local
+2019-04-18 16:40:54 INFO  Driver:161 - OS Windows 10
+2019-04-18 16:41:01 INFO  FlyInMenuBehaviourSteps:64 - User is on portal's login screen
+2019-04-18 16:41:22 INFO  DatabaseConnection:34 - Get Access token
+2019-04-18 16:41:25 WARN  RequestSpecificationImpl$RestAssuredHttpBuilder:534 - Could not parse content-type: Response does not have a content-type header
+2019-04-18 16:42:03 INFO  DatabaseConnection:207 - Error occurred. status code : 504
+2019-04-18 16:42:03 ERROR UtilityMethods:110 - 
+2019-04-18 16:42:03 INFO  Driver:270 - embedScreenshot
+2019-04-18 16:42:05 INFO  Driver:72 - Cleaning up the browser
+2019-04-18 16:43:32 INFO  Hooks:58 - ***********************************************************************************************************
+2019-04-18 16:43:32 INFO  Hooks:67 -  Launch Browser: "chrome" on Environment:local
+2019-04-18 16:43:32 INFO  Driver:161 - OS Windows 10
+2019-04-18 16:43:37 INFO  FlyInMenuBehaviourSteps:64 - User is on portal's login screen
+2019-04-18 16:43:58 INFO  DatabaseConnection:34 - Get Access token
+2019-04-18 16:44:01 WARN  RequestSpecificationImpl$RestAssuredHttpBuilder:534 - Could not parse content-type: Response does not have a content-type header
+2019-04-18 20:25:30 ERROR UtilityMethods:110 - Software caused connection abort: recv failed
+2019-04-18 20:40:26 INFO  Hooks:58 - ***********************************************************************************************************
+2019-04-18 20:40:26 INFO  Hooks:67 -  Launch Browser: "chrome" on Environment:local
+2019-04-18 20:40:26 INFO  Driver:161 - OS Windows 10
+2019-04-18 20:40:46 INFO  FlyInMenuBehaviourSteps:64 - User is on portal's login screen
+2019-04-18 20:41:12 INFO  DatabaseConnection:34 - Get Access token
+2019-04-18 20:41:17 WARN  RequestSpecificationImpl$RestAssuredHttpBuilder:534 - Could not parse content-type: Response does not have a content-type header
+2019-04-18 20:41:20 ERROR UtilityMethods:110 - unknown error: Element <div class="single-filter-icon" style="cursor: pointer;">...</div> is not clickable at point (747, 129). Other element would receive the click: <div class="display-loading-main" style="display: block;">...</div>
+  (Session info: chrome=73.0.3683.103)
+  (Driver info: chromedriver=73.0.3683.68 (47787ec04b6e38e22703e856e101e840b65afe72),platform=Windows NT 10.0.17134 x86_64) (WARNING: The server did not provide any stacktrace information)
+Command duration or timeout: 98 milliseconds
+Build info: version: '3.4.0', revision: 'unknown', time: 'unknown'
+System info: host: 'HARSHALT-PC', ip: '10.0.75.1', os.name: 'Windows 10', os.arch: 'amd64', os.version: '10.0', java.version: '1.8.0_202'
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities [{mobileEmulationEnabled=false, timeouts={implicit=0.0, pageLoad=300000.0, script=30000.0}, hasTouchScreen=false, platform=XP, acceptSslCerts=false, goog:chromeOptions={debuggerAddress=localhost:64288}, acceptInsecureCerts=false, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, setWindowRect=true, unexpectedAlertBehaviour=ignore, applicationCacheEnabled=false, rotatable=false, networkConnectionEnabled=false, chrome={chromedriverVersion=73.0.3683.68 (47787ec04b6e38e22703e856e101e840b65afe72), userDataDir=C:\Users\htikkas\AppData\Local\Temp\scoped_dir16732_23574}, takesHeapSnapshot=true, pageLoadStrategy=normal, strictFileInteractability=false, databaseEnabled=false, handlesAlerts=true, version=73.0.3683.103, browserConnectionEnabled=false, proxy=Proxy(), nativeEvents=true, locationContextEnabled=true, cssSelectorsEnabled=true}]
+Session ID: b5a9e3188b28e06e790a6550c2e595d4
+2019-04-18 20:41:20 INFO  Driver:270 - embedScreenshot
+2019-04-18 20:41:22 INFO  Driver:72 - Cleaning up the browser
+2019-04-18 20:43:04 INFO  Hooks:58 - ***********************************************************************************************************
+2019-04-18 20:43:04 INFO  Hooks:67 -  Launch Browser: "chrome" on Environment:local
+2019-04-18 20:43:04 INFO  Driver:161 - OS Windows 10
+2019-04-18 20:43:12 INFO  FlyInMenuBehaviourSteps:64 - User is on portal's login screen
+2019-04-18 20:43:37 INFO  DatabaseConnection:34 - Get Access token
+2019-04-18 20:43:42 WARN  RequestSpecificationImpl$RestAssuredHttpBuilder:534 - Could not parse content-type: Response does not have a content-type header
+2019-04-18 20:50:08 INFO  Hooks:58 - ***********************************************************************************************************
+2019-04-18 20:50:08 INFO  Hooks:67 -  Launch Browser: "chrome" on Environment:local
+2019-04-18 20:50:08 INFO  Driver:161 - OS Windows 10
+2019-04-18 20:50:16 INFO  FlyInMenuBehaviourSteps:64 - User is on portal's login screen
+2019-04-18 20:50:45 INFO  DatabaseConnection:34 - Get Access token
+2019-04-18 20:50:51 WARN  RequestSpecificationImpl$RestAssuredHttpBuilder:534 - Could not parse content-type: Response does not have a content-type header
+2019-04-18 21:19:44 INFO  DatabaseConnection:35 - Get Access token
+2019-04-18 21:19:47 WARN  RequestSpecificationImpl$RestAssuredHttpBuilder:534 - Could not parse content-type: Response does not have a content-type header
+2019-04-18 21:21:03 INFO  DatabaseConnection:35 - Get Access token
+2019-04-18 21:21:52 WARN  RequestSpecificationImpl$RestAssuredHttpBuilder:534 - Could not parse content-type: Response does not have a content-type header
+2019-04-18 21:22:05 INFO  DatabaseConnection:35 - Get Access token
+2019-04-18 21:22:16 WARN  RequestSpecificationImpl$RestAssuredHttpBuilder:534 - Could not parse content-type: Response does not have a content-type header
+2019-04-18 21:30:26 INFO  Hooks:58 - ***********************************************************************************************************
+2019-04-18 21:30:26 INFO  Hooks:67 -  Launch Browser: "chrome" on Environment:local
+2019-04-18 21:30:26 INFO  Driver:161 - OS Windows 10
+2019-04-18 21:30:45 INFO  FlyInMenuBehaviourSteps:64 - User is on portal's login screen
+2019-04-18 21:31:09 INFO  DatabaseConnection:35 - Get Access token
+2019-04-18 21:31:15 WARN  RequestSpecificationImpl$RestAssuredHttpBuilder:534 - Could not parse content-type: Response does not have a content-type header
+2019-04-18 21:35:32 ERROR UtilityMethods:110 - Index: 0, Size: 0
+2019-04-18 21:35:41 INFO  Driver:270 - embedScreenshot
+2019-04-18 21:36:22 INFO  Hooks:58 - ***********************************************************************************************************
+2019-04-18 21:36:22 INFO  Hooks:67 -  Launch Browser: "chrome" on Environment:local
+2019-04-18 21:36:22 INFO  Driver:161 - OS Windows 10
+2019-04-18 21:36:31 INFO  FlyInMenuBehaviourSteps:64 - User is on portal's login screen
+2019-04-18 21:36:55 INFO  DatabaseConnection:35 - Get Access token
+2019-04-18 21:37:00 WARN  RequestSpecificationImpl$RestAssuredHttpBuilder:534 - Could not parse content-type: Response does not have a content-type header
+2019-04-18 21:37:02 ERROR UtilityMethods:110 - unknown error: Element <div class="single-filter-icon" style="cursor: pointer;">...</div> is not clickable at point (747, 129). Other element would receive the click: <div class="display-loading-main" style="display: block;">...</div>
+  (Session info: chrome=73.0.3683.103)
+  (Driver info: chromedriver=73.0.3683.68 (47787ec04b6e38e22703e856e101e840b65afe72),platform=Windows NT 10.0.17134 x86_64) (WARNING: The server did not provide any stacktrace information)
+Command duration or timeout: 115 milliseconds
+Build info: version: '3.4.0', revision: 'unknown', time: 'unknown'
+System info: host: 'HARSHALT-PC', ip: '10.0.75.1', os.name: 'Windows 10', os.arch: 'amd64', os.version: '10.0', java.version: '1.8.0_202'
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities [{mobileEmulationEnabled=false, timeouts={implicit=0.0, pageLoad=300000.0, script=30000.0}, hasTouchScreen=false, platform=XP, acceptSslCerts=false, goog:chromeOptions={debuggerAddress=localhost:51953}, acceptInsecureCerts=false, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, setWindowRect=true, unexpectedAlertBehaviour=ignore, applicationCacheEnabled=false, rotatable=false, networkConnectionEnabled=false, chrome={chromedriverVersion=73.0.3683.68 (47787ec04b6e38e22703e856e101e840b65afe72), userDataDir=C:\Users\htikkas\AppData\Local\Temp\scoped_dir6652_27267}, takesHeapSnapshot=true, pageLoadStrategy=normal, strictFileInteractability=false, databaseEnabled=false, handlesAlerts=true, version=73.0.3683.103, browserConnectionEnabled=false, proxy=Proxy(), nativeEvents=true, locationContextEnabled=true, cssSelectorsEnabled=true}]
+Session ID: b875ece0214533759f2aea1eb968fe27
+2019-04-18 21:37:02 INFO  Driver:270 - embedScreenshot
+2019-04-18 21:37:04 INFO  Driver:72 - Cleaning up the browser
+2019-04-18 21:37:22 INFO  Hooks:58 - ***********************************************************************************************************
+2019-04-18 21:37:22 INFO  Hooks:67 -  Launch Browser: "chrome" on Environment:local
+2019-04-18 21:37:22 INFO  Driver:161 - OS Windows 10
+2019-04-18 21:37:28 INFO  FlyInMenuBehaviourSteps:64 - User is on portal's login screen
+2019-04-18 21:37:51 INFO  DatabaseConnection:35 - Get Access token
+2019-04-18 21:37:55 WARN  RequestSpecificationImpl$RestAssuredHttpBuilder:534 - Could not parse content-type: Response does not have a content-type header
+2019-04-18 21:41:29 INFO  Driver:270 - embedScreenshot
+2019-04-18 21:41:31 INFO  Driver:72 - Cleaning up the browser
+2019-04-18 21:41:43 INFO  Hooks:58 - ***********************************************************************************************************
+2019-04-18 21:41:43 INFO  Hooks:67 -  Launch Browser: "chrome" on Environment:local
+2019-04-18 21:41:43 INFO  Driver:161 - OS Windows 10
+2019-04-18 21:41:50 INFO  FlyInMenuBehaviourSteps:64 - User is on portal's login screen
+2019-04-18 21:42:14 INFO  DatabaseConnection:35 - Get Access token
+2019-04-18 21:42:18 WARN  RequestSpecificationImpl$RestAssuredHttpBuilder:534 - Could not parse content-type: Response does not have a content-type header
+2019-04-18 21:48:28 INFO  Hooks:58 - ***********************************************************************************************************
+2019-04-18 21:48:28 INFO  Hooks:67 -  Launch Browser: "chrome" on Environment:local
+2019-04-18 21:48:28 INFO  Driver:161 - OS Windows 10
+2019-04-18 21:48:35 INFO  FlyInMenuBehaviourSteps:64 - User is on portal's login screen
+2019-04-18 21:49:00 INFO  DatabaseConnection:35 - Get Access token
+2019-04-18 21:49:05 WARN  RequestSpecificationImpl$RestAssuredHttpBuilder:534 - Could not parse content-type: Response does not have a content-type header
+2019-04-18 21:53:02 INFO  Hooks:58 - ***********************************************************************************************************
+2019-04-18 21:53:02 INFO  Hooks:67 -  Launch Browser: "chrome" on Environment:local
+2019-04-18 21:53:03 INFO  Driver:161 - OS Windows 10
+2019-04-18 21:53:09 INFO  FlyInMenuBehaviourSteps:64 - User is on portal's login screen
+2019-04-18 21:53:36 INFO  DatabaseConnection:35 - Get Access token
+2019-04-18 21:53:41 WARN  RequestSpecificationImpl$RestAssuredHttpBuilder:534 - Could not parse content-type: Response does not have a content-type header
+2019-04-18 22:07:14 INFO  Hooks:58 - ***********************************************************************************************************
+2019-04-18 22:07:14 INFO  Hooks:67 -  Launch Browser: "chrome" on Environment:local
+2019-04-18 22:07:14 INFO  Driver:161 - OS Windows 10
+2019-04-18 22:07:27 INFO  FlyInMenuBehaviourSteps:64 - User is on portal's login screen
+2019-04-18 22:07:52 INFO  DatabaseConnection:35 - Get Access token
+2019-04-18 22:07:57 WARN  RequestSpecificationImpl$RestAssuredHttpBuilder:534 - Could not parse content-type: Response does not have a content-type header
+2019-04-18 22:07:59 ERROR UtilityMethods:110 - unknown error: Element <div class="single-filter-icon" style="cursor: pointer;">...</div> is not clickable at point (747, 129). Other element would receive the click: <div class="display-loading-main" style="display: block;">...</div>
+  (Session info: chrome=73.0.3683.103)
+  (Driver info: chromedriver=73.0.3683.68 (47787ec04b6e38e22703e856e101e840b65afe72),platform=Windows NT 10.0.17134 x86_64) (WARNING: The server did not provide any stacktrace information)
+Command duration or timeout: 134 milliseconds
+Build info: version: '3.4.0', revision: 'unknown', time: 'unknown'
+System info: host: 'HARSHALT-PC', ip: '10.0.75.1', os.name: 'Windows 10', os.arch: 'amd64', os.version: '10.0', java.version: '1.8.0_202'
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities [{mobileEmulationEnabled=false, timeouts={implicit=0.0, pageLoad=300000.0, script=30000.0}, hasTouchScreen=false, platform=XP, acceptSslCerts=false, goog:chromeOptions={debuggerAddress=localhost:54156}, acceptInsecureCerts=false, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, setWindowRect=true, unexpectedAlertBehaviour=ignore, applicationCacheEnabled=false, rotatable=false, networkConnectionEnabled=false, chrome={chromedriverVersion=73.0.3683.68 (47787ec04b6e38e22703e856e101e840b65afe72), userDataDir=C:\Users\htikkas\AppData\Local\Temp\scoped_dir18396_14885}, takesHeapSnapshot=true, pageLoadStrategy=normal, strictFileInteractability=false, databaseEnabled=false, handlesAlerts=true, version=73.0.3683.103, browserConnectionEnabled=false, proxy=Proxy(), nativeEvents=true, locationContextEnabled=true, cssSelectorsEnabled=true}]
+Session ID: 0e746985d0ae394c81d10fd417b47375
+2019-04-18 22:07:59 INFO  Driver:270 - embedScreenshot
+2019-04-18 22:08:01 INFO  Driver:72 - Cleaning up the browser
+2019-04-18 22:08:13 INFO  Hooks:58 - ***********************************************************************************************************
+2019-04-18 22:08:13 INFO  Hooks:67 -  Launch Browser: "chrome" on Environment:local
+2019-04-18 22:08:13 INFO  Driver:161 - OS Windows 10
+2019-04-18 22:08:22 INFO  FlyInMenuBehaviourSteps:64 - User is on portal's login screen
+2019-04-18 22:08:48 INFO  DatabaseConnection:35 - Get Access token
+2019-04-18 22:08:53 WARN  RequestSpecificationImpl$RestAssuredHttpBuilder:534 - Could not parse content-type: Response does not have a content-type header
+2019-04-18 22:58:36 INFO  Hooks:58 - ***********************************************************************************************************
+2019-04-18 22:58:36 INFO  Hooks:67 -  Launch Browser: "chrome" on Environment:local
+2019-04-18 22:58:36 INFO  Driver:161 - OS Windows 10
+2019-04-18 22:59:01 INFO  FlyInMenuBehaviourSteps:64 - User is on portal's login screen
+2019-04-18 22:59:36 INFO  DatabaseConnection:33 - Get Access token
+2019-04-18 22:59:42 WARN  RequestSpecificationImpl$RestAssuredHttpBuilder:534 - Could not parse content-type: Response does not have a content-type header
+2019-04-18 22:59:44 ERROR UtilityMethods:110 - unknown error: Element <div class="single-filter-icon" style="cursor: pointer;">...</div> is not clickable at point (747, 129). Other element would receive the click: <div class="display-loading-main" style="display: block;">...</div>
+  (Session info: chrome=73.0.3683.103)
+  (Driver info: chromedriver=73.0.3683.68 (47787ec04b6e38e22703e856e101e840b65afe72),platform=Windows NT 10.0.17134 x86_64) (WARNING: The server did not provide any stacktrace information)
+Command duration or timeout: 189 milliseconds
+Build info: version: '3.4.0', revision: 'unknown', time: 'unknown'
+System info: host: 'HARSHALT-PC', ip: '10.0.75.1', os.name: 'Windows 10', os.arch: 'amd64', os.version: '10.0', java.version: '1.8.0_202'
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities [{mobileEmulationEnabled=false, timeouts={implicit=0.0, pageLoad=300000.0, script=30000.0}, hasTouchScreen=false, platform=XP, acceptSslCerts=false, goog:chromeOptions={debuggerAddress=localhost:57761}, acceptInsecureCerts=false, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, setWindowRect=true, unexpectedAlertBehaviour=ignore, applicationCacheEnabled=false, rotatable=false, networkConnectionEnabled=false, chrome={chromedriverVersion=73.0.3683.68 (47787ec04b6e38e22703e856e101e840b65afe72), userDataDir=C:\Users\htikkas\AppData\Local\Temp\scoped_dir19164_16826}, takesHeapSnapshot=true, pageLoadStrategy=normal, strictFileInteractability=false, databaseEnabled=false, handlesAlerts=true, version=73.0.3683.103, browserConnectionEnabled=false, proxy=Proxy(), nativeEvents=true, locationContextEnabled=true, cssSelectorsEnabled=true}]
+Session ID: 9675a8057dae8b8306ab8f6c3e176a0a
+2019-04-18 22:59:44 INFO  Driver:270 - embedScreenshot
+2019-04-18 22:59:47 INFO  Driver:72 - Cleaning up the browser
+2019-04-18 23:00:01 INFO  Hooks:58 - ***********************************************************************************************************
+2019-04-18 23:00:01 INFO  Hooks:67 -  Launch Browser: "chrome" on Environment:local
+2019-04-18 23:00:01 INFO  Driver:161 - OS Windows 10
+2019-04-18 23:00:10 INFO  FlyInMenuBehaviourSteps:64 - User is on portal's login screen
+2019-04-18 23:00:38 INFO  DatabaseConnection:33 - Get Access token
+2019-04-18 23:00:42 WARN  RequestSpecificationImpl$RestAssuredHttpBuilder:534 - Could not parse content-type: Response does not have a content-type header
+2019-04-18 23:02:34 ERROR UtilityMethods:110 - 
+2019-04-18 23:02:34 INFO  Driver:270 - embedScreenshot
+2019-04-18 23:02:36 INFO  Driver:72 - Cleaning up the browser
+2019-04-18 23:03:21 INFO  Hooks:58 - ***********************************************************************************************************
+2019-04-18 23:03:21 INFO  Hooks:67 -  Launch Browser: "chrome" on Environment:local
+2019-04-18 23:03:21 INFO  Driver:161 - OS Windows 10
+2019-04-18 23:03:29 INFO  FlyInMenuBehaviourSteps:64 - User is on portal's login screen
+2019-04-18 23:03:53 INFO  DatabaseConnection:33 - Get Access token
+2019-04-18 23:03:58 WARN  RequestSpecificationImpl$RestAssuredHttpBuilder:534 - Could not parse content-type: Response does not have a content-type header
+2019-04-18 23:04:00 ERROR UtilityMethods:110 - unknown error: Element <div class="single-filter-icon" style="cursor: pointer;">...</div> is not clickable at point (747, 129). Other element would receive the click: <div class="display-loading-main" style="display: block;">...</div>
+  (Session info: chrome=73.0.3683.103)
+  (Driver info: chromedriver=73.0.3683.68 (47787ec04b6e38e22703e856e101e840b65afe72),platform=Windows NT 10.0.17134 x86_64) (WARNING: The server did not provide any stacktrace information)
+Command duration or timeout: 69 milliseconds
+Build info: version: '3.4.0', revision: 'unknown', time: 'unknown'
+System info: host: 'HARSHALT-PC', ip: '10.0.75.1', os.name: 'Windows 10', os.arch: 'amd64', os.version: '10.0', java.version: '1.8.0_202'
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities [{mobileEmulationEnabled=false, timeouts={implicit=0.0, pageLoad=300000.0, script=30000.0}, hasTouchScreen=false, platform=XP, acceptSslCerts=false, goog:chromeOptions={debuggerAddress=localhost:62995}, acceptInsecureCerts=false, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, setWindowRect=true, unexpectedAlertBehaviour=ignore, applicationCacheEnabled=false, rotatable=false, networkConnectionEnabled=false, chrome={chromedriverVersion=73.0.3683.68 (47787ec04b6e38e22703e856e101e840b65afe72), userDataDir=C:\Users\htikkas\AppData\Local\Temp\scoped_dir18192_21434}, takesHeapSnapshot=true, pageLoadStrategy=normal, strictFileInteractability=false, databaseEnabled=false, handlesAlerts=true, version=73.0.3683.103, browserConnectionEnabled=false, proxy=Proxy(), nativeEvents=true, locationContextEnabled=true, cssSelectorsEnabled=true}]
+Session ID: 4981082f6fe96acc70e73bf733001543
+2019-04-18 23:04:00 INFO  Driver:270 - embedScreenshot
+2019-04-18 23:04:01 INFO  Driver:72 - Cleaning up the browser
+2019-04-18 23:04:21 INFO  Hooks:58 - ***********************************************************************************************************
+2019-04-18 23:04:21 INFO  Hooks:67 -  Launch Browser: "chrome" on Environment:local
+2019-04-18 23:04:21 INFO  Driver:161 - OS Windows 10
+2019-04-18 23:04:27 INFO  FlyInMenuBehaviourSteps:64 - User is on portal's login screen
+2019-04-18 23:04:56 INFO  DatabaseConnection:33 - Get Access token
+2019-04-18 23:05:00 WARN  RequestSpecificationImpl$RestAssuredHttpBuilder:534 - Could not parse content-type: Response does not have a content-type header
+2019-04-18 23:06:52 ERROR UtilityMethods:110 - 
+2019-04-18 23:06:52 INFO  Driver:270 - embedScreenshot
+2019-04-18 23:06:54 INFO  Driver:72 - Cleaning up the browser
+2019-04-18 23:07:15 INFO  Hooks:58 - ***********************************************************************************************************
+2019-04-18 23:07:15 INFO  Hooks:67 -  Launch Browser: "chrome" on Environment:local
+2019-04-18 23:07:15 INFO  Driver:161 - OS Windows 10
+2019-04-18 23:07:21 INFO  FlyInMenuBehaviourSteps:64 - User is on portal's login screen
+2019-04-18 23:07:49 INFO  DatabaseConnection:33 - Get Access token
+2019-04-18 23:07:53 WARN  RequestSpecificationImpl$RestAssuredHttpBuilder:534 - Could not parse content-type: Response does not have a content-type header
+2019-04-18 23:07:55 ERROR UtilityMethods:110 - unknown error: Element <div class="single-filter-icon" style="cursor: pointer;">...</div> is not clickable at point (747, 129). Other element would receive the click: <div class="display-loading-main" style="display: block;">...</div>
+  (Session info: chrome=73.0.3683.103)
+  (Driver info: chromedriver=73.0.3683.68 (47787ec04b6e38e22703e856e101e840b65afe72),platform=Windows NT 10.0.17134 x86_64) (WARNING: The server did not provide any stacktrace information)
+Command duration or timeout: 75 milliseconds
+Build info: version: '3.4.0', revision: 'unknown', time: 'unknown'
+System info: host: 'HARSHALT-PC', ip: '10.0.75.1', os.name: 'Windows 10', os.arch: 'amd64', os.version: '10.0', java.version: '1.8.0_202'
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities [{mobileEmulationEnabled=false, timeouts={implicit=0.0, pageLoad=300000.0, script=30000.0}, hasTouchScreen=false, platform=XP, acceptSslCerts=false, goog:chromeOptions={debuggerAddress=localhost:63315}, acceptInsecureCerts=false, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, setWindowRect=true, unexpectedAlertBehaviour=ignore, applicationCacheEnabled=false, rotatable=false, networkConnectionEnabled=false, chrome={chromedriverVersion=73.0.3683.68 (47787ec04b6e38e22703e856e101e840b65afe72), userDataDir=C:\Users\htikkas\AppData\Local\Temp\scoped_dir10820_24226}, takesHeapSnapshot=true, pageLoadStrategy=normal, strictFileInteractability=false, databaseEnabled=false, handlesAlerts=true, version=73.0.3683.103, browserConnectionEnabled=false, proxy=Proxy(), nativeEvents=true, locationContextEnabled=true, cssSelectorsEnabled=true}]
+Session ID: 9bd97774b471f4b46e163efed987b805
+2019-04-18 23:07:55 INFO  Driver:270 - embedScreenshot
+2019-04-18 23:07:57 INFO  Driver:72 - Cleaning up the browser
+2019-04-18 23:08:19 INFO  Hooks:58 - ***********************************************************************************************************
+2019-04-18 23:08:19 INFO  Hooks:67 -  Launch Browser: "chrome" on Environment:local
+2019-04-18 23:08:19 INFO  Driver:161 - OS Windows 10
+2019-04-18 23:08:25 INFO  FlyInMenuBehaviourSteps:64 - User is on portal's login screen
+2019-04-18 23:08:50 INFO  DatabaseConnection:33 - Get Access token
+2019-04-18 23:08:54 WARN  RequestSpecificationImpl$RestAssuredHttpBuilder:534 - Could not parse content-type: Response does not have a content-type header
+2019-04-18 23:08:57 ERROR UtilityMethods:110 - unknown error: Element <div class="single-filter-icon" style="cursor: pointer;">...</div> is not clickable at point (747, 129). Other element would receive the click: <div class="display-loading-main" style="display: block;">...</div>
+  (Session info: chrome=73.0.3683.103)
+  (Driver info: chromedriver=73.0.3683.68 (47787ec04b6e38e22703e856e101e840b65afe72),platform=Windows NT 10.0.17134 x86_64) (WARNING: The server did not provide any stacktrace information)
+Command duration or timeout: 82 milliseconds
+Build info: version: '3.4.0', revision: 'unknown', time: 'unknown'
+System info: host: 'HARSHALT-PC', ip: '10.0.75.1', os.name: 'Windows 10', os.arch: 'amd64', os.version: '10.0', java.version: '1.8.0_202'
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities [{mobileEmulationEnabled=false, timeouts={implicit=0.0, pageLoad=300000.0, script=30000.0}, hasTouchScreen=false, platform=XP, acceptSslCerts=false, goog:chromeOptions={debuggerAddress=localhost:63443}, acceptInsecureCerts=false, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, setWindowRect=true, unexpectedAlertBehaviour=ignore, applicationCacheEnabled=false, rotatable=false, networkConnectionEnabled=false, chrome={chromedriverVersion=73.0.3683.68 (47787ec04b6e38e22703e856e101e840b65afe72), userDataDir=C:\Users\htikkas\AppData\Local\Temp\scoped_dir16824_28792}, takesHeapSnapshot=true, pageLoadStrategy=normal, strictFileInteractability=false, databaseEnabled=false, handlesAlerts=true, version=73.0.3683.103, browserConnectionEnabled=false, proxy=Proxy(), nativeEvents=true, locationContextEnabled=true, cssSelectorsEnabled=true}]
+Session ID: 6d2a55eb8b2f2b11b10456f8dd21ed38
+2019-04-18 23:08:57 INFO  Driver:270 - embedScreenshot
+2019-04-18 23:08:58 INFO  Driver:72 - Cleaning up the browser
+2019-04-18 23:09:29 INFO  Hooks:58 - ***********************************************************************************************************
+2019-04-18 23:09:29 INFO  Hooks:67 -  Launch Browser: "chrome" on Environment:local
+2019-04-18 23:09:29 INFO  Driver:161 - OS Windows 10
+2019-04-18 23:09:35 INFO  FlyInMenuBehaviourSteps:64 - User is on portal's login screen
+2019-04-18 23:10:02 INFO  DatabaseConnection:33 - Get Access token
+2019-04-18 23:10:06 WARN  RequestSpecificationImpl$RestAssuredHttpBuilder:534 - Could not parse content-type: Response does not have a content-type header
+2019-04-18 23:12:04 ERROR UtilityMethods:110 - 
+2019-04-18 23:12:04 INFO  Driver:270 - embedScreenshot
+2019-04-18 23:12:06 INFO  Driver:72 - Cleaning up the browser
+2019-04-18 23:12:34 INFO  Hooks:58 - ***********************************************************************************************************
+2019-04-18 23:12:34 INFO  Hooks:67 -  Launch Browser: "chrome" on Environment:local
+2019-04-18 23:12:34 INFO  Driver:161 - OS Windows 10
+2019-04-18 23:12:41 INFO  FlyInMenuBehaviourSteps:64 - User is on portal's login screen
+2019-04-18 23:13:09 INFO  DatabaseConnection:33 - Get Access token
+2019-04-18 23:13:14 WARN  RequestSpecificationImpl$RestAssuredHttpBuilder:534 - Could not parse content-type: Response does not have a content-type header
+2019-04-18 23:34:12 INFO  Hooks:58 - ***********************************************************************************************************
+2019-04-18 23:34:12 INFO  Hooks:67 -  Launch Browser: "chrome" on Environment:local
+2019-04-18 23:34:12 INFO  Driver:161 - OS Windows 10
+2019-04-18 23:34:22 INFO  FlyInMenuBehaviourSteps:64 - User is on portal's login screen
+2019-04-18 23:34:53 INFO  DatabaseConnection:33 - Get Access token
+2019-04-18 23:34:57 WARN  RequestSpecificationImpl$RestAssuredHttpBuilder:534 - Could not parse content-type: Response does not have a content-type header
+2019-04-18 23:44:29 ERROR DatabaseConnection:275 - 
+2019-04-18 23:56:06 INFO  Driver:270 - embedScreenshot
+2019-04-18 23:56:08 INFO  Driver:72 - Cleaning up the browser
+2019-04-18 23:56:56 INFO  Hooks:58 - ***********************************************************************************************************
+2019-04-18 23:56:56 INFO  Hooks:67 -  Launch Browser: "chrome" on Environment:local
+2019-04-18 23:56:56 INFO  Driver:161 - OS Windows 10
+2019-04-18 23:57:10 INFO  FlyInMenuBehaviourSteps:64 - User is on portal's login screen
+2019-04-18 23:57:33 INFO  DatabaseConnection:33 - Get Access token
+2019-04-18 23:57:38 WARN  RequestSpecificationImpl$RestAssuredHttpBuilder:534 - Could not parse content-type: Response does not have a content-type header
+2019-04-18 23:57:40 ERROR UtilityMethods:110 - unknown error: Element <div class="single-filter-icon" style="cursor: pointer;">...</div> is not clickable at point (747, 129). Other element would receive the click: <div class="display-loading-main" style="display: block;">...</div>
+  (Session info: chrome=73.0.3683.103)
+  (Driver info: chromedriver=73.0.3683.68 (47787ec04b6e38e22703e856e101e840b65afe72),platform=Windows NT 10.0.17134 x86_64) (WARNING: The server did not provide any stacktrace information)
+Command duration or timeout: 71 milliseconds
+Build info: version: '3.4.0', revision: 'unknown', time: 'unknown'
+System info: host: 'HARSHALT-PC', ip: '10.0.75.1', os.name: 'Windows 10', os.arch: 'amd64', os.version: '10.0', java.version: '1.8.0_202'
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities [{mobileEmulationEnabled=false, timeouts={implicit=0.0, pageLoad=300000.0, script=30000.0}, hasTouchScreen=false, platform=XP, acceptSslCerts=false, goog:chromeOptions={debuggerAddress=localhost:50713}, acceptInsecureCerts=false, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, setWindowRect=true, unexpectedAlertBehaviour=ignore, applicationCacheEnabled=false, rotatable=false, networkConnectionEnabled=false, chrome={chromedriverVersion=73.0.3683.68 (47787ec04b6e38e22703e856e101e840b65afe72), userDataDir=C:\Users\htikkas\AppData\Local\Temp\scoped_dir9472_15046}, takesHeapSnapshot=true, pageLoadStrategy=normal, strictFileInteractability=false, databaseEnabled=false, handlesAlerts=true, version=73.0.3683.103, browserConnectionEnabled=false, proxy=Proxy(), nativeEvents=true, locationContextEnabled=true, cssSelectorsEnabled=true}]
+Session ID: 58c7d2e7cea565d1e6c0df57814811ca
+2019-04-18 23:57:40 INFO  Driver:270 - embedScreenshot
+2019-04-18 23:57:42 INFO  Driver:72 - Cleaning up the browser
+2019-04-18 23:58:05 INFO  Hooks:58 - ***********************************************************************************************************
+2019-04-18 23:58:05 INFO  Hooks:67 -  Launch Browser: "chrome" on Environment:local
+2019-04-18 23:58:05 INFO  Driver:161 - OS Windows 10
+2019-04-18 23:58:10 INFO  FlyInMenuBehaviourSteps:64 - User is on portal's login screen
+2019-04-18 23:58:36 INFO  DatabaseConnection:33 - Get Access token
+2019-04-18 23:58:41 WARN  RequestSpecificationImpl$RestAssuredHttpBuilder:534 - Could not parse content-type: Response does not have a content-type header
+2019-04-18 23:58:43 ERROR UtilityMethods:110 - unknown error: Element <div class="single-filter-icon" style="cursor: pointer;">...</div> is not clickable at point (747, 129). Other element would receive the click: <div class="display-loading-main" style="display: block;">...</div>
+  (Session info: chrome=73.0.3683.103)
+  (Driver info: chromedriver=73.0.3683.68 (47787ec04b6e38e22703e856e101e840b65afe72),platform=Windows NT 10.0.17134 x86_64) (WARNING: The server did not provide any stacktrace information)
+Command duration or timeout: 68 milliseconds
+Build info: version: '3.4.0', revision: 'unknown', time: 'unknown'
+System info: host: 'HARSHALT-PC', ip: '10.0.75.1', os.name: 'Windows 10', os.arch: 'amd64', os.version: '10.0', java.version: '1.8.0_202'
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities [{mobileEmulationEnabled=false, timeouts={implicit=0.0, pageLoad=300000.0, script=30000.0}, hasTouchScreen=false, platform=XP, acceptSslCerts=false, goog:chromeOptions={debuggerAddress=localhost:50831}, acceptInsecureCerts=false, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, setWindowRect=true, unexpectedAlertBehaviour=ignore, applicationCacheEnabled=false, rotatable=false, networkConnectionEnabled=false, chrome={chromedriverVersion=73.0.3683.68 (47787ec04b6e38e22703e856e101e840b65afe72), userDataDir=C:\Users\htikkas\AppData\Local\Temp\scoped_dir15536_24274}, takesHeapSnapshot=true, pageLoadStrategy=normal, strictFileInteractability=false, databaseEnabled=false, handlesAlerts=true, version=73.0.3683.103, browserConnectionEnabled=false, proxy=Proxy(), nativeEvents=true, locationContextEnabled=true, cssSelectorsEnabled=true}]
+Session ID: 1b451d85d21b0e68ae548afd6b08407f
+2019-04-18 23:58:43 INFO  Driver:270 - embedScreenshot
+2019-04-18 23:58:44 INFO  Driver:72 - Cleaning up the browser
+2019-04-18 23:59:03 INFO  Hooks:58 - ***********************************************************************************************************
+2019-04-18 23:59:03 INFO  Hooks:67 -  Launch Browser: "chrome" on Environment:local
+2019-04-18 23:59:03 INFO  Driver:161 - OS Windows 10
+2019-04-18 23:59:08 INFO  FlyInMenuBehaviourSteps:64 - User is on portal's login screen
+2019-04-18 23:59:32 INFO  DatabaseConnection:33 - Get Access token
+2019-04-18 23:59:36 WARN  RequestSpecificationImpl$RestAssuredHttpBuilder:534 - Could not parse content-type: Response does not have a content-type header
+2019-04-18 23:59:38 ERROR UtilityMethods:110 - unknown error: Element <div class="single-filter-icon" style="cursor: pointer;">...</div> is not clickable at point (747, 129). Other element would receive the click: <div class="display-loading-main" style="display: block;">...</div>
+  (Session info: chrome=73.0.3683.103)
+  (Driver info: chromedriver=73.0.3683.68 (47787ec04b6e38e22703e856e101e840b65afe72),platform=Windows NT 10.0.17134 x86_64) (WARNING: The server did not provide any stacktrace information)
+Command duration or timeout: 67 milliseconds
+Build info: version: '3.4.0', revision: 'unknown', time: 'unknown'
+System info: host: 'HARSHALT-PC', ip: '10.0.75.1', os.name: 'Windows 10', os.arch: 'amd64', os.version: '10.0', java.version: '1.8.0_202'
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities [{mobileEmulationEnabled=false, timeouts={implicit=0.0, pageLoad=300000.0, script=30000.0}, hasTouchScreen=false, platform=XP, acceptSslCerts=false, goog:chromeOptions={debuggerAddress=localhost:50927}, acceptInsecureCerts=false, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, setWindowRect=true, unexpectedAlertBehaviour=ignore, applicationCacheEnabled=false, rotatable=false, networkConnectionEnabled=false, chrome={chromedriverVersion=73.0.3683.68 (47787ec04b6e38e22703e856e101e840b65afe72), userDataDir=C:\Users\htikkas\AppData\Local\Temp\scoped_dir12220_1995}, takesHeapSnapshot=true, pageLoadStrategy=normal, strictFileInteractability=false, databaseEnabled=false, handlesAlerts=true, version=73.0.3683.103, browserConnectionEnabled=false, proxy=Proxy(), nativeEvents=true, locationContextEnabled=true, cssSelectorsEnabled=true}]
+Session ID: 7be1fb7be6faa95a027c03088a4832f1
+2019-04-18 23:59:38 INFO  Driver:270 - embedScreenshot
+2019-04-18 23:59:40 INFO  Driver:72 - Cleaning up the browser
+2019-04-21 00:07:46 INFO  Hooks:58 - ***********************************************************************************************************
+2019-04-21 00:07:46 INFO  Hooks:67 -  Launch Browser: "chrome" on Environment:local
+2019-04-21 00:07:46 INFO  Driver:161 - OS Windows 10
+2019-04-21 00:08:06 INFO  FlyInMenuBehaviourSteps:64 - User is on portal's login screen
+2019-04-21 00:08:41 INFO  DatabaseConnection:33 - Get Access token
+2019-04-21 00:08:48 WARN  RequestSpecificationImpl$RestAssuredHttpBuilder:534 - Could not parse content-type: Response does not have a content-type header
+2019-04-21 00:21:09 INFO  Standard_Overview_Table_Steps:1562 - Scenario 43_4 completed
+2019-04-21 00:21:11 INFO  Driver:72 - Cleaning up the browser
+2019-04-21 00:21:33 INFO  Hooks:58 - ***********************************************************************************************************
+2019-04-21 00:21:33 INFO  Hooks:67 -  Launch Browser: "chrome" on Environment:local
+2019-04-21 00:21:33 INFO  Driver:161 - OS Windows 10
+2019-04-21 00:21:44 INFO  FlyInMenuBehaviourSteps:64 - User is on portal's login screen
+2019-04-21 00:22:09 INFO  DatabaseConnection:33 - Get Access token
+2019-04-21 00:22:14 WARN  RequestSpecificationImpl$RestAssuredHttpBuilder:534 - Could not parse content-type: Response does not have a content-type header
+2019-04-21 00:22:16 ERROR UtilityMethods:110 - unknown error: Element <div class="single-filter-icon" style="cursor: pointer;">...</div> is not clickable at point (747, 129). Other element would receive the click: <div class="display-loading-main" style="display: block;">...</div>
+  (Session info: chrome=73.0.3683.103)
+  (Driver info: chromedriver=73.0.3683.68 (47787ec04b6e38e22703e856e101e840b65afe72),platform=Windows NT 10.0.17134 x86_64) (WARNING: The server did not provide any stacktrace information)
+Command duration or timeout: 76 milliseconds
+Build info: version: '3.4.0', revision: 'unknown', time: 'unknown'
+System info: host: 'HARSHALT-PC', ip: '10.0.75.1', os.name: 'Windows 10', os.arch: 'amd64', os.version: '10.0', java.version: '1.8.0_202'
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities [{mobileEmulationEnabled=false, timeouts={implicit=0.0, pageLoad=300000.0, script=30000.0}, hasTouchScreen=false, platform=XP, acceptSslCerts=false, goog:chromeOptions={debuggerAddress=localhost:56669}, acceptInsecureCerts=false, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, setWindowRect=true, unexpectedAlertBehaviour=ignore, applicationCacheEnabled=false, rotatable=false, networkConnectionEnabled=false, chrome={chromedriverVersion=73.0.3683.68 (47787ec04b6e38e22703e856e101e840b65afe72), userDataDir=C:\Users\htikkas\AppData\Local\Temp\scoped_dir11944_28509}, takesHeapSnapshot=true, pageLoadStrategy=normal, strictFileInteractability=false, databaseEnabled=false, handlesAlerts=true, version=73.0.3683.103, browserConnectionEnabled=false, proxy=Proxy(), nativeEvents=true, locationContextEnabled=true, cssSelectorsEnabled=true}]
+Session ID: 65ab7905b2647794ff9e5bea3118b3e6
+2019-04-21 00:22:16 INFO  Driver:270 - embedScreenshot
+2019-04-21 00:22:18 INFO  Driver:72 - Cleaning up the browser
+2019-04-21 00:23:01 INFO  Hooks:58 - ***********************************************************************************************************
+2019-04-21 00:23:01 INFO  Hooks:67 -  Launch Browser: "chrome" on Environment:local
+2019-04-21 00:23:01 INFO  Driver:161 - OS Windows 10
+2019-04-21 00:23:07 INFO  FlyInMenuBehaviourSteps:64 - User is on portal's login screen
+2019-04-21 00:23:31 INFO  DatabaseConnection:33 - Get Access token
+2019-04-21 00:23:34 WARN  RequestSpecificationImpl$RestAssuredHttpBuilder:534 - Could not parse content-type: Response does not have a content-type header
+2019-04-21 00:25:00 INFO  Standard_Overview_Table_Steps:1562 - Scenario 43_4 completed
+2019-04-21 00:25:01 INFO  Driver:72 - Cleaning up the browser
+2019-04-21 00:27:04 INFO  Hooks:58 - ***********************************************************************************************************
+2019-04-21 00:27:04 INFO  Hooks:67 -  Launch Browser: "chrome" on Environment:local
+2019-04-21 00:27:04 INFO  Driver:161 - OS Windows 10
+2019-04-21 00:27:12 INFO  FlyInMenuBehaviourSteps:64 - User is on portal's login screen
+2019-04-21 00:27:34 INFO  DatabaseConnection:33 - Get Access token
+2019-04-21 00:27:39 WARN  RequestSpecificationImpl$RestAssuredHttpBuilder:534 - Could not parse content-type: Response does not have a content-type header
+2019-04-21 00:27:46 INFO  Standard_Overview_Table_Steps:1367 - Scenario 43_5 completed
+2019-04-21 00:27:47 INFO  Driver:72 - Cleaning up the browser
+2019-04-21 00:28:57 INFO  Hooks:58 - ***********************************************************************************************************
+2019-04-21 00:28:57 INFO  Hooks:67 -  Launch Browser: "chrome" on Environment:local
+2019-04-21 00:28:57 INFO  Driver:161 - OS Windows 10
+2019-04-21 00:29:04 INFO  FlyInMenuBehaviourSteps:64 - User is on portal's login screen
+2019-04-21 00:29:27 INFO  DatabaseConnection:33 - Get Access token
+2019-04-21 00:29:32 WARN  RequestSpecificationImpl$RestAssuredHttpBuilder:534 - Could not parse content-type: Response does not have a content-type header
+2019-04-21 00:29:39 INFO  Driver:270 - embedScreenshot
+2019-04-21 00:29:40 INFO  Driver:72 - Cleaning up the browser
+2019-04-21 00:30:43 INFO  Hooks:58 - ***********************************************************************************************************
+2019-04-21 00:30:43 INFO  Hooks:67 -  Launch Browser: "chrome" on Environment:local
+2019-04-21 00:30:43 INFO  Driver:161 - OS Windows 10
+2019-04-21 00:30:50 INFO  FlyInMenuBehaviourSteps:64 - User is on portal's login screen
+2019-04-21 00:31:17 INFO  DatabaseConnection:33 - Get Access token
+2019-04-21 00:31:24 WARN  RequestSpecificationImpl$RestAssuredHttpBuilder:534 - Could not parse content-type: Response does not have a content-type header
+2019-04-21 00:31:48 ERROR UtilityMethods:110 - Index: 0, Size: 0
+2019-04-21 00:31:48 INFO  Driver:270 - embedScreenshot
+2019-04-21 00:31:50 INFO  Driver:72 - Cleaning up the browser
+2019-04-21 23:15:19 INFO  Hooks:58 - ***********************************************************************************************************
+2019-04-21 23:15:19 INFO  Hooks:67 -  Launch Browser: "chrome" on Environment:local
+2019-04-21 23:15:19 INFO  Driver:161 - OS Windows 10
+2019-04-21 23:16:05 INFO  FlyInMenuBehaviourSteps:64 - User is on portal's login screen
+2019-04-21 23:16:37 INFO  DatabaseConnection:33 - Get Access token
+2019-04-21 23:16:44 WARN  RequestSpecificationImpl$RestAssuredHttpBuilder:534 - Could not parse content-type: Response does not have a content-type header
+2019-04-22 12:10:39 INFO  Hooks:58 - ***********************************************************************************************************
+2019-04-22 12:10:39 INFO  Hooks:67 -  Launch Browser: "chrome" on Environment:local
+2019-04-22 12:10:39 INFO  Driver:161 - OS Windows 10
+2019-04-22 12:11:46 INFO  FlyInMenuBehaviourSteps:64 - User is on portal's login screen
+2019-04-22 12:12:40 INFO  DatabaseConnection:33 - Get Access token
+2019-04-22 12:12:47 WARN  RequestSpecificationImpl$RestAssuredHttpBuilder:534 - Could not parse content-type: Response does not have a content-type header
+2019-04-22 12:16:24 INFO  Hooks:58 - ***********************************************************************************************************
+2019-04-22 12:16:24 INFO  Hooks:67 -  Launch Browser: "chrome" on Environment:local
+2019-04-22 12:16:24 INFO  Driver:161 - OS Windows 10
+2019-04-22 12:16:33 INFO  FlyInMenuBehaviourSteps:64 - User is on portal's login screen
+2019-04-22 12:16:49 ERROR UtilityMethods:110 - no such element: Unable to locate element: {"method":"xpath","selector":"//input[@name='username']"}
+  (Session info: chrome=73.0.3683.103)
+  (Driver info: chromedriver=73.0.3683.68 (47787ec04b6e38e22703e856e101e840b65afe72),platform=Windows NT 10.0.17134 x86_64) (WARNING: The server did not provide any stacktrace information)
+Command duration or timeout: 10.09 seconds
+For documentation on this error, please visit: http://seleniumhq.org/exceptions/no_such_element.html
+Build info: version: '3.4.0', revision: 'unknown', time: 'unknown'
+System info: host: 'HARSHALT-PC', ip: '10.0.75.1', os.name: 'Windows 10', os.arch: 'amd64', os.version: '10.0', java.version: '1.8.0_202'
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities [{mobileEmulationEnabled=false, timeouts={implicit=0.0, pageLoad=300000.0, script=30000.0}, hasTouchScreen=false, platform=XP, acceptSslCerts=false, goog:chromeOptions={debuggerAddress=localhost:61535}, acceptInsecureCerts=false, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, setWindowRect=true, unexpectedAlertBehaviour=ignore, applicationCacheEnabled=false, rotatable=false, networkConnectionEnabled=false, chrome={chromedriverVersion=73.0.3683.68 (47787ec04b6e38e22703e856e101e840b65afe72), userDataDir=C:\Users\htikkas\AppData\Local\Temp\scoped_dir14596_16573}, takesHeapSnapshot=true, pageLoadStrategy=normal, strictFileInteractability=false, databaseEnabled=false, handlesAlerts=true, version=73.0.3683.103, browserConnectionEnabled=false, proxy=Proxy(), nativeEvents=true, locationContextEnabled=true, cssSelectorsEnabled=true}]
+Session ID: fc2c060766663617c01602dee3d113a2
+*** Element info: {Using=xpath, value=//input[@name='username']}
+2019-04-22 12:16:49 INFO  Driver:270 - embedScreenshot
+2019-04-22 12:16:51 INFO  Driver:72 - Cleaning up the browser
+2019-04-22 12:17:10 INFO  Hooks:58 - ***********************************************************************************************************
+2019-04-22 12:17:10 INFO  Hooks:67 -  Launch Browser: "chrome" on Environment:local
+2019-04-22 12:17:10 INFO  Driver:161 - OS Windows 10
+2019-04-22 12:17:17 INFO  FlyInMenuBehaviourSteps:64 - User is on portal's login screen
+2019-04-22 12:17:32 ERROR UtilityMethods:110 - no such element: Unable to locate element: {"method":"xpath","selector":"//input[@name='username']"}
+  (Session info: chrome=73.0.3683.103)
+  (Driver info: chromedriver=73.0.3683.68 (47787ec04b6e38e22703e856e101e840b65afe72),platform=Windows NT 10.0.17134 x86_64) (WARNING: The server did not provide any stacktrace information)
+Command duration or timeout: 10.04 seconds
+For documentation on this error, please visit: http://seleniumhq.org/exceptions/no_such_element.html
+Build info: version: '3.4.0', revision: 'unknown', time: 'unknown'
+System info: host: 'HARSHALT-PC', ip: '10.0.75.1', os.name: 'Windows 10', os.arch: 'amd64', os.version: '10.0', java.version: '1.8.0_202'
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities [{mobileEmulationEnabled=false, timeouts={implicit=0.0, pageLoad=300000.0, script=30000.0}, hasTouchScreen=false, platform=XP, acceptSslCerts=false, goog:chromeOptions={debuggerAddress=localhost:61566}, acceptInsecureCerts=false, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, setWindowRect=true, unexpectedAlertBehaviour=ignore, applicationCacheEnabled=false, rotatable=false, networkConnectionEnabled=false, chrome={chromedriverVersion=73.0.3683.68 (47787ec04b6e38e22703e856e101e840b65afe72), userDataDir=C:\Users\htikkas\AppData\Local\Temp\scoped_dir20416_4745}, takesHeapSnapshot=true, pageLoadStrategy=normal, strictFileInteractability=false, databaseEnabled=false, handlesAlerts=true, version=73.0.3683.103, browserConnectionEnabled=false, proxy=Proxy(), nativeEvents=true, locationContextEnabled=true, cssSelectorsEnabled=true}]
+Session ID: cb1741017d060c67f998aced65995c9f
+*** Element info: {Using=xpath, value=//input[@name='username']}
+2019-04-22 12:17:32 INFO  Driver:270 - embedScreenshot
+2019-04-22 12:17:34 INFO  Driver:72 - Cleaning up the browser
+2019-04-22 12:18:12 INFO  Hooks:58 - ***********************************************************************************************************
+2019-04-22 12:18:12 INFO  Hooks:67 -  Launch Browser: "chrome" on Environment:local
+2019-04-22 12:18:12 INFO  Driver:161 - OS Windows 10
+2019-04-22 12:18:18 INFO  FlyInMenuBehaviourSteps:64 - User is on portal's login screen
+2019-04-22 12:18:33 ERROR UtilityMethods:110 - no such element: Unable to locate element: {"method":"xpath","selector":"//input[@name='username']"}
+  (Session info: chrome=73.0.3683.103)
+  (Driver info: chromedriver=73.0.3683.68 (47787ec04b6e38e22703e856e101e840b65afe72),platform=Windows NT 10.0.17134 x86_64) (WARNING: The server did not provide any stacktrace information)
+Command duration or timeout: 10.08 seconds
+For documentation on this error, please visit: http://seleniumhq.org/exceptions/no_such_element.html
+Build info: version: '3.4.0', revision: 'unknown', time: 'unknown'
+System info: host: 'HARSHALT-PC', ip: '10.0.75.1', os.name: 'Windows 10', os.arch: 'amd64', os.version: '10.0', java.version: '1.8.0_202'
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities [{mobileEmulationEnabled=false, timeouts={implicit=0.0, pageLoad=300000.0, script=30000.0}, hasTouchScreen=false, platform=XP, acceptSslCerts=false, goog:chromeOptions={debuggerAddress=localhost:61606}, acceptInsecureCerts=false, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, setWindowRect=true, unexpectedAlertBehaviour=ignore, applicationCacheEnabled=false, rotatable=false, networkConnectionEnabled=false, chrome={chromedriverVersion=73.0.3683.68 (47787ec04b6e38e22703e856e101e840b65afe72), userDataDir=C:\Users\htikkas\AppData\Local\Temp\scoped_dir8856_1755}, takesHeapSnapshot=true, pageLoadStrategy=normal, strictFileInteractability=false, databaseEnabled=false, handlesAlerts=true, version=73.0.3683.103, browserConnectionEnabled=false, proxy=Proxy(), nativeEvents=true, locationContextEnabled=true, cssSelectorsEnabled=true}]
+Session ID: 2723c23244f5e8115b99c9a222810fc6
+*** Element info: {Using=xpath, value=//input[@name='username']}
+2019-04-22 12:18:33 INFO  Driver:270 - embedScreenshot
+2019-04-22 12:18:35 INFO  Driver:72 - Cleaning up the browser
+2019-04-22 12:19:03 INFO  Hooks:58 - ***********************************************************************************************************
+2019-04-22 12:19:03 INFO  Hooks:67 -  Launch Browser: "chrome" on Environment:local
+2019-04-22 12:19:03 INFO  Driver:161 - OS Windows 10
+2019-04-22 12:19:09 INFO  FlyInMenuBehaviourSteps:64 - User is on portal's login screen
+2019-04-22 12:19:54 ERROR UtilityMethods:110 - no such element: Unable to locate element: {"method":"xpath","selector":"//li[contains(text(),'Overview')]"}
+  (Session info: chrome=73.0.3683.103)
+  (Driver info: chromedriver=73.0.3683.68 (47787ec04b6e38e22703e856e101e840b65afe72),platform=Windows NT 10.0.17134 x86_64) (WARNING: The server did not provide any stacktrace information)
+Command duration or timeout: 10.03 seconds
+For documentation on this error, please visit: http://seleniumhq.org/exceptions/no_such_element.html
+Build info: version: '3.4.0', revision: 'unknown', time: 'unknown'
+System info: host: 'HARSHALT-PC', ip: '10.0.75.1', os.name: 'Windows 10', os.arch: 'amd64', os.version: '10.0', java.version: '1.8.0_202'
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities [{mobileEmulationEnabled=false, timeouts={implicit=0.0, pageLoad=300000.0, script=30000.0}, hasTouchScreen=false, platform=XP, acceptSslCerts=false, goog:chromeOptions={debuggerAddress=localhost:61633}, acceptInsecureCerts=false, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, setWindowRect=true, unexpectedAlertBehaviour=ignore, applicationCacheEnabled=false, rotatable=false, networkConnectionEnabled=false, chrome={chromedriverVersion=73.0.3683.68 (47787ec04b6e38e22703e856e101e840b65afe72), userDataDir=C:\Users\htikkas\AppData\Local\Temp\scoped_dir20652_8074}, takesHeapSnapshot=true, pageLoadStrategy=normal, strictFileInteractability=false, databaseEnabled=false, handlesAlerts=true, version=73.0.3683.103, browserConnectionEnabled=false, proxy=Proxy(), nativeEvents=true, locationContextEnabled=true, cssSelectorsEnabled=true}]
+Session ID: 77d232c775fc4a3eb7a538f91192117b
+*** Element info: {Using=xpath, value=//li[contains(text(),'Overview')]}
+2019-04-22 12:19:54 INFO  Driver:270 - embedScreenshot
+2019-04-22 12:19:56 INFO  Driver:72 - Cleaning up the browser
+2019-04-22 12:22:38 INFO  Hooks:58 - ***********************************************************************************************************
+2019-04-22 12:22:38 INFO  Hooks:67 -  Launch Browser: "chrome" on Environment:local
+2019-04-22 12:22:38 INFO  Driver:161 - OS Windows 10
+2019-04-22 12:22:44 INFO  FlyInMenuBehaviourSteps:64 - User is on portal's login screen
+2019-04-22 12:23:05 INFO  DatabaseConnection:33 - Get Access token
+2019-04-22 12:23:09 WARN  RequestSpecificationImpl$RestAssuredHttpBuilder:534 - Could not parse content-type: Response does not have a content-type header
+2019-04-22 12:23:11 ERROR UtilityMethods:110 - unknown error: Element <div class="single-filter-icon" style="cursor: pointer;">...</div> is not clickable at point (747, 129). Other element would receive the click: <div class="display-loading-main" style="display: block;">...</div>
+  (Session info: chrome=73.0.3683.103)
+  (Driver info: chromedriver=73.0.3683.68 (47787ec04b6e38e22703e856e101e840b65afe72),platform=Windows NT 10.0.17134 x86_64) (WARNING: The server did not provide any stacktrace information)
+Command duration or timeout: 68 milliseconds
+Build info: version: '3.4.0', revision: 'unknown', time: 'unknown'
+System info: host: 'HARSHALT-PC', ip: '10.0.75.1', os.name: 'Windows 10', os.arch: 'amd64', os.version: '10.0', java.version: '1.8.0_202'
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities [{mobileEmulationEnabled=false, timeouts={implicit=0.0, pageLoad=300000.0, script=30000.0}, hasTouchScreen=false, platform=XP, acceptSslCerts=false, goog:chromeOptions={debuggerAddress=localhost:61679}, acceptInsecureCerts=false, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, setWindowRect=true, unexpectedAlertBehaviour=ignore, applicationCacheEnabled=false, rotatable=false, networkConnectionEnabled=false, chrome={chromedriverVersion=73.0.3683.68 (47787ec04b6e38e22703e856e101e840b65afe72), userDataDir=C:\Users\htikkas\AppData\Local\Temp\scoped_dir15860_8955}, takesHeapSnapshot=true, pageLoadStrategy=normal, strictFileInteractability=false, databaseEnabled=false, handlesAlerts=true, version=73.0.3683.103, browserConnectionEnabled=false, proxy=Proxy(), nativeEvents=true, locationContextEnabled=true, cssSelectorsEnabled=true}]
+Session ID: f7624beb724312bccc37fe34053e19fa
+2019-04-22 12:23:11 INFO  Driver:270 - embedScreenshot
+2019-04-22 12:23:13 INFO  Driver:72 - Cleaning up the browser
+2019-04-22 12:24:55 INFO  Hooks:58 - ***********************************************************************************************************
+2019-04-22 12:24:55 INFO  Hooks:67 -  Launch Browser: "chrome" on Environment:local
+2019-04-22 12:24:55 INFO  Driver:161 - OS Windows 10
+2019-04-22 12:25:02 INFO  FlyInMenuBehaviourSteps:64 - User is on portal's login screen
+2019-04-22 12:25:23 INFO  DatabaseConnection:33 - Get Access token
+2019-04-22 12:25:28 WARN  RequestSpecificationImpl$RestAssuredHttpBuilder:534 - Could not parse content-type: Response does not have a content-type header
+2019-04-22 12:25:30 ERROR UtilityMethods:110 - unknown error: Element <div class="single-filter-icon" style="cursor: pointer;">...</div> is not clickable at point (747, 129). Other element would receive the click: <div class="display-loading-main" style="display: block;">...</div>
+  (Session info: chrome=73.0.3683.103)
+  (Driver info: chromedriver=73.0.3683.68 (47787ec04b6e38e22703e856e101e840b65afe72),platform=Windows NT 10.0.17134 x86_64) (WARNING: The server did not provide any stacktrace information)
+Command duration or timeout: 65 milliseconds
+Build info: version: '3.4.0', revision: 'unknown', time: 'unknown'
+System info: host: 'HARSHALT-PC', ip: '10.0.75.1', os.name: 'Windows 10', os.arch: 'amd64', os.version: '10.0', java.version: '1.8.0_202'
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities [{mobileEmulationEnabled=false, timeouts={implicit=0.0, pageLoad=300000.0, script=30000.0}, hasTouchScreen=false, platform=XP, acceptSslCerts=false, goog:chromeOptions={debuggerAddress=localhost:61743}, acceptInsecureCerts=false, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, setWindowRect=true, unexpectedAlertBehaviour=ignore, applicationCacheEnabled=false, rotatable=false, networkConnectionEnabled=false, chrome={chromedriverVersion=73.0.3683.68 (47787ec04b6e38e22703e856e101e840b65afe72), userDataDir=C:\Users\htikkas\AppData\Local\Temp\scoped_dir7452_11504}, takesHeapSnapshot=true, pageLoadStrategy=normal, strictFileInteractability=false, databaseEnabled=false, handlesAlerts=true, version=73.0.3683.103, browserConnectionEnabled=false, proxy=Proxy(), nativeEvents=true, locationContextEnabled=true, cssSelectorsEnabled=true}]
+Session ID: 8ffbf531c80bb98f425d8234f272d97b
+2019-04-22 12:25:30 INFO  Driver:270 - embedScreenshot
+2019-04-22 12:25:31 INFO  Driver:72 - Cleaning up the browser

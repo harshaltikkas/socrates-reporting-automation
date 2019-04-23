@@ -13,6 +13,7 @@ import com.google.common.base.Verify;
 import com.jayway.restassured.RestAssured;
 import com.jayway.restassured.path.json.JsonPath;
 import com.jayway.restassured.response.Response;
+
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -29,7 +30,8 @@ public class DatabaseConnection {
 	 * @return
 	 */
 	public static String getToken() {
-		log.info("Get Access token");		
+		log.info("Get Access token");	
+		String token="";
 		try {
 			prop = FileRead.readProperties();
 			String payload = "{\n" + "  \"username\": \"superadmin\",\n" + "  \"password\": \"password\",\n"
@@ -38,16 +40,17 @@ public class DatabaseConnection {
 			String apiUrl ="https://atlantis-api.cf:8080/api/v1/auth/create-token";
 			Response response = RestAssured.given().body(payload)
 					.get(apiUrl);
-			if (!(response.getStatusCode() == 200)) {
+			if (response.getStatusCode() != 200) {
 				log.info("Error occurred. status code : " + response.getStatusCode());
 				return null;
 			} else {
-				return new JsonPath(response.asString()).getString("token");
+				token=new JsonPath(response.asString()).getString("token");
 			}
 		} catch (Exception e) {
+			log.error(e.getMessage());
 			UtilityMethods.processException(e);
-			return null;
-		}		
+		}
+		return token;
 	}
 	
 	/**
@@ -61,7 +64,7 @@ public class DatabaseConnection {
 			prop = FileRead.readProperties();
 			String apiUrl = prop.getProperty("apiURL") + "/schools?page=0&size=10000&direction=ASC";
 			Response response = RestAssured.given().header("Authorization", "Bearer " + Standard_Overview_Table_Steps.token).get(apiUrl);
-			if (!(response.getStatusCode() == 200)) {
+			if (response.getStatusCode() != 200) {
 				log.info("Error occurred. status code : " + response.getStatusCode());
 				return null;
 			} else {
@@ -71,8 +74,8 @@ public class DatabaseConnection {
 				schoolID=Integer.parseInt(schoolidlist.get(schoolnameslist.indexOf(schoolName)).toString());
 			}	
 		} catch (Exception e) {
+			log.error(e.getMessage());
 			UtilityMethods.processException(e);
-			return null;
 		}
 		return schoolID;
 	}
@@ -88,7 +91,7 @@ public class DatabaseConnection {
 			prop = FileRead.readProperties();
 			String apiUrl = prop.getProperty("apiURL") + "/schools?page=0&size=10000&direction=ASC";
 			Response response = RestAssured.given().header("Authorization", "Bearer " + getToken()).get(apiUrl);
-			if (!(response.getStatusCode() == 200)) {
+			if (response.getStatusCode() != 200) {
 				log.info("Error occurred. status code : " + response.getStatusCode());
 				return null;
 			} else {
@@ -98,8 +101,8 @@ public class DatabaseConnection {
 				}
 			}	
 		} catch (Exception e) {
+			log.error(e.getMessage());
 			UtilityMethods.processException(e);
-			return null;
 		}
 		return schoolMap;
 	}
@@ -115,7 +118,7 @@ public class DatabaseConnection {
 			prop = FileRead.readProperties();
 			String apiUrl = prop.getProperty("apiURL") + "/classes?schoolId="+getSchoolIDBySchoolName(schoolName)+"&districtId="+districtId;
 			Response response = RestAssured.given().header("Authorization", "Bearer " + getToken()).get(apiUrl);
-			if (!(response.getStatusCode() == 200)) {
+			if (response.getStatusCode() != 200) {
 				log.info("Error occurred. status code : " + response.getStatusCode());
 				return null;
 			} else {
@@ -125,8 +128,8 @@ public class DatabaseConnection {
 				}
 			}	
 		} catch (Exception e) {
+			log.error(e.getMessage());
 			UtilityMethods.processException(e);
-			return null;
 		}
 		return classMap;
 	}
@@ -140,8 +143,8 @@ public class DatabaseConnection {
 		try {
 			schoolName=getAllSchoolNames().keySet().stream().findFirst().get();
 		} catch (Exception e) {
+			log.error(e.getMessage());
 			UtilityMethods.processException(e);
-			return null;
 		}
 		return schoolName;
 	}
@@ -150,14 +153,13 @@ public class DatabaseConnection {
 	 * This method is used to return first alpha class based on first alpha school 
 	 * @return
 	 */
-	public static String getFirstAlphaClassNameBySchoolName() {
+	public static String getFirstAlphaClassNameBySchoolName(String schoolName) {
 		String className = "";
 		try {
-			String schoolName=getAllSchoolNames().keySet().stream().findFirst().get();
 			className=getAllClassesNamesBySchoolName(schoolName).keySet().stream().findFirst().get();
 		} catch (Exception e) {
+			log.error(e.getMessage());
 			UtilityMethods.processException(e);
-			return null;
 		}
 		return className;
 	}
@@ -168,13 +170,13 @@ public class DatabaseConnection {
 	 * @param className
 	 * @return
 	 */
-	public static Map<String,Integer> getAllStudentsByClassNameAndSchoolName(String schoolName,String className) {
+	public static Map<String,Integer> getAllStudentsByClassNameAndSchoolName(Integer schoolId,Integer classId) {
 		Map<String,Integer> studentMap=new TreeMap<String,Integer>();
 		try {
 			prop = FileRead.readProperties();
-			String apiUrl = prop.getProperty("apiURL") + "/students?schoolId="+getSchoolIDBySchoolName(schoolName)+"&districtId="+districtId+"&classId="+getClassIDBySchoolNameAndClassName(schoolName, className);
+			String apiUrl = prop.getProperty("apiURL") + "/students?schoolId="+schoolId+"&districtId="+districtId+"&classId="+classId;
 			Response response = RestAssured.given().header("Authorization", "Bearer " + Standard_Overview_Table_Steps.token).get(apiUrl);
-			if (!(response.getStatusCode() == 200)) {
+			if (response.getStatusCode() != 200) {
 				log.info("Error occurred. status code : " + response.getStatusCode());
 				return null;
 			} else {
@@ -184,8 +186,8 @@ public class DatabaseConnection {
 				}
 			}	
 		} catch (Exception e) {
+			log.error(e.getMessage());
 			UtilityMethods.processException(e);
-			return null;
 		}
 		return studentMap;
 	}
@@ -201,7 +203,7 @@ public class DatabaseConnection {
 			prop = FileRead.readProperties();
 			String apiUrl = prop.getProperty("apiURL") + "/classes?schoolId="+getSchoolIDBySchoolName(schoolName)+"&districtId="+districtId;
 			Response response = RestAssured.given().header("Authorization", "Bearer " + Standard_Overview_Table_Steps.token).get(apiUrl);
-			if (!(response.getStatusCode() == 200)) {
+			if (response.getStatusCode() != 200) {
 				log.info("Error occurred. status code : " + response.getStatusCode());
 				return null;
 			} else {
@@ -211,8 +213,8 @@ public class DatabaseConnection {
 				classID=Integer.parseInt(classIdList.get(classNamesList.indexOf(className)).toString());
 			}	
 		} catch (Exception e) {
+			log.error(e.getMessage());
 			UtilityMethods.processException(e);
-			return null;
 		}
 		return classID;
 	}
@@ -232,7 +234,7 @@ public class DatabaseConnection {
 			prop = FileRead.readProperties();
 			String apiUrl = prop.getProperty("apiURL") +"/students?schoolId="+schoolId+"&districtId="+districtId+"&classId="+classId;
 			Response response = RestAssured.given().header("Authorization", "Bearer " + Standard_Overview_Table_Steps.token).get(apiUrl);
-			if (!(response.getStatusCode() == 200)) {
+			if (response.getStatusCode() != 200) {
 				log.info("Error occurred. status code : " + response.getStatusCode());
 				return null;
 			} else {
@@ -243,12 +245,38 @@ public class DatabaseConnection {
 				studentName = studentMap.keySet().stream().findFirst().get()+" "+"("+studentMap.get(studentMap.keySet().toArray()[0])+" )";
 			}
 		} catch (Exception e) {
+			log.error(e.getMessage());
 			UtilityMethods.processException(e);
-			return null;
 		}
 		return studentName;
 	}
 	
+	
+	/**
+	 * This method is used to return the student name based on student id
+	 * @return
+	 */
+	public static String getStudentNameByStudentId(Integer schoolId,Integer classId,Integer studentId) {
+		String studentName = "";
+		try {
+			prop = FileRead.readProperties();
+			String apiUrl = prop.getProperty("apiURL") +"/students?schoolId="+schoolId+"&districtId="+districtId+"&classId="+classId;
+			Response response = RestAssured.given().header("Authorization", "Bearer " + Standard_Overview_Table_Steps.token).get(apiUrl);
+			if (response.getStatusCode() != 200) {
+				log.info("Error occurred. status code : " + response.getStatusCode());
+				return null;
+			} else {
+				List<Object> studentNamesList = new JsonPath(response.asString()).getList("value.name");
+				List<Object> studentIdList=new JsonPath(response.asString()).getList("value.id");
+				Verify.verify(studentIdList.contains(String.valueOf(studentId)));
+				studentName=studentNamesList.get(studentIdList.indexOf(String.valueOf(studentId))).toString();
+			}
+		} catch (Exception e) {
+			log.error(e.getMessage());
+			UtilityMethods.processException(e);
+		}
+		return studentName;
+	}
 	public static void main(String args[]) {
 		/*List<Model> lm=getStandardAvgPerListInClassContext(ConnectionPool.getDBConnection(), 509446, 1213286, "Language");
 		for (Model model : lm) {
@@ -265,7 +293,8 @@ public class DatabaseConnection {
 		//System.out.println(getAllStudentsByClassNameAndSchoolName("Church of England Primary School", "School V Trainer Class (PD)"));
 		//System.out.println(getFirstAlphaLastNameStudentByAlphaClassAndSchoolName());
 		//System.out.println(getStandardAvgPerListInClassContext(ConnectionPool.getDBConnection(), 509446, 1213286, "Language"));
-		System.out.println(getTestScoreDetailsInClassContext(ConnectionPool.getDBConnection(), 509446, 1213286, "Grade 4 Unit 1 Assessment", "CCSS.ELA-Literacy.L.4.2"));
+		//System.out.println(getTestScoreDetailsInClassContext(ConnectionPool.getDBConnection(), 509446, 1213286, "Grade 4 Unit 1 Assessment", "CCSS.ELA-Literacy.L.4.2"));
+		System.out.println(getStudentDetailListInSPInClassByStrand(ConnectionPool.getDBConnection(), "Church of England Primary School", "School V Trainer Class (PD)", "Language"));
 	}
 	
 	
@@ -290,6 +319,7 @@ public class DatabaseConnection {
 			}
 			//con.close();
 		} catch (Exception e) {
+			log.error(e.getMessage());
 			System.out.println(e.getMessage());
 		}		
 		return strandlist;
@@ -327,6 +357,7 @@ public class DatabaseConnection {
 			}
 			//con.close();
 		} catch (Exception e) {
+			log.error(e.getMessage());
 			System.out.println(e.getMessage());
 		}
 		return list;
@@ -363,6 +394,7 @@ public class DatabaseConnection {
 			}
 			//con.close();
 		} catch (Exception e) {
+			log.error(e.getMessage());
 			System.out.println(e.getMessage());
 		}
 		return list;
@@ -377,13 +409,13 @@ public class DatabaseConnection {
 	 * @param standard_id
 	 * @return
 	 */
-	public static List<Model> getTestScoreDetailsInClassContext(Connection con,Integer schoolId,Integer classId,String component_title,String standard_id) {
+	public static List<Model> getTestScoreDetailsInSPInClassContext(Connection con,Integer schoolId,Integer classId,String component_title,String standard_id) {
 		List<Model> list=new ArrayList<Model>();
 		List<Integer> qList=new ArrayList<>(); 
 		try {
 			Statement stmt = con.createStatement();
 			ResultSet rs = null;
-			String questionStr = "select distinct question_no   from bec_edw_dev.bu_strand_details_vw  WHERE bu_school_id = "+schoolId+" " + 
+			String questionStr = "select distinct question_no from bec_edw_dev.bu_strand_details_vw  WHERE bu_school_id = "+schoolId+" " + 
 					"AND collective_noun_id = "+classId+" and component_title='"+component_title+"'  AND " + 
 					"standard_id='"+standard_id+"' order by question_no ";
 			rs = stmt.executeQuery(questionStr);
@@ -406,13 +438,92 @@ public class DatabaseConnection {
 				
 			//con.close();
 		} catch (Exception e) {
-			System.out.println(e.getMessage());
+			log.error(e.getMessage());
+			UtilityMethods.processException(e);
+		}
+		return list;
+	}
+	
+	/**
+	 * This method is used to fetch no. of questions, student name and student test score avg from DB for SP Context
+	 * @param con
+	 * @param schoolName
+	 * @param className
+	 * @param strandName
+	 * @return
+	 */
+	public static List<Model> getStudentDetailListInSPInClassByStrand(Connection con, String schoolName, String className,
+			String strandName) {
+		List<Model> list = new ArrayList<Model>();
+		int schoolId = DatabaseConnection.getSchoolIDBySchoolName(schoolName);
+		int classId = DatabaseConnection.getClassIDBySchoolNameAndClassName(schoolName, className);
+		try {
+			Statement stmt = con.createStatement();
+			ResultSet rs = null;
+			String str = "";
+			str = " SELECT student_id,COUNT(DISTINCT identifier) AS no_of_question,ROUND((sum(score) / sum(max_score))*100) AS Student_Score\r\n"
+					+ "FROM bec_edw_dev.bu_strand_details_vw WHERE bu_school_id = " + schoolId + "\r\n"
+					+ "AND   collective_noun_id = " + classId
+					+ " AND   component_title IN (SELECT DISTINCT component_title FROM bec_edw_dev.bu_assessment_reporting_detail\r\n"
+					+ " WHERE bu_school_id = " + schoolId + "\r\n" + " AND   collective_noun_id = " + classId + ")\r\n"
+					+ "AND standard_id IN (SELECT DISTINCT standard_id\r\n"
+					+ "FROM bec_edw_dev.content_standard_common_core\r\n" + "WHERE standard_category = '" + strandName
+					+ "')\r\n" + "GROUP BY student_id order by student_id limit 10";
+			rs = stmt.executeQuery(str);
+			while (rs.next()) {
+				Model m = new Model();
+				m.setNo_of_questions(rs.getInt(2));
+				m.setStudent_score_avg(rs.getInt(3));
+				m.setStudent_name(getStudentNameByStudentId(schoolId, classId, rs.getInt(1)));
+/*				studentName = studentMap.entrySet().stream().filter(map -> sid == (map.getValue()))
+						.map(map -> map.getKey()).collect(Collectors.joining(","));*/
+				list.add(m);
+			}
+			// sorting
+			list.sort((Model o1, Model o2) -> o1.getStudent_name().compareTo(o2.getStudent_name()));
+			// con.close();
+		} catch (Exception e) {
+			log.error(e.getMessage());
+			UtilityMethods.processException(e);
 		}
 		return list;
 	}
 	
 	
-}
-	
+	/**
+	 * This method is used to fetch submission date, student name and student test score avg from DB for TS Context
+	 * @param con
+	 * @param schoolName
+	 * @param className
+	 * @return
+	 */
+	public static List<Model> getStudentDetailListInTSInClass(Connection con, String schoolName, String className,String testName) {
+		List<Model> list = new ArrayList<Model>();
+		int schoolId = DatabaseConnection.getSchoolIDBySchoolName(schoolName);
+		int classId = DatabaseConnection.getClassIDBySchoolNameAndClassName(schoolName, className);
+		try {
+			Statement stmt = con.createStatement();
+			ResultSet rs = null;
+			String str="SELECT student_id,max(updatedat) as date_submitted,ROUND((sum(score) / sum(max_score))*100) AS Student_Score"+ 
+						"FROM bec_edw_dev.bu_strand_details_vw WHERE bu_school_id = "+schoolId+" AND collective_noun_id ="+classId+
+						" AND component_title='"+testName+"' GROUP BY student_id order by student_id limit 10";
+			rs = stmt.executeQuery(str);
+			while (rs.next()) {
+				Model m = new Model();
+				m.setMaxDate(rs.getDate(2));
+				m.setStudent_score_avg(rs.getInt(3));
+				m.setStudent_name(getStudentNameByStudentId(schoolId, classId, rs.getInt(1)));
+				list.add(m);
+			}
+			// sorting
+			list.sort((Model o1, Model o2) -> o1.getStudent_name().compareTo(o2.getStudent_name()));
+			// con.close();
+		} catch (Exception e) {
+			log.error(e.getMessage());
+			UtilityMethods.processException(e);
+		}
+		return list;
+	}
 
+}
 

@@ -26,6 +26,7 @@
 package com.bec.reporting.steps;
 
 import java.sql.Connection;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -806,6 +807,10 @@ public class Standard_Overview_Table_Steps {
 						} else {
 							strandName = homePage.strandnameslist.get(i).getText();
 						}
+						/**
+						 *TODO Code here to verify the avg list below the strand name,supriya will give the code
+						 */
+						
 						click_on_the_icon_to_maximize_the_Chart();
 						Assert.assertTrue(homePage.defaultstrandnameinpotchart.getText().contains(strandName));
 						new Actions(Driver.webdriver).moveToElement(homePage.overviewtext).build().perform();
@@ -858,23 +863,209 @@ public class Standard_Overview_Table_Steps {
 			throws Throwable {
 		try {
 			Assert.assertTrue(homePage.testscoreovertimelinechart.isDisplayed());
-			log.info("Total no. of student in list: " + homePage.noofstudentsinlist.size());
-			int circleListSize = homePage.testScoreCircleClronPerPage_onlinechart.size();
-			int randomNumber = (int) (Math.random() * circleListSize);
-			UtilityMethods.scrollPageDown(Driver.webdriver, 4);
-			homePage.testScoreValueInCircle_onlinechart.get(randomNumber).click();
-			Thread.sleep(2000);
-			new Actions(Driver.webdriver).moveToElement(homePage.testNamesonPerPage_onlinechart.get(randomNumber))
-					.build().perform();
-			String toolTipTextofTest = homePage.testNametooltip_onlinechart.getText();
-			new Actions(Driver.webdriver).moveToElement(homePage.selectedTestName).build().perform();
-			Assert.assertTrue(homePage.tooltipofselectedTest.getText().equals(toolTipTextofTest));
-			String submittedDateText = homePage.selectedTestSubmittedDate.getText();
-			UtilityMethods.checkDateFormat(submittedDateText.substring(11, 21));
-			UtilityMethods.checkDateFormat(submittedDateText.substring(24));
+			String schoolName,className,toolTipTextofTest;
+			List<Model> lm = new ArrayList<Model>();
+			new Actions(Driver.webdriver).moveToElement(homePage.schoolnameoncontextheader).build().perform();
+			if(homePage.schoolnameoncontextheader.getText().contains("...")) {
+				schoolName = homePage.tooltipofschoolnameoncontextheader.getText();				
+			}
+			else {
+				schoolName = homePage.schoolnameoncontextheader.getText();
+			}
+			new Actions(Driver.webdriver).moveToElement(homePage.classnameoncontextheader).build().perform();
+			if(homePage.classnameoncontextheader.getText().contains("...")) {
+				className = homePage.tooltipofclassnameoncontextheader.getText();				
+			}
+			else {
+				className =homePage.classnameoncontextheader.getText();
+			}
+			/**
+			 *TODO Write code to click on 1,2,3 page in sequence and match the score in circle with DB
+			 */
+			Actions action = new Actions(Driver.webdriver);
+			WebElement enabledLeftArrow = null;
+			boolean doneWithThreeCircle = false, disableLeftArrowFound = false, enabledLeftArrowFound = false,
+					paginatorFound = false;
+			List<WebElement> circleList = null;
+			try {
+				action.moveToElement(homePage.paginator_onlinechart).build().perform();
+				paginatorFound = true;
+			} catch (Exception e) {
+				System.out.println("Paginator Not Found");
+			}
+			if (paginatorFound) {
+				try {
+					circleList = homePage.paginationcirclelist_onlinechart;
+					enabledLeftArrow = homePage.enabledleftarrow_onlinechart;
+					enabledLeftArrow.isDisplayed();
+					enabledLeftArrowFound = true;
+				} catch (Exception e) {
+					System.out.println("Enabled Left Arrow on Paginator is not found");
+				}
+				if (enabledLeftArrowFound) {
+					do {
+						try {
+							homePage.disabledleftarrow_onlinechart.isDisplayed();
+							disableLeftArrowFound = true;
+						} catch (Exception e) {
+							System.out.println("Disabled Left Arrow on Paginator is not found");
+						}
+						if (doneWithThreeCircle) {
+							UtilityMethods.scrollPageDown(Driver.webdriver, 2);
+							Thread.sleep(1000);
+							circleList.get(0).click();
+							Thread.sleep(1000);
+							for (int j = homePage.testNamesonPerPage_onlinechart.size() - 1; j >= 0; j--) {
+								homePage.testScoreValueInCircle_onlinechart.get(j).click();
+								Thread.sleep(3000);
+								
+								action.moveToElement(homePage.testNamesonPerPage_onlinechart.get(j)).build().perform();
+								toolTipTextofTest = homePage.testNametooltip_onlinechart.getText();
+								
+								new Actions(Driver.webdriver).moveToElement(homePage.selectedTestName).build().perform();
+								
+								Assert.assertTrue(homePage.tooltipofselectedTest.getText().equals(toolTipTextofTest));
+								String submittedDateText = homePage.selectedTestSubmittedDate.getText();
+								UtilityMethods.checkDateFormat(submittedDateText.substring(11, 21));
+								UtilityMethods.checkDateFormat(submittedDateText.substring(24));
+							
+								// DB code for check the student list
+								/**Verifying UI Content in Student List with DB data*/
+								lm = DatabaseConnection.getStudentDetailListInTSInClass(conn, schoolName, className, toolTipTextofTest);
+								Iterator<Model> iterator = lm.iterator();
+								int index = 0;
+								while (iterator.hasNext()) {
+									Model m = (Model) iterator.next();
+									Assert.assertTrue(m.getStudent_name().equals(homePage.studentnameslistinstudentlist.get(index).getText()));
+									Assert.assertTrue(new SimpleDateFormat("MM/dd/yyyy").format(m.getMaxDate())
+											.equals(homePage.noofquestionsorsubmitdatelistinstudentlist.get(index).getText()));
+									Assert.assertTrue(m.getStudent_score_avg()==Integer.parseInt(homePage.scorelistinstudentlist.get(index).getText()));
+									UtilityMethods.verifyColorAndScoreOnStudentList(homePage.scorelistinstudentlist.get(index), m.getStudent_score_avg());
+									index++;
+								}
+							}
+							UtilityMethods.scrollPageUp(Driver.webdriver, 2);
+							Thread.sleep(1000);
+						} else {
+							for (int i = circleList.size() - 1; i >= 0; i--) {
+									UtilityMethods.scrollPageDown(Driver.webdriver, 2);
+									Thread.sleep(1000);
+									circleList.get(i).click();
+									Thread.sleep(1000);
+									for (int j = homePage.testNamesonPerPage_onlinechart.size() - 1; j >= 0; j--) {
+										homePage.testScoreValueInCircle_onlinechart.get(j).click();
+										Thread.sleep(3000);
+										
+										action.moveToElement(homePage.testNamesonPerPage_onlinechart.get(j)).build().perform();
+										toolTipTextofTest = homePage.testNametooltip_onlinechart.getText();
+										
+										new Actions(Driver.webdriver).moveToElement(homePage.selectedTestName).build().perform();
+										
+										Assert.assertTrue(homePage.tooltipofselectedTest.getText().equals(toolTipTextofTest));
+										String submittedDateText = homePage.selectedTestSubmittedDate.getText();
+										UtilityMethods.checkDateFormat(submittedDateText.substring(11, 21));
+										UtilityMethods.checkDateFormat(submittedDateText.substring(24));
+									
+										// DB code for check the student list
+										/**Verifying UI Content in Student List with DB data*/
+										lm = DatabaseConnection.getStudentDetailListInTSInClass(conn, schoolName, className, toolTipTextofTest);
+										Iterator<Model> iterator = lm.iterator();
+										int index = 0;
+										while (iterator.hasNext()) {
+											Model m = (Model) iterator.next();
+											Assert.assertTrue(m.getStudent_name().equals(homePage.studentnameslistinstudentlist.get(index).getText()));
+											Assert.assertTrue(new SimpleDateFormat("MM/dd/yyyy").format(m.getMaxDate())
+													.equals(homePage.noofquestionsorsubmitdatelistinstudentlist.get(index).getText()));
+											Assert.assertTrue(m.getStudent_score_avg()==Integer.parseInt(homePage.scorelistinstudentlist.get(index).getText()));
+											UtilityMethods.verifyColorAndScoreOnStudentList(homePage.scorelistinstudentlist.get(index), m.getStudent_score_avg());
+											index++;
+										}
+									}
+									UtilityMethods.scrollPageUp(Driver.webdriver, 2);
+									Thread.sleep(1000);
+								}
+							doneWithThreeCircle = true;
+						}
+						try {
+							enabledLeftArrow.click();
+						} catch (Exception e) {
+						}
+					} while (!disableLeftArrowFound);
+				} else {
+					for (int i = circleList.size() - 1; i >= 0; i--) {
+							UtilityMethods.scrollPageDown(Driver.webdriver, 2);
+							Thread.sleep(1000);
+							circleList.get(i).click();
+							Thread.sleep(1000);
+							for (int j = homePage.testNamesonPerPage_onlinechart.size() - 1; j >= 0; j--) {
+								homePage.testScoreValueInCircle_onlinechart.get(j).click();
+								Thread.sleep(3000);
+								
+								action.moveToElement(homePage.testNamesonPerPage_onlinechart.get(j)).build().perform();
+								toolTipTextofTest = homePage.testNametooltip_onlinechart.getText();
+								
+								new Actions(Driver.webdriver).moveToElement(homePage.selectedTestName).build().perform();
+								
+								Assert.assertTrue(homePage.tooltipofselectedTest.getText().equals(toolTipTextofTest));
+								String submittedDateText = homePage.selectedTestSubmittedDate.getText();
+								UtilityMethods.checkDateFormat(submittedDateText.substring(11, 21));
+								UtilityMethods.checkDateFormat(submittedDateText.substring(24));
+							
+								// DB code for check the student list
+								/**Verifying UI Content in Student List with DB data*/
+								lm = DatabaseConnection.getStudentDetailListInTSInClass(conn, schoolName, className, toolTipTextofTest);
+								Iterator<Model> iterator = lm.iterator();
+								int index = 0;
+								while (iterator.hasNext()) {
+									Model m = (Model) iterator.next();
+									Assert.assertTrue(m.getStudent_name().equals(homePage.studentnameslistinstudentlist.get(index).getText()));
+									Assert.assertTrue(new SimpleDateFormat("MM/dd/yyyy").format(m.getMaxDate())
+											.equals(homePage.noofquestionsorsubmitdatelistinstudentlist.get(index).getText()));
+									Assert.assertTrue(m.getStudent_score_avg()==Integer.parseInt(homePage.scorelistinstudentlist.get(index).getText()));
+									UtilityMethods.verifyColorAndScoreOnStudentList(homePage.scorelistinstudentlist.get(index), m.getStudent_score_avg());
+									index++;
+								}
+							}
+							UtilityMethods.scrollPageUp(Driver.webdriver, 2);
+							Thread.sleep(1000);
+					}
+				}
 
-			// DB code for check the student list
-
+			} else {
+				for (int j = homePage.testNamesonPerPage_onlinechart.size() - 1; j >= 0; j--) {
+					homePage.testScoreValueInCircle_onlinechart.get(j).click();
+					Thread.sleep(3000);
+					
+					action.moveToElement(homePage.testNamesonPerPage_onlinechart.get(j)).build().perform();
+					toolTipTextofTest = homePage.testNametooltip_onlinechart.getText();
+					
+					new Actions(Driver.webdriver).moveToElement(homePage.selectedTestName).build().perform();
+					
+					Assert.assertTrue(homePage.tooltipofselectedTest.getText().equals(toolTipTextofTest));
+					String submittedDateText = homePage.selectedTestSubmittedDate.getText();
+					UtilityMethods.checkDateFormat(submittedDateText.substring(11, 21));
+					UtilityMethods.checkDateFormat(submittedDateText.substring(24));
+				
+					// DB code for check the student list
+					/**Verifying UI Content in Student List with DB data*/
+					lm = DatabaseConnection.getStudentDetailListInTSInClass(conn, schoolName, className, toolTipTextofTest);
+					Iterator<Model> iterator = lm.iterator();
+					int index = 0;
+					while (iterator.hasNext()) {
+						Model m = (Model) iterator.next();
+						Assert.assertTrue(m.getStudent_name().equals(homePage.studentnameslistinstudentlist.get(index).getText()));
+						Assert.assertTrue(new SimpleDateFormat("MM/dd/yyyy").format(m.getMaxDate())
+								.equals(homePage.noofquestionsorsubmitdatelistinstudentlist.get(index).getText()));
+						Assert.assertTrue(m.getStudent_score_avg()==Integer.parseInt(homePage.scorelistinstudentlist.get(index).getText()));
+						UtilityMethods.verifyColorAndScoreOnStudentList(homePage.scorelistinstudentlist.get(index), m.getStudent_score_avg());
+						index++;
+					}
+					
+				}
+			}
+			
+			
+			
 			CBTConfiguration.score = "pass";
 		} catch (Exception e) {
 			UtilityMethods.processException(e);
@@ -910,6 +1101,9 @@ public class Standard_Overview_Table_Steps {
 	public void line_chart_of_Test_score_over_time_should_be_displayed_of_that_student_but_Student_list_should_not_be_displayed()
 			throws Throwable {
 		try {
+			/**
+			 *TODO Code here for checking the test score in Student COntext-Test Scores
+			 */
 			Assert.assertTrue(homePage.testscoreovertimetext.isDisplayed());
 			try {
 				Assert.assertTrue(homePage.noofstudentsinlist.get(0).isDisplayed());
@@ -1138,7 +1332,7 @@ public class Standard_Overview_Table_Steps {
 			Assert.assertTrue(homePage.textoutredstripinstudentlist.getText().equals("< 40%"));
 			Assert.assertTrue(homePage.textoutorangestripinstudentlist.getText().equals("40-59%"));
 			Assert.assertTrue(homePage.textoutyellowstripinstudentlist.getText().equals("60-79%"));
-			Assert.assertTrue(homePage.textoutgreenstripinstudentlist.getText().equals("80% ≥"));
+			Assert.assertTrue(homePage.textoutgreenstripinstudentlist.getText().equals("≥ 80%"));
 			CBTConfiguration.score = "pass";
 		} catch (Exception e) {
 			UtilityMethods.processException(e);
@@ -1255,7 +1449,6 @@ public class Standard_Overview_Table_Steps {
 	@Then("^user should able to see Student List and the icon next to it can be selected to minimize or maximize the Student List window$")
 	public void user_should_able_to_see_Student_List_and_the_icon_next_to_it_can_be_selected_to_minimize_or_maximize_the_Student_List_window() throws Throwable {
 		try {
-			// DatabaseConnection.getAllStrand(FlyInMenuBehaviourSteps.conn);
 			Assert.assertTrue(homePage.studentlist.isDisplayed());
 			// clicking on icon to minimize the student list
 			homePage.studentlisticon.click();
@@ -1292,7 +1485,9 @@ public class Standard_Overview_Table_Steps {
 			homePage.standardnameslist.get(randomNumber).click();
 			Thread.sleep(3000);
 			headerOnToolTip = homePage.stranddefinitionlist.get(randomNumber).getText();
-			subHeaderOnToolTip = homePage.standardsubdefinitionlist.get(randomNumber).getText();
+			String subcat= homePage.standardsubdefinitionlist.get(randomNumber).getText();
+			subHeaderOnToolTip =subcat.substring(0, subcat.indexOf(" "))+" "+ homePage.standarddescriptionlist.get(randomNumber).getText();
+			
 		} catch (Exception e) {
 			UtilityMethods.processException(e);
 		}
@@ -1314,7 +1509,7 @@ public class Standard_Overview_Table_Steps {
 		} catch (Exception e) {
 			UtilityMethods.processException(e);
 		}
-		log.info("Scenario 43_2 completed");
+		log.info("Scenario 43_6 completed");
 	}
 
 	/**
@@ -1332,7 +1527,7 @@ public class Standard_Overview_Table_Steps {
 		} catch (Exception e) {
 			UtilityMethods.processException(e);
 		}
-		log.info("Scenario 43_3 completed");
+		log.info("Scenario 43_2 completed");
 	}
 
 	/**
@@ -1365,7 +1560,7 @@ public class Standard_Overview_Table_Steps {
 		} catch (Exception e) {
 			UtilityMethods.processException(e);
 		}
-		log.info("Scenario 43_4 completed");
+		log.info("Scenario 43_5 completed");
 	}
 
 	/**
@@ -1464,12 +1659,47 @@ public class Standard_Overview_Table_Steps {
 		} catch (Exception e) {
 			UtilityMethods.processException(e);
 		}
-		log.info("Scenario 43_5 completed");
+		log.info("Scenario 43_3 completed");
 	}
 
 	@Then("^All the column headers should be sortable with ascending and descending order$")
 	public void all_the_column_headers_should_be_sortable_with_ascending_and_descending_order() throws Throwable {
 		try {
+			/**Verifying UI Content in Student List with DB data*/
+			List<Model> lm = new ArrayList<Model>();
+			new Actions(Driver.webdriver).moveToElement(homePage.schoolnameoncontextheader).build().perform();
+			String schoolName,className;
+			if(homePage.schoolnameoncontextheader.getText().contains("...")) {
+				schoolName = homePage.tooltipofschoolnameoncontextheader.getText();				
+			}
+			else {
+				schoolName = homePage.schoolnameoncontextheader.getText();
+			}
+			new Actions(Driver.webdriver).moveToElement(homePage.classnameoncontextheader).build().perform();
+			if(homePage.classnameoncontextheader.getText().contains("...")) {
+				className = homePage.tooltipofclassnameoncontextheader.getText();				
+			}
+			else {
+				className =homePage.classnameoncontextheader.getText();
+			}
+			String firstStrandName;
+			if (homePage.strandnameslist.get(0).getText().contains("...")) {
+				firstStrandName = homePage.strandnamestooltip.getText();
+			} else {
+				firstStrandName = homePage.strandnameslist.get(0).getText();
+			}
+			lm = DatabaseConnection.getStudentDetailListInSPInClassByStrand(conn, schoolName, className, firstStrandName);
+			Iterator<Model> iterator = lm.iterator();
+			int index = 0;
+			while (iterator.hasNext()) {
+				Model m = (Model) iterator.next();
+				Assert.assertTrue(m.getStudent_name().equals(homePage.studentnameslistinstudentlist.get(index).getText()));
+				Assert.assertTrue(m.getNo_of_questions()==Integer.parseInt(homePage.noofquestionsorsubmitdatelistinstudentlist.get(index).getText()));
+				Assert.assertTrue(m.getStudent_score_avg()==Integer.parseInt(homePage.scorelistinstudentlist.get(index).getText()));
+				UtilityMethods.verifyColorAndScoreOnStudentList(homePage.scorelistinstudentlist.get(index), m.getStudent_score_avg());
+				index++;
+			}
+
 			String name = "";
 			UtilityMethods.scrollPageDown(Driver.webdriver, 10);
 			Actions actions = new Actions(Driver.webdriver);
@@ -1498,8 +1728,8 @@ public class Standard_Overview_Table_Steps {
 			// clicking on number of questions down arrow
 			actions.moveToElement(homePage.studentListquestiondownarrow).click().build().perform();
 			Thread.sleep(500);
-			for (int i = 0; i < homePage.noofquestionslistinstudentlist.size(); i++) {
-				numericlistItem.add(Integer.parseInt(homePage.noofquestionslistinstudentlist.get(i).getText()));
+			for (int i = 0; i < homePage.noofquestionsorsubmitdatelistinstudentlist.size(); i++) {
+				numericlistItem.add(Integer.parseInt(homePage.noofquestionsorsubmitdatelistinstudentlist.get(i).getText()));
 			}
 			Assert.assertTrue(Ordering.natural().reverse().isOrdered(numericlistItem));
 			numericlistItem.clear();
@@ -1507,8 +1737,8 @@ public class Standard_Overview_Table_Steps {
 			// clicking on number of questions up arrow
 			actions.moveToElement(homePage.studentListquestionuparrow).click().build().perform();
 			Thread.sleep(500);
-			for (int i = 0; i < homePage.noofquestionslistinstudentlist.size(); i++) {
-				numericlistItem.add(Integer.parseInt(homePage.noofquestionslistinstudentlist.get(i).getText()));
+			for (int i = 0; i < homePage.noofquestionsorsubmitdatelistinstudentlist.size(); i++) {
+				numericlistItem.add(Integer.parseInt(homePage.noofquestionsorsubmitdatelistinstudentlist.get(i).getText()));
 			}
 			Assert.assertTrue(Ordering.natural().isOrdered(numericlistItem));
 			numericlistItem.clear();
@@ -1536,7 +1766,7 @@ public class Standard_Overview_Table_Steps {
 		} catch (Exception e) {
 			UtilityMethods.processException(e);
 		}
-		log.info("Scenario 43_6 completed");
+		log.info("Scenario 43_4 completed");
 	}
 
 }
