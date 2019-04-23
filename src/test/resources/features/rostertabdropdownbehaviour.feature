@@ -1,6 +1,6 @@
 @Feature1
 Feature: Roster Tab Dropdown Behaviour
-
+																		##story 1c)
   #  @Scenario9 @TC12
   ##Data incomplete, we need role of teacher for single and multiple class allocation.
   ##  @SmokeTests
@@ -17,7 +17,7 @@ Feature: Roster Tab Dropdown Behaviour
   ##      | School Admin 	 		|												|
   ##      | District Admin 		|												|
   
-  
+  ##story Loading Icon
   @Scenario10 @TC16
   Scenario: Verify that the selected option should appear at the top of the list and the user should select one option from the dropdown list at a time.
     Given User is on portal's login screen with username as "superadmin" and password as "password" and usertype as "techsupport"

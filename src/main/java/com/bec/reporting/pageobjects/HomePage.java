@@ -576,7 +576,7 @@ public class HomePage {
 	public List<WebElement> studentnameslistinstudentlist;
 	
 	@FindBy(xpath="//div[@class='student-list-body']/div[@class='student-list-row']/div[@class='student-list-col' and not(@style)][1]")
-	public List<WebElement> noofquestionslistinstudentlist;
+	public List<WebElement> noofquestionsorsubmitdatelistinstudentlist;
 	
 	@FindBy(xpath="//div[@class='student-list-body']/div[@class='student-list-row']/div[@class='student-list-col']/span")
 	public List<WebElement> scorelistinstudentlist;

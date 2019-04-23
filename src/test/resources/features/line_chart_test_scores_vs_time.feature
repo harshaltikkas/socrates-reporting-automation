@@ -1,6 +1,6 @@
 @Feature1
 Feature: Line Chart Test Scores vs Time
-
+	##LINE CHART TEST SCORE OVER TIME
   @Scenario31 @TC_0019
   Scenario: Verify the Y-axis label
     Given User is on portal's login screen with username as "superadmin" and password as "password" and usertype as "techsupport"

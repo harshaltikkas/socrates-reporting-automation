@@ -62,7 +62,7 @@ public class RosterTabDropDownBehaviour {
 			Thread.sleep(500);
 			String defaultSelectedSchool,defaultSelectedClass;
 			String apiFirstSchool=DatabaseConnection.getFirstAlphaSchoolName();
-			String apiFirstClass=DatabaseConnection.getFirstAlphaClassNameBySchoolName();
+			String apiFirstClass=DatabaseConnection.getFirstAlphaClassNameBySchoolName(apiFirstSchool);
 			
 			new Actions(Driver.webdriver).moveToElement(homePage.schooldropdownbtn).build().perform();
 			defaultSelectedSchool=homePage.schooldropdownbtntooltip.getText();

@@ -1,6 +1,6 @@
 @Feature1
 Feature: Test Tab Design and Behaviour
-
+												##story 1f)
   @Scenario18 @TC31
   Scenario: Verify that the checkbox for ALL option
     Given User is on portal's login screen with username as "superadmin" and password as "password" and usertype as "techsupport"
@@ -27,6 +27,7 @@ Feature: Test Tab Design and Behaviour
       | Earliest Date     | Earliest Submission Date         |
       | Latest Date       | Latest Submission Date           |
 
+	##story 2e)
   @Scenario21 @TC43
   Scenario: Verify the sorting with the arrows which are with heading elements
     Given User is on portal's login screen with username as "superadmin" and password as "password" and usertype as "techsupport"
@@ -48,6 +49,7 @@ Feature: Test Tab Design and Behaviour
     Then verify earliest date is dispalying in descending order
 
   #TC57 is not implemented yet , UI is not as per the requirement.once done, will add code for TC57.
+  ##story 2d)
   @Scenario29 @TC_0051 @TC_0052 @TC_0053 @TC_0055 @TC_0057
   Scenario: Verify the search bar not scrollable and has the 'X' to cancel searched option and search icon to search the option within test tab
     Given User is on portal's login screen with username as "superadmin" and password as "password" and usertype as "techsupport"

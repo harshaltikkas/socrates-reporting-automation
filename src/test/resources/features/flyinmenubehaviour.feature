@@ -1,6 +1,6 @@
 @Feature1
 Feature: Fly In Menu Behaviour
-
+												##story 1b)
   @Scenario1 @TC2
   Scenario Outline: Arrows to Open and Close the Tab
     Given User is on portal's login screen with username as "superadmin" and password as "password" and usertype as "techsupport"

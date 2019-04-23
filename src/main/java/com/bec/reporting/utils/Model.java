@@ -14,6 +14,53 @@ public class Model {
 	private List<Integer> question_no;
 	private Date minDate;
 	private Date maxDate;
+	private Integer no_of_questions;
+	private Integer student_score_avg;
+	private String student_name;
+	private Integer student_id;
+	
+	
+	@Override
+	public String toString() {
+		return "Model [avg_per=" + avg_per + ", standard_shortvalue=" + standard_shortvalue + ", standard_category="
+				+ standard_category + ", standard_subcategory=" + standard_subcategory + ", standard_description="
+				+ standard_description + ", standard_id=" + standard_id + ", component_title=" + component_title
+				+ ", question_no=" + question_no + ", minDate=" + minDate + ", maxDate=" + maxDate
+				+ ", no_of_questions=" + no_of_questions + ", student_score_avg=" + student_score_avg
+				+ ", student_name=" + student_name + ", student_id=" + student_id + "]";
+	}
+
+	public Integer getStudent_id() {
+		return student_id;
+	}
+	
+	public void setStudent_id(Integer student_id) {
+		this.student_id = student_id;
+	}
+
+	public Integer getNo_of_questions() {
+		return no_of_questions;
+	}
+
+	public void setNo_of_questions(Integer no_of_questions) {
+		this.no_of_questions = no_of_questions;
+	}
+
+	public Integer getStudent_score_avg() {
+		return student_score_avg;
+	}
+
+	public void setStudent_score_avg(Integer student_score_avg) {
+		this.student_score_avg = student_score_avg;
+	}
+
+	public String getStudent_name() {
+		return student_name;
+	}
+
+	public void setStudent_name(String student_name) {
+		this.student_name = student_name;
+	}
 
 	public Integer getAvg_per() {
 		return avg_per;
@@ -41,14 +88,6 @@ public class Model {
 
 	public void setMaxDate(Date maxDate) {
 		this.maxDate = maxDate;
-	}
-
-	@Override
-	public String toString() {
-		return "Model [avg_per=" + avg_per + ", standard_shortvalue=" + standard_shortvalue + ", standard_category="
-				+ standard_category + ", standard_subcategory=" + standard_subcategory + ", standard_description="
-				+ standard_description + ", standard_id=" + standard_id + ", component_title=" + component_title
-				+ ", question_no=" + question_no + ", minDate=" + minDate + ", maxDate=" + maxDate + "]";
 	}
 
 	public void setAvg_per(Integer avg_per) {
