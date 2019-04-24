@@ -22437,3 +22437,22 @@ Capabilities [{mobileEmulationEnabled=false, timeouts={implicit=0.0, pageLoad=30
 Session ID: 8ffbf531c80bb98f425d8234f272d97b
 2019-04-22 12:25:30 INFO  Driver:270 - embedScreenshot
 2019-04-22 12:25:31 INFO  Driver:72 - Cleaning up the browser
+2019-04-24 15:49:31 INFO  Hooks:58 - ***********************************************************************************************************
+2019-04-24 15:49:31 INFO  Hooks:67 -  Launch Browser: "chrome" on Environment:local
+2019-04-24 15:49:31 INFO  Driver:161 - OS Windows 10
+2019-04-24 15:50:01 INFO  FlyInMenuBehaviourSteps:64 - User is on portal's login screen
+2019-04-24 15:50:23 INFO  DatabaseConnection:33 - Get Access token
+2019-04-24 15:50:25 INFO  Driver:270 - embedScreenshot
+2019-04-24 15:50:28 INFO  Driver:72 - Cleaning up the browser
+2019-04-24 16:15:15 INFO  Hooks:58 - ***********************************************************************************************************
+2019-04-24 16:15:15 INFO  Hooks:67 -  Launch Browser: "chrome" on Environment:local
+2019-04-24 16:15:15 INFO  Driver:161 - OS Windows 10
+2019-04-24 16:15:36 INFO  FlyInMenuBehaviourSteps:64 - User is on portal's login screen
+2019-04-24 16:16:00 INFO  DatabaseConnection:33 - Get Access token
+2019-04-24 16:16:05 WARN  RequestSpecificationImpl$RestAssuredHttpBuilder:534 - Could not parse content-type: Response does not have a content-type header
+2019-04-24 16:26:18 INFO  Hooks:58 - ***********************************************************************************************************
+2019-04-24 16:26:18 INFO  Hooks:67 -  Launch Browser: "chrome" on Environment:local
+2019-04-24 16:26:18 INFO  Driver:161 - OS Windows 10
+2019-04-24 16:26:47 INFO  FlyInMenuBehaviourSteps:64 - User is on portal's login screen
+2019-04-24 16:27:14 INFO  Standard_Overview_Table_Steps:103 - Scenario 36_1 completed
+2019-04-24 16:27:20 INFO  Driver:72 - Cleaning up the browser
