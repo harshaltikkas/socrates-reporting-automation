@@ -58,8 +58,10 @@ public class Standard_Overview_Table_Steps {
 	HomePage homePage = PageFactory.initElements(Driver.webdriver, HomePage.class);
 	static boolean performanceMenuClicked = false;
 	static String headerOnToolTip, subHeaderOnToolTip;
-	public static String token=DatabaseConnection.getToken();
-	public static Connection conn=ConnectionPool.getDBConnection();
+	/*public static String token=DatabaseConnection.getToken();
+	public static Connection conn=ConnectionPool.getDBConnection();*/
+	public static String token;
+	public static Connection conn;
 	/**
 	 * This method is used to click on standard performance tab in class context
 	 * 
