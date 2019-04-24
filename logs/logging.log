@@ -22456,3 +22456,15 @@ Session ID: 8ffbf531c80bb98f425d8234f272d97b
 2019-04-24 16:26:47 INFO  FlyInMenuBehaviourSteps:64 - User is on portal's login screen
 2019-04-24 16:27:14 INFO  Standard_Overview_Table_Steps:103 - Scenario 36_1 completed
 2019-04-24 16:27:20 INFO  Driver:72 - Cleaning up the browser
+2019-04-24 19:19:33 INFO  Hooks:58 - ***********************************************************************************************************
+2019-04-24 19:19:34 INFO  Hooks:67 -  Launch Browser: "chrome" on Environment:local
+2019-04-24 19:19:34 INFO  Driver:161 - OS Windows 10
+2019-04-24 19:20:25 INFO  FlyInMenuBehaviourSteps:64 - User is on portal's login screen
+2019-04-24 19:21:06 INFO  DatabaseConnection:33 - Get Access token
+2019-04-24 19:21:13 WARN  RequestSpecificationImpl$RestAssuredHttpBuilder:534 - Could not parse content-type: Response does not have a content-type header
+2019-04-24 19:28:05 INFO  Hooks:58 - ***********************************************************************************************************
+2019-04-24 19:28:05 INFO  Hooks:67 -  Launch Browser: "chrome" on Environment:local
+2019-04-24 19:28:05 INFO  Driver:161 - OS Windows 10
+2019-04-24 19:28:21 INFO  FlyInMenuBehaviourSteps:64 - User is on portal's login screen
+2019-04-24 19:28:41 INFO  Standard_Overview_Table_Steps:103 - Scenario 36_1 completed
+2019-04-24 19:28:45 INFO  Driver:72 - Cleaning up the browser

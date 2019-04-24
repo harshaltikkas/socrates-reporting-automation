@@ -332,7 +332,7 @@
 						<configuration>
 							<!-- Mandatory -->
 							<!-- comma separated list of package names to scan for glue code -->
-							<glue>com.intel.gdpr.steps</glue>
+							<glue>com.bec.reporting.steps</glue>
 							<!-- These are the default values -->
 							<!-- Where to output the generated Junit tests -->
 							<outputDirectory>${project.build.directory}/generated-test-sources/features</outputDirectory>
@@ -341,7 +341,7 @@
 							<cucumberOutputDir>${project.build.directory}/cucumber_reports/test_results</cucumberOutputDir>
 							<plugins>
 								<plugin>
-									<name>com.intel.gdpr.pool.ExtentCucumberFormatter</name>
+									<name>com.bec.reporting.utils.ExtentCucumberFormatter</name>
 									<extension>html</extension>
 								</plugin>
 							</plugins>
