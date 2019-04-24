@@ -306,7 +306,7 @@
 						</goals>
 						<configuration>
 							<outputDirectory>${basedir}/${target.dir}/extra-resources</outputDirectory>
-							<!--<outputDirectory>${basedir}/target/extra-resources</outputDirectory>-->
+							<!-- <outputDirectory>${basedir}/target/extra-resources</outputDirectory>
 							<outputDirectory>target/test-classes/com/yourcompany/cucumberjvm</outputDirectory> -->
 							<resources>
 								<resource>
