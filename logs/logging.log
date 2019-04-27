@@ -22468,3 +22468,331 @@ Session ID: 8ffbf531c80bb98f425d8234f272d97b
 2019-04-24 19:28:21 INFO  FlyInMenuBehaviourSteps:64 - User is on portal's login screen
 2019-04-24 19:28:41 INFO  Standard_Overview_Table_Steps:103 - Scenario 36_1 completed
 2019-04-24 19:28:45 INFO  Driver:72 - Cleaning up the browser
+2019-04-24 19:45:39 INFO  Hooks:58 - ***********************************************************************************************************
+2019-04-24 19:45:39 INFO  Hooks:67 -  Launch Browser: "chrome" on Environment:local
+2019-04-24 19:45:39 INFO  Driver:161 - OS Windows 10
+2019-04-24 19:46:30 INFO  FlyInMenuBehaviourSteps:64 - User is on portal's login screen
+2019-04-24 19:47:06 INFO  Standard_Overview_Table_Steps:103 - Scenario 36_1 completed
+2019-04-24 19:47:08 INFO  Driver:72 - Cleaning up the browser
+2019-04-28 02:05:49 INFO  Hooks:58 - ***********************************************************************************************************
+2019-04-28 02:05:49 INFO  Hooks:67 -  Launch Browser: "chrome" on Environment:local
+2019-04-28 02:05:49 INFO  Driver:161 - OS Windows 10
+2019-04-28 02:06:23 INFO  FlyInMenuBehaviourSteps:64 - User is on portal's login screen
+2019-04-28 02:06:43 INFO  FlyInMenuBehaviourSteps:156 - Scenario 1 Completed
+2019-04-28 02:06:43 INFO  Hooks:58 - ***********************************************************************************************************
+2019-04-28 02:06:43 INFO  Hooks:67 -  Launch Browser: "chrome" on Environment:local
+2019-04-28 02:06:43 INFO  FlyInMenuBehaviourSteps:64 - User is on portal's login screen
+2019-04-28 02:06:57 INFO  FlyInMenuBehaviourSteps:156 - Scenario 1 Completed
+2019-04-28 02:06:57 INFO  Hooks:58 - ***********************************************************************************************************
+2019-04-28 02:06:57 INFO  Hooks:67 -  Launch Browser: "chrome" on Environment:local
+2019-04-28 02:06:57 INFO  FlyInMenuBehaviourSteps:64 - User is on portal's login screen
+2019-04-28 02:07:14 ERROR UtilityMethods:110 - no such element: Unable to locate element: {"method":"xpath","selector":"//div[@class='menu-title' and contains(text(),'School')]/following-sibling::div//div[@class='menu-dropdown-list-inr']/ul//li[contains(text(),'Steiner Academy Bristol')]"}
+  (Session info: chrome=73.0.3683.103)
+  (Driver info: chromedriver=73.0.3683.68 (47787ec04b6e38e22703e856e101e840b65afe72),platform=Windows NT 10.0.17134 x86_64) (WARNING: The server did not provide any stacktrace information)
+Command duration or timeout: 2.06 seconds
+For documentation on this error, please visit: http://seleniumhq.org/exceptions/no_such_element.html
+Build info: version: '3.4.0', revision: 'unknown', time: 'unknown'
+System info: host: 'HARSHALT-PC', ip: '10.0.75.1', os.name: 'Windows 10', os.arch: 'amd64', os.version: '10.0', java.version: '1.8.0_202'
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities [{mobileEmulationEnabled=false, timeouts={implicit=0.0, pageLoad=300000.0, script=30000.0}, hasTouchScreen=false, platform=XP, acceptSslCerts=false, goog:chromeOptions={debuggerAddress=localhost:51806}, acceptInsecureCerts=false, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, setWindowRect=true, unexpectedAlertBehaviour=ignore, applicationCacheEnabled=false, rotatable=false, networkConnectionEnabled=false, chrome={chromedriverVersion=73.0.3683.68 (47787ec04b6e38e22703e856e101e840b65afe72), userDataDir=C:\Users\htikkas\AppData\Local\Temp\scoped_dir19720_31223}, takesHeapSnapshot=true, pageLoadStrategy=normal, strictFileInteractability=false, databaseEnabled=false, handlesAlerts=true, version=73.0.3683.103, browserConnectionEnabled=false, proxy=Proxy(), nativeEvents=true, locationContextEnabled=true, cssSelectorsEnabled=true}]
+Session ID: 86a457c26f94892f41f064f40a51438b
+*** Element info: {Using=xpath, value=//div[@class='menu-title' and contains(text(),'School')]/following-sibling::div//div[@class='menu-dropdown-list-inr']/ul//li[contains(text(),'Steiner Academy Bristol')]}
+2019-04-28 02:07:14 INFO  Driver:270 - embedScreenshot
+2019-04-28 02:07:14 INFO  Hooks:58 - ***********************************************************************************************************
+2019-04-28 02:07:14 INFO  Hooks:67 -  Launch Browser: "chrome" on Environment:local
+2019-04-28 02:07:14 INFO  FlyInMenuBehaviourSteps:64 - User is on portal's login screen
+2019-04-28 02:07:31 ERROR UtilityMethods:110 - no such element: Unable to locate element: {"method":"xpath","selector":"//div[@class='menu-title' and contains(text(),'School')]/following-sibling::div//div[@class='menu-dropdown-list-inr']/ul//li[contains(text(),'The Advance School')]"}
+  (Session info: chrome=73.0.3683.103)
+  (Driver info: chromedriver=73.0.3683.68 (47787ec04b6e38e22703e856e101e840b65afe72),platform=Windows NT 10.0.17134 x86_64) (WARNING: The server did not provide any stacktrace information)
+Command duration or timeout: 2.02 seconds
+For documentation on this error, please visit: http://seleniumhq.org/exceptions/no_such_element.html
+Build info: version: '3.4.0', revision: 'unknown', time: 'unknown'
+System info: host: 'HARSHALT-PC', ip: '10.0.75.1', os.name: 'Windows 10', os.arch: 'amd64', os.version: '10.0', java.version: '1.8.0_202'
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities [{mobileEmulationEnabled=false, timeouts={implicit=0.0, pageLoad=300000.0, script=30000.0}, hasTouchScreen=false, platform=XP, acceptSslCerts=false, goog:chromeOptions={debuggerAddress=localhost:51806}, acceptInsecureCerts=false, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, setWindowRect=true, unexpectedAlertBehaviour=ignore, applicationCacheEnabled=false, rotatable=false, networkConnectionEnabled=false, chrome={chromedriverVersion=73.0.3683.68 (47787ec04b6e38e22703e856e101e840b65afe72), userDataDir=C:\Users\htikkas\AppData\Local\Temp\scoped_dir19720_31223}, takesHeapSnapshot=true, pageLoadStrategy=normal, strictFileInteractability=false, databaseEnabled=false, handlesAlerts=true, version=73.0.3683.103, browserConnectionEnabled=false, proxy=Proxy(), nativeEvents=true, locationContextEnabled=true, cssSelectorsEnabled=true}]
+Session ID: 86a457c26f94892f41f064f40a51438b
+*** Element info: {Using=xpath, value=//div[@class='menu-title' and contains(text(),'School')]/following-sibling::div//div[@class='menu-dropdown-list-inr']/ul//li[contains(text(),'The Advance School')]}
+2019-04-28 02:07:31 INFO  Driver:270 - embedScreenshot
+2019-04-28 02:07:31 INFO  Hooks:58 - ***********************************************************************************************************
+2019-04-28 02:07:31 INFO  Hooks:67 -  Launch Browser: "chrome" on Environment:local
+2019-04-28 02:07:31 INFO  FlyInMenuBehaviourSteps:64 - User is on portal's login screen
+2019-04-28 02:07:45 INFO  FlyInMenuBehaviourSteps:278 - Scenario 3 Completed
+2019-04-28 02:07:45 INFO  Hooks:58 - ***********************************************************************************************************
+2019-04-28 02:07:45 INFO  Hooks:67 -  Launch Browser: "chrome" on Environment:local
+2019-04-28 02:07:45 INFO  FlyInMenuBehaviourSteps:64 - User is on portal's login screen
+2019-04-28 02:08:06 ERROR UtilityMethods:110 - Index: 12, Size: 10
+2019-04-28 02:08:06 INFO  Driver:270 - embedScreenshot
+2019-04-28 02:08:06 INFO  Hooks:58 - ***********************************************************************************************************
+2019-04-28 02:08:06 INFO  Hooks:67 -  Launch Browser: "chrome" on Environment:local
+2019-04-28 02:08:06 INFO  FlyInMenuBehaviourSteps:64 - User is on portal's login screen
+2019-04-28 02:08:23 ERROR UtilityMethods:110 - element not interactable
+  (Session info: chrome=73.0.3683.103)
+  (Driver info: chromedriver=73.0.3683.68 (47787ec04b6e38e22703e856e101e840b65afe72),platform=Windows NT 10.0.17134 x86_64) (WARNING: The server did not provide any stacktrace information)
+Command duration or timeout: 2.07 seconds
+Build info: version: '3.4.0', revision: 'unknown', time: 'unknown'
+System info: host: 'HARSHALT-PC', ip: '10.0.75.1', os.name: 'Windows 10', os.arch: 'amd64', os.version: '10.0', java.version: '1.8.0_202'
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities [{mobileEmulationEnabled=false, timeouts={implicit=0.0, pageLoad=300000.0, script=30000.0}, hasTouchScreen=false, platform=XP, acceptSslCerts=false, goog:chromeOptions={debuggerAddress=localhost:51806}, acceptInsecureCerts=false, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, setWindowRect=true, unexpectedAlertBehaviour=ignore, applicationCacheEnabled=false, rotatable=false, networkConnectionEnabled=false, chrome={chromedriverVersion=73.0.3683.68 (47787ec04b6e38e22703e856e101e840b65afe72), userDataDir=C:\Users\htikkas\AppData\Local\Temp\scoped_dir19720_31223}, takesHeapSnapshot=true, pageLoadStrategy=normal, strictFileInteractability=false, databaseEnabled=false, handlesAlerts=true, version=73.0.3683.103, browserConnectionEnabled=false, proxy=Proxy(), nativeEvents=true, locationContextEnabled=true, cssSelectorsEnabled=true}]
+Session ID: 86a457c26f94892f41f064f40a51438b
+2019-04-28 02:08:23 INFO  Driver:270 - embedScreenshot
+2019-04-28 02:08:23 INFO  Hooks:58 - ***********************************************************************************************************
+2019-04-28 02:08:23 INFO  Hooks:67 -  Launch Browser: "chrome" on Environment:local
+2019-04-28 02:08:23 INFO  FlyInMenuBehaviourSteps:64 - User is on portal's login screen
+2019-04-28 02:08:43 INFO  FlyInMenuBehaviourSteps:369 - Scenario 5 Completed
+2019-04-28 02:08:43 INFO  Hooks:58 - ***********************************************************************************************************
+2019-04-28 02:08:43 INFO  Hooks:67 -  Launch Browser: "chrome" on Environment:local
+2019-04-28 02:08:43 INFO  FlyInMenuBehaviourSteps:64 - User is on portal's login screen
+2019-04-28 02:08:55 INFO  FlyInMenuBehaviourSteps:471 - Scenario 8 Completed
+2019-04-28 02:08:55 INFO  Hooks:58 - ***********************************************************************************************************
+2019-04-28 02:08:55 INFO  Hooks:67 -  Launch Browser: "chrome" on Environment:local
+2019-04-28 02:08:55 INFO  FlyInMenuBehaviourSteps:64 - User is on portal's login screen
+2019-04-28 02:09:07 INFO  FlyInMenuBehaviourSteps:471 - Scenario 8 Completed
+2019-04-28 02:09:11 INFO  Hooks:58 - ***********************************************************************************************************
+2019-04-28 02:09:11 INFO  Hooks:67 -  Launch Browser: "chrome" on Environment:local
+2019-04-28 02:09:11 INFO  FlyInMenuBehaviourSteps:64 - User is on portal's login screen
+2019-04-28 02:09:26 INFO  Driver:270 - embedScreenshot
+2019-04-28 02:09:26 INFO  Hooks:58 - ***********************************************************************************************************
+2019-04-28 02:09:26 INFO  Hooks:67 -  Launch Browser: "chrome" on Environment:local
+2019-04-28 02:09:26 INFO  FlyInMenuBehaviourSteps:64 - User is on portal's login screen
+2019-04-28 02:09:42 INFO  PaginationOfDropDownListSteps:89 - Scenario 14 Completed
+2019-04-28 02:09:42 INFO  Hooks:58 - ***********************************************************************************************************
+2019-04-28 02:09:42 INFO  Hooks:67 -  Launch Browser: "chrome" on Environment:local
+2019-04-28 02:09:42 INFO  FlyInMenuBehaviourSteps:64 - User is on portal's login screen
+2019-04-28 02:09:58 INFO  PaginationOfDropDownListSteps:89 - Scenario 14 Completed
+2019-04-28 02:09:58 INFO  Hooks:58 - ***********************************************************************************************************
+2019-04-28 02:09:58 INFO  Hooks:67 -  Launch Browser: "chrome" on Environment:local
+2019-04-28 02:09:58 INFO  FlyInMenuBehaviourSteps:64 - User is on portal's login screen
+2019-04-28 02:10:15 INFO  PaginationOfDropDownListSteps:189 - Scenario 15 Completed
+2019-04-28 02:10:15 INFO  Hooks:58 - ***********************************************************************************************************
+2019-04-28 02:10:15 INFO  Hooks:67 -  Launch Browser: "chrome" on Environment:local
+2019-04-28 02:10:15 INFO  FlyInMenuBehaviourSteps:64 - User is on portal's login screen
+2019-04-28 02:10:35 ERROR UtilityMethods:110 - element not interactable
+  (Session info: chrome=73.0.3683.103)
+  (Driver info: chromedriver=73.0.3683.68 (47787ec04b6e38e22703e856e101e840b65afe72),platform=Windows NT 10.0.17134 x86_64) (WARNING: The server did not provide any stacktrace information)
+Command duration or timeout: 2.09 seconds
+Build info: version: '3.4.0', revision: 'unknown', time: 'unknown'
+System info: host: 'HARSHALT-PC', ip: '10.0.75.1', os.name: 'Windows 10', os.arch: 'amd64', os.version: '10.0', java.version: '1.8.0_202'
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities [{mobileEmulationEnabled=false, timeouts={implicit=0.0, pageLoad=300000.0, script=30000.0}, hasTouchScreen=false, platform=XP, acceptSslCerts=false, goog:chromeOptions={debuggerAddress=localhost:51806}, acceptInsecureCerts=false, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, setWindowRect=true, unexpectedAlertBehaviour=ignore, applicationCacheEnabled=false, rotatable=false, networkConnectionEnabled=false, chrome={chromedriverVersion=73.0.3683.68 (47787ec04b6e38e22703e856e101e840b65afe72), userDataDir=C:\Users\htikkas\AppData\Local\Temp\scoped_dir19720_31223}, takesHeapSnapshot=true, pageLoadStrategy=normal, strictFileInteractability=false, databaseEnabled=false, handlesAlerts=true, version=73.0.3683.103, browserConnectionEnabled=false, proxy=Proxy(), nativeEvents=true, locationContextEnabled=true, cssSelectorsEnabled=true}]
+Session ID: 86a457c26f94892f41f064f40a51438b
+2019-04-28 02:10:35 INFO  Driver:270 - embedScreenshot
+2019-04-28 02:10:36 INFO  Hooks:58 - ***********************************************************************************************************
+2019-04-28 02:10:36 INFO  Hooks:67 -  Launch Browser: "chrome" on Environment:local
+2019-04-28 02:10:36 INFO  FlyInMenuBehaviourSteps:64 - User is on portal's login screen
+2019-04-28 02:10:52 ERROR UtilityMethods:110 - element not interactable
+  (Session info: chrome=73.0.3683.103)
+  (Driver info: chromedriver=73.0.3683.68 (47787ec04b6e38e22703e856e101e840b65afe72),platform=Windows NT 10.0.17134 x86_64) (WARNING: The server did not provide any stacktrace information)
+Command duration or timeout: 2.02 seconds
+Build info: version: '3.4.0', revision: 'unknown', time: 'unknown'
+System info: host: 'HARSHALT-PC', ip: '10.0.75.1', os.name: 'Windows 10', os.arch: 'amd64', os.version: '10.0', java.version: '1.8.0_202'
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities [{mobileEmulationEnabled=false, timeouts={implicit=0.0, pageLoad=300000.0, script=30000.0}, hasTouchScreen=false, platform=XP, acceptSslCerts=false, goog:chromeOptions={debuggerAddress=localhost:51806}, acceptInsecureCerts=false, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, setWindowRect=true, unexpectedAlertBehaviour=ignore, applicationCacheEnabled=false, rotatable=false, networkConnectionEnabled=false, chrome={chromedriverVersion=73.0.3683.68 (47787ec04b6e38e22703e856e101e840b65afe72), userDataDir=C:\Users\htikkas\AppData\Local\Temp\scoped_dir19720_31223}, takesHeapSnapshot=true, pageLoadStrategy=normal, strictFileInteractability=false, databaseEnabled=false, handlesAlerts=true, version=73.0.3683.103, browserConnectionEnabled=false, proxy=Proxy(), nativeEvents=true, locationContextEnabled=true, cssSelectorsEnabled=true}]
+Session ID: 86a457c26f94892f41f064f40a51438b
+2019-04-28 02:10:52 INFO  Driver:270 - embedScreenshot
+2019-04-28 02:10:52 INFO  Hooks:58 - ***********************************************************************************************************
+2019-04-28 02:10:52 INFO  Hooks:67 -  Launch Browser: "chrome" on Environment:local
+2019-04-28 02:10:52 INFO  FlyInMenuBehaviourSteps:64 - User is on portal's login screen
+2019-04-28 02:11:07 INFO  PaginationOfDropDownListSteps:244 - Scenario 16 Completed
+2019-04-28 02:11:08 INFO  Hooks:58 - ***********************************************************************************************************
+2019-04-28 02:11:08 INFO  Hooks:67 -  Launch Browser: "chrome" on Environment:local
+2019-04-28 02:11:08 INFO  FlyInMenuBehaviourSteps:64 - User is on portal's login screen
+2019-04-28 02:11:31 INFO  DatabaseConnection:33 - Get Access token
+2019-04-28 02:11:35 WARN  RequestSpecificationImpl$RestAssuredHttpBuilder:534 - Could not parse content-type: Response does not have a content-type header
+2019-04-28 02:11:39 INFO  DatabaseConnection:33 - Get Access token
+2019-04-28 02:11:40 WARN  RequestSpecificationImpl$RestAssuredHttpBuilder:534 - Could not parse content-type: Response does not have a content-type header
+2019-04-28 02:16:40 INFO  Hooks:58 - ***********************************************************************************************************
+2019-04-28 02:16:40 INFO  Hooks:67 -  Launch Browser: "chrome" on Environment:local
+2019-04-28 02:16:40 INFO  Driver:161 - OS Windows 10
+2019-04-28 02:16:48 INFO  FlyInMenuBehaviourSteps:64 - User is on portal's login screen
+2019-04-28 02:17:12 INFO  FlyInMenuBehaviourSteps:156 - Scenario 1 Completed
+2019-04-28 02:17:12 INFO  Hooks:58 - ***********************************************************************************************************
+2019-04-28 02:17:12 INFO  Hooks:67 -  Launch Browser: "chrome" on Environment:local
+2019-04-28 02:17:12 INFO  FlyInMenuBehaviourSteps:64 - User is on portal's login screen
+2019-04-28 02:17:25 INFO  FlyInMenuBehaviourSteps:156 - Scenario 1 Completed
+2019-04-28 02:17:25 INFO  Hooks:58 - ***********************************************************************************************************
+2019-04-28 02:17:25 INFO  Hooks:67 -  Launch Browser: "chrome" on Environment:local
+2019-04-28 02:17:26 INFO  FlyInMenuBehaviourSteps:64 - User is on portal's login screen
+2019-04-28 02:17:43 ERROR UtilityMethods:110 - no such element: Unable to locate element: {"method":"xpath","selector":"//div[@class='menu-title' and contains(text(),'School')]/following-sibling::div//div[@class='menu-dropdown-list-inr']/ul//li[contains(text(),'Steiner Academy Bristol')]"}
+  (Session info: chrome=73.0.3683.103)
+  (Driver info: chromedriver=73.0.3683.68 (47787ec04b6e38e22703e856e101e840b65afe72),platform=Windows NT 10.0.17134 x86_64) (WARNING: The server did not provide any stacktrace information)
+Command duration or timeout: 2.08 seconds
+For documentation on this error, please visit: http://seleniumhq.org/exceptions/no_such_element.html
+Build info: version: '3.4.0', revision: 'unknown', time: 'unknown'
+System info: host: 'HARSHALT-PC', ip: '10.0.75.1', os.name: 'Windows 10', os.arch: 'amd64', os.version: '10.0', java.version: '1.8.0_212'
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities [{mobileEmulationEnabled=false, timeouts={implicit=0.0, pageLoad=300000.0, script=30000.0}, hasTouchScreen=false, platform=XP, acceptSslCerts=false, goog:chromeOptions={debuggerAddress=localhost:52299}, acceptInsecureCerts=false, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, setWindowRect=true, unexpectedAlertBehaviour=ignore, applicationCacheEnabled=false, rotatable=false, networkConnectionEnabled=false, chrome={chromedriverVersion=73.0.3683.68 (47787ec04b6e38e22703e856e101e840b65afe72), userDataDir=C:\Users\htikkas\AppData\Local\Temp\scoped_dir19680_2401}, takesHeapSnapshot=true, pageLoadStrategy=normal, strictFileInteractability=false, databaseEnabled=false, handlesAlerts=true, version=73.0.3683.103, browserConnectionEnabled=false, proxy=Proxy(), nativeEvents=true, locationContextEnabled=true, cssSelectorsEnabled=true}]
+Session ID: 4998d610867ae5e3ced97c24decfa3c1
+*** Element info: {Using=xpath, value=//div[@class='menu-title' and contains(text(),'School')]/following-sibling::div//div[@class='menu-dropdown-list-inr']/ul//li[contains(text(),'Steiner Academy Bristol')]}
+2019-04-28 02:17:43 INFO  Driver:270 - embedScreenshot
+2019-04-28 02:17:43 INFO  Hooks:58 - ***********************************************************************************************************
+2019-04-28 02:17:43 INFO  Hooks:67 -  Launch Browser: "chrome" on Environment:local
+2019-04-28 02:17:43 INFO  FlyInMenuBehaviourSteps:64 - User is on portal's login screen
+2019-04-28 02:18:00 ERROR UtilityMethods:110 - no such element: Unable to locate element: {"method":"xpath","selector":"//div[@class='menu-title' and contains(text(),'School')]/following-sibling::div//div[@class='menu-dropdown-list-inr']/ul//li[contains(text(),'The Advance School')]"}
+  (Session info: chrome=73.0.3683.103)
+  (Driver info: chromedriver=73.0.3683.68 (47787ec04b6e38e22703e856e101e840b65afe72),platform=Windows NT 10.0.17134 x86_64) (WARNING: The server did not provide any stacktrace information)
+Command duration or timeout: 2.06 seconds
+For documentation on this error, please visit: http://seleniumhq.org/exceptions/no_such_element.html
+Build info: version: '3.4.0', revision: 'unknown', time: 'unknown'
+System info: host: 'HARSHALT-PC', ip: '10.0.75.1', os.name: 'Windows 10', os.arch: 'amd64', os.version: '10.0', java.version: '1.8.0_212'
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities [{mobileEmulationEnabled=false, timeouts={implicit=0.0, pageLoad=300000.0, script=30000.0}, hasTouchScreen=false, platform=XP, acceptSslCerts=false, goog:chromeOptions={debuggerAddress=localhost:52299}, acceptInsecureCerts=false, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, setWindowRect=true, unexpectedAlertBehaviour=ignore, applicationCacheEnabled=false, rotatable=false, networkConnectionEnabled=false, chrome={chromedriverVersion=73.0.3683.68 (47787ec04b6e38e22703e856e101e840b65afe72), userDataDir=C:\Users\htikkas\AppData\Local\Temp\scoped_dir19680_2401}, takesHeapSnapshot=true, pageLoadStrategy=normal, strictFileInteractability=false, databaseEnabled=false, handlesAlerts=true, version=73.0.3683.103, browserConnectionEnabled=false, proxy=Proxy(), nativeEvents=true, locationContextEnabled=true, cssSelectorsEnabled=true}]
+Session ID: 4998d610867ae5e3ced97c24decfa3c1
+*** Element info: {Using=xpath, value=//div[@class='menu-title' and contains(text(),'School')]/following-sibling::div//div[@class='menu-dropdown-list-inr']/ul//li[contains(text(),'The Advance School')]}
+2019-04-28 02:18:00 INFO  Driver:270 - embedScreenshot
+2019-04-28 02:18:01 INFO  Hooks:58 - ***********************************************************************************************************
+2019-04-28 02:18:01 INFO  Hooks:67 -  Launch Browser: "chrome" on Environment:local
+2019-04-28 02:18:01 INFO  FlyInMenuBehaviourSteps:64 - User is on portal's login screen
+2019-04-28 02:18:15 INFO  FlyInMenuBehaviourSteps:278 - Scenario 3 Completed
+2019-04-28 02:18:15 INFO  Hooks:58 - ***********************************************************************************************************
+2019-04-28 02:18:15 INFO  Hooks:67 -  Launch Browser: "chrome" on Environment:local
+2019-04-28 02:18:15 INFO  FlyInMenuBehaviourSteps:64 - User is on portal's login screen
+2019-04-28 02:18:38 INFO  Driver:270 - embedScreenshot
+2019-04-28 02:18:39 INFO  Hooks:58 - ***********************************************************************************************************
+2019-04-28 02:18:39 INFO  Hooks:67 -  Launch Browser: "chrome" on Environment:local
+2019-04-28 02:18:39 INFO  FlyInMenuBehaviourSteps:64 - User is on portal's login screen
+2019-04-28 02:18:54 ERROR UtilityMethods:110 - element not interactable
+  (Session info: chrome=73.0.3683.103)
+  (Driver info: chromedriver=73.0.3683.68 (47787ec04b6e38e22703e856e101e840b65afe72),platform=Windows NT 10.0.17134 x86_64) (WARNING: The server did not provide any stacktrace information)
+Command duration or timeout: 2.09 seconds
+Build info: version: '3.4.0', revision: 'unknown', time: 'unknown'
+System info: host: 'HARSHALT-PC', ip: '10.0.75.1', os.name: 'Windows 10', os.arch: 'amd64', os.version: '10.0', java.version: '1.8.0_212'
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities [{mobileEmulationEnabled=false, timeouts={implicit=0.0, pageLoad=300000.0, script=30000.0}, hasTouchScreen=false, platform=XP, acceptSslCerts=false, goog:chromeOptions={debuggerAddress=localhost:52299}, acceptInsecureCerts=false, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, setWindowRect=true, unexpectedAlertBehaviour=ignore, applicationCacheEnabled=false, rotatable=false, networkConnectionEnabled=false, chrome={chromedriverVersion=73.0.3683.68 (47787ec04b6e38e22703e856e101e840b65afe72), userDataDir=C:\Users\htikkas\AppData\Local\Temp\scoped_dir19680_2401}, takesHeapSnapshot=true, pageLoadStrategy=normal, strictFileInteractability=false, databaseEnabled=false, handlesAlerts=true, version=73.0.3683.103, browserConnectionEnabled=false, proxy=Proxy(), nativeEvents=true, locationContextEnabled=true, cssSelectorsEnabled=true}]
+Session ID: 4998d610867ae5e3ced97c24decfa3c1
+2019-04-28 02:18:54 INFO  Driver:270 - embedScreenshot
+2019-04-28 02:18:54 INFO  Hooks:58 - ***********************************************************************************************************
+2019-04-28 02:18:54 INFO  Hooks:67 -  Launch Browser: "chrome" on Environment:local
+2019-04-28 02:18:54 INFO  FlyInMenuBehaviourSteps:64 - User is on portal's login screen
+2019-04-28 02:19:14 INFO  FlyInMenuBehaviourSteps:369 - Scenario 5 Completed
+2019-04-28 02:19:14 INFO  Hooks:58 - ***********************************************************************************************************
+2019-04-28 02:19:14 INFO  Hooks:67 -  Launch Browser: "chrome" on Environment:local
+2019-04-28 02:19:14 INFO  FlyInMenuBehaviourSteps:64 - User is on portal's login screen
+2019-04-28 02:19:26 INFO  FlyInMenuBehaviourSteps:471 - Scenario 8 Completed
+2019-04-28 02:19:26 INFO  Hooks:58 - ***********************************************************************************************************
+2019-04-28 02:19:26 INFO  Hooks:67 -  Launch Browser: "chrome" on Environment:local
+2019-04-28 02:19:26 INFO  FlyInMenuBehaviourSteps:64 - User is on portal's login screen
+2019-04-28 02:19:38 INFO  FlyInMenuBehaviourSteps:471 - Scenario 8 Completed
+2019-04-28 02:19:41 INFO  Hooks:58 - ***********************************************************************************************************
+2019-04-28 02:19:41 INFO  Hooks:67 -  Launch Browser: "chrome" on Environment:local
+2019-04-28 02:19:41 INFO  FlyInMenuBehaviourSteps:64 - User is on portal's login screen
+2019-04-28 02:19:57 INFO  Driver:270 - embedScreenshot
+2019-04-28 02:19:57 INFO  Hooks:58 - ***********************************************************************************************************
+2019-04-28 02:19:57 INFO  Hooks:67 -  Launch Browser: "chrome" on Environment:local
+2019-04-28 02:19:57 INFO  FlyInMenuBehaviourSteps:64 - User is on portal's login screen
+2019-04-28 02:20:13 INFO  PaginationOfDropDownListSteps:89 - Scenario 14 Completed
+2019-04-28 02:20:13 INFO  Hooks:58 - ***********************************************************************************************************
+2019-04-28 02:20:13 INFO  Hooks:67 -  Launch Browser: "chrome" on Environment:local
+2019-04-28 02:20:13 INFO  FlyInMenuBehaviourSteps:64 - User is on portal's login screen
+2019-04-28 02:20:30 INFO  PaginationOfDropDownListSteps:89 - Scenario 14 Completed
+2019-04-28 02:20:30 INFO  Hooks:58 - ***********************************************************************************************************
+2019-04-28 02:20:30 INFO  Hooks:67 -  Launch Browser: "chrome" on Environment:local
+2019-04-28 02:20:30 INFO  FlyInMenuBehaviourSteps:64 - User is on portal's login screen
+2019-04-28 02:20:48 INFO  PaginationOfDropDownListSteps:189 - Scenario 15 Completed
+2019-04-28 02:20:48 INFO  Hooks:58 - ***********************************************************************************************************
+2019-04-28 02:20:48 INFO  Hooks:67 -  Launch Browser: "chrome" on Environment:local
+2019-04-28 02:20:48 INFO  FlyInMenuBehaviourSteps:64 - User is on portal's login screen
+2019-04-28 02:21:06 INFO  PaginationOfDropDownListSteps:244 - Scenario 16 Completed
+2019-04-28 02:21:06 INFO  Hooks:58 - ***********************************************************************************************************
+2019-04-28 02:21:06 INFO  Hooks:67 -  Launch Browser: "chrome" on Environment:local
+2019-04-28 02:21:06 INFO  FlyInMenuBehaviourSteps:64 - User is on portal's login screen
+2019-04-28 02:21:22 ERROR UtilityMethods:110 - element not interactable
+  (Session info: chrome=73.0.3683.103)
+  (Driver info: chromedriver=73.0.3683.68 (47787ec04b6e38e22703e856e101e840b65afe72),platform=Windows NT 10.0.17134 x86_64) (WARNING: The server did not provide any stacktrace information)
+Command duration or timeout: 2.04 seconds
+Build info: version: '3.4.0', revision: 'unknown', time: 'unknown'
+System info: host: 'HARSHALT-PC', ip: '10.0.75.1', os.name: 'Windows 10', os.arch: 'amd64', os.version: '10.0', java.version: '1.8.0_212'
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities [{mobileEmulationEnabled=false, timeouts={implicit=0.0, pageLoad=300000.0, script=30000.0}, hasTouchScreen=false, platform=XP, acceptSslCerts=false, goog:chromeOptions={debuggerAddress=localhost:52299}, acceptInsecureCerts=false, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, setWindowRect=true, unexpectedAlertBehaviour=ignore, applicationCacheEnabled=false, rotatable=false, networkConnectionEnabled=false, chrome={chromedriverVersion=73.0.3683.68 (47787ec04b6e38e22703e856e101e840b65afe72), userDataDir=C:\Users\htikkas\AppData\Local\Temp\scoped_dir19680_2401}, takesHeapSnapshot=true, pageLoadStrategy=normal, strictFileInteractability=false, databaseEnabled=false, handlesAlerts=true, version=73.0.3683.103, browserConnectionEnabled=false, proxy=Proxy(), nativeEvents=true, locationContextEnabled=true, cssSelectorsEnabled=true}]
+Session ID: 4998d610867ae5e3ced97c24decfa3c1
+2019-04-28 02:21:22 INFO  Driver:270 - embedScreenshot
+2019-04-28 02:21:22 INFO  Hooks:58 - ***********************************************************************************************************
+2019-04-28 02:21:22 INFO  Hooks:67 -  Launch Browser: "chrome" on Environment:local
+2019-04-28 02:21:22 INFO  FlyInMenuBehaviourSteps:64 - User is on portal's login screen
+2019-04-28 02:21:37 INFO  PaginationOfDropDownListSteps:244 - Scenario 16 Completed
+2019-04-28 02:21:38 INFO  Driver:72 - Cleaning up the browser
+2019-04-28 02:35:21 INFO  Hooks:86 - ***********************************************************************************************************
+2019-04-28 02:35:21 INFO  Hooks:95 -  Launch Browser: "chrome" on Environment:local
+2019-04-28 02:35:21 INFO  Driver:161 - OS Windows 10
+2019-04-28 02:35:43 INFO  FlyInMenuBehaviourSteps:64 - User is on portal's login screen
+2019-04-28 02:36:18 INFO  Driver:270 - embedScreenshot
+2019-04-28 02:36:19 INFO  Hooks:86 - ***********************************************************************************************************
+2019-04-28 02:36:19 INFO  Hooks:95 -  Launch Browser: "chrome" on Environment:local
+2019-04-28 02:36:19 INFO  FlyInMenuBehaviourSteps:64 - User is on portal's login screen
+2019-04-28 02:36:44 INFO  PaginationOfDropDownListSteps:89 - Scenario 14 Completed
+2019-04-28 02:36:44 INFO  Hooks:86 - ***********************************************************************************************************
+2019-04-28 02:36:44 INFO  Hooks:95 -  Launch Browser: "chrome" on Environment:local
+2019-04-28 02:36:44 INFO  FlyInMenuBehaviourSteps:64 - User is on portal's login screen
+2019-04-28 02:37:08 INFO  PaginationOfDropDownListSteps:89 - Scenario 14 Completed
+2019-04-28 02:37:08 INFO  Hooks:86 - ***********************************************************************************************************
+2019-04-28 02:37:08 INFO  Hooks:95 -  Launch Browser: "chrome" on Environment:local
+2019-04-28 02:37:08 INFO  FlyInMenuBehaviourSteps:64 - User is on portal's login screen
+2019-04-28 02:37:42 INFO  PaginationOfDropDownListSteps:189 - Scenario 15 Completed
+2019-04-28 02:37:44 INFO  Driver:72 - Cleaning up the browser
+2019-04-28 02:45:21 INFO  Hooks:86 - ***********************************************************************************************************
+2019-04-28 02:45:21 INFO  Hooks:95 -  Launch Browser: "chrome" on Environment:local
+2019-04-28 02:45:21 INFO  Driver:161 - OS Windows 10
+2019-04-28 02:45:30 INFO  FlyInMenuBehaviourSteps:64 - User is on portal's login screen
+2019-04-28 02:45:58 INFO  PaginationOfDropDownListSteps:89 - Scenario 14 Completed
+2019-04-28 02:45:58 INFO  Hooks:86 - ***********************************************************************************************************
+2019-04-28 02:45:58 INFO  Hooks:95 -  Launch Browser: "chrome" on Environment:local
+2019-04-28 02:45:58 INFO  FlyInMenuBehaviourSteps:64 - User is on portal's login screen
+2019-04-28 02:46:23 INFO  PaginationOfDropDownListSteps:89 - Scenario 14 Completed
+2019-04-28 02:46:23 INFO  Hooks:86 - ***********************************************************************************************************
+2019-04-28 02:46:23 INFO  Hooks:95 -  Launch Browser: "chrome" on Environment:local
+2019-04-28 02:46:23 INFO  FlyInMenuBehaviourSteps:64 - User is on portal's login screen
+2019-04-28 02:47:00 INFO  PaginationOfDropDownListSteps:189 - Scenario 15 Completed
+2019-04-28 02:47:02 INFO  Driver:72 - Cleaning up the browser
+2019-04-28 03:00:22 INFO  Hooks:66 - ***********************************************************************************************************
+2019-04-28 03:00:22 INFO  Hooks:75 -  Launch Browser: "chrome" on Environment:local
+2019-04-28 03:00:22 INFO  Driver:161 - OS Windows 10
+2019-04-28 03:00:29 INFO  FlyInMenuBehaviourSteps:64 - User is on portal's login screen
+2019-04-28 03:00:54 INFO  DatabaseConnection:33 - Get Access token
+2019-04-28 03:00:59 WARN  RequestSpecificationImpl$RestAssuredHttpBuilder:534 - Could not parse content-type: Response does not have a content-type header
+2019-04-28 03:03:52 INFO  Hooks:58 - ***********************************************************************************************************
+2019-04-28 03:03:52 INFO  Hooks:67 -  Launch Browser: "chrome" on Environment:local
+2019-04-28 03:03:52 INFO  Driver:161 - OS Windows 10
+2019-04-28 03:03:59 INFO  FlyInMenuBehaviourSteps:64 - User is on portal's login screen
+2019-04-28 03:04:23 INFO  DatabaseConnection:33 - Get Access token
+2019-04-28 03:04:47 WARN  RequestSpecificationImpl$RestAssuredHttpBuilder:534 - Could not parse content-type: Response does not have a content-type header
+2019-04-28 03:06:55 INFO  Hooks:58 - ***********************************************************************************************************
+2019-04-28 03:06:55 INFO  Hooks:67 -  Launch Browser: "chrome" on Environment:local
+2019-04-28 03:06:55 INFO  Driver:161 - OS Windows 10
+2019-04-28 03:07:00 INFO  FlyInMenuBehaviourSteps:64 - User is on portal's login screen
+2019-04-28 03:08:19 INFO  DatabaseConnection:33 - Get Access token
+2019-04-28 03:08:23 WARN  RequestSpecificationImpl$RestAssuredHttpBuilder:534 - Could not parse content-type: Response does not have a content-type header
+2019-04-28 03:11:49 INFO  Hooks:58 - ***********************************************************************************************************
+2019-04-28 03:11:49 INFO  Hooks:67 -  Launch Browser: "chrome" on Environment:local
+2019-04-28 03:11:49 INFO  Driver:161 - OS Windows 10
+2019-04-28 03:11:54 INFO  FlyInMenuBehaviourSteps:64 - User is on portal's login screen
+2019-04-28 03:13:13 INFO  Hooks:58 - ***********************************************************************************************************
+2019-04-28 03:13:13 INFO  Hooks:67 -  Launch Browser: "chrome" on Environment:local
+2019-04-28 03:13:13 INFO  Driver:161 - OS Windows 10
+2019-04-28 03:13:18 INFO  FlyInMenuBehaviourSteps:64 - User is on portal's login screen
+2019-04-28 03:13:38 INFO  DatabaseConnection:32 - Get Access token
+2019-04-28 03:13:42 WARN  RequestSpecificationImpl$RestAssuredHttpBuilder:534 - Could not parse content-type: Response does not have a content-type header
+2019-04-28 03:14:16 INFO  PaginationOfDropDownListSteps:94 - Scenario 14 Completed
+2019-04-28 03:14:16 INFO  Hooks:58 - ***********************************************************************************************************
+2019-04-28 03:14:16 INFO  Hooks:67 -  Launch Browser: "chrome" on Environment:local
+2019-04-28 03:14:16 INFO  FlyInMenuBehaviourSteps:64 - User is on portal's login screen
+2019-04-28 03:14:43 INFO  PaginationOfDropDownListSteps:94 - Scenario 14 Completed
+2019-04-28 03:14:43 INFO  Hooks:58 - ***********************************************************************************************************
+2019-04-28 03:14:43 INFO  Hooks:67 -  Launch Browser: "chrome" on Environment:local
+2019-04-28 03:14:43 INFO  FlyInMenuBehaviourSteps:64 - User is on portal's login screen
+2019-04-28 03:15:16 INFO  PaginationOfDropDownListSteps:194 - Scenario 15 Completed
+2019-04-28 03:15:17 INFO  Driver:72 - Cleaning up the browser
+2019-04-28 03:16:18 INFO  Hooks:58 - ***********************************************************************************************************
+2019-04-28 03:16:18 INFO  Hooks:67 -  Launch Browser: "chrome" on Environment:local
+2019-04-28 03:16:18 INFO  Driver:161 - OS Windows 10
+2019-04-28 03:16:26 INFO  FlyInMenuBehaviourSteps:64 - User is on portal's login screen
+2019-04-28 03:16:42 INFO  DatabaseConnection:32 - Get Access token
+2019-04-28 03:16:47 WARN  RequestSpecificationImpl$RestAssuredHttpBuilder:534 - Could not parse content-type: Response does not have a content-type header
+2019-04-28 03:17:05 INFO  PaginationOfDropDownListSteps:94 - Scenario 14 Completed
+2019-04-28 03:17:05 INFO  Hooks:58 - ***********************************************************************************************************
+2019-04-28 03:17:05 INFO  Hooks:67 -  Launch Browser: "chrome" on Environment:local
+2019-04-28 03:17:05 INFO  FlyInMenuBehaviourSteps:64 - User is on portal's login screen
+2019-04-28 03:17:28 INFO  PaginationOfDropDownListSteps:94 - Scenario 14 Completed
+2019-04-28 03:17:28 INFO  Hooks:58 - ***********************************************************************************************************
+2019-04-28 03:17:28 INFO  Hooks:67 -  Launch Browser: "chrome" on Environment:local
+2019-04-28 03:17:28 INFO  FlyInMenuBehaviourSteps:64 - User is on portal's login screen
+2019-04-28 03:18:01 INFO  PaginationOfDropDownListSteps:194 - Scenario 15 Completed
+2019-04-28 03:18:03 INFO  Driver:72 - Cleaning up the browser

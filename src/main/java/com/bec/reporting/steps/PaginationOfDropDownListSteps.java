@@ -25,6 +25,7 @@
  */
 package com.bec.reporting.steps;
 
+import java.sql.Connection;
 import java.util.List;
 import org.junit.Assert;
 import org.openqa.selenium.By;
@@ -32,6 +33,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 import com.bec.reporting.pageobjects.HomePage;
 import com.bec.reporting.utils.CBTConfiguration;
+import com.bec.reporting.utils.ConnectionPool;
+import com.bec.reporting.utils.DatabaseConnection;
 import com.bec.reporting.utils.Driver;
 import com.bec.reporting.utils.IWait;
 import com.bec.reporting.utils.UtilityMethods;
@@ -49,6 +52,8 @@ public class PaginationOfDropDownListSteps {
 	HomePage homePage = PageFactory.initElements(Driver.webdriver, HomePage.class);
 	static int listCount=0,AllPagetotalListItem=0;
 	int countPerPage = 0, pageCount = 0,totalCount=0;
+	public static String token=DatabaseConnection.getToken();
+	public static Connection conn=ConnectionPool.getDBConnection();
 	
 	/**
 	 * This method used to click on roster tab and click on school,class and student drop down 

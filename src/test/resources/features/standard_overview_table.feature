@@ -1,14 +1,14 @@
-@Feature
+@Feature1
 Feature: Standard Overview Table and Chart
 	
 			##STORY 5a) Standards in Achievement Bands and Y axis / Calculating Cells
 			##STORY 6c) Student and Class level and STORY 7d)
 	#@Scenario36 @TC_0001 @TC_0002 @TC_0003 @TC_0005 @TC_0006 @TC_0007 @TC_0008 @TC_0009 @TC_00010
   Scenario: Verify The Y-axis UI representation
-    Given User is on portal's login screen with username as "superadmin" and password as "password" and usertype as "techsupport"
-    When User Click on Standard Performance tab within the Class Context
+    #Given User is on portal's login screen with username as "superadmin" and password as "password" and usertype as "techsupport"
+    #When User Click on Standard Performance tab within the Class Context
    		 ## TC-1
-    Then The Y-axis of the table should be labeled as "Achievement Level" 
+    #Then The Y-axis of the table should be labeled as "Achievement Level" 
    		 ## TC-2
     #And The Y-axis should have the groupings strip of colours with the respective ranges in %
 				##<40%” (red), "40-59%” (orange), "60-79%” (yellow) and "≥80%” (green)
@@ -70,10 +70,10 @@ Feature: Standard Overview Table and Chart
 	   ##STORY 6f) Relationship between Line Chart for Test Scores at the Class Level and Student List module & STORY AND 7a) Standards and Test Score Detail
   	 ##STORY 6c) Student and Class level  	 	
   #@Scenario40 @TC_0029 @TC_0030_DB @TC_0031 @TC_0032  @TC_005 @TC_006 
- 	#Scenario: Verify The appearance of the student list and the line chart, when viewing the class context for the Test Scores Overview
-    #Given User is on portal's login screen with username as "superadmin" and password as "password" and usertype as "techsupport"
-    #When User click on Class Context and Test Score button
-    #Then line chart of Test score over time should be displayed to the right of it Student list should display
+ 	Scenario: Verify The appearance of the student list and the line chart, when viewing the class context for the Test Scores Overview
+    Given User is on portal's login screen with username as "superadmin" and password as "password" and usertype as "techsupport"
+    When User click on Class Context and Test Score button
+    Then line chart of Test score over time should be displayed to the right of it Student list should display
     #When User click on Student Context and Test Score button
     #Then line chart of Test score over time should be displayed of that student but Student list should not be displayed
     

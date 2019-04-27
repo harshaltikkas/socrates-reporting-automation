@@ -6,6 +6,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Properties;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 public class ConnectionPool {
 
 	static ArrayList<Connection> connections = null;
@@ -62,7 +65,7 @@ public class ConnectionPool {
 					count++;
 				}
 			} catch (Exception e) {
-				System.err.println("Cannot connect to database server");
+				log.error("Cannot connect to database server");
 			}
 		}
 	}
@@ -85,7 +88,7 @@ public class ConnectionPool {
 				try {
 					wait();
 				} catch (Exception e) {
-					System.out.println("Problem with wait");
+					log.error("Problem with wait while synchronizing connection");
 				}
 			}
 		}
@@ -111,6 +114,7 @@ public class ConnectionPool {
 	    	 ConnectionPool jdbcObj = ConnectionPool.getInstance();
 	    	 jdbcObj.initialize();
 				connObj = jdbcObj.getConnection();
+				log.info("DB Connection done successfully");
 				return connObj;
 	    }
 
