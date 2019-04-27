@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.TreeMap;
-import com.bec.reporting.steps.Standard_Overview_Table_Steps;
+import com.bec.reporting.steps.PaginationOfDropDownListSteps;
 import com.google.common.base.Verify;
 import com.jayway.restassured.RestAssured;
 import com.jayway.restassured.path.json.JsonPath;
@@ -19,7 +19,6 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class DatabaseConnection {
 	public static Properties prop; 	
-	public static Connection conn=ConnectionPool.getDBConnection();
 	public static int districtId=509440;
 	/*
 	 * API Methods Here
@@ -63,7 +62,7 @@ public class DatabaseConnection {
 		try {
 			prop = FileRead.readProperties();
 			String apiUrl = prop.getProperty("apiURL") + "/schools?page=0&size=10000&direction=ASC";
-			Response response = RestAssured.given().header("Authorization", "Bearer " + Standard_Overview_Table_Steps.token).get(apiUrl);
+			Response response = RestAssured.given().header("Authorization", "Bearer " + PaginationOfDropDownListSteps.token).get(apiUrl);
 			if (response.getStatusCode() != 200) {
 				log.info("Error occurred. status code : " + response.getStatusCode());
 				return null;
@@ -90,7 +89,7 @@ public class DatabaseConnection {
 		try {
 			prop = FileRead.readProperties();
 			String apiUrl = prop.getProperty("apiURL") + "/schools?page=0&size=10000&direction=ASC";
-			Response response = RestAssured.given().header("Authorization", "Bearer " + getToken()).get(apiUrl);
+			Response response = RestAssured.given().header("Authorization", "Bearer " + PaginationOfDropDownListSteps.token).get(apiUrl);
 			if (response.getStatusCode() != 200) {
 				log.info("Error occurred. status code : " + response.getStatusCode());
 				return null;
@@ -117,7 +116,7 @@ public class DatabaseConnection {
 		try {
 			prop = FileRead.readProperties();
 			String apiUrl = prop.getProperty("apiURL") + "/classes?schoolId="+getSchoolIDBySchoolName(schoolName)+"&districtId="+districtId;
-			Response response = RestAssured.given().header("Authorization", "Bearer " + getToken()).get(apiUrl);
+			Response response = RestAssured.given().header("Authorization", "Bearer " + PaginationOfDropDownListSteps.token).get(apiUrl);
 			if (response.getStatusCode() != 200) {
 				log.info("Error occurred. status code : " + response.getStatusCode());
 				return null;
@@ -175,7 +174,7 @@ public class DatabaseConnection {
 		try {
 			prop = FileRead.readProperties();
 			String apiUrl = prop.getProperty("apiURL") + "/students?schoolId="+schoolId+"&districtId="+districtId+"&classId="+classId;
-			Response response = RestAssured.given().header("Authorization", "Bearer " + Standard_Overview_Table_Steps.token).get(apiUrl);
+			Response response = RestAssured.given().header("Authorization", "Bearer " + PaginationOfDropDownListSteps.token).get(apiUrl);
 			if (response.getStatusCode() != 200) {
 				log.info("Error occurred. status code : " + response.getStatusCode());
 				return null;
@@ -202,7 +201,7 @@ public class DatabaseConnection {
 		try {
 			prop = FileRead.readProperties();
 			String apiUrl = prop.getProperty("apiURL") + "/classes?schoolId="+getSchoolIDBySchoolName(schoolName)+"&districtId="+districtId;
-			Response response = RestAssured.given().header("Authorization", "Bearer " + Standard_Overview_Table_Steps.token).get(apiUrl);
+			Response response = RestAssured.given().header("Authorization", "Bearer " + PaginationOfDropDownListSteps.token).get(apiUrl);
 			if (response.getStatusCode() != 200) {
 				log.info("Error occurred. status code : " + response.getStatusCode());
 				return null;
@@ -233,7 +232,7 @@ public class DatabaseConnection {
 			int classId=getClassIDBySchoolNameAndClassName(schoolName, className);			
 			prop = FileRead.readProperties();
 			String apiUrl = prop.getProperty("apiURL") +"/students?schoolId="+schoolId+"&districtId="+districtId+"&classId="+classId;
-			Response response = RestAssured.given().header("Authorization", "Bearer " + Standard_Overview_Table_Steps.token).get(apiUrl);
+			Response response = RestAssured.given().header("Authorization", "Bearer " + PaginationOfDropDownListSteps.token).get(apiUrl);
 			if (response.getStatusCode() != 200) {
 				log.info("Error occurred. status code : " + response.getStatusCode());
 				return null;
@@ -261,7 +260,7 @@ public class DatabaseConnection {
 		try {
 			prop = FileRead.readProperties();
 			String apiUrl = prop.getProperty("apiURL") +"/students?schoolId="+schoolId+"&districtId="+districtId+"&classId="+classId;
-			Response response = RestAssured.given().header("Authorization", "Bearer " + Standard_Overview_Table_Steps.token).get(apiUrl);
+			Response response = RestAssured.given().header("Authorization", "Bearer " + PaginationOfDropDownListSteps.token).get(apiUrl);
 			if (response.getStatusCode() != 200) {
 				log.info("Error occurred. status code : " + response.getStatusCode());
 				return null;

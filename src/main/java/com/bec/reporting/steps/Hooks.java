@@ -41,9 +41,9 @@ import lombok.extern.slf4j.Slf4j;
 public class Hooks {
 
 	public static String reportBrowser;
-
 	/**
-	 * This is pre scenario executing method to launch the browser 
+	 * This is pre scenario executing method to launch the browser
+	 * 
 	 * @throws InterruptedException
 	 * @throws IOException
 	 */
@@ -54,7 +54,7 @@ public class Hooks {
 			 * Initializing DB details and required Data from DB and API
 			 */
 			/**/
-			
+
 			log.info(
 					"***********************************************************************************************************");
 			String browser;
@@ -75,11 +75,13 @@ public class Hooks {
 	}
 
 	/**
-	 * This is post scenario executing method to capture screenshot and crossbrowser testing
+	 * This is post scenario executing method to capture screenshot and crossbrowser
+	 * testing
+	 * 
 	 * @param scenario
 	 * @throws FileNotFoundException
 	 * @throws IOException
-	 * @throws SQLException 
+	 * @throws SQLException
 	 */
 	@After
 	public void after(Scenario scenario) throws FileNotFoundException, IOException, SQLException {

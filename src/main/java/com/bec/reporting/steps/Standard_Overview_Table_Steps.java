@@ -25,7 +25,6 @@
  */
 package com.bec.reporting.steps;
 
-import java.sql.Connection;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -38,7 +37,6 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.PageFactory;
 import com.bec.reporting.pageobjects.HomePage;
 import com.bec.reporting.utils.CBTConfiguration;
-import com.bec.reporting.utils.ConnectionPool;
 import com.bec.reporting.utils.DatabaseConnection;
 import com.bec.reporting.utils.Driver;
 import com.bec.reporting.utils.Model;
@@ -58,10 +56,6 @@ public class Standard_Overview_Table_Steps {
 	HomePage homePage = PageFactory.initElements(Driver.webdriver, HomePage.class);
 	static boolean performanceMenuClicked = false;
 	static String headerOnToolTip, subHeaderOnToolTip;
-	/*public static String token=DatabaseConnection.getToken();
-	public static Connection conn=ConnectionPool.getDBConnection();*/
-	public static String token;
-	public static Connection conn;
 	/**
 	 * This method is used to click on standard performance tab in class context
 	 * 
@@ -256,7 +250,7 @@ public class Standard_Overview_Table_Steps {
 					} else {
 						strandName = homePage.strandnameslist.get(lastStrandIndex).getText();
 					}
-					lm=DatabaseConnection.getStandardAvgPerListInClassContext(conn, schoolId, classId,
+					lm=DatabaseConnection.getStandardAvgPerListInClassContext(PaginationOfDropDownListSteps.conn, schoolId, classId,
 							strandName);
 
 					Iterator<Model> iterator = lm.iterator();
@@ -277,7 +271,7 @@ public class Standard_Overview_Table_Steps {
 							//code here
 							//Assert.assertTrue(UtilityMethods.VerifyTestScore(conn,m.getStandard_id(),schoolId,classId));
 						} catch (Exception e) {
-							UtilityMethods.searchandClickonELement(standardList.get(standardIndex),m,standardIndex,cat,subcat,desc,lastStrandIndex,conn,m.getStandard_id(),schoolId,classId);
+							UtilityMethods.searchandClickonELement(standardList.get(standardIndex),m,standardIndex,cat,subcat,desc,lastStrandIndex,PaginationOfDropDownListSteps.conn,m.getStandard_id(),schoolId,classId);
 						}
 
 						Thread.sleep(1000);
@@ -299,7 +293,7 @@ public class Standard_Overview_Table_Steps {
 						} else {
 							strandName = homePage.strandnameslist.get(strandIndex).getText();
 						}
-						lm=DatabaseConnection.getStandardAvgPerListInClassContext(conn, schoolId, classId,
+						lm=DatabaseConnection.getStandardAvgPerListInClassContext(PaginationOfDropDownListSteps.conn, schoolId, classId,
 								strandName);					
 						Iterator<Model> iterator = lm.iterator();
 						
@@ -318,9 +312,9 @@ public class Standard_Overview_Table_Steps {
 								Assert.assertTrue(desc.equals(m.getStandard_description()));
 								
 								//code here
-								//Assert.assertTrue(UtilityMethods.VerifyTestScore(conn,m.getStandard_id(),schoolId,classId));
+								//Assert.assertTrue(UtilityMethods.VerifyTestScore(PaginationOfDropDownListSteps.conn,m.getStandard_id(),schoolId,classId));
 							} catch (Exception e) {
-								UtilityMethods.searchandClickonELement(standardList.get(standardIndex),m,standardIndex,cat,subcat,desc,strandIndex,conn,m.getStandard_id(),schoolId,classId);
+								UtilityMethods.searchandClickonELement(standardList.get(standardIndex),m,standardIndex,cat,subcat,desc,strandIndex,PaginationOfDropDownListSteps.conn,m.getStandard_id(),schoolId,classId);
 							}
 							Thread.sleep(1000);
 							UtilityMethods.verifyColorAndStandardAvgPercentage(standardList.get(standardIndex), m.getAvg_per());
@@ -390,7 +384,7 @@ public class Standard_Overview_Table_Steps {
 					} else {
 						strandName = homePage.strandnameslist.get(lastStrandIndex).getText();
 					}
-					lm=DatabaseConnection.getStandardAvgPerListInStudentContext(conn, schoolId, classId,
+					lm=DatabaseConnection.getStandardAvgPerListInStudentContext(PaginationOfDropDownListSteps.conn, schoolId, classId,
 							strandName,studentId);	
 					Iterator<Model> iterator = lm.iterator();
 					int standardIndex = 0;
@@ -414,7 +408,7 @@ public class Standard_Overview_Table_Steps {
 						} else {
 							strandName = homePage.strandnameslist.get(strandIndex).getText();
 						}
-						lm=DatabaseConnection.getStandardAvgPerListInStudentContext(conn, schoolId, classId,
+						lm=DatabaseConnection.getStandardAvgPerListInStudentContext(PaginationOfDropDownListSteps.conn, schoolId, classId,
 								strandName,studentId);					
 						Iterator<Model> iterator = lm.iterator();
 						
@@ -444,7 +438,7 @@ public class Standard_Overview_Table_Steps {
 		} catch (Exception e) {
 			UtilityMethods.processException(e);
 		}
-		conn.close();
+		PaginationOfDropDownListSteps.conn.close();
 		log.info("Scenario 36_5 completed");
 	}
 	
@@ -881,9 +875,7 @@ public class Standard_Overview_Table_Steps {
 			else {
 				className =homePage.classnameoncontextheader.getText();
 			}
-			/**
-			 *TODO Write code to click on 1,2,3 page in sequence and match the score in circle with DB
-			 */
+			
 			Actions action = new Actions(Driver.webdriver);
 			WebElement enabledLeftArrow = null;
 			boolean doneWithThreeCircle = false, disableLeftArrowFound = false, enabledLeftArrowFound = false,
@@ -918,6 +910,9 @@ public class Standard_Overview_Table_Steps {
 							circleList.get(0).click();
 							Thread.sleep(1000);
 							for (int j = homePage.testNamesonPerPage_onlinechart.size() - 1; j >= 0; j--) {
+								/**
+								 * match homePage.testScoreValueInCircle_onlinechart.get(j).gettext() with db value
+								 */
 								homePage.testScoreValueInCircle_onlinechart.get(j).click();
 								Thread.sleep(3000);
 								
@@ -933,7 +928,7 @@ public class Standard_Overview_Table_Steps {
 							
 								// DB code for check the student list
 								/**Verifying UI Content in Student List with DB data*/
-								lm = DatabaseConnection.getStudentDetailListInTSInClass(conn, schoolName, className, toolTipTextofTest);
+								lm = DatabaseConnection.getStudentDetailListInTSInClass(PaginationOfDropDownListSteps.conn, schoolName, className, toolTipTextofTest);
 								Iterator<Model> iterator = lm.iterator();
 								int index = 0;
 								while (iterator.hasNext()) {
@@ -970,7 +965,7 @@ public class Standard_Overview_Table_Steps {
 									
 										// DB code for check the student list
 										/**Verifying UI Content in Student List with DB data*/
-										lm = DatabaseConnection.getStudentDetailListInTSInClass(conn, schoolName, className, toolTipTextofTest);
+										lm = DatabaseConnection.getStudentDetailListInTSInClass(PaginationOfDropDownListSteps.conn, schoolName, className, toolTipTextofTest);
 										Iterator<Model> iterator = lm.iterator();
 										int index = 0;
 										while (iterator.hasNext()) {
@@ -1015,7 +1010,7 @@ public class Standard_Overview_Table_Steps {
 							
 								// DB code for check the student list
 								/**Verifying UI Content in Student List with DB data*/
-								lm = DatabaseConnection.getStudentDetailListInTSInClass(conn, schoolName, className, toolTipTextofTest);
+								lm = DatabaseConnection.getStudentDetailListInTSInClass(PaginationOfDropDownListSteps.conn, schoolName, className, toolTipTextofTest);
 								Iterator<Model> iterator = lm.iterator();
 								int index = 0;
 								while (iterator.hasNext()) {
@@ -1050,7 +1045,7 @@ public class Standard_Overview_Table_Steps {
 				
 					// DB code for check the student list
 					/**Verifying UI Content in Student List with DB data*/
-					lm = DatabaseConnection.getStudentDetailListInTSInClass(conn, schoolName, className, toolTipTextofTest);
+					lm = DatabaseConnection.getStudentDetailListInTSInClass(PaginationOfDropDownListSteps.conn, schoolName, className, toolTipTextofTest);
 					Iterator<Model> iterator = lm.iterator();
 					int index = 0;
 					while (iterator.hasNext()) {
@@ -1353,7 +1348,7 @@ public class Standard_Overview_Table_Steps {
 	public void click_on_different_coloured_strips_blue_strip_should_be_display_under_the_clicked_strip_and_the_no_of_student_records_with_that_colour_should_be_display()
 			throws Throwable {
 		try {
-			// DatabaseConnection.getAllStrand(FlyInMenuBehaviourSteps.conn);
+			// DatabaseConnection.getAllStrand(FlyInMenuBehaviourSteps.PaginationOfDropDownListSteps.conn);
 			int recordsOnClickedStrip = 0, countPerPage = 0, totalCount = 0;
 			boolean doneWithThreeCircle = false, disableRightArrowFound = false, enabledRightArrowFound = false,
 					paginatorFound = false;
@@ -1690,7 +1685,7 @@ public class Standard_Overview_Table_Steps {
 			} else {
 				firstStrandName = homePage.strandnameslist.get(0).getText();
 			}
-			lm = DatabaseConnection.getStudentDetailListInSPInClassByStrand(conn, schoolName, className, firstStrandName);
+			lm = DatabaseConnection.getStudentDetailListInSPInClassByStrand(PaginationOfDropDownListSteps.conn, schoolName, className, firstStrandName);
 			Iterator<Model> iterator = lm.iterator();
 			int index = 0;
 			while (iterator.hasNext()) {
@@ -1764,7 +1759,7 @@ public class Standard_Overview_Table_Steps {
 			numericlistItem.clear();
 
 			CBTConfiguration.score = "pass";
-//			conn.close();
+//			PaginationOfDropDownListSteps.conn.close();
 		} catch (Exception e) {
 			UtilityMethods.processException(e);
 		}
