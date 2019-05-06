@@ -18,7 +18,8 @@
 		<cucumber.jvm.parallel.version>2.2.0</cucumber.jvm.parallel.version>
 		<surefire.maven.plugin.version>2.19.1</surefire.maven.plugin.version>
 		<acceptance.test.parallel.count>1</acceptance.test.parallel.count>
-		<jdk.compiler.path>C:\Program Files\Java\jdk1.8.0_212\bin\javac.exe</jdk.compiler.path>
+		<!--<jdk.compiler.path>C:\Program Files\Java\jdk1.8.0_212\bin\javac.exe</jdk.compiler.path>-->
+		<jdk.compiler.path>/docker-java-home/bin/javac</jdk.compiler.path>
 		<restassured.verson>2.9.0</restassured.verson>
 
 	</properties>
