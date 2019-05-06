@@ -59,7 +59,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class Driver {
 	
-	static String resourceFolder="resources/files/software/";
+	static String resourceFolder="src/test/resources/files/software/";
 	public static RemoteWebDriver webdriver = null;
 	public static DesiredCapabilities caps;
 	public static boolean crossbrwr=false;
