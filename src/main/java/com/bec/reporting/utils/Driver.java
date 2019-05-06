@@ -182,7 +182,7 @@ public class Driver {
 						"C:\\Program Files (x86)\\Google\\Chrome\\Application\\chromedriver.exe");
 			}
 			else {
-				 System.setProperty("webdriver.chrome.driver", resourceFolder+os+"/chromedriver");
+				 System.setProperty("webdriver.chrome.driver", "/usr/local/bin/chromedriver");
 			}
 			Map<String, Object> prefs = new HashMap<String, Object>();
 			prefs.put("profile.default_content_setting_values.notifications", 2);
