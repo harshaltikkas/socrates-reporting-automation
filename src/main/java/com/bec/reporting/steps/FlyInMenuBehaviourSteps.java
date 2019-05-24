@@ -74,39 +74,27 @@ public class FlyInMenuBehaviourSteps {
 			select.selectByVisibleText(usertype);
 			Thread.sleep(2000);
 			homePage.loginbtn.click();
-			Thread.sleep(5000);
+			//Thread.sleep(5000);
 			IWait.explicit_wait(Driver.webdriver, homePage.overviewtext);					
 			Assert.assertTrue("User is on SSO portal's home screen", homePage.overviewtext.isDisplayed());
 		} catch (Exception e) {
 			UtilityMethods.processException(e);
 		}
 	}
-
+	
 	/**
-	 * method used to verify openarrow and click on Tab on Universal Selector
-	 * @param  tabName
+	 * This method is used to open and close the Universal Selector Tab one by one
+	 * @param tabName
 	 * @throws Throwable
 	 */
-	@When("^User Click on open arrows of \"([^\"]*)\" tab within the Universal Selector Tab$")
-	public void user_Click_on_open_arrows_of_tab_within_the_Universal_Selector_Tab(String tabName) throws Throwable {
+	@Then("^User is able to open and close the \"([^\"]*)\" tab within the Universal Selector Tab$")
+	public void user_is_able_to_open_and_close_the_tab_within_the_Universal_Selector_Tab(String tabName) throws Throwable {
 		try {
 			IWait.explicit_wait(Driver.webdriver, homePage.openarrow);
 			Verify.verify(homePage.openarrow.isDisplayed());
 			Driver.webdriver.findElement(By.xpath("//span[@class='menu-name' and contains(text(),'" + tabName + "')]"))
 					.click();
-		} catch (Exception e) {
-			UtilityMethods.processException(e);
-		}
-	}
-
-	/**
-	 * method used to verify closearrow display 
-	 * @param  tabName
-	 * @throws Throwable
-	 */
-	@Then("^User should be able to open the slider for the \"([^\"]*)\" Tab and able to see the close arrows$")
-	public void user_should_be_able_to_open_the_slider_for_the_Tab_with_and_able_to_see_the_close_arrows(String tabName) throws Throwable {
-		try {
+			Thread.sleep(1000);
 			if (tabName.equals("Roster")) {
 				IWait.explicit_wait(Driver.webdriver, homePage.schoolTitleOnSliderMenu);
 				Verify.verify(homePage.schoolTitleOnSliderMenu.isDisplayed());
@@ -118,42 +106,14 @@ public class FlyInMenuBehaviourSteps {
 				Verify.verify(homePage.districtNameOnSliderMenu.isDisplayed());
 			}
 			Assert.assertTrue(homePage.closearrow.isDisplayed());
-			CBTConfiguration.score = "pass";
-		} catch (Exception e) {
-			UtilityMethods.processException(e);
-		}
-	}
-
-	/**
-	 * method used to click on close arrow
-	 * @param  tabName
-	 * @throws Throwable
-	 */
-	@When("^User Click on close arrows for \"([^\"]*)\" tab within the Universal Selector Tab$")
-	public void user_Click_on_close_arrows_for_tab_within_the_Universal_Selector_Tab(String tabName) throws Throwable {
-		try {
-			IWait.implicit_wait(2);
 			homePage.closearrow.click();
-		} catch (Exception e) {
-			UtilityMethods.processException(e);
-		}
-	}
-
-	/**
-	 * method used to verify open arrow display 
-	 * @param  tabName
-	 * @throws Throwable
-	 */
-	@Then("^User should be able to close the slider for the \"([^\"]*)\" Tab and able to see the open arrows$")
-	public void user_should_be_able_to_close_the_slider_for_the_Tab_and_able_to_see_the_open_arrows(String tabName) throws Throwable {
-		try {
-			IWait.implicit_wait(2);
+			Thread.sleep(1000);
 			Assert.assertTrue(homePage.openarrow.isDisplayed());
 			CBTConfiguration.score = "pass";
 		} catch (Exception e) {
 			UtilityMethods.processException(e);
 		}
-		log.info("Scenario 1 Completed");
+		log.info("Scenario 1 for "+tabName+" Completed");		
 	}
 
 	/**
@@ -172,33 +132,29 @@ public class FlyInMenuBehaviourSteps {
 			UtilityMethods.processException(e);
 		}
 	}
-
+	
 	/**
-	 * method used to select school,class and student from dropdown on roster tab and apply filter
-	 * and verify the text on context header 
-	 * @param school
-	 * @param classNm
-	 * @param student
+	 * This method is used to verify the different student type selection in Roster Tab and after applying button verify the content with
+	 * context header info
+	 * @param studentType
 	 * @throws Throwable
 	 */
-	@Then("^User should be able to select School \"([^\"]*)\" and Class \"([^\"]*)\" and Student \"([^\"]*)\" drop downlist and click on apply filter button$")
-	public void user_should_be_able_to_select_School_and_Class_and_Student_drop_downlist_and_click_on_apply_filter_button(String school, String classNm, String student) throws Throwable {
+	@Then("^User should be able to select school and Class and student as \"([^\"]*)\" and apply and verify with context header information$")
+	public void user_should_be_able_to_select_school_and_Class_and_student_as_and_apply_and_verify_with_context_header_information(String studentType) throws Throwable {
 		try {
+			String selectedSchool,selectedClass,selectedStudent;
 			// selecting school from dropdown
 			homePage.schooldropdownbtn.click();
-			UtilityMethods.scrollPageDown(Driver.webdriver, 3);
-			WebElement selectSchool = Driver.webdriver.findElement(By.xpath(
-					"//div[@class='menu-title' and contains(text(),'School')]/following-sibling::div//div[@class='menu-dropdown-list-inr']/ul//li[contains(text(),'"
-							+ school + "')]"));
-			IWait.explicit_wait(Driver.webdriver, selectSchool);
-			selectSchool.click();
-			String schoolName = homePage.schooldropdownbtn.getText();
-			Thread.sleep(500);
+			Thread.sleep(1000);
+			int randomSchoolIndex=UtilityMethods.generateRandomNumberBySkippingIndex(homePage.schoollist.size(), 0);
+			selectedSchool=homePage.schoollist.get(randomSchoolIndex).getText();
+			homePage.schoollist.get(randomSchoolIndex).click();			
+			log.info("Selected School is:" +selectedSchool );
 			Assert.assertTrue(homePage.classRefreshIcon.isDisplayed());
 			int count = 1;
 			try {
 				do {
-					log.info("Thread sleep called for class Loading :" + count +" Times");
+					log.info("Thread sleep called for class Loading :" + count + " Times");
 					Thread.sleep(2000);
 					count++;
 				} while (homePage.classRefreshIcon.isDisplayed());
@@ -206,20 +162,17 @@ public class FlyInMenuBehaviourSteps {
 				log.info("Class Refresh Icon Display off");
 				count = 1;
 			}
+			UtilityMethods.scrollPageDown(Driver.webdriver, 3);
 			// selecting class from dropdown
 			homePage.classdropdownbtn.click();
-			UtilityMethods.scrollPageDown(Driver.webdriver, 3);
-			WebElement selectClass = Driver.webdriver.findElement(By.xpath(
-					"//div[@class='menu-title' and contains(text(),'Class')]/following-sibling::div//div[@class='menu-dropdown-list-inr']/ul//li[contains(text(),'"
-							+ classNm + "')]"));
-			IWait.explicit_wait(Driver.webdriver, selectClass);		
-			selectClass.click();			
-			String className = homePage.classdropdownbtn.getText();
-			Thread.sleep(500);
+			Thread.sleep(1000);
+			selectedClass=homePage.classlist.get(0).getText();
+			homePage.classlist.get(0).click();
+			log.info("Selected Class is:" + selectedClass);
 			Assert.assertTrue(homePage.studentRefreshIcon.isDisplayed());
 			try {
 				do {
-					log.info("Thread sleep called for Student Loading :" + count +" Times");
+					log.info("Thread sleep called for Student Loading :" + count + " Times");
 					Thread.sleep(2000);
 					count++;
 				} while (homePage.studentRefreshIcon.isDisplayed());
@@ -228,37 +181,98 @@ public class FlyInMenuBehaviourSteps {
 			}
 			// selecting student from dropdown
 			homePage.studentdropdownbtn.click();
-			WebElement selectStudent = Driver.webdriver.findElement(By.xpath(
-					"//div[@class='menu-title' and contains(text(),'Student')]/following-sibling::div//div[@class='menu-dropdown-list-inr']/ul//li[contains(text(),'"
-							+ student + "')]"));
-			IWait.explicit_wait(Driver.webdriver, selectStudent);
-			selectStudent.click();
-			String studentName = homePage.studentdropdownbtn.getText();
 			Thread.sleep(1000);
+			int customSize=0;
+			//This is to unselect all student from dropdown,as default is all selected
+			homePage.studentalllist.get(0).click();
+			Thread.sleep(1000);
+			UtilityMethods.scrollPageDown(Driver.webdriver,5);
+			switch (studentType) {
+			case "single":
+				homePage.studentalllist.get(2).click();
+				break;
+			case "multiple":
+				for (int i = 1; i < homePage.studentalllist.size(); i=i+2) {
+					if(homePage.studentalllist.get(i).getText().equals("")) {
+						UtilityMethods.scroll_Div(homePage.studentalllist.get(i), 20);
+					}
+					homePage.studentalllist.get(i).click();
+					Thread.sleep(1000);
+					customSize++;
+				}
+				break;
+			default:
+				homePage.studentalllist.get(0).click();
+				break;
+			}
+			Thread.sleep(1000);
+			selectedStudent=homePage.studentdropdownbtn.getText();
+			log.info("Selected Student is:" + selectedStudent);
+
 			homePage.rosterapplybtn.click();
-			Thread.sleep(1000);
+			Thread.sleep(3000);
+			UtilityMethods.scrollPageUp(Driver.webdriver,8);
 			/**
 			 * verifying class and school and student on context menu by comparing dropdown
 			 * text and context menu values
 			 */
-			String studentTextOnContextHeader;
-			String schoolTextOnContextHeader=homePage.schoolnameoncontextheader.getText().trim();
-			String classTextOnContextHeader=homePage.classnameoncontextheader.getText().trim();			
-			Assert.assertTrue(schoolName.contains(UtilityMethods.elipsisRemoval(schoolTextOnContextHeader)));
-			Assert.assertTrue(className.contains(UtilityMethods.elipsisRemoval(classTextOnContextHeader)));
-			if (!(studentName.equals("All"))) {
-				studentTextOnContextHeader=homePage.studentnameoncontextheader.getText().trim();
-				Assert.assertTrue(UtilityMethods.elipsisRemoval(studentTextOnContextHeader).contains(studentName));
-				Assert.assertTrue(homePage.activestudentmenu.isDisplayed());
+			String schoolNameonCH,classNameonCH,studentTextonCH;
+			if (homePage.schoolnameoncontextheader.getText().contains("...")) {
+				new Actions(Driver.webdriver).moveToElement(homePage.schoolnameoncontextheader).build().perform();
+				schoolNameonCH = homePage.tooltipofschoolnameoncontextheader.getText();
+				new Actions(Driver.webdriver).moveToElement(homePage.overviewtext).build().perform();
+			} else {
+				schoolNameonCH = homePage.schoolnameoncontextheader.getText();
+			}
+
+			if (homePage.classnameoncontextheader.getText().contains("...")) {
+				new Actions(Driver.webdriver).moveToElement(homePage.classnameoncontextheader).build().perform();
+				classNameonCH = homePage.tooltipofclassnameoncontextheader.getText();
+				new Actions(Driver.webdriver).moveToElement(homePage.overviewtext).build().perform();
 			}
 			else {
-			Assert.assertTrue(homePage.activeclass.isDisplayed());
+				classNameonCH = homePage.classnameoncontextheader.getText();
+			}
+
+			Assert.assertTrue(selectedSchool.equals(schoolNameonCH));
+			Assert.assertTrue(selectedClass.equals(classNameonCH));
+
+			switch (studentType) {
+			
+			case "single":
+
+				if (homePage.studentnameoncontextheader.getText().contains("...")) {
+					new Actions(Driver.webdriver).moveToElement(homePage.studentnameoncontextheader).build().perform();
+					studentTextonCH = homePage.studentnameoncontextheadertooltiptext.getText();
+				} else {
+					studentTextonCH = homePage.studentnameoncontextheader.getText();
+				}
+
+				Assert.assertTrue(studentTextonCH.contains(selectedStudent));
+				Assert.assertTrue(homePage.activestudentmenu.isDisplayed());
+				break;
+
+			case "multiple":
+				
+				if (homePage.studentnameoncontextheader.getText().contains("...")) {
+					new Actions(Driver.webdriver).moveToElement(homePage.studentnameoncontextheader).build().perform();
+					studentTextonCH = homePage.studentnameoncontextheadertooltiptext.getText();
+				} else {
+					studentTextonCH = homePage.studentnameoncontextheader.getText();
+				}
+				Assert.assertTrue(studentTextonCH.equals("Custom ("+customSize+")"));
+				Assert.assertTrue(homePage.activeclassmenu.isDisplayed());
+				break;
+				
+			default:
+				Assert.assertTrue(homePage.activeclassmenu.isDisplayed());
+				break;
 			}
 			CBTConfiguration.score = "pass";
 		} catch (Exception e) {
 			UtilityMethods.processException(e);
 		}
-		log.info("Scenario 2 Completed");
+		log.info("Scenario 2 for "+studentType+" Completed");		
 	}
 
 	/**
@@ -302,22 +316,28 @@ public class FlyInMenuBehaviourSteps {
 	@Then("^User should be able to select \"([^\"]*)\" Test and click on apply filter button$")
 	public void user_should_be_able_to_select_Test_and_click_on_apply_filter_button(String testType) throws Throwable {
 		try {
+			homePage.allcheckbox.click();
+			Thread.sleep(500);
+			
 			String selectedTestName;
 			int testCheckBoxListSize = 0, randomNumber = 0;
 			testCheckBoxListSize = homePage.testscheckboxlist.size();
 			randomNumber = (int) (Math.random() * testCheckBoxListSize);
-			homePage.allcheckbox.click();
-			Thread.sleep(500);
+			
 			switch (testType) {
 			case "single":
 				UtilityMethods.scrollPageDown(Driver.webdriver, randomNumber+1);
-				homePage.testscheckboxlist.get(randomNumber).click();
 				selectedTestName=homePage.testnameslist.get(randomNumber).getText();
-				Thread.sleep(500);				
-				new Actions(Driver.webdriver).moveToElement(homePage.testapplybtn).build().perform();
-				UtilityMethods.scrollPageDown(Driver.webdriver, 10);
+				homePage.testscheckboxlist.get(randomNumber).click();
 				Thread.sleep(500);
-				homePage.testapplybtn.click();
+				UtilityMethods.scrollPageDown(Driver.webdriver);
+				Thread.sleep(1000);
+				UtilityMethods.scrollPageDown(Driver.webdriver);
+				Thread.sleep(1000);
+				new Actions(Driver.webdriver).moveToElement(homePage.testapplybtn).click().build().perform();
+				Thread.sleep(3000);
+				UtilityMethods.scrollPageUp(Driver.webdriver);
+				Thread.sleep(2000);
 				new Actions(Driver.webdriver).moveToElement(homePage.nooftestoncontextheader).build().perform();
 				Assert.assertTrue(selectedTestName.equals(homePage.tooltipoftestnameoncontextheader.getText()));
 				break;
@@ -330,17 +350,10 @@ public class FlyInMenuBehaviourSteps {
 					noOfSelectedTest++;
 				}
 				homePage.testapplybtn.click();
-				Thread.sleep(500);
+				Thread.sleep(3000);
 				UtilityMethods.scrollPageUp(Driver.webdriver);
 				Thread.sleep(500);
 				Assert.assertTrue(homePage.nooftestoncontextheader.getText().equals("Custom ("+noOfSelectedTest+")"));
-				break;
-			default:
-				/**
-				 * This block can not be executed ,earlier we keep this clicking on all checkbox and then apply filter but now
-				 * if by default all checkbox are selected then apply button is  not enable.
-				 */
-				//Default end here
 				break;
 			}
 			CBTConfiguration.score = "pass";
@@ -421,6 +434,8 @@ public class FlyInMenuBehaviourSteps {
 	@Then("^User should be able to click on cancel button to close the Date Tab\\.$")
 	public void user_should_be_able_to_click_on_cancel_button_to_close_the_Date_Tab() throws Throwable {
 		try {
+			UtilityMethods.scrollPageDown(Driver.webdriver, 3);
+			Thread.sleep(1000);
 			homePage.datecancelbtn.click();
 			Thread.sleep(500);
 			Assert.assertEquals(false, homePage.districtNameOnSliderMenu.isDisplayed());

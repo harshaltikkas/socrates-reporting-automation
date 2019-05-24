@@ -58,46 +58,52 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class Driver {
-	
-	static String resourceFolder="resources/files/software/";
+
 	public static RemoteWebDriver webdriver = null;
 	public static DesiredCapabilities caps;
-	public static boolean crossbrwr=false;
-	
-	/** 
-	 * This method close the all running instance of browser 
+	public static boolean crossbrwr = false;
+
+	/**
+	 * This method close the all running instance of browser
 	 */
 	private static class BrowserCleanup implements Runnable {
 		public void run() {
 			log.info("Cleaning up the browser");
-			try { 
+			try {
 				Driver.webdriver.quit();
-				Runtime.getRuntime().exec("taskkill /F /IM chromedriver.exe /T");
+				String os = System.getProperty("os.name");
+				if(os.equalsIgnoreCase("linux")) {
+					Runtime.getRuntime().exec("kill chromedriver");
+				}
+				else {
+					Runtime.getRuntime().exec("taskkill /F /IM chromedriver.exe /T");					
+				}
 			} catch (NullPointerException e) {
 				log.error("Browser already shut down.");
-			}
-			catch(Exception e) {
-				log.error(e.getMessage()+"\n Problem Occurs to close browsers");
+			} catch (Exception e) {
+				log.error(e.getMessage() + "\n Problem Occurs to close browsers");
 			}
 		}
 	}
-	
-	/** 
-	 * This method get current driver instance of browser 
+
+	/**
+	 * This method get current driver instance of browser
 	 */
-	public synchronized static RemoteWebDriver getCurrentDriver(String seleniumEnv, String browserName) throws FileNotFoundException, IOException {
+	public synchronized static RemoteWebDriver getCurrentDriver(String seleniumEnv, String browserName)
+			throws FileNotFoundException, IOException {
 		if (webdriver == null) {
 			webdriver = createWebdriver(seleniumEnv, browserName);
 			webdriver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		}
 		return webdriver;
 	}
-	
-	/** 
-	 * This method create the web driver with the property specifies 
-	 */	
-	public static RemoteWebDriver createWebdriver(String seleniumEnv, String browserName) throws FileNotFoundException, IOException {
-		Properties p =FileRead.readProperties();
+
+	/**
+	 * This method create the web driver with the property specifies
+	 */
+	public static RemoteWebDriver createWebdriver(String seleniumEnv, String browserName)
+			throws FileNotFoundException, IOException {
+		Properties p = FileRead.readProperties();
 		URL seleniumHub = null;
 		caps = new DesiredCapabilities();
 		if (seleniumEnv.equals("local")) {
@@ -106,44 +112,42 @@ public class Driver {
 		} else {
 
 			if (seleniumEnv.equals("browserstack")) {
-				seleniumHub= new URL("https://" + p.getProperty("BROWSERSTACK_USERNAME") + ":"
+				seleniumHub = new URL("https://" + p.getProperty("BROWSERSTACK_USERNAME") + ":"
 						+ p.getProperty("BROWSERSTACK_ACCESS_KEY") + "@hub-cloud.browserstack.com/wd/hub");
-				
-				String plateForm= p.getProperty(browserName + ".platform");
+
+				String plateForm = p.getProperty(browserName + ".platform");
 				caps.setCapability("browser", p.getProperty(browserName + ".browserName"));
 				caps.setCapability("browser_version", p.getProperty(browserName + ".version"));
 				caps.setCapability("os", plateForm.substring(0, plateForm.indexOf(" ")));
-				caps.setCapability("os_version",plateForm.substring(plateForm.indexOf(" ")+1));
+				caps.setCapability("os_version", plateForm.substring(plateForm.indexOf(" ") + 1));
 				caps.setCapability("resolution", p.getProperty(browserName + ".screenResolution"));
-				webdriver =  new RemoteWebDriver(seleniumHub, caps);
-			}
-			else if (seleniumEnv.equals("crossbrowser")) {
-				CBTConfiguration cbt = new CBTConfiguration(p.getProperty("CROSSBROWSER_USERNAME"),p.getProperty("CROSSBROWSER_AUTH_KEY"));
-				seleniumHub=cbt.getHubUrl();
+				webdriver = new RemoteWebDriver(seleniumHub, caps);
+			} else if (seleniumEnv.equals("crossbrowser")) {
+				CBTConfiguration cbt = new CBTConfiguration(p.getProperty("CROSSBROWSER_USERNAME"),
+						p.getProperty("CROSSBROWSER_AUTH_KEY"));
+				seleniumHub = cbt.getHubUrl();
 				caps.setCapability("name", p.getProperty("name"));
 				caps.setCapability("browserName", p.getProperty(browserName + ".browserName"));
-				caps.setCapability("version", p.getProperty(browserName + ".version")); 
+				caps.setCapability("version", p.getProperty(browserName + ".version"));
 				caps.setCapability("platform", p.getProperty(browserName + ".platform"));
 				caps.setCapability("screenResolution", p.getProperty(browserName + ".screenResolution"));
 				caps.setCapability("record_video", p.getProperty("record_video"));
 				caps.setCapability("record_network", p.getProperty("record_network"));
 				caps.setCapability("build", p.getProperty("build"));
-	
-				webdriver =  new RemoteWebDriver(seleniumHub, caps);
-				CBTConfiguration.sessionId=webdriver.getSessionId().toString();
-				crossbrwr=true;
+
+				webdriver = new RemoteWebDriver(seleniumHub, caps);
+				CBTConfiguration.sessionId = webdriver.getSessionId().toString();
+				crossbrwr = true;
 			}
-						
+
 			try {
 				return webdriver;
 			} catch (WebDriverException e) {
 				Driver.writeToReport("WebDriverException: " + e.getMessage());
 				Assert.fail(e.getMessage());
-			}
-			catch (Exception e) {
+			} catch (Exception e) {
 				Driver.writeToReport(e.getMessage());
-			} 
-			finally {
+			} finally {
 				Runtime.getRuntime().addShutdownHook(new Thread(new BrowserCleanup()));
 			}
 		}
@@ -151,14 +155,15 @@ public class Driver {
 	}
 
 	/**
-	 * This method used to select local browser in system 
+	 * This method used to select local browser in system
+	 * 
 	 * @param browserName
 	 * @return
 	 */
 	@SuppressWarnings("deprecation")
 	private static RemoteWebDriver selectLocalBrowser(String browserName) {
 		String os = System.getProperty("os.name");
-		log.info("OS "+os);
+		log.info("OS " + os);
 
 		switch (browserName) {
 		case "firefox":
@@ -169,9 +174,9 @@ public class Driver {
 				FirefoxBinary firefoxBinary = new FirefoxBinary(pathBinary);
 				FirefoxProfile firefoxProfile = new FirefoxProfile();
 				webdriver = new FirefoxDriver(firefoxBinary, firefoxProfile);
-				
+
 			} else {
-				System.setProperty("webdriver.gecko.driver", resourceFolder+os+"/geckodriver");
+				System.setProperty("webdriver.gecko.driver", "/usr/local/bin/geckodriver");
 				webdriver = new FirefoxDriver();
 			}
 			break;
@@ -180,9 +185,8 @@ public class Driver {
 			if (os.contains("Windows")) {
 				System.setProperty("webdriver.chrome.driver",
 						"C:\\Program Files (x86)\\Google\\Chrome\\Application\\chromedriver.exe");
-			}
-			else {
-				 System.setProperty("webdriver.chrome.driver", resourceFolder+os+"/chromedriver");
+			} else {
+				System.setProperty("webdriver.chrome.driver", "/usr/local/bin/chromedriver");
 			}
 			Map<String, Object> prefs = new HashMap<String, Object>();
 			prefs.put("profile.default_content_setting_values.notifications", 2);
@@ -200,7 +204,7 @@ public class Driver {
 			webdriver = new InternetExplorerDriver(IEcaps);
 			break;
 		case "opera":
-			webdriver=new OperaDriver();
+			webdriver = new OperaDriver();
 			break;
 		case "safari":
 			webdriver = new SafariDriver();
@@ -213,6 +217,7 @@ public class Driver {
 
 	/**
 	 * This method launch the browser with the specified url
+	 * 
 	 * @param url
 	 * @return
 	 */
@@ -234,21 +239,21 @@ public class Driver {
 	}
 
 	/**
-	 *This is used to close single instance of driver/browser 
+	 * This is used to close single instance of driver/browser
 	 */
 	public static void close_browser() {
 		webdriver.close();
 	}
 
 	/**
-	 *This is used to close all live instance of driver/browser 
+	 * This is used to close all live instance of driver/browser
 	 */
 	public static void quit_browser() {
 		webdriver.quit();
 	}
-	
+
 	/**
-	 *This is used to take screenshot in local machine 
+	 * This is used to take screenshot in local machine
 	 */
 	public static String takeScreenshot(String filename) throws IOException {
 		log.info("Taking ScreenShot");
@@ -264,16 +269,16 @@ public class Driver {
 	}
 
 	/**
-	 *This is used to embed screenshot while running scenario 
+	 * This is used to embed screenshot while running scenario
 	 */
 	public static void embedScreenshot(Scenario scenario) {
 		log.info("embedScreenshot");
 		String screenshotName = scenario.getName().replaceAll(" ", "_");
-		try {			 
+		try {
 			TakesScreenshot ts = (TakesScreenshot) Driver.webdriver;
 			File sourcePath = ts.getScreenshotAs(OutputType.FILE);
-			File destinationPath = new File(System.getProperty("user.dir") + "\\target\\cucumber-reports\\screenshots\\"
-					+ screenshotName +"_"+ExtentCucumberFormatter.exeDateTime+ ".png");
+			File destinationPath = new File(System.getProperty("user.dir") + "\\target\\cucumber-reports\\extent_report\\screenshots\\"
+					+ screenshotName + "_" + ExtentCucumberFormatter.exeDateTime + ".png");
 			FileUtils.copyFile(sourcePath, destinationPath);
 			Reporter.addScreenCaptureFromPath(destinationPath.toString());
 		} catch (Exception e) {
@@ -282,28 +287,32 @@ public class Driver {
 	}
 
 	/**
-	 *This is used to text Scenario while report generation 
+	 * This is used to text Scenario while report generation
 	 */
 	public static void writeToReport(String string) {
 		TestRunner.scenario.write(string);
 	}
 
+	/**
+	 * This method is used to set CrossBrowser Parameters and Extent Report Generation information
+	 * @throws FileNotFoundException
+	 * @throws IOException
+	 */
 	public static void crossBrowserSetting() throws FileNotFoundException, IOException {
 		log.info("Calling Cross-Browser Testing and Extent-Report-Generation");
-		Properties p =FileRead.readProperties();
+		Properties p = FileRead.readProperties();
 		String username = p.getProperty("CROSSBROWSER_USERNAME");
 		String authkey = p.getProperty("CROSSBROWSER_AUTH_KEY");
 		CBTConfiguration cbt = new CBTConfiguration(username, authkey);
 		cbt.takeSnapshot();
 		cbt.setScore(CBTConfiguration.score);
-		//Extent-Report
+		// Extent-Report
 		Reporter.loadXMLConfig(new File(FileRead.getReportConfigPath()));
-		Reporter.setSystemInfo("Project Name", 	 p.getProperty("name"));
-		Reporter.setSystemInfo("Project Build",  p.getProperty("build"));
-		Reporter.setSystemInfo("Plateform", 	 p.getProperty(Hooks.reportBrowser + ".platform"));
-		Reporter.setSystemInfo("Browser", 	     p.getProperty(Hooks.reportBrowser + ".browserName") + " " + p.getProperty(Hooks.reportBrowser + ".version"));
+		Reporter.setSystemInfo("Project Name", p.getProperty("name"));
+		Reporter.setSystemInfo("Project Build", p.getProperty("build"));
+		Reporter.setSystemInfo("Plateform", p.getProperty(Hooks.reportBrowser + ".platform"));
+		Reporter.setSystemInfo("Browser", p.getProperty(Hooks.reportBrowser + ".browserName") + " "
+				+ p.getProperty(Hooks.reportBrowser + ".version"));
 		Reporter.setSystemInfo("Screen-Resolution", p.getProperty(Hooks.reportBrowser + ".screenResolution"));
-
 	}
-
 }

@@ -35,7 +35,14 @@ Feature: Roster Tab Dropdown Behaviour
     Then Searches anything what’s being typed in showing "x" to cancel and displays them as options to select from below the search bar and filters the list.
 
   @Scenario13 @TC19
-  Scenario: Verify that the "All" option displayed in first position among the optins in studentlist untill the user select the single student name as option.
+  Scenario: Verify that the All option displayed in first position among the optins in studentlist untill the user select the single student name as option
     Given User is on portal's login screen with username as "superadmin" and password as "password" and usertype as "techsupport"
     When User Click on Roster tab within the Universal Selector Tab
     Then "All" option should be display at first position in list and can not be scrollable
+    
+    ##S6 & S7 , BE-630,660,659,
+   Scenario: Verify Selection/Deselection of Multiple Students from Student dropdown List within Roster tab
+    Given User is on portal's login screen with username as "superadmin" and password as "password" and usertype as "techsupport"
+   	When User Click on Roster tab within the Universal Selector Tab 
+   	Then Veriy the previously selected students should be on top in student dropdown
+		

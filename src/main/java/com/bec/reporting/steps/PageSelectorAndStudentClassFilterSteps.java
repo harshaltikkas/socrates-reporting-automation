@@ -60,7 +60,7 @@ public class PageSelectorAndStudentClassFilterSteps {
 	@When("^default Standards Performance button should be selected with the Class context$")
 	public void default_Standards_Performance_button_should_be_selected_with_the_Class_context() throws Throwable {
 		try {
-			Verify.verify(homePage.activeclass.isEnabled());
+			Verify.verify(homePage.activeclassmenu.isEnabled());
 			Verify.verify(homePage.activestandardperformancebtn.isEnabled());
 		} catch (Exception e) {
 			UtilityMethods.processException(e);
@@ -76,7 +76,7 @@ public class PageSelectorAndStudentClassFilterSteps {
 		try {
 			homePage.testscoresbtn.click();
 			Thread.sleep(500);
-			Assert.assertTrue(homePage.activeclass.isEnabled());
+			Assert.assertTrue(homePage.activeclassmenu.isEnabled());
 			try {
 			homePage.activestandardperformancebtn.isEnabled();
 			CBTConfiguration.score = "fail";

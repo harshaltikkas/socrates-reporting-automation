@@ -27,6 +27,7 @@ package com.bec.reporting.utils;
 
 import java.util.concurrent.TimeUnit;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -57,11 +58,42 @@ public class IWait {
 	 */
 	public static boolean explicit_wait(WebDriver driver, WebElement el) {
 		try {
+			/*new WebDriverWait(driver, 10).ignoring(StaleElementReferenceException.class)
+					.until(ExpectedConditions.visibilityOf(el));*/
+			/*new WebDriverWait(driver, 10).ignoring(StaleElementReferenceException.class)
+					  .until(ExpectedConditions.presenceOfElementLocated(toByVal(el)));*/
 			new WebDriverWait(driver, 10).ignoring(StaleElementReferenceException.class)
-					.until(ExpectedConditions.visibilityOf(el));
+			  .until(ExpectedConditions.visibilityOfElementLocated(toByVal(el)));
 		} catch (Exception e) {
 			return false;
 		}
 		return true;
+	}
+	
+	// return ByType of WebElement
+	public static By toByVal(WebElement we) {
+	    // By format = "[foundFrom] -> locator: term"
+	    // see RemoteWebElement toString() implementation
+	    String[] data = we.toString().split(" -> ")[1].replaceFirst("]", "").split(": ");
+	    String locator = data[0];
+	    String term = data[1];
+
+	    switch (locator) {
+	    case "xpath":
+	        return By.xpath(term);
+	    case "css selector":
+	        return By.cssSelector(term);
+	    case "id":
+	        return By.id(term);
+	    case "tag name":
+	        return By.tagName(term);
+	    case "name":
+	        return By.name(term);
+	    case "link text":
+	        return By.linkText(term);
+	    case "class name":
+	        return By.className(term);
+	    }
+	    return (By) we;
 	}
 }

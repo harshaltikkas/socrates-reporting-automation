@@ -28,8 +28,10 @@ package com.bec.reporting.utils;
 import java.sql.Connection;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -64,7 +66,7 @@ public class UtilityMethods {
 	}
 
 	/**
-	 * This method used to page up
+	 * This method used to page up to top 
 	 * 
 	 * @param driver
 	 */
@@ -73,6 +75,20 @@ public class UtilityMethods {
 		builder.sendKeys(Keys.PAGE_UP).build().perform();
 	}
 
+	/**
+	 * This methd is used to scroll down till bottom
+	 * @param driver
+	 */
+	public static void scrollPageDown(WebDriver driver) {
+		Actions builder = new Actions(driver);
+		builder.sendKeys(Keys.PAGE_DOWN).build().perform();
+	}
+	
+	/**
+	 * This method is used to scroll page up till the count value
+	 * @param driver
+	 * @param count
+	 */
 	public static void scrollPageUp(WebDriver driver, int count) {
 		Actions builder = new Actions(driver);
 		for (int i = 0; i < count; i++) {
@@ -328,14 +344,13 @@ public class UtilityMethods {
 	 * @param numberLength
 	 * @return
 	 */
-	/*public static int generateRandomNumberBySkippingIndex(int numberLength) {
-		int skipIndex = 7; // Number to exclude
+	public static int generateRandomNumberBySkippingIndex(int numberLength,int skipIndex) {
 		int number = (int) (Math.random() * numberLength);
-		while (number == skipIndex) {
-			number = (int) (Math.random() * numberLength);
+		if (number == skipIndex) {
+			number=generateRandomNumberBySkippingIndex(numberLength, skipIndex);
 		}
 		return number;
-	}*/
+	}
 
 	/**
 	 * This method is used to scroll down the div(vertical scroll bar) in
@@ -365,6 +380,29 @@ public class UtilityMethods {
 		return true;
 	}
 
+	/**
+	 * This method is used to scroll up the div(vertical scroll bar) in
+	 * Student,class and student Dropdown
+	 * 
+	 * @param webelement
+	 * @param scrollPoints
+	 * @return
+	 */
+	public static boolean scroll_Div_UP(WebElement webelement, int scrollPoints) {
+		try {
+			Actions dragger = new Actions(Driver.webdriver);
+			dragger.moveToElement(webelement).clickAndHold().moveByOffset(0, scrollPoints).build().perform();
+			Thread.sleep(500);
+			if (webelement.getAttribute("value").equals("")) {
+				scroll_Div_UP(webelement, scrollPoints);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+		return true;
+	}
+	
 	/**
 	 * This method is used to click on performance icon on line chart and verify on line chart test name,test score, questions
 	 * Submitted Date
@@ -639,6 +677,63 @@ public class UtilityMethods {
 			return false;
 		}
 		return true;
+	}
+
+	/**
+	 * This method is used to get student id based on studentname on UI
+	 * 
+	 * @return
+	 */
+	public static Integer getStudentId() {
+		Integer stuId = 0;
+		HomePage homePage = PageFactory.initElements(Driver.webdriver, HomePage.class);
+		try {
+			String studentTextonCH;
+			new Actions(Driver.webdriver).moveToElement(homePage.studentnameoncontextheader).build().perform();
+			if (homePage.studentnameoncontextheader.getText().contains("...")) {
+				studentTextonCH = homePage.studentnameoncontextheadertooltiptext.getText();
+			} else {
+				studentTextonCH = homePage.studentnameoncontextheader.getText();
+			}
+			stuId = Integer.parseInt(
+					studentTextonCH.substring(studentTextonCH.indexOf("(") + 1, studentTextonCH.indexOf(" )")));
+			new Actions(Driver.webdriver).moveToElement(homePage.overviewtext).build().perform();
+		} catch (Exception e) {
+			processException(e);
+		}
+		return stuId;
+	}
+	
+	/**
+	 * This method is used to return schoolID and classID based on UI schoolname and class name
+	 * @return
+	 */
+	public static Map<Integer, Integer> getSchoolIdAndClassId() {
+		Map<Integer, Integer> Ids = new HashMap<Integer, Integer>();
+		try {
+			String schoolName, className;
+			HomePage homePage = PageFactory.initElements(Driver.webdriver, HomePage.class);
+			new Actions(Driver.webdriver).moveToElement(homePage.schoolnameoncontextheader).build().perform();
+			if (homePage.schoolnameoncontextheader.getText().contains("...")) {
+				schoolName = homePage.tooltipofschoolnameoncontextheader.getText();
+			} else {
+				schoolName = homePage.schoolnameoncontextheader.getText();
+			}
+			new Actions(Driver.webdriver).moveToElement(homePage.overviewtext).build().perform();
+			new Actions(Driver.webdriver).moveToElement(homePage.classnameoncontextheader).build().perform();
+			if (homePage.classnameoncontextheader.getText().contains("...")) {
+				className = homePage.tooltipofclassnameoncontextheader.getText();
+			} else {
+				className = homePage.classnameoncontextheader.getText();
+			}
+			new Actions(Driver.webdriver).moveToElement(homePage.overviewtext).build().perform();
+			Integer schoolId = DatabaseConnection.getSchoolIDBySchoolName(schoolName);
+			Integer classId = DatabaseConnection.getClassIDBySchoolIdAndClassName(schoolId, className);
+			Ids.put(schoolId, classId);
+		} catch (Exception e) {
+			processException(e);
+		}
+		return Ids;
 	}
 
 }
