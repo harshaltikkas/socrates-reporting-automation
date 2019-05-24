@@ -52,8 +52,8 @@ public class PaginationOfDropDownListSteps {
 	HomePage homePage = PageFactory.initElements(Driver.webdriver, HomePage.class);
 	static int listCount=0,AllPagetotalListItem=0;
 	int countPerPage = 0, pageCount = 0,totalCount=0;
-	public static String token=DatabaseConnection.getToken();
 	public static Connection conn=ConnectionPool.getDBConnection();
+	public static String token=DatabaseConnection.getToken();
 	
 	/**
 	 * This method used to click on roster tab and click on school,class and student drop down 

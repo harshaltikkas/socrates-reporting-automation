@@ -52,7 +52,10 @@ public class RosterTabDropDownBehaviour {
 	public static String selectedSchoolText,selectedclassText,selectedStudentText;
 	int schoolcount=0,selectedschool=0,classcount=0,selectedclassIndex=0,studentcount=0,selectedstudent=0;
 
-	
+	/**
+	 * This method is used to click on roster tab and verify the default first alphabatical selection of school and class and 'all' as student.
+	 * @throws Throwable
+	 */
 	@Then("^User Click on Roster tab within the Universal Selector Tab and bydefault first alpha school and first alpha class and 'all' student are selected$")
 	public void user_Click_on_Roster_tab_within_the_Universal_Selector_Tab_and_bydefault_first_alpha_school_and_first_alpha_class_and_all_student_are_selected() throws Throwable {
 		try {
@@ -75,20 +78,24 @@ public class RosterTabDropDownBehaviour {
 			Assert.assertTrue(defaultSelectedClass.equals(apiFirstClass));
 			Assert.assertTrue(homePage.studentdropdownbtn.getText().equals("All"));
 			homePage.rostercancelbtn.click();
-			Thread.sleep(2000);
 			CBTConfiguration.score = "pass";
 		} catch (Exception e) {
 			UtilityMethods.processException(e);
 		}
 		log.info("Scenario 10_1 Completed");
 	}
-
+	
+	/**
+	 * This method is used to click on roster and verify the school and class name should be in alphabatical order 
+	 * and the student list shuld be in alphabatical order based on last name
+	 * @throws Throwable
+	 */
 	@Then("^User Click on Roster tab within the Universal Selector Tab and the School and Class names and the student last names should be displayed in alphabetical ascending order within their respective dropdowns$")
 	public void user_Click_on_Roster_tab_within_the_Universal_Selector_Tab_and_the_School_and_Class_names_and_the_student_last_names_should_be_displayed_in_alphabetical_ascending_order_within_their_respective_dropdowns() throws Throwable {
 		try {
 			List<String> schoolList = new ArrayList<>();
 			List<String> classList=new ArrayList<>();
-			List<String>studentList=new ArrayList<>();
+			List<String> studentList=new ArrayList<>();
 			Thread.sleep(2000);
 			homePage.rostertab.click();
 			IWait.explicit_wait(Driver.webdriver, homePage.schoolTitleOnSliderMenu);
@@ -361,10 +368,7 @@ public class RosterTabDropDownBehaviour {
 			UtilityMethods.scrollPageDown(Driver.webdriver, 3);
 			homePage.studentdropdownbtn.click();
 			Thread.sleep(2000);
-			Verify.verify(homePage.studentalllist.get(0).getText().equals("All"));
-			homePage.studentalllist.get(0).click();
-			Thread.sleep(500);
-			Assert.assertTrue(homePage.studentdropdownbtn.getText().equals("All"));
+			Assert.assertTrue(homePage.studentalllist.get(0).getText().equals("All"));
 			CBTConfiguration.score = "pass";
 		} catch (Exception e) {
 			UtilityMethods.processException(e);
@@ -372,4 +376,103 @@ public class RosterTabDropDownBehaviour {
 		log.info("Scenario 13 Completed");
 	}
 
+	/**
+	 * This method is used to select /deselect multiple student from student dropdown in roster tab
+	 * and also check once selection done and revisit the student dropdown, then the selected options should be in top
+	 * @throws Throwable
+	 */
+	@Then("^Veriy the previously selected students should be on top in student dropdown$")
+	public void veriy_the_previously_selected_students_should_be_on_top_in_student_dropdown() throws Throwable {
+		try {
+			String selectedSchool,selectedClass,selectedStudent;
+			// selecting school from dropdown
+			homePage.schooldropdownbtn.click();
+			Thread.sleep(1000);
+			int randomSchoolIndex=UtilityMethods.generateRandomNumberBySkippingIndex(homePage.schoollist.size(), 0);
+			selectedSchool=homePage.schoollist.get(randomSchoolIndex).getText();
+			homePage.schoollist.get(randomSchoolIndex).click();			
+			log.info("Selected School is:" +selectedSchool );
+			Assert.assertTrue(homePage.classRefreshIcon.isDisplayed());
+			int count = 1;
+			try {
+				do {
+					log.info("Thread sleep called for class Loading :" + count + " Times");
+					Thread.sleep(2000);
+					count++;
+				} while (homePage.classRefreshIcon.isDisplayed());
+			} catch (Exception e) {
+				log.info("Class Refresh Icon Display off");
+				count = 1;
+			}
+			UtilityMethods.scrollPageDown(Driver.webdriver, 3);
+			// selecting class from dropdown
+			homePage.classdropdownbtn.click();
+			Thread.sleep(1000);
+			selectedClass=homePage.classlist.get(0).getText();
+			homePage.classlist.get(0).click();
+			log.info("Selected Class is:" + selectedClass);
+			Assert.assertTrue(homePage.studentRefreshIcon.isDisplayed());
+			try {
+				do {
+					log.info("Thread sleep called for Student Loading :" + count + " Times");
+					Thread.sleep(2000);
+					count++;
+				} while (homePage.studentRefreshIcon.isDisplayed());
+			} catch (Exception e) {
+				log.info("Student Refresh Icon Display off");
+			}
+			// selecting student from dropdown
+			homePage.studentdropdownbtn.click();
+			Thread.sleep(1000);
+			int customSize=0;
+			//This is to unselect all student from dropdown,as default is all selected
+			homePage.studentalllist.get(0).click();
+			Thread.sleep(1000);
+			UtilityMethods.scrollPageDown(Driver.webdriver,5);
+			
+			for (int i = 1; i < homePage.studentalllist.size(); i=i+2) {
+					if(homePage.studentalllist.get(i).getText().equals("")) {
+						UtilityMethods.scroll_Div(homePage.studentalllist.get(i), 20);
+					}
+					homePage.studentalllist.get(i).click();
+					Thread.sleep(1000);
+					customSize++;
+				}
+			
+			Thread.sleep(1000);
+			selectedStudent=homePage.studentdropdownbtn.getText();
+			log.info("Selected Student is:" + selectedStudent);
+
+			homePage.rosterapplybtn.click();
+			Thread.sleep(3000);
+			UtilityMethods.scrollPageUp(Driver.webdriver);
+			IWait.explicit_wait(Driver.webdriver, homePage.rostertab);
+			homePage.rostertab.click();
+			IWait.explicit_wait(Driver.webdriver, homePage.schoolTitleOnSliderMenu);
+			Verify.verify(homePage.schoolTitleOnSliderMenu.isDisplayed());
+			Thread.sleep(500);
+			homePage.studentdropdownbtn.click();
+			Thread.sleep(1000);
+			UtilityMethods.scrollPageDown(Driver.webdriver, 8);
+			//verifying after applying result,selected student names are on top
+			UtilityMethods.scroll_Div_UP(homePage.studentlistondropdownwithinput.get(0), -20);
+			
+			for (int i = 0; i <customSize; i++) {
+					Assert.assertTrue(homePage.studentlistondropdownwithinput.get(i).isSelected());
+					Thread.sleep(500);
+			}
+			Thread.sleep(1000);
+			//now,delselecting the selected student and verify with content select student on dropdown
+			for (int i = 0; i <customSize; i++) {
+				homePage.studentlistondropdown.get(i).click();
+				Thread.sleep(500);
+			}
+			Assert.assertTrue(homePage.studentdropdownbtn.getText().equals("Select Student"));
+				
+			CBTConfiguration.score = "pass";
+		} catch (Exception e) {
+			UtilityMethods.processException(e);
+		}
+		log.info("Scenario BE-630,659,660 Completed");
+	}
 }

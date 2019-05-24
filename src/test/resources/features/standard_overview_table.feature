@@ -4,7 +4,7 @@ Feature: Standard Overview Table and Chart
 			##STORY 5a) Standards in Achievement Bands and Y axis / Calculating Cells
 			##STORY 6c) Student and Class level and STORY 7d)
 	#@Scenario36 @TC_0001 @TC_0002 @TC_0003 @TC_0005 @TC_0006 @TC_0007 @TC_0008 @TC_0009 @TC_00010
-  Scenario: Verify The Y-axis UI representation
+  #Scenario: Verify The Y-axis UI representation
     #Given User is on portal's login screen with username as "superadmin" and password as "password" and usertype as "techsupport"
     #When User Click on Standard Performance tab within the Class Context
    		 ## TC-1
@@ -47,15 +47,15 @@ Feature: Standard Overview Table and Chart
 			##STORY 6a) Standard table / Performance over Time (Line Chart) relationship
  		#@Scenario38 @TC_0001 @TC_0002 @TC_0003
  	#Scenario: Verify Standard table related data on Performance over time chart
-    #Given User is on portal's login screen with username as "superadmin" and password as "password" and usertype as "techsupport"
-    #When User Click on Standard Performance tab within the Class Context
+   # Given User is on portal's login screen with username as "superadmin" and password as "password" and usertype as "techsupport"
+   # When User Click on Standard Performance tab within the Class Context
     #And Click on the icon to maximize the Chart
     	##TC-1 failing as info icon removed from UI on performance over time button
     #Then The user should be able to see the Chart header and the icon next to it can be selected and click on same icon to minimize the Chart
     	##TC-2
     #And Verify that the chart header should be the first alphabetical strand by defaultly  
     	##TC-3, Testing in Progress
-    #And Select the Strand within the Strand header from the Standard table and selected strand becomes the header of the Line Chart
+   # And Select the Strand within the Strand header from the Standard table and selected strand becomes the header of the Line Chart
     
       ##STORY 6b) Axes on the Standards Line Chart And calculating Points
   	#@Scenario39 @TC_0006 @TC_0007 @TC_0008 @TC_0005_DB @TC_0009_DB 
@@ -67,13 +67,14 @@ Feature: Standard Overview Table and Chart
    #And verify x-axis labeled with 'Test Names' and show tooltip if elipsis in test names and if more than '10' tests are there then paginator should be display
    #And verify The points on the chart should be circles that are color-coordinated according to achievement level
 	
-	   ##STORY 6f) Relationship between Line Chart for Test Scores at the Class Level and Student List module & STORY AND 7a) Standards and Test Score Detail
+	   ##STORY 6f) Relationship between Line Chart for Test Scores at the Class Level and Student List module & STORY AND 
+	   ##STORY 7a) Standards and Test Score Detail
   	 ##STORY 6c) Student and Class level  	 	
   #@Scenario40 @TC_0029 @TC_0030_DB @TC_0031 @TC_0032  @TC_005 @TC_006 
- 	Scenario: Verify The appearance of the student list and the line chart, when viewing the class context for the Test Scores Overview
-    Given User is on portal's login screen with username as "superadmin" and password as "password" and usertype as "techsupport"
-    When User click on Class Context and Test Score button
-    Then line chart of Test score over time should be displayed to the right of it Student list should display
+ 	#Scenario: Verify The appearance of the student list and the line chart, when viewing the class context for the Test Scores Overview
+    #Given User is on portal's login screen with username as "superadmin" and password as "password" and usertype as "techsupport"
+    #When User click on Class Context and Test Score button
+    #Then line chart of Test score over time should be displayed to the right of it Student list should display
     #When User click on Student Context and Test Score button
     #Then line chart of Test score over time should be displayed of that student but Student list should not be displayed
     
@@ -119,7 +120,7 @@ Feature: Standard Overview Table and Chart
   	#And Verify the right most column header should be 'Score'
   	#And All the column headers should be sortable with ascending and descending order
   	#And select the student within the student list and Student context with information for that individual student should be shown
-  	########## failing
-  	#When Click or select strand and standard from the standard table
+  	#When User Click on Standard Performance tab within the Class Context
+  	#And Click or select strand and standard from the standard table
   	#Then The student list related to the selected standard within the perticular strand with the header and the subheader is displayed  	
   

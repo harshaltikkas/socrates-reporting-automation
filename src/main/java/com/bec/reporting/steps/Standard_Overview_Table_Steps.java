@@ -29,12 +29,15 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.PageFactory;
+
 import com.bec.reporting.pageobjects.HomePage;
 import com.bec.reporting.utils.CBTConfiguration;
 import com.bec.reporting.utils.DatabaseConnection;
@@ -42,6 +45,7 @@ import com.bec.reporting.utils.Driver;
 import com.bec.reporting.utils.Model;
 import com.bec.reporting.utils.UtilityMethods;
 import com.google.common.collect.Ordering;
+
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import junit.framework.AssertionFailedError;
@@ -64,12 +68,23 @@ public class Standard_Overview_Table_Steps {
 	@When("^User Click on Standard Performance tab within the Class Context$")
 	public void user_Click_on_Standard_Performance_tab_within_the_Class_Context() throws Throwable {
 		try {
+			Thread.sleep(8000);
 			UtilityMethods.scrollPageUp(Driver.webdriver);
 			Thread.sleep(1000);
-			homePage.classmenu.click();
-			Thread.sleep(500);
-			homePage.standardperformancebtn.click();
-			Thread.sleep(500);
+			try {
+				Assert.assertTrue(homePage.activeclassmenu.getAttribute("class").contains("active"));
+			}
+			catch(Exception e) {
+				homePage.classmenu.click();
+			}
+			try {
+				Thread.sleep(3000);							
+				Assert.assertTrue(homePage.activestandardperformancebtn.getAttribute("class").contains("active"));
+			}
+			catch(Exception e) {
+				homePage.standardperformancebtn.click();
+			}
+			Thread.sleep(3000);				
 			performanceMenuClicked = true;
 		} catch (Exception e) {
 			UtilityMethods.processException(e);
@@ -224,18 +239,16 @@ public class Standard_Overview_Table_Steps {
 		try {
 			WebElement rightArrowEnable = null;
 			boolean enabledRightArrowFound = false;
-			String schoolName, className, strandName;
 			List<Model> lm=new ArrayList<Model>();
 			List<WebElement> standardList;
-			Integer schoolId, classId;
-			String cat="", subcat ="",desc="";
+			Integer schoolId = 0, classId=0;
+			String cat="", subcat ="",desc="",strandName;
 			do {
-				new Actions(Driver.webdriver).moveToElement(homePage.schoolnameoncontextheader).build().perform();
-				schoolName = homePage.tooltipofschoolnameoncontextheader.getText();
-				schoolId = DatabaseConnection.getSchoolIDBySchoolName(schoolName);
-				new Actions(Driver.webdriver).moveToElement(homePage.classnameoncontextheader).build().perform();
-				className = homePage.tooltipofclassnameoncontextheader.getText();
-				classId = DatabaseConnection.getClassIDBySchoolNameAndClassName(schoolName, className);
+				Map<Integer,Integer> ids=UtilityMethods.getSchoolIdAndClassId();
+				for(Map.Entry<Integer,Integer> entry:ids.entrySet()) {
+					schoolId=entry.getKey();
+					classId=entry.getValue();
+				}
 			
 				if (enabledRightArrowFound) {
 					int lastStrandIndex = homePage.strandnameslist.size() - 1;
@@ -353,23 +366,20 @@ public class Standard_Overview_Table_Steps {
 		try {
 			WebElement rightArrowEnable = null;
 			boolean enabledRightArrowFound = false;
-			String schoolName, className, strandName;
+			String strandName;
 			List<Model> lm=new ArrayList<Model>();
 			List<WebElement> standardList;
-			Integer schoolId, classId,studentId;
-			String studentTextonCH;
+			Integer schoolId =0,classId=0,studentId=0;
+			
+			Map<Integer,Integer> ids=UtilityMethods.getSchoolIdAndClassId();
+			for(Map.Entry<Integer,Integer> entry:ids.entrySet()) {
+				schoolId=entry.getKey();
+				classId=entry.getValue();
+			}
+			
+			studentId=UtilityMethods.getStudentId();
+		
 			do {
-				new Actions(Driver.webdriver).moveToElement(homePage.schoolnameoncontextheader).build().perform();
-				schoolName = homePage.tooltipofschoolnameoncontextheader.getText();
-				schoolId = DatabaseConnection.getSchoolIDBySchoolName(schoolName);
-				new Actions(Driver.webdriver).moveToElement(homePage.overviewtext).build().perform();
-				new Actions(Driver.webdriver).moveToElement(homePage.classnameoncontextheader).build().perform();
-				className = homePage.tooltipofclassnameoncontextheader.getText();
-				classId = DatabaseConnection.getClassIDBySchoolNameAndClassName(schoolName, className);
-				new Actions(Driver.webdriver).moveToElement(homePage.overviewtext).build().perform();
-				new Actions(Driver.webdriver).moveToElement(homePage.studentnameoncontextheader).build().perform();
-				studentTextonCH=homePage.studentnameoncontextheadertooltiptext.getText();
-				studentId=Integer.parseInt(studentTextonCH.substring(studentTextonCH.indexOf("(")+1, studentTextonCH.indexOf(" )")));
 				
 				if (enabledRightArrowFound) {
 					int lastStrandIndex = homePage.strandnameslist.size() - 1;
@@ -766,8 +776,8 @@ public class Standard_Overview_Table_Steps {
 	}
 
 	/**
-	 * This method is used to verrify the clicking on strand names one by one and
-	 * that name should be become the header of performance over time chart.
+	 * This method is used to verify the clicking on strand names one by one and
+	 * that name should become the header of performance over time chart here also checking the avg percentage of each strand in their column in SP table.
 	 * 
 	 * @throws Throwable
 	 */
@@ -775,9 +785,19 @@ public class Standard_Overview_Table_Steps {
 	public void select_the_Strand_within_the_Strand_header_from_the_Standard_table_and_selected_strand_becomes_the_header_of_the_Line_Chart()
 			throws Throwable {
 		try {
-			String strandName = "";
+			String strandName = "",standard="";
 			WebElement rightArrowEnable = null;
 			boolean enabledRightArrowFound = false;
+			List<WebElement> standardList;
+			
+			Integer schoolId=0,classId=0,avg=0;
+
+			Map<Integer,Integer> ids=UtilityMethods.getSchoolIdAndClassId();
+			for(Map.Entry<Integer,Integer> entry:ids.entrySet()) {
+				schoolId=entry.getKey();
+				classId=entry.getValue();
+			}
+			
 			do {
 				if (enabledRightArrowFound) {
 					new Actions(Driver.webdriver)
@@ -789,6 +809,14 @@ public class Standard_Overview_Table_Steps {
 					} else {
 						strandName = homePage.strandnameslist.get(homePage.strandnameslist.size() - 1).getText();
 					}
+					standardList = Driver.webdriver.findElements(By.xpath(
+							"//div[@class='overview-table-body']//div[@class='overview-table-row']//div[@class='overview-table-col']["
+									+ ((homePage.strandnameslist.size() - 1) + 2) + "]//li[not(contains(@class,'StandardsNotAvailable'))]"));
+					standard=standardList.get(0).getText();
+					standard=standard.substring(0, standard.indexOf("."));
+					avg=DatabaseConnection.getStrandAvgInSPInClass(PaginationOfDropDownListSteps.conn, schoolId, classId, standard);
+					Assert.assertTrue(homePage.strandavglist.get(homePage.strandnameslist.size() - 1).getText().equals("Avg. "+avg+"%"));
+					
 					click_on_the_icon_to_maximize_the_Chart();
 					Assert.assertTrue(homePage.defaultstrandnameinpotchart.getText().contains(strandName));
 					new Actions(Driver.webdriver).moveToElement(homePage.overviewtext).build().perform();
@@ -803,16 +831,20 @@ public class Standard_Overview_Table_Steps {
 						} else {
 							strandName = homePage.strandnameslist.get(i).getText();
 						}
-						/**
-						 *TODO Code here to verify the avg list below the strand name,supriya will give the code
-						 */
+						standardList = Driver.webdriver.findElements(By.xpath(
+								"//div[@class='overview-table-body']//div[@class='overview-table-row']//div[@class='overview-table-col']["
+										+ (i + 2) + "]//li[not(contains(@class,'StandardsNotAvailable'))]"));
+						standard=standardList.get(0).getText();
+						standard=standard.substring(0, standard.indexOf("."));
+						avg=DatabaseConnection.getStrandAvgInSPInClass(PaginationOfDropDownListSteps.conn, schoolId, classId, standard);
+						Assert.assertTrue(homePage.strandavglist.get(i).getText().equals("Avg. "+avg+"%"));
 						
 						click_on_the_icon_to_maximize_the_Chart();
 						Assert.assertTrue(homePage.defaultstrandnameinpotchart.getText().contains(strandName));
 						new Actions(Driver.webdriver).moveToElement(homePage.overviewtext).build().perform();
 						Thread.sleep(1000);
 					}
-				}
+				}				
 				try {
 					rightArrowEnable = homePage.enabledrightarrow;
 					rightArrowEnable.isEnabled();
@@ -839,18 +871,30 @@ public class Standard_Overview_Table_Steps {
 	@When("^User click on Class Context and Test Score button$")
 	public void user_click_on_Class_Context_and_Test_Score_button() throws Throwable {
 		try {
-			Thread.sleep(10000);
-			homePage.classmenu.click();
-			Thread.sleep(500);
-			homePage.testscoresbtn.click();
-			Thread.sleep(500);
+			Thread.sleep(8000);
+			UtilityMethods.scrollPageUp(Driver.webdriver);
+			Thread.sleep(1000);
+			try {
+				Assert.assertTrue(homePage.activeclassmenu.getAttribute("class").contains("active"));
+			}
+			catch(Exception e) {
+				homePage.classmenu.click();
+				Thread.sleep(3000);
+			}
+			try {
+				Assert.assertTrue(homePage.activetestscoresbtn.getAttribute("class").equals("active"));
+			}
+			catch(Exception e) {
+				homePage.testscoresbtn.click();
+				Thread.sleep(3000);
+			}
 		} catch (Exception e) {
 			UtilityMethods.processException(e);
 		}
 	}
 
 	/**
-	 * This method is to verify the student list is display in class context
+	 * This method is to verify the student list is display in class context in test score, and also validating with db
 	 * 
 	 * @throws Throwable
 	 */
@@ -859,21 +903,16 @@ public class Standard_Overview_Table_Steps {
 			throws Throwable {
 		try {
 			Assert.assertTrue(homePage.testscoreovertimelinechart.isDisplayed());
-			String schoolName,className,toolTipTextofTest;
+			String toolTipTextofTest;
 			List<Model> lm = new ArrayList<Model>();
-			new Actions(Driver.webdriver).moveToElement(homePage.schoolnameoncontextheader).build().perform();
-			if(homePage.schoolnameoncontextheader.getText().contains("...")) {
-				schoolName = homePage.tooltipofschoolnameoncontextheader.getText();				
-			}
-			else {
-				schoolName = homePage.schoolnameoncontextheader.getText();
-			}
-			new Actions(Driver.webdriver).moveToElement(homePage.classnameoncontextheader).build().perform();
-			if(homePage.classnameoncontextheader.getText().contains("...")) {
-				className = homePage.tooltipofclassnameoncontextheader.getText();				
-			}
-			else {
-				className =homePage.classnameoncontextheader.getText();
+			Integer testScoreAvg=0;
+			float classAvgScrInClassInTS=0.0f;
+			Integer schoolId=0,classId=0;
+
+			Map<Integer,Integer> ids=UtilityMethods.getSchoolIdAndClassId();
+			for(Map.Entry<Integer,Integer> entry:ids.entrySet()) {
+				schoolId=entry.getKey();
+				classId=entry.getValue();
 			}
 			
 			Actions action = new Actions(Driver.webdriver);
@@ -910,25 +949,29 @@ public class Standard_Overview_Table_Steps {
 							circleList.get(0).click();
 							Thread.sleep(1000);
 							for (int j = homePage.testNamesonPerPage_onlinechart.size() - 1; j >= 0; j--) {
-								/**
-								 * match homePage.testScoreValueInCircle_onlinechart.get(j).gettext() with db value
-								 */
 								homePage.testScoreValueInCircle_onlinechart.get(j).click();
 								Thread.sleep(3000);
-								
 								action.moveToElement(homePage.testNamesonPerPage_onlinechart.get(j)).build().perform();
 								toolTipTextofTest = homePage.testNametooltip_onlinechart.getText();
+								
+								testScoreAvg=DatabaseConnection.getTestScoreAvgInTSInClassContext(PaginationOfDropDownListSteps.conn, schoolId, classId, toolTipTextofTest);
+								Assert.assertTrue(Integer.parseInt(homePage.testScoreValueInCircle_onlinechart.get(j).getText())==testScoreAvg);
 								
 								new Actions(Driver.webdriver).moveToElement(homePage.selectedTestName).build().perform();
 								
 								Assert.assertTrue(homePage.tooltipofselectedTest.getText().equals(toolTipTextofTest));
+								new Actions(Driver.webdriver).moveToElement(homePage.testscoredetail).build().perform();
+								
 								String submittedDateText = homePage.selectedTestSubmittedDate.getText();
 								UtilityMethods.checkDateFormat(submittedDateText.substring(11, 21));
-								UtilityMethods.checkDateFormat(submittedDateText.substring(24));
+								try {
+									UtilityMethods.checkDateFormat(submittedDateText.substring(24));
+									}
+									catch(Exception e) {}
 							
-								// DB code for check the student list
-								/**Verifying UI Content in Student List with DB data*/
-								lm = DatabaseConnection.getStudentDetailListInTSInClass(PaginationOfDropDownListSteps.conn, schoolName, className, toolTipTextofTest);
+								// DB code for check the student list, Verifying UI Content in Student List with DB data
+
+								lm = DatabaseConnection.getStudentDetailListInTSInClass(PaginationOfDropDownListSteps.conn, schoolId, classId, toolTipTextofTest);
 								Iterator<Model> iterator = lm.iterator();
 								int index = 0;
 								while (iterator.hasNext()) {
@@ -937,9 +980,12 @@ public class Standard_Overview_Table_Steps {
 									Assert.assertTrue(new SimpleDateFormat("MM/dd/yyyy").format(m.getMaxDate())
 											.equals(homePage.noofquestionsorsubmitdatelistinstudentlist.get(index).getText()));
 									Assert.assertTrue(m.getStudent_score_avg()==Integer.parseInt(homePage.scorelistinstudentlist.get(index).getText()));
+									classAvgScrInClassInTS+=m.getStudent_score_avg();
 									UtilityMethods.verifyColorAndScoreOnStudentList(homePage.scorelistinstudentlist.get(index), m.getStudent_score_avg());
 									index++;
 								}
+								Assert.assertTrue(homePage.classAvgScrInClassInTS.getText().equals("Class Average Scores: "+Math.round((float)(classAvgScrInClassInTS/lm.size()))+"% based on "+lm.size()+" results"));
+								classAvgScrInClassInTS=0.0f;
 							}
 							UtilityMethods.scrollPageUp(Driver.webdriver, 2);
 							Thread.sleep(1000);
@@ -952,20 +998,25 @@ public class Standard_Overview_Table_Steps {
 									for (int j = homePage.testNamesonPerPage_onlinechart.size() - 1; j >= 0; j--) {
 										homePage.testScoreValueInCircle_onlinechart.get(j).click();
 										Thread.sleep(3000);
-										
 										action.moveToElement(homePage.testNamesonPerPage_onlinechart.get(j)).build().perform();
 										toolTipTextofTest = homePage.testNametooltip_onlinechart.getText();
+										
+										testScoreAvg=DatabaseConnection.getTestScoreAvgInTSInClassContext(PaginationOfDropDownListSteps.conn, schoolId, classId, toolTipTextofTest);
+										Assert.assertTrue(Integer.parseInt(homePage.testScoreValueInCircle_onlinechart.get(j).getText())==testScoreAvg);
 										
 										new Actions(Driver.webdriver).moveToElement(homePage.selectedTestName).build().perform();
 										
 										Assert.assertTrue(homePage.tooltipofselectedTest.getText().equals(toolTipTextofTest));
+										new Actions(Driver.webdriver).moveToElement(homePage.testscoredetail).build().perform();
 										String submittedDateText = homePage.selectedTestSubmittedDate.getText();
 										UtilityMethods.checkDateFormat(submittedDateText.substring(11, 21));
-										UtilityMethods.checkDateFormat(submittedDateText.substring(24));
+										try {
+											UtilityMethods.checkDateFormat(submittedDateText.substring(24));
+											}
+											catch(Exception e) {}
 									
-										// DB code for check the student list
-										/**Verifying UI Content in Student List with DB data*/
-										lm = DatabaseConnection.getStudentDetailListInTSInClass(PaginationOfDropDownListSteps.conn, schoolName, className, toolTipTextofTest);
+										// DB code for check the student list, Verifying UI Content in Student List with DB data
+										lm = DatabaseConnection.getStudentDetailListInTSInClass(PaginationOfDropDownListSteps.conn, schoolId, classId, toolTipTextofTest);
 										Iterator<Model> iterator = lm.iterator();
 										int index = 0;
 										while (iterator.hasNext()) {
@@ -974,9 +1025,12 @@ public class Standard_Overview_Table_Steps {
 											Assert.assertTrue(new SimpleDateFormat("MM/dd/yyyy").format(m.getMaxDate())
 													.equals(homePage.noofquestionsorsubmitdatelistinstudentlist.get(index).getText()));
 											Assert.assertTrue(m.getStudent_score_avg()==Integer.parseInt(homePage.scorelistinstudentlist.get(index).getText()));
+											classAvgScrInClassInTS+=m.getStudent_score_avg();
 											UtilityMethods.verifyColorAndScoreOnStudentList(homePage.scorelistinstudentlist.get(index), m.getStudent_score_avg());
 											index++;
 										}
+										Assert.assertTrue(homePage.classAvgScrInClassInTS.getText().equals("Class Average Scores: "+Math.round((float)(classAvgScrInClassInTS/lm.size()))+"% based on "+lm.size()+" results"));
+										classAvgScrInClassInTS=0.0f;
 									}
 									UtilityMethods.scrollPageUp(Driver.webdriver, 2);
 									Thread.sleep(1000);
@@ -997,20 +1051,24 @@ public class Standard_Overview_Table_Steps {
 							for (int j = homePage.testNamesonPerPage_onlinechart.size() - 1; j >= 0; j--) {
 								homePage.testScoreValueInCircle_onlinechart.get(j).click();
 								Thread.sleep(3000);
-								
 								action.moveToElement(homePage.testNamesonPerPage_onlinechart.get(j)).build().perform();
 								toolTipTextofTest = homePage.testNametooltip_onlinechart.getText();
+								
+								testScoreAvg=DatabaseConnection.getTestScoreAvgInTSInClassContext(PaginationOfDropDownListSteps.conn, schoolId, classId, toolTipTextofTest);
+								Assert.assertTrue(Integer.parseInt(homePage.testScoreValueInCircle_onlinechart.get(j).getText())==testScoreAvg);
 								
 								new Actions(Driver.webdriver).moveToElement(homePage.selectedTestName).build().perform();
 								
 								Assert.assertTrue(homePage.tooltipofselectedTest.getText().equals(toolTipTextofTest));
+								new Actions(Driver.webdriver).moveToElement(homePage.testscoredetail).build().perform();
 								String submittedDateText = homePage.selectedTestSubmittedDate.getText();
 								UtilityMethods.checkDateFormat(submittedDateText.substring(11, 21));
+								try {
 								UtilityMethods.checkDateFormat(submittedDateText.substring(24));
-							
-								// DB code for check the student list
-								/**Verifying UI Content in Student List with DB data*/
-								lm = DatabaseConnection.getStudentDetailListInTSInClass(PaginationOfDropDownListSteps.conn, schoolName, className, toolTipTextofTest);
+								}
+								catch(Exception e) {}
+								// DB code for check the student list, Verifying UI Content in Student List with DB data
+								lm = DatabaseConnection.getStudentDetailListInTSInClass(PaginationOfDropDownListSteps.conn, schoolId, classId, toolTipTextofTest);
 								Iterator<Model> iterator = lm.iterator();
 								int index = 0;
 								while (iterator.hasNext()) {
@@ -1019,9 +1077,12 @@ public class Standard_Overview_Table_Steps {
 									Assert.assertTrue(new SimpleDateFormat("MM/dd/yyyy").format(m.getMaxDate())
 											.equals(homePage.noofquestionsorsubmitdatelistinstudentlist.get(index).getText()));
 									Assert.assertTrue(m.getStudent_score_avg()==Integer.parseInt(homePage.scorelistinstudentlist.get(index).getText()));
+									classAvgScrInClassInTS+=m.getStudent_score_avg();
 									UtilityMethods.verifyColorAndScoreOnStudentList(homePage.scorelistinstudentlist.get(index), m.getStudent_score_avg());
 									index++;
 								}
+								Assert.assertTrue(homePage.classAvgScrInClassInTS.getText().equals("Class Average Scores: "+Math.round((float)(classAvgScrInClassInTS/lm.size()))+"% based on "+lm.size()+" results"));
+								classAvgScrInClassInTS=0.0f;
 							}
 							UtilityMethods.scrollPageUp(Driver.webdriver, 2);
 							Thread.sleep(1000);
@@ -1032,20 +1093,25 @@ public class Standard_Overview_Table_Steps {
 				for (int j = homePage.testNamesonPerPage_onlinechart.size() - 1; j >= 0; j--) {
 					homePage.testScoreValueInCircle_onlinechart.get(j).click();
 					Thread.sleep(3000);
-					
 					action.moveToElement(homePage.testNamesonPerPage_onlinechart.get(j)).build().perform();
 					toolTipTextofTest = homePage.testNametooltip_onlinechart.getText();
+					
+					testScoreAvg=DatabaseConnection.getTestScoreAvgInTSInClassContext(PaginationOfDropDownListSteps.conn, schoolId, classId, toolTipTextofTest);
+					Assert.assertTrue(Integer.parseInt(homePage.testScoreValueInCircle_onlinechart.get(j).getText())==testScoreAvg);
 					
 					new Actions(Driver.webdriver).moveToElement(homePage.selectedTestName).build().perform();
 					
 					Assert.assertTrue(homePage.tooltipofselectedTest.getText().equals(toolTipTextofTest));
+					new Actions(Driver.webdriver).moveToElement(homePage.testscoredetail).build().perform();
 					String submittedDateText = homePage.selectedTestSubmittedDate.getText();
 					UtilityMethods.checkDateFormat(submittedDateText.substring(11, 21));
-					UtilityMethods.checkDateFormat(submittedDateText.substring(24));
+					try {
+						UtilityMethods.checkDateFormat(submittedDateText.substring(24));
+						}
+						catch(Exception e) {}
 				
-					// DB code for check the student list
-					/**Verifying UI Content in Student List with DB data*/
-					lm = DatabaseConnection.getStudentDetailListInTSInClass(PaginationOfDropDownListSteps.conn, schoolName, className, toolTipTextofTest);
+					// DB code for check the student list, Verifying UI Content in Student List with DB data
+					lm = DatabaseConnection.getStudentDetailListInTSInClass(PaginationOfDropDownListSteps.conn, schoolId, classId, toolTipTextofTest);
 					Iterator<Model> iterator = lm.iterator();
 					int index = 0;
 					while (iterator.hasNext()) {
@@ -1054,15 +1120,14 @@ public class Standard_Overview_Table_Steps {
 						Assert.assertTrue(new SimpleDateFormat("MM/dd/yyyy").format(m.getMaxDate())
 								.equals(homePage.noofquestionsorsubmitdatelistinstudentlist.get(index).getText()));
 						Assert.assertTrue(m.getStudent_score_avg()==Integer.parseInt(homePage.scorelistinstudentlist.get(index).getText()));
+						classAvgScrInClassInTS+=m.getStudent_score_avg();
 						UtilityMethods.verifyColorAndScoreOnStudentList(homePage.scorelistinstudentlist.get(index), m.getStudent_score_avg());
 						index++;
 					}
-					
+					Assert.assertTrue(homePage.classAvgScrInClassInTS.getText().equals("Class Average Scores: "+Math.round((float)(classAvgScrInClassInTS/lm.size()))+"% based on "+lm.size()+" results"));
+					classAvgScrInClassInTS=0.0f;
 				}
 			}
-			
-			
-			
 			CBTConfiguration.score = "pass";
 		} catch (Exception e) {
 			UtilityMethods.processException(e);
@@ -1078,11 +1143,20 @@ public class Standard_Overview_Table_Steps {
 	@When("^User click on Student Context and Test Score button$")
 	public void user_click_on_Student_Context_and_Test_Score_button() throws Throwable {
 		try {
-			Thread.sleep(10000);
-			homePage.studentmenu.click();
-			Thread.sleep(500);
-			homePage.testscoresbtn.click();
-			Thread.sleep(500);
+			UtilityMethods.scrollPageUp(Driver.webdriver);
+			Thread.sleep(1000);
+			try {
+				Assert.assertTrue(homePage.activestudentmenu.getAttribute("class").contains("active"));
+			}catch(Exception e) {
+				homePage.studentmenu.click();
+				Thread.sleep(3000);								
+			}
+			try {
+				Assert.assertTrue(homePage.activetestscoresbtn.getAttribute("class").equals("active"));
+			}catch(Exception e) {
+				homePage.testscoresbtn.click();
+				Thread.sleep(3000);								
+			}
 		} catch (Exception e) {
 			UtilityMethods.processException(e);
 		}
@@ -1098,10 +1172,175 @@ public class Standard_Overview_Table_Steps {
 	public void line_chart_of_Test_score_over_time_should_be_displayed_of_that_student_but_Student_list_should_not_be_displayed()
 			throws Throwable {
 		try {
-			/**
-			 *TODO Code here for checking the test score in Student COntext-Test Scores
-			 */
 			Assert.assertTrue(homePage.testscoreovertimetext.isDisplayed());
+			Integer schoolId=0, classId=0,studentId=0,test_score=0;
+			String testName,submittedDateText;
+			Map<Integer,Integer> ids=UtilityMethods.getSchoolIdAndClassId();
+			for(Map.Entry<Integer,Integer> entry:ids.entrySet()) {
+				schoolId=entry.getKey();
+				classId=entry.getValue();
+			}
+			studentId=UtilityMethods.getStudentId();
+			
+			WebElement enabledLeftArrow = null;
+			boolean doneWithThreeCircle = false, disableLeftArrowFound = false, enabledLeftArrowFound = false,
+					paginatorFound = false;
+			List<WebElement> circleList = null;
+			Actions action=new Actions(Driver.webdriver);
+			try {
+				action.moveToElement(homePage.paginator_onlinechart).build().perform();
+				paginatorFound = true;
+			} catch (Exception e) {
+				System.out.println("Paginator Not Found");
+			}
+			if (paginatorFound) {
+				try {
+					circleList = homePage.paginationcirclelist_onlinechart;
+					enabledLeftArrow = homePage.enabledleftarrow_onlinechart;
+					enabledLeftArrow.isDisplayed();
+					enabledLeftArrowFound = true;
+				} catch (Exception e) {
+					System.out.println("Enabled Left Arrow on Paginator is not found");
+				}
+				if (enabledLeftArrowFound) {
+					do {
+						try {
+							homePage.disabledleftarrow_onlinechart.isDisplayed();
+							disableLeftArrowFound = true;
+						} catch (Exception e) {
+							System.out.println("Disabled Left Arrow on Paginator is not found");
+						}
+						if (doneWithThreeCircle) {
+							UtilityMethods.scrollPageDown(Driver.webdriver, 2);
+							Thread.sleep(1000);
+							circleList.get(0).click();
+							Thread.sleep(1000);
+							for (int j = homePage.testNamesonPerPage_onlinechart.size() - 1; j >= 0; j--) {
+
+								action.moveToElement(homePage.testNamesonPerPage_onlinechart.get(j)).build()
+										.perform();
+								testName = homePage.testNametooltip_onlinechart.getText();
+								test_score=DatabaseConnection.getStudentScoreAvgInTSInStudentContext(PaginationOfDropDownListSteps.conn, schoolId, classId, studentId, testName);
+								Assert.assertTrue(Integer.parseInt(homePage.testScoreValueInCircle_onlinechart.get(j).getText())==test_score);
+								homePage.testScoreValueInCircle_onlinechart.get(j).click();
+								Thread.sleep(500);
+								Assert.assertTrue(homePage.testnameontooltip.getText().equals(testName));
+								submittedDateText = homePage.submitteddateontooltip.getText();
+								UtilityMethods.checkDateFormat(submittedDateText.substring(12, 22));
+								try {
+									UtilityMethods.checkDateFormat(submittedDateText.substring(24));
+									}catch(Exception e) {}
+								Assert.assertTrue(homePage.studentscoreleftcontentontt.getText().equals("Student Score"));
+								Assert.assertTrue(homePage.studentscorerightcontentontt.getText().equals(test_score+"%"));
+								UtilityMethods.scrollPageDown(Driver.webdriver, 2);
+								Thread.sleep(1000);
+								action.moveToElement(homePage.testNamesLabelOnLineChart).click().build().perform();
+								UtilityMethods.scrollPageUp(Driver.webdriver, 2);
+								Thread.sleep(1000);
+							
+							}
+							UtilityMethods.scrollPageUp(Driver.webdriver, 2);
+							Thread.sleep(1000);
+						} else {
+							for (int i = circleList.size() - 1; i >= 0; i--) {
+									UtilityMethods.scrollPageDown(Driver.webdriver, 2);
+									Thread.sleep(1000);
+									circleList.get(i).click();
+									Thread.sleep(1000);
+									for (int j = homePage.testNamesonPerPage_onlinechart.size() - 1; j >= 0; j--) {
+										action.moveToElement(homePage.testNamesonPerPage_onlinechart.get(j)).build()
+												.perform();
+										testName = homePage.testNametooltip_onlinechart.getText();
+										test_score=DatabaseConnection.getStudentScoreAvgInTSInStudentContext(PaginationOfDropDownListSteps.conn, schoolId, classId, studentId, testName);
+										Assert.assertTrue(Integer.parseInt(homePage.testScoreValueInCircle_onlinechart.get(j).getText())==test_score);
+										homePage.testScoreValueInCircle_onlinechart.get(j).click();
+										Thread.sleep(500);
+										Assert.assertTrue(homePage.testnameontooltip.getText().equals(testName));
+										submittedDateText = homePage.submitteddateontooltip.getText();
+										UtilityMethods.checkDateFormat(submittedDateText.substring(12, 22));
+										try {
+											UtilityMethods.checkDateFormat(submittedDateText.substring(24));
+											}catch(Exception e) {}
+										Assert.assertTrue(homePage.studentscoreleftcontentontt.getText().equals("Student Score"));
+										Assert.assertTrue(homePage.studentscorerightcontentontt.getText().equals(test_score+"%"));
+										UtilityMethods.scrollPageDown(Driver.webdriver, 2);
+										Thread.sleep(1000);
+										action.moveToElement(homePage.testNamesLabelOnLineChart).click().build().perform();
+										UtilityMethods.scrollPageUp(Driver.webdriver, 2);
+										Thread.sleep(1000);
+									}
+									UtilityMethods.scrollPageUp(Driver.webdriver, 2);
+									Thread.sleep(1000);
+								}
+							doneWithThreeCircle = true;
+						}
+						try {
+							enabledLeftArrow.click();
+						} catch (Exception e) {
+						}
+					} while (!disableLeftArrowFound);
+				} else {
+					for (int i = circleList.size() - 1; i >= 0; i--) {
+							UtilityMethods.scrollPageDown(Driver.webdriver, 2);
+							Thread.sleep(1000);
+							circleList.get(i).click();
+							Thread.sleep(1000);
+							for (int j = homePage.testNamesonPerPage_onlinechart.size() - 1; j >= 0; j--) {
+
+								action.moveToElement(homePage.testNamesonPerPage_onlinechart.get(j)).build()
+										.perform();
+								testName = homePage.testNametooltip_onlinechart.getText();
+								test_score=DatabaseConnection.getStudentScoreAvgInTSInStudentContext(PaginationOfDropDownListSteps.conn, schoolId, classId, studentId, testName);
+								Assert.assertTrue(Integer.parseInt(homePage.testScoreValueInCircle_onlinechart.get(j).getText())==test_score);
+								homePage.testScoreValueInCircle_onlinechart.get(j).click();
+								Thread.sleep(500);
+								Assert.assertTrue(homePage.testnameontooltip.getText().equals(testName));
+								submittedDateText = homePage.submitteddateontooltip.getText();
+								UtilityMethods.checkDateFormat(submittedDateText.substring(12, 22));
+								try {
+									UtilityMethods.checkDateFormat(submittedDateText.substring(24));
+									}catch(Exception e) {}
+								Assert.assertTrue(homePage.studentscoreleftcontentontt.getText().equals("Student Score"));
+								Assert.assertTrue(homePage.studentscorerightcontentontt.getText().equals(test_score+"%"));
+								UtilityMethods.scrollPageDown(Driver.webdriver, 2);
+								Thread.sleep(1000);
+								action.moveToElement(homePage.testNamesLabelOnLineChart).click().build().perform();
+								UtilityMethods.scrollPageUp(Driver.webdriver, 2);
+								Thread.sleep(1000);
+							
+							}
+							UtilityMethods.scrollPageUp(Driver.webdriver, 2);
+							Thread.sleep(1000);
+					}
+				}
+
+			} else {
+				for (int j = homePage.testNamesonPerPage_onlinechart.size() - 1; j >= 0; j--) {
+
+					action.moveToElement(homePage.testNamesonPerPage_onlinechart.get(j)).build()
+							.perform();
+					testName = homePage.testNametooltip_onlinechart.getText();
+					test_score=DatabaseConnection.getStudentScoreAvgInTSInStudentContext(PaginationOfDropDownListSteps.conn, schoolId, classId, studentId, testName);
+					Assert.assertTrue(Integer.parseInt(homePage.testScoreValueInCircle_onlinechart.get(j).getText())==test_score);
+					homePage.testScoreValueInCircle_onlinechart.get(j).click();
+					Thread.sleep(500);
+					Assert.assertTrue(homePage.testnameontooltip.getText().equals(testName));
+					submittedDateText = homePage.submitteddateontooltip.getText();
+					UtilityMethods.checkDateFormat(submittedDateText.substring(12, 22));
+					try {
+						UtilityMethods.checkDateFormat(submittedDateText.substring(24));
+						}catch(Exception e) {}
+					Assert.assertTrue(homePage.studentscoreleftcontentontt.getText().equals("Student Score"));
+					Assert.assertTrue(homePage.studentscorerightcontentontt.getText().equals(test_score+"%"));
+					UtilityMethods.scrollPageDown(Driver.webdriver, 2);
+					Thread.sleep(1000);
+					action.moveToElement(homePage.testNamesLabelOnLineChart).click().build().perform();
+					UtilityMethods.scrollPageUp(Driver.webdriver, 2);
+					Thread.sleep(1000);
+				
+				}
+			}
+
 			try {
 				Assert.assertTrue(homePage.noofstudentsinlist.get(0).isDisplayed());
 				log.info("The Student List is display in Student Context Test Score");
@@ -1125,12 +1364,21 @@ public class Standard_Overview_Table_Steps {
 	@When("^User Click on Standard Performance tab within the Student Context$")
 	public void user_Click_on_Standard_Performance_tab_within_the_Student_Context() throws Throwable {
 		try {
+			Thread.sleep(10000);
 			UtilityMethods.scrollPageUp(Driver.webdriver);
 			Thread.sleep(1000);
-			homePage.studentmenu.click();
-			Thread.sleep(1000);
-			homePage.standardperformancebtn.click();
-			Thread.sleep(1000);
+			try {
+				Assert.assertTrue(homePage.activestudentmenu.getAttribute("class").contains("active"));
+			} catch (Exception e) {
+				homePage.studentmenu.click();
+				Thread.sleep(3000);
+			}
+			try {
+				Assert.assertTrue(homePage.activestandardperformancebtn.getAttribute("class").equals("active"));
+			} catch (Exception e) {
+				homePage.standardperformancebtn.click();
+				Thread.sleep(3000);
+			}
 		} catch (Exception e) {
 			UtilityMethods.processException(e);
 		}
@@ -1193,10 +1441,16 @@ public class Standard_Overview_Table_Steps {
 								UtilityMethods.checkDateFormat(submittedDateText.substring(24));
 								}catch(Exception e) {}
 								Assert.assertTrue(homePage.questionlistarea.isDisplayed());
-								UtilityMethods.scrollPageDown(Driver.webdriver, 2);
-								Thread.sleep(1000);
-								action.moveToElement(homePage.testNamesLabelOnLineChart).click().build().perform();
-								UtilityMethods.scrollPageUp(Driver.webdriver, 2);
+								try {
+									action.moveToElement(homePage.testNamesonPerPage_onlinechart.get(j)).click().build()
+											.perform();
+								} catch (Exception e) {
+									try {
+										action.moveToElement(homePage.testscoreovertimetext).click().build().perform();
+									} catch (Exception e1) {
+										action.moveToElement(homePage.hundredtextontsot).click().build().perform();
+									}
+								}
 								Thread.sleep(1000);
 								try {
 									Assert.assertTrue(homePage.testnameontooltip.getText().equals(tooltiptext));
@@ -1225,10 +1479,16 @@ public class Standard_Overview_Table_Steps {
 											UtilityMethods.checkDateFormat(submittedDateText.substring(24));
 											}catch(Exception e) {}
 										Assert.assertTrue(homePage.questionlistarea.isDisplayed());
-										UtilityMethods.scrollPageDown(Driver.webdriver, 2);
-										Thread.sleep(1000);
-										action.moveToElement(homePage.testNamesLabelOnLineChart).click().build().perform();
-										UtilityMethods.scrollPageUp(Driver.webdriver, 2);
+										try {
+											action.moveToElement(homePage.testNamesonPerPage_onlinechart.get(j)).click().build()
+													.perform();
+										} catch (Exception e) {
+											try {
+												action.moveToElement(homePage.testscoreovertimetext).click().build().perform();
+											} catch (Exception e1) {
+												action.moveToElement(homePage.hundredtextontsot).click().build().perform();
+											}
+										}
 										Thread.sleep(1000);
 										try {
 											Assert.assertTrue(homePage.testnameontooltip.getText().equals(tooltiptext));
@@ -1248,8 +1508,6 @@ public class Standard_Overview_Table_Steps {
 					} while (!disableLeftArrowFound);
 				} else {
 					for (int i = circleList.size() - 1; i >= 0; i--) {
-							UtilityMethods.scrollPageDown(Driver.webdriver, 2);
-							Thread.sleep(1000);
 							circleList.get(i).click();
 							Thread.sleep(1000);
 							for (int j = homePage.testNamesonPerPage_onlinechart.size() - 1; j >= 0; j--) {
@@ -1264,19 +1522,23 @@ public class Standard_Overview_Table_Steps {
 									UtilityMethods.checkDateFormat(submittedDateText.substring(24));
 									}catch(Exception e) {}
 								Assert.assertTrue(homePage.questionlistarea.isDisplayed());
-								UtilityMethods.scrollPageDown(Driver.webdriver, 2);
-								Thread.sleep(1000);
-								action.moveToElement(homePage.testNamesLabelOnLineChart).click().build().perform();
-								UtilityMethods.scrollPageUp(Driver.webdriver, 2);
+							try {
+								action.moveToElement(homePage.testscoreovertimetext).click().build().perform();
+							} catch (Exception e) {
+								try {
+									action.moveToElement(homePage.testNamesonPerPage_onlinechart.get(j)).click().build()
+									.perform();
+								} catch (Exception e1) {
+									action.moveToElement(homePage.hundredtextontsot).click().build().perform();
+								}
+							}
 								Thread.sleep(1000);
 								try {
 									Assert.assertTrue(homePage.testnameontooltip.getText().equals(tooltiptext));
 									toolTipDisplayAfterClosing = true;
 								} catch (Exception e) {
 								}
-							}
-							UtilityMethods.scrollPageUp(Driver.webdriver, 2);
-							Thread.sleep(1000);
+							}							
 					}
 				}
 
@@ -1293,10 +1555,16 @@ public class Standard_Overview_Table_Steps {
 						UtilityMethods.checkDateFormat(submittedDateText.substring(24));
 						}catch(Exception e) {}
 					Assert.assertTrue(homePage.questionlistarea.isDisplayed());
-					UtilityMethods.scrollPageDown(Driver.webdriver, 2);
-					Thread.sleep(1000);
-					action.moveToElement(homePage.testNamesLabelOnLineChart).click().build().perform();
-					UtilityMethods.scrollPageUp(Driver.webdriver, 2);
+					try {
+						action.moveToElement(homePage.testNamesonPerPage_onlinechart.get(j)).click().build()
+								.perform();
+					} catch (Exception e) {
+						try {
+							action.moveToElement(homePage.testscoreovertimetext).click().build().perform();
+						} catch (Exception e1) {
+							action.moveToElement(homePage.hundredtextontsot).click().build().perform();
+						}
+					}
 					Thread.sleep(1000);
 					try {
 						Assert.assertTrue(homePage.testnameontooltip.getText().equals(tooltiptext));
@@ -1354,12 +1622,12 @@ public class Standard_Overview_Table_Steps {
 					paginatorFound = false;
 			WebElement enabledRightArrow = null, enabledLeftArrow = null;
 			List<WebElement> circleList = null;
-			for (int i = 0; i < homePage.colouredStripOnStudentList.size(); i++) {
+			for (int i = 0; i < homePage.classcolouredStripOnStudentList.size(); i++) {
 				if (!(homePage.TextInStripOnStudentList.get(i).getText().equals("0"))) {
-					homePage.colouredStripOnStudentList.get(i).click();
+					homePage.classcolouredStripOnStudentList.get(i).click();
 					Thread.sleep(1000);
 					Assert.assertTrue(
-							homePage.colouredStripOnStudentList.get(i).getAttribute("class").equals("active_progress"));
+							homePage.classcolouredStripOnStudentList.get(i).getAttribute("class").equals("active_progress"));
 					Thread.sleep(1000);
 					recordsOnClickedStrip = Integer.parseInt(homePage.TextInStripOnStudentList.get(i).getText());
 					try {
@@ -1479,12 +1747,14 @@ public class Standard_Overview_Table_Steps {
 			int standardListSize = homePage.standardnameslist.size();
 			int randomNumber = (int) (Math.random() * standardListSize);
 			UtilityMethods.scrollPageDown(Driver.webdriver, 4);
-			homePage.standardnameslist.get(randomNumber).click();
+			Thread.sleep(2000);
+			new Actions(Driver.webdriver).moveToElement(homePage.standardnameslist.get(randomNumber)).build().perform();
 			Thread.sleep(3000);
 			headerOnToolTip = homePage.stranddefinitionlist.get(randomNumber).getText();
 			String subcat= homePage.standardsubdefinitionlist.get(randomNumber).getText();
 			subHeaderOnToolTip =subcat.substring(0, subcat.indexOf(" "))+" "+ homePage.standarddescriptionlist.get(randomNumber).getText();
-			
+			homePage.standardnameslist.get(randomNumber).click();
+			Thread.sleep(5000);
 		} catch (Exception e) {
 			UtilityMethods.processException(e);
 		}
@@ -1502,6 +1772,9 @@ public class Standard_Overview_Table_Steps {
 		try {
 			Assert.assertTrue(homePage.studentlistheader.getText().equals(headerOnToolTip));
 			Assert.assertTrue(homePage.studentlistsubheader.getText().equals(subHeaderOnToolTip));
+			/** Note :student list related to the selected standard within the perticular strand with the header and the subheader is displayed & 
+			 * already covered in previously created method
+			 */
 			CBTConfiguration.score = "pass";
 		} catch (Exception e) {
 			UtilityMethods.processException(e);
@@ -1538,8 +1811,22 @@ public class Standard_Overview_Table_Steps {
 	public void select_the_student_within_the_student_list_and_Student_context_with_information_for_that_individual_student_should_be_shown()
 			throws Throwable {
 		try {
-			String schoolName = homePage.schoolnameoncontextheader.getText();
-			String className = homePage.classnameoncontextheader.getText();
+			String schoolName, className;
+			HomePage homePage = PageFactory.initElements(Driver.webdriver, HomePage.class);
+			new Actions(Driver.webdriver).moveToElement(homePage.schoolnameoncontextheader).build().perform();
+			if (homePage.schoolnameoncontextheader.getText().contains("...")) {
+				schoolName = homePage.tooltipofschoolnameoncontextheader.getText();
+			} else {
+				schoolName = homePage.schoolnameoncontextheader.getText();
+			}
+			new Actions(Driver.webdriver).moveToElement(homePage.overviewtext).build().perform();
+			new Actions(Driver.webdriver).moveToElement(homePage.classnameoncontextheader).build().perform();
+			if (homePage.classnameoncontextheader.getText().contains("...")) {
+				className = homePage.tooltipofclassnameoncontextheader.getText();
+			} else {
+				className = homePage.classnameoncontextheader.getText();
+			}
+			new Actions(Driver.webdriver).moveToElement(homePage.overviewtext).build().perform();
 			int studentListSize = homePage.noofstudentsinlist.size();
 			int randomNumber = (int) (Math.random() * studentListSize);
 			String StudentName = homePage.studentnameslistinstudentlist.get(randomNumber).getText();
@@ -1664,28 +1951,21 @@ public class Standard_Overview_Table_Steps {
 		try {
 			/**Verifying UI Content in Student List with DB data*/
 			List<Model> lm = new ArrayList<Model>();
-			new Actions(Driver.webdriver).moveToElement(homePage.schoolnameoncontextheader).build().perform();
-			String schoolName,className;
-			if(homePage.schoolnameoncontextheader.getText().contains("...")) {
-				schoolName = homePage.tooltipofschoolnameoncontextheader.getText();				
+			Integer schoolId=0,classId=0;
+
+			Map<Integer,Integer> ids=UtilityMethods.getSchoolIdAndClassId();
+			for(Map.Entry<Integer,Integer> entry:ids.entrySet()) {
+				schoolId=entry.getKey();
+				classId=entry.getValue();
 			}
-			else {
-				schoolName = homePage.schoolnameoncontextheader.getText();
-			}
-			new Actions(Driver.webdriver).moveToElement(homePage.classnameoncontextheader).build().perform();
-			if(homePage.classnameoncontextheader.getText().contains("...")) {
-				className = homePage.tooltipofclassnameoncontextheader.getText();				
-			}
-			else {
-				className =homePage.classnameoncontextheader.getText();
-			}
+			
 			String firstStrandName;
 			if (homePage.strandnameslist.get(0).getText().contains("...")) {
 				firstStrandName = homePage.strandnamestooltip.getText();
 			} else {
 				firstStrandName = homePage.strandnameslist.get(0).getText();
 			}
-			lm = DatabaseConnection.getStudentDetailListInSPInClassByStrand(PaginationOfDropDownListSteps.conn, schoolName, className, firstStrandName);
+			lm = DatabaseConnection.getStudentDetailListInSPInClassByStrand(PaginationOfDropDownListSteps.conn, schoolId, classId, firstStrandName);
 			Iterator<Model> iterator = lm.iterator();
 			int index = 0;
 			while (iterator.hasNext()) {

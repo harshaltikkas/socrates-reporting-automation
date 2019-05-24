@@ -54,6 +54,7 @@ public class CBTConfiguration {
 		this.username = username;
 		this.authkey = authkey;
 	}
+	
 	/**
 	 * This method is used to set score value as pass or fail 
 	 * @param score
