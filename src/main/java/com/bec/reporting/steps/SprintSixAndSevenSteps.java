@@ -364,6 +364,7 @@ public class SprintSixAndSevenSteps {
 				homePage.compareclasslabel.click();
 				Thread.sleep(1000);
 				Assert.assertTrue(homePage.classpath.isDisplayed());
+				Assert.assertTrue(homePage.classpath.getAttribute("stroke").equals("#00539b"));
 				isClassComparePresence=true;
 			}
 			catch(Exception e) {
@@ -374,10 +375,11 @@ public class SprintSixAndSevenSteps {
 			homePage.compareschoollabel.click();
 			Thread.sleep(1000);
 			Assert.assertTrue(homePage.schoolpath.isDisplayed());
+			Assert.assertTrue(homePage.schoolpath.getAttribute("stroke").equals("#00539b"));
 			homePage.comparedistrictlabel.click();
 			Thread.sleep(1000);
 			Assert.assertTrue(homePage.districtpath.isDisplayed());
-		
+			Assert.assertTrue(homePage.districtpath.getAttribute("stroke").equals("#00539b"));
 			//De-selecting school and district and class if there.
 			homePage.selectedcompareschoollabel.click();
 			Thread.sleep(1000);
@@ -426,16 +428,16 @@ public class SprintSixAndSevenSteps {
 			Thread.sleep(2000);
 			UtilityMethods.scrollPageDown(Driver.webdriver, 3);
 			int no=(int)(Math.random()*homePage.testNamesonPerPage_onlinechart.size());
-			new Actions(Driver.webdriver).moveToElement(homePage.testNamesonPerPage_onlinechart.get(no)).click().build().perform();
+			new Actions(Driver.webdriver).moveToElement(homePage.testScoreValueInCircle_onlinechart.get(no)).click().build().perform();
 			Thread.sleep(3000);
 			homePage.compareschoollabel.click();
 			Thread.sleep(1000);
-			homePage.compareschoollabel.click();
-			Thread.sleep(1000);
 			Assert.assertTrue(homePage.schoolpath.isDisplayed());
+			Assert.assertTrue(homePage.schoolpath.getAttribute("stroke").equals("#00539b"));
 			homePage.comparedistrictlabel.click();
 			Thread.sleep(1000);
 			Assert.assertTrue(homePage.districtpath.isDisplayed());
+			Assert.assertTrue(homePage.districtpath.getAttribute("stroke").equals("#00539b"));
 		
 			//De-selecting school and district and class if there.
 			homePage.selectedcompareschoollabel.click();

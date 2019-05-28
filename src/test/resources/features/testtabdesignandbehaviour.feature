@@ -1,6 +1,7 @@
-@Feature1
+@Feature
 Feature: Test Tab Design and Behaviour
-												##story 1f)
+
+  ##story 1f)
   @Scenario18 @TC31
   Scenario: Verify that the checkbox for ALL option
     Given User is on portal's login screen with username as "superadmin" and password as "password" and usertype as "techsupport"
@@ -27,7 +28,7 @@ Feature: Test Tab Design and Behaviour
       | Earliest Date     | Earliest Submission Date         |
       | Latest Date       | Latest Submission Date           |
 
-	##story 2e)
+  ##story 2e)
   @Scenario21 @TC43
   Scenario: Verify the sorting with the arrows which are with heading elements
     Given User is on portal's login screen with username as "superadmin" and password as "password" and usertype as "techsupport"
@@ -40,7 +41,6 @@ Feature: Test Tab Design and Behaviour
   #4)Results down arrow: 10-1
   #5)Date up arrows: oldest to newest
   #6)Date down arrows: newest to oldest
-
   # failing because the earliest date list not in descending order.
   @Scenario28 @TC39
   Scenario: Check whether the earliest date is displaying in descending by defaultly
