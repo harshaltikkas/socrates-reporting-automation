@@ -74,9 +74,11 @@ public class ExtentCucumberFormatter implements Reporter, Formatter {
 			FileReader reader = new FileReader("src//main//resources//configuration.properties");
 			Properties p = new Properties();
 			p.load(reader);
-	        newFile=new File(file.getAbsolutePath().replace("report.html", "report_"+p.getProperty("default_browser_Name")+"_"+exeDateTime+".html"));
+	        //newFile=new File(file.getAbsolutePath().replace("report.html", "report_"+p.getProperty("default_browser_Name")+"_"+exeDateTime+".html"));
+	        newFile=new File(file.getAbsolutePath().replace("report.html", "report_"+p.getProperty("default_browser_Name")+".html"));	        
 		} else {
-	        newFile=new File(file.getAbsolutePath().replace("report.html", "report_"+System.getProperty("browser")+"_"+formatter.format(date)+".html"));
+	      //  newFile=new File(file.getAbsolutePath().replace("report.html", "report_"+System.getProperty("browser")+"_"+formatter.format(date)+".html"));
+	        newFile=new File(file.getAbsolutePath().replace("report.html", "report_"+System.getProperty("browser")+".html"));
 		}		
         htmlReporter = new ExtentHtmlReporter(newFile);
     }

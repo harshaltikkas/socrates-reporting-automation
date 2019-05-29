@@ -143,16 +143,19 @@ public class FlyInMenuBehaviourSteps {
 	public void user_should_be_able_to_select_school_and_Class_and_student_as_and_apply_and_verify_with_context_header_information(String studentType) throws Throwable {
 		try {
 			String selectedSchool,selectedClass,selectedStudent;
+			String classNameonCH,studentTextonCH;
 			// selecting school from dropdown
+			UtilityMethods.scrollPageDown(Driver.webdriver,3);
 			homePage.schooldropdownbtn.click();
 			Thread.sleep(1000);
 			int randomSchoolIndex=UtilityMethods.generateRandomNumberBySkippingIndex(homePage.schoollist.size(), 0);
 			selectedSchool=homePage.schoollist.get(randomSchoolIndex).getText();
 			homePage.schoollist.get(randomSchoolIndex).click();			
 			log.info("Selected School is:" +selectedSchool );
-			Assert.assertTrue(homePage.classRefreshIcon.isDisplayed());
+
 			int count = 1;
 			try {
+				Assert.assertTrue(homePage.classRefreshIcon.isDisplayed());
 				do {
 					log.info("Thread sleep called for class Loading :" + count + " Times");
 					Thread.sleep(2000);
@@ -169,8 +172,9 @@ public class FlyInMenuBehaviourSteps {
 			selectedClass=homePage.classlist.get(0).getText();
 			homePage.classlist.get(0).click();
 			log.info("Selected Class is:" + selectedClass);
-			Assert.assertTrue(homePage.studentRefreshIcon.isDisplayed());
+
 			try {
+				Assert.assertTrue(homePage.studentRefreshIcon.isDisplayed());
 				do {
 					log.info("Thread sleep called for Student Loading :" + count + " Times");
 					Thread.sleep(2000);
@@ -211,12 +215,16 @@ public class FlyInMenuBehaviourSteps {
 
 			homePage.rosterapplybtn.click();
 			Thread.sleep(3000);
-			UtilityMethods.scrollPageUp(Driver.webdriver,8);
+			UtilityMethods.scrollPageUp(Driver.webdriver);
+			Thread.sleep(2000);
 			/**
 			 * verifying class and school and student on context menu by comparing dropdown
 			 * text and context menu values
 			 */
-			String schoolNameonCH,classNameonCH,studentTextonCH;
+
+			/*homePage.tripledotsoncontextheader.click();
+			Thread.sleep(1500);
+			
 			if (homePage.schoolnameoncontextheader.getText().contains("...")) {
 				new Actions(Driver.webdriver).moveToElement(homePage.schoolnameoncontextheader).build().perform();
 				schoolNameonCH = homePage.tooltipofschoolnameoncontextheader.getText();
@@ -224,6 +232,8 @@ public class FlyInMenuBehaviourSteps {
 			} else {
 				schoolNameonCH = homePage.schoolnameoncontextheader.getText();
 			}
+			Assert.assertTrue(selectedSchool.equals(schoolNameonCH));			
+			*/
 
 			if (homePage.classnameoncontextheader.getText().contains("...")) {
 				new Actions(Driver.webdriver).moveToElement(homePage.classnameoncontextheader).build().perform();
@@ -234,7 +244,6 @@ public class FlyInMenuBehaviourSteps {
 				classNameonCH = homePage.classnameoncontextheader.getText();
 			}
 
-			Assert.assertTrue(selectedSchool.equals(schoolNameonCH));
 			Assert.assertTrue(selectedClass.equals(classNameonCH));
 
 			switch (studentType) {
@@ -281,7 +290,8 @@ public class FlyInMenuBehaviourSteps {
 	 */	
 	@Then("^User should be able to click on cancel button to close the Roster Tab\\.$")
 	public void user_should_be_able_to_click_on_cancel_button_to_close_the_Roster_Tab() throws Throwable {
-		try {			
+		try {		
+			UtilityMethods.scrollPageDown(Driver.webdriver,4);
 			homePage.rostercancelbtn.click();
 			Thread.sleep(500);
 			Assert.assertEquals(false, homePage.schoolTitleOnSliderMenu.isDisplayed());
@@ -316,20 +326,21 @@ public class FlyInMenuBehaviourSteps {
 	@Then("^User should be able to select \"([^\"]*)\" Test and click on apply filter button$")
 	public void user_should_be_able_to_select_Test_and_click_on_apply_filter_button(String testType) throws Throwable {
 		try {
+			Thread.sleep(1000);
 			homePage.allcheckbox.click();
-			Thread.sleep(500);
-			
+			Thread.sleep(1000);
 			String selectedTestName;
 			int testCheckBoxListSize = 0, randomNumber = 0;
 			testCheckBoxListSize = homePage.testscheckboxlist.size();
 			randomNumber = (int) (Math.random() * testCheckBoxListSize);
-			
 			switch (testType) {
 			case "single":
 				UtilityMethods.scrollPageDown(Driver.webdriver, randomNumber+1);
 				selectedTestName=homePage.testnameslist.get(randomNumber).getText();
+				Thread.sleep(1000);
 				homePage.testscheckboxlist.get(randomNumber).click();
-				Thread.sleep(500);
+				//new Actions(Driver.webdriver).moveToElement(homePage.testscheckboxlist.get(randomNumber)).click().build().perform();
+				Thread.sleep(1000);
 				UtilityMethods.scrollPageDown(Driver.webdriver);
 				Thread.sleep(1000);
 				UtilityMethods.scrollPageDown(Driver.webdriver);
@@ -343,16 +354,16 @@ public class FlyInMenuBehaviourSteps {
 				break;
 			case "multiple":
 				int noOfSelectedTest=0;
-				for (int i = 0; i < testCheckBoxListSize; i = i + 2) {
+				for (int i = 0; i <testCheckBoxListSize; i = i + 2) {
+					UtilityMethods.scrollPageDown(Driver.webdriver, i+2);
 					homePage.testscheckboxlist.get(i).click();
-					UtilityMethods.scrollPageDown(Driver.webdriver, i + 2);
 					Thread.sleep(500);
 					noOfSelectedTest++;
 				}
 				homePage.testapplybtn.click();
 				Thread.sleep(3000);
 				UtilityMethods.scrollPageUp(Driver.webdriver);
-				Thread.sleep(500);
+				Thread.sleep(2000);
 				Assert.assertTrue(homePage.nooftestoncontextheader.getText().equals("Custom ("+noOfSelectedTest+")"));
 				break;
 			}

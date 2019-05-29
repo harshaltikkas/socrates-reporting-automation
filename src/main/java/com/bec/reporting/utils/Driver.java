@@ -274,11 +274,19 @@ public class Driver {
 	public static void embedScreenshot(Scenario scenario) {
 		log.info("embedScreenshot");
 		String screenshotName = scenario.getName().replaceAll(" ", "_");
+		String os = System.getProperty("os.name");
 		try {
 			TakesScreenshot ts = (TakesScreenshot) Driver.webdriver;
 			File sourcePath = ts.getScreenshotAs(OutputType.FILE);
-			File destinationPath = new File(System.getProperty("user.dir") + "\\target\\cucumber-reports\\extent_report\\screenshots\\"
-					+ screenshotName + "_" + ExtentCucumberFormatter.exeDateTime + ".png");
+			File destinationPath;
+			if(os.equalsIgnoreCase("linux")) {
+				destinationPath= new File(System.getProperty("user.dir") + "/target/cucumber-reports/extent_report/screenshots/"
+						+ screenshotName + "_" + ExtentCucumberFormatter.exeDateTime + ".png");
+			}
+			else {
+				destinationPath= new File(System.getProperty("user.dir") + "\\target\\cucumber-reports\\extent_report\\screenshots\\"
+						+ screenshotName + "_" + ExtentCucumberFormatter.exeDateTime + ".png");
+			}
 			FileUtils.copyFile(sourcePath, destinationPath);
 			Reporter.addScreenCaptureFromPath(destinationPath.toString());
 		} catch (Exception e) {
