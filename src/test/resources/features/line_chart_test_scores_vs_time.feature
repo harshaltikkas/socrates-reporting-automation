@@ -1,4 +1,4 @@
-@Feature1
+@Feature
 Feature: Line Chart Test Scores vs Time
 
   ##LINE CHART TEST SCORE OVER TIME
