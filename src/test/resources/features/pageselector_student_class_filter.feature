@@ -1,4 +1,4 @@
-@Feature1
+@Feature
 Feature: Page Selector and Class Student Filter
 
   ##STUDENT/CLASS FILTER , PAGE SELECTOR , CONTEXT HEADER, FLY-IN-KEY,
