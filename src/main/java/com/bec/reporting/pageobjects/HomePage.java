@@ -278,6 +278,9 @@ public class HomePage {
 	@FindBy(xpath="//div[@class='context-header-main']//span[contains(text(),'School:')]/following-sibling::span")
 	public WebElement schoolnameoncontextheader;
 	
+	@FindBy(xpath="//span[@class='context-header-title']//i[contains(text(),'more_vert')]")
+	public WebElement tripledotsoncontextheader;
+	
 	@FindBy(xpath="//div[@class='context-header-main']//span[contains(text(),'School:')]/following-sibling::span//div[@class='bec_tooltip_content']")
 	public WebElement tooltipofschoolnameoncontextheader;
 	

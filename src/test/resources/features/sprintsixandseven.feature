@@ -1,4 +1,4 @@
-@Feature
+@Feature1
 Feature: Sprint 6 and Sprint 7 Stories
 
   ##Note: BE-630,659,660,661 all are already covered previously
@@ -36,7 +36,7 @@ Feature: Sprint 6 and Sprint 7 Stories
 
   ## BE-666,685,677,686
   ##failing as, multiple xpath are available for schoolpath and districtpath
-  Scenario: Verify Selection/Deselection of the Comparison options within the Line Charts for Particular Strand and standard
+  Scenario: Verify Selection and Deselection of the Comparison options within the Line Charts for Particular Strand and standard
     Given User is on portal's login screen with username as "superadmin" and password as "password" and usertype as "techsupport"
     When User Click on Standard Performance tab within the Class Context
     Then verify the dotted line and triangle line on line chart based on selection of school and district and class checkbox
@@ -44,7 +44,7 @@ Feature: Sprint 6 and Sprint 7 Stories
     Then verify the dotted line and triangle line on line chart based on selection of school and district and class checkbox
 
   ## BE-678,689
-  Scenario: Verify Selection/Deselection of the Comparison options within the Line Charts for Particular Test
+  Scenario: Verify Selection and Deselection of the Comparison options within the Line Charts for Particular Test
     Given User is on portal's login screen with username as "superadmin" and password as "password" and usertype as "techsupport"
     When User click on Class Context and Test Score button
     Then Veriy the Selection and Deselection of the Comparison options within the Line Charts for Particular Test

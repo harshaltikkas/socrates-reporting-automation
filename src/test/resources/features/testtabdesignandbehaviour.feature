@@ -1,4 +1,4 @@
-@Feature
+@Feature1
 Feature: Test Tab Design and Behaviour
 
   ##story 1f)
