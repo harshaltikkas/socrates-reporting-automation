@@ -1,4 +1,4 @@
-@Feature1
+@Feature
 Feature: Pagination of Dropdown List
 
   ##story 1d)
