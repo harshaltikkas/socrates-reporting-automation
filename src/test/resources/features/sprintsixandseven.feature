@@ -1,4 +1,4 @@
-@Feature1
+@Feature
 Feature: Sprint 6 and Sprint 7 Stories
 
   ##Note: BE-630,659,660,661 all are already covered previously
