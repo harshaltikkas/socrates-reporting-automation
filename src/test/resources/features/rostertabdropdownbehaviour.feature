@@ -1,9 +1,10 @@
-@Feature1
+@Feature
 Feature: Roster Tab Dropdown Behaviour
 
   ##story 1c)
+  
   #  @Scenario9 @TC12
-  ##Data incomplete, we need role of teacher for single and multiple class allocation.
+  ##Data incomplete we need role of teacher for single and multiple class allocation.
   ##  @SmokeTests
   ##  Scenario Outline: Single or Multiple Selection of class Dropdown
   ##    Given User is on portal's login screen with username as "superadmin" and password as "password" and usertype as "techsupport"
@@ -18,7 +19,7 @@ Feature: Roster Tab Dropdown Behaviour
   ##      | School Admin 	 		|												|
   ##      | District Admin 		|												|
   
-  ##story Loading Icon
+ ##story Loading Icon
   @Scenario10 @TC16
   Scenario: Verify that the selected option should appear at the top of the list and the user should select one option from the dropdown list at a time.
     Given User is on portal's login screen with username as "superadmin" and password as "password" and usertype as "techsupport"
@@ -30,7 +31,7 @@ Feature: Roster Tab Dropdown Behaviour
     And Verify selected option should appear at the top of the list
 
   @Scenario12 @TC18
-  Scenario: Verify the search bar not scrollable and has the "X" to cancel searched option and search icon to search the option within School, class and student dropdown.
+  Scenario: Verify the search bar not scrollable and has the "X" to cancel searched option and search icon to search the option within School and class and student dropdown
     Given User is on portal's login screen with username as "superadmin" and password as "password" and usertype as "techsupport"
     When User Click on Roster tab within the Universal Selector Tab
     Then Searches anything what’s being typed in showing "x" to cancel and displays them as options to select from below the search bar and filters the list.
@@ -41,7 +42,7 @@ Feature: Roster Tab Dropdown Behaviour
     When User Click on Roster tab within the Universal Selector Tab
     Then "All" option should be display at first position in list and can not be scrollable
 
-  ##S6 & S7 , BE-630,660,659,
+  ##S6 & S7 , BE-630,660,659
   Scenario: Verify Selection/Deselection of Multiple Students from Student dropdown List within Roster tab
     Given User is on portal's login screen with username as "superadmin" and password as "password" and usertype as "techsupport"
     When User Click on Roster tab within the Universal Selector Tab

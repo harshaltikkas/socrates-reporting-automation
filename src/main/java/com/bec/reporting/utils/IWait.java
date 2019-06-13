@@ -27,13 +27,18 @@ package com.bec.reporting.utils;
 
 import java.util.concurrent.TimeUnit;
 
+import org.junit.Assert;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import lombok.extern.slf4j.Slf4j;
+@Slf4j
 public class IWait {
 
 	/**
@@ -58,10 +63,6 @@ public class IWait {
 	 */
 	public static boolean explicit_wait(WebDriver driver, WebElement el) {
 		try {
-			/*new WebDriverWait(driver, 10).ignoring(StaleElementReferenceException.class)
-					.until(ExpectedConditions.visibilityOf(el));*/
-			/*new WebDriverWait(driver, 10).ignoring(StaleElementReferenceException.class)
-					  .until(ExpectedConditions.presenceOfElementLocated(toByVal(el)));*/
 			new WebDriverWait(driver, 10).ignoring(StaleElementReferenceException.class)
 			  .until(ExpectedConditions.visibilityOfElementLocated(toByVal(el)));
 		} catch (Exception e) {
@@ -96,4 +97,23 @@ public class IWait {
 	    }
 	    return (By) we;
 	}
+	
+	public static void waitForLoad(WebDriver driver) {
+		String errorMsg;
+		ExpectedCondition<Boolean> expectation = new
+                ExpectedCondition<Boolean>() {
+                    public Boolean apply(WebDriver driver) {
+                        return ((JavascriptExecutor) driver).executeScript("return document.readyState").toString().equals("complete");
+                    }
+                };
+        try {
+            Thread.sleep(1000);
+            WebDriverWait wait = new WebDriverWait(driver, 15);
+            wait.until(expectation);
+        } catch (Throwable error) {
+        	errorMsg="Timeout waiting for Page Load Request to complete.";
+        	log.error(errorMsg);
+            Assert.fail(errorMsg);
+        }
+    }
 }

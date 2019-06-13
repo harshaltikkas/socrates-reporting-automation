@@ -76,7 +76,7 @@ public class SprintSixAndSevenSteps {
 			Thread.sleep(1000);
 			// verifying the school avg percentage along with the result
 			Map<Integer, Integer> schoolResult = DatabaseConnection
-					.getSchoolAvgInTSInClass(PaginationOfDropDownListSteps.conn, schoolId, testName);
+					.getSchoolAvgInTSInClass(DatabaseConnection.conn, schoolId, testName);
 			for (Map.Entry<Integer, Integer> entry : schoolResult.entrySet()) {
 				Assert.assertTrue(homePage.schoolAvgScrInClassInTS.getText().equals(
 						"School Average Scores: " + entry.getKey() + "% based on " + entry.getValue() + " results"));
@@ -103,9 +103,9 @@ public class SprintSixAndSevenSteps {
 			Thread.sleep(1000);
 			Map<Integer, Integer> districtResult = new HashMap<>();
 
-			int districtId = DatabaseConnection.getDistrictIdBySchoolId(PaginationOfDropDownListSteps.conn, schoolId);
+			int districtId = DatabaseConnection.getDistrictIdBySchoolId(DatabaseConnection.conn, schoolId);
 			// verifying the district avg percentage along with the result
-			districtResult = DatabaseConnection.getDistrictAvgInTSInClass(PaginationOfDropDownListSteps.conn,
+			districtResult = DatabaseConnection.getDistrictAvgInTSInClass(DatabaseConnection.conn,
 					districtId, testName);
 			for (Map.Entry<Integer, Integer> entry : districtResult.entrySet()) {
 				Assert.assertTrue(homePage.districtAvgScrInClassInTS.getText().equals(
@@ -232,7 +232,7 @@ public class SprintSixAndSevenSteps {
 				action.moveToElement(homePage.paginator_onlinechart).build().perform();
 				paginatorFound = true;
 			} catch (Exception e) {
-				System.out.println("Paginator Not Found");
+				log.info("Paginator Not Found");
 			}
 			if (paginatorFound) {
 				try {
@@ -241,7 +241,7 @@ public class SprintSixAndSevenSteps {
 					enabledLeftArrow.isDisplayed();
 					enabledLeftArrowFound = true;
 				} catch (Exception e) {
-					System.out.println("Enabled Left Arrow on Paginator is not found");
+					log.info("Enabled Left Arrow on Paginator is not found");
 				}
 				if (enabledLeftArrowFound) {
 					do {
@@ -249,7 +249,7 @@ public class SprintSixAndSevenSteps {
 							homePage.disabledleftarrow_onlinechart.isDisplayed();
 							disableLeftArrowFound = true;
 						} catch (Exception e) {
-							System.out.println("Disabled Left Arrow on Paginator is not found");
+							log.info("Disabled Left Arrow on Paginator is not found");
 						}
 						if (doneWithThreeCircle) {
 							UtilityMethods.scrollPageDown(Driver.webdriver, 2);
