@@ -26,16 +26,13 @@
 package com.bec.reporting.utils;
 
 import java.sql.Connection;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
@@ -44,9 +41,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.PageFactory;
-
 import com.bec.reporting.pageobjects.HomePage;
-
+import com.bec.reporting.steps.Standard_Overview_Table_Steps;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -197,6 +193,7 @@ public class UtilityMethods {
 			}
 			return true;
 		} catch (Exception e) {
+			UtilityMethods.processException(e);
 			return false;
 		}
 	}
@@ -247,7 +244,7 @@ public class UtilityMethods {
 	/*
 	 * public static void printDateTime() { SimpleDateFormat formatter = new
 	 * SimpleDateFormat("dd/MM/yyyy HH:mm:ss"); Date date = new Date();
-	 * System.out.println(formatter.format(date)); }
+	 * log.info(formatter.format(date)); }
 	 */
 
 	/**
@@ -422,193 +419,63 @@ public class UtilityMethods {
 			Thread.sleep(2000);
 			new Actions(Driver.webdriver).moveToElement(homePage.xaxistexton_linechart).build().perform();
 			Thread.sleep(1000);
-			List<String> testNamesList = new ArrayList<>();
-			int avgPerOnSubHeading = 0, totalQuestionCount = 0, tsum = 0, TestCount = 0;
-			List<Model> lm = new ArrayList<>();
 			// =============================================================================
-			WebElement enabledLeftArrow = null;
-			boolean doneWithThreeCircle = false, disableLeftArrowFound = false, enabledLeftArrowFound = false,
-					paginatorFound = false;
-			List<WebElement> circleList = null;
-			try {
-				new Actions(Driver.webdriver).moveToElement(homePage.paginator_onlinechart).build().perform();
-				paginatorFound = true;
-			} catch (Exception e) {
-				System.out.println("Paginator Not Found");
-			}
-			if (paginatorFound) {
-				try {
-					circleList = homePage.paginationcirclelist_onlinechart;
-					enabledLeftArrow = homePage.enabledleftarrow_onlinechart;
-					enabledLeftArrow.isDisplayed();
-					enabledLeftArrowFound = true;
-				} catch (Exception e) {
-					System.out.println("Enabled Left Arrow on Paginator is not found");
-				}
-				if (enabledLeftArrowFound) {
+			PaginationUtility.methodOne();
+			if (PaginationUtility.paginatorFound) {
+				PaginationUtility.methodTwo();
+				if (PaginationUtility.enabledLeftArrowFound) {
 					do {
-						try {
-							homePage.disabledleftarrow_onlinechart.isDisplayed();
-							disableLeftArrowFound = true;
-						} catch (Exception e) {
-							System.out.println("Disabled Left Arrow on Paginator is not found");
-						}
-						if (doneWithThreeCircle) {
-							testNamesList.clear();
-							circleList.get(0).click();
-							Thread.sleep(1000);
+						PaginationUtility.methodThree();
+						if (PaginationUtility.doneWithThreeCircle) {
+							PaginationUtility.methodFour();
+							PaginationUtility.testNamesList.clear();
 							for (int i = 0; i < homePage.testNamesonPerPage_onlinechart.size(); i++) {
 								new Actions(Driver.webdriver)
 										.moveToElement(homePage.testNamesonPerPage_onlinechart.get(i)).build()
 										.perform();
-								testNamesList.add(homePage.testNametooltip_onlinechart.getText());
+								PaginationUtility.testNamesList.add(homePage.testNametooltip_onlinechart.getText());
 								Thread.sleep(500);
 								new Actions(Driver.webdriver).moveToElement(homePage.xaxistexton_linechart).build()
 										.perform();
 							}
-							UtilityMethods.scrollPageUp(Driver.webdriver, 3);
-							for (int j = 0; j < testNamesList.size(); j++) {
-								lm = DatabaseConnection.getTestScoreDetailsInSPInClassContext(con, schoolId, classId,
-										testNamesList.get(j), standardId);
-								Iterator<Model> iterator = lm.iterator();
-								while (iterator.hasNext()) {
-									TestCount++;
-									Model m = (Model) iterator.next();
-									tsum += m.getAvg_per();
-									Assert.assertTrue(testNamesList.get(j).contains(m.getComponent_title()));
-									Assert.assertTrue(homePage.testScoreValueInCircle_onlinechart.get(j).getText()
-											.equals(String.valueOf(m.getAvg_per())));
-									Thread.sleep(1000);
-									new Actions(Driver.webdriver)
-											.moveToElement(homePage.testScoreValueInCircle_onlinechart.get(j)).click()
-											.build().perform();
-									Thread.sleep(2000);
-									Assert.assertTrue(
-											homePage.testnameontooltip.getText().equals(m.getComponent_title()));
-									for (int i = 0; i < homePage.questionlistontooltip.size(); i++) {
-										Assert.assertTrue(homePage.questionlistontooltip.get(i).getText()
-												.equals(String.valueOf(m.getQuestion_no().get(i))));
-										totalQuestionCount++;
-									}
-									String submittedDateText = homePage.submitteddateontooltip.getText();
-									Assert.assertTrue(new SimpleDateFormat("MM/dd/yyyy").format(m.getMinDate())
-											.equals(submittedDateText.substring(12, 22)));
-									Assert.assertTrue(new SimpleDateFormat("MM/dd/yyyy").format(m.getMaxDate())
-											.equals(submittedDateText.substring(24)));
-									new Actions(Driver.webdriver).moveToElement(homePage.testscoreovertimetext).click()
-											.build().perform();
-									Thread.sleep(1000);
-								}
-							}
+						PaginationUtility.checkTestScoreDetails(schoolId, classId, standardId);
 
 						} else {
-							for (int k = circleList.size() - 1; k >= 0; k--) {
-								testNamesList.clear();
-								circleList.get(k).click();
-								Thread.sleep(1000);
+							for (int k = PaginationUtility.circleList.size() - 1; k >= 0; k--) {
+								PaginationUtility.testNamesList.clear();
+								PaginationUtility.methodFive(k);
 								for (int i = 0; i < homePage.testNamesonPerPage_onlinechart.size(); i++) {
 									new Actions(Driver.webdriver)
 											.moveToElement(homePage.testNamesonPerPage_onlinechart.get(i)).build()
 											.perform();
-									testNamesList.add(homePage.testNametooltip_onlinechart.getText());
+									PaginationUtility.testNamesList.add(homePage.testNametooltip_onlinechart.getText());
 									Thread.sleep(500);
 									new Actions(Driver.webdriver).moveToElement(homePage.xaxistexton_linechart).build()
 											.perform();
 								}
-								UtilityMethods.scrollPageUp(Driver.webdriver, 3);
-								for (int j = 0; j < testNamesList.size(); j++) {
-									lm = DatabaseConnection.getTestScoreDetailsInSPInClassContext(con, schoolId, classId,
-											testNamesList.get(j), standardId);
-									Iterator<Model> iterator = lm.iterator();
-									while (iterator.hasNext()) {
-										TestCount++;
-										Model m = (Model) iterator.next();
-										tsum += m.getAvg_per();
-										Assert.assertTrue(testNamesList.get(j).contains(m.getComponent_title()));
-										Assert.assertTrue(homePage.testScoreValueInCircle_onlinechart.get(j).getText()
-												.equals(String.valueOf(m.getAvg_per())));
-										Thread.sleep(1000);
-										new Actions(Driver.webdriver)
-												.moveToElement(homePage.testScoreValueInCircle_onlinechart.get(j))
-												.click().build().perform();
-										Thread.sleep(2000);
-										Assert.assertTrue(
-												homePage.testnameontooltip.getText().equals(m.getComponent_title()));
-										for (int i = 0; i < homePage.questionlistontooltip.size(); i++) {
-											Assert.assertTrue(homePage.questionlistontooltip.get(i).getText()
-													.equals(String.valueOf(m.getQuestion_no().get(i))));
-											totalQuestionCount++;
-										}
-										String submittedDateText = homePage.submitteddateontooltip.getText();
-										Assert.assertTrue(new SimpleDateFormat("MM/dd/yyyy").format(m.getMinDate())
-												.equals(submittedDateText.substring(12, 22)));
-										Assert.assertTrue(new SimpleDateFormat("MM/dd/yyyy").format(m.getMaxDate())
-												.equals(submittedDateText.substring(24)));
-										new Actions(Driver.webdriver).moveToElement(homePage.testscoreovertimetext)
-												.click().build().perform();
-										Thread.sleep(1000);
-									}
-								}
+								PaginationUtility.checkTestScoreDetails(schoolId, classId, standardId);
 
 							}
-							doneWithThreeCircle = true;
+							PaginationUtility.doneWithThreeCircle = true;
 						}
-						try {
-							enabledLeftArrow.click();
-						} catch (Exception e) {
-						}
-					} while (!disableLeftArrowFound);
+						PaginationUtility.methodSix();
+					} while (!PaginationUtility.disableLeftArrowFound);
 				}
 
 				else {
-					for (int k = 0; k <= circleList.size() - 1; k++) {
-						testNamesList.clear();
-						circleList.get(k).click();
-						Thread.sleep(2000);
+					for (int k = 0; k <= PaginationUtility.circleList.size() - 1; k++) {
+						PaginationUtility.testNamesList.clear();
+						PaginationUtility.methodFive(k);
 
 						for (int i = 0; i < homePage.testNamesonPerPage_onlinechart.size(); i++) {
 							new Actions(Driver.webdriver).moveToElement(homePage.testNamesonPerPage_onlinechart.get(i))
 									.build().perform();
-							testNamesList.add(homePage.testNametooltip_onlinechart.getText());
+							PaginationUtility.testNamesList.add(homePage.testNametooltip_onlinechart.getText());
 							Thread.sleep(500);
 							new Actions(Driver.webdriver).moveToElement(homePage.xaxistexton_linechart).build()
 									.perform();
 						}
-						UtilityMethods.scrollPageUp(Driver.webdriver, 2);
-
-						for (int j = 0; j < testNamesList.size(); j++) {
-							lm = DatabaseConnection.getTestScoreDetailsInSPInClassContext(con, schoolId, classId,
-									testNamesList.get(j), standardId);
-							Iterator<Model> iterator = lm.iterator();
-							while (iterator.hasNext()) {
-								TestCount++;
-								Model m = (Model) iterator.next();
-								tsum += m.getAvg_per();
-								Assert.assertTrue(testNamesList.get(j).contains(m.getComponent_title()));
-								Assert.assertTrue(homePage.testScoreValueInCircle_onlinechart.get(j).getText()
-										.equals(String.valueOf(m.getAvg_per())));
-								Thread.sleep(1000);
-								new Actions(Driver.webdriver)
-										.moveToElement(homePage.testScoreValueInCircle_onlinechart.get(j)).click()
-										.build().perform();
-								Thread.sleep(2000);
-								Assert.assertTrue(homePage.testnameontooltip.getText().equals(m.getComponent_title()));
-								for (int i = 0; i < homePage.questionlistontooltip.size(); i++) {
-									Assert.assertTrue(homePage.questionlistontooltip.get(i).getText()
-											.equals(String.valueOf(m.getQuestion_no().get(i))));
-									totalQuestionCount++;
-								}
-								String submittedDateText = homePage.submitteddateontooltip.getText();
-								Assert.assertTrue(new SimpleDateFormat("MM/dd/yyyy").format(m.getMinDate())
-										.equals(submittedDateText.substring(12, 22)));
-								Assert.assertTrue(new SimpleDateFormat("MM/dd/yyyy").format(m.getMaxDate())
-										.equals(submittedDateText.substring(24)));
-								new Actions(Driver.webdriver).moveToElement(homePage.testscoreovertimetext).click()
-										.build().perform();
-								Thread.sleep(1000);
-							}
-						}
-						UtilityMethods.scrollPageDown(Driver.webdriver, 2);
+						PaginationUtility.checkTestScoreDetails(schoolId, classId, standardId);
 					}
 				}
 
@@ -618,42 +485,11 @@ public class UtilityMethods {
 				for (int i = 0; i < homePage.testNamesonPerPage_onlinechart.size(); i++) {
 					new Actions(Driver.webdriver).moveToElement(homePage.testNamesonPerPage_onlinechart.get(i)).build()
 							.perform();
-					testNamesList.add(homePage.testNametooltip_onlinechart.getText());
+					PaginationUtility.testNamesList.add(homePage.testNametooltip_onlinechart.getText());
 					Thread.sleep(500);
 					new Actions(Driver.webdriver).moveToElement(homePage.xaxistexton_linechart).build().perform();
 				}
-				UtilityMethods.scrollPageUp(Driver.webdriver, 3);
-
-				for (int j = 0; j < testNamesList.size(); j++) {
-					lm = DatabaseConnection.getTestScoreDetailsInSPInClassContext(con, schoolId, classId,
-							testNamesList.get(j), standardId);
-					Iterator<Model> iterator = lm.iterator();
-					while (iterator.hasNext()) {
-						TestCount++;
-						Model m = (Model) iterator.next();
-						tsum += m.getAvg_per();
-						Assert.assertTrue(testNamesList.get(j).contains(m.getComponent_title()));
-						Assert.assertTrue(homePage.testScoreValueInCircle_onlinechart.get(j).getText()
-								.equals(String.valueOf(m.getAvg_per())));
-						new Actions(Driver.webdriver).moveToElement(homePage.testScoreValueInCircle_onlinechart.get(j))
-								.click().build().perform();
-						Thread.sleep(2000);
-						Assert.assertTrue(homePage.testnameontooltip.getText().equals(m.getComponent_title()));
-						for (int i = 0; i < homePage.questionlistontooltip.size(); i++) {
-							Assert.assertTrue(homePage.questionlistontooltip.get(i).getText()
-									.equals(String.valueOf(m.getQuestion_no().get(i))));
-							totalQuestionCount++;
-						}
-						String submittedDateText = homePage.submitteddateontooltip.getText();
-						Assert.assertTrue(new SimpleDateFormat("MM/dd/yyyy").format(m.getMinDate())
-								.equals(submittedDateText.substring(12, 22)));
-						Assert.assertTrue(new SimpleDateFormat("MM/dd/yyyy").format(m.getMaxDate())
-								.equals(submittedDateText.substring(24)));
-						new Actions(Driver.webdriver).moveToElement(homePage.testscoreovertimetext).click().build()
-								.perform();
-						Thread.sleep(1000);
-					}
-				}
+				PaginationUtility.checkTestScoreDetails(schoolId, classId, standardId);
 			}
 
 			// ==============================================================================
@@ -663,9 +499,9 @@ public class UtilityMethods {
 			Thread.sleep(1000);
 			Assert.assertTrue(homePage.tooltip.getText().equals(tooltipText));
 			new Actions(Driver.webdriver).moveToElement(homePage.defaultstrandnameinpotchart).click().build().perform();
-			avgPerOnSubHeading = (tsum / TestCount);
-			WebElement avgInfo = Driver.webdriver.findElement(By.xpath("//span[.='Average Score: " + avgPerOnSubHeading
-					+ "% based on " + totalQuestionCount + " questions']"));
+			PaginationUtility.avgPerOnSubHeading = (PaginationUtility.tsum / PaginationUtility.TestCount);
+			WebElement avgInfo = Driver.webdriver.findElement(By.xpath("//span[.='Average Score: " + PaginationUtility.avgPerOnSubHeading
+					+ "% based on " + PaginationUtility.totalQuestionCount + " questions']"));
 			Assert.assertTrue(avgInfo.isDisplayed());
 			Thread.sleep(1000);
 			new Actions(Driver.webdriver).moveToElement(homePage.performanceovrtimeicon).click().build().perform();
@@ -680,7 +516,7 @@ public class UtilityMethods {
 	}
 
 	/**
-	 * This method is used to get student id based on studentname on UI
+	 * This method is used to get student id based on student name on UI
 	 * 
 	 * @return
 	 */
@@ -705,7 +541,7 @@ public class UtilityMethods {
 	}
 	
 	/**
-	 * This method is used to return schoolID and classID based on UI schoolname and class name
+	 * This method is used to return schoolID and classID based on UI school name and class name
 	 * @return
 	 */
 	public static Map<Integer, Integer> getSchoolIdAndClassId() {
@@ -735,5 +571,188 @@ public class UtilityMethods {
 		}
 		return Ids;
 	}
+	
+	/**
+	 * To get school id ,class id and student id called the below code
+	  Integer schoolId=0,classId=0;
 
+			Map<Integer,Integer> ids=UtilityMethods.getSchoolIdAndClassId();
+			for(Map.Entry<Integer,Integer> entry:ids.entrySet()) {
+				schoolId=entry.getKey();
+				classId=entry.getValue();
+			}
+			
+			studentId=UtilityMethods.getStudentId();
+	 */
+	
+	/**
+	 * This method is used to wait till the loading of Student List section
+	 */
+	public static void waitforstudentlistsaction() {
+		HomePage homePage = PageFactory.initElements(Driver.webdriver, HomePage.class);
+		try {
+			Assert.assertTrue(homePage.noofquestionstext.isDisplayed());
+			log.info("Student List Saction is now Displaying");
+			waitforcontextheadersaction();
+			Standard_Overview_Table_Steps.underClassContext=false;
+			Standard_Overview_Table_Steps.performanceMenuClicked=false;
+		} catch (Exception e) {
+			log.info("Waiting for Student List Saction Loading");
+			try {
+				Thread.sleep(2000);
+			} catch (InterruptedException e1) {
+
+			}
+			waitforstudentlistsaction();
+		}
+	}
+	
+	/**
+	 * This method is used to wait till the loading of Performance Over Time Line Chart section
+	 */
+	public static void waitforperformanceovertimesaction() {
+		HomePage homePage = PageFactory.initElements(Driver.webdriver, HomePage.class);
+		try {
+			Assert.assertTrue(homePage.infoicononperformanceovrtimeheader.isDisplayed());
+			log.info("Perfomance Over Time Saction is now Displaying");
+			waitforcontextheadersaction();
+			Standard_Overview_Table_Steps.underStudentContext=false;
+			Standard_Overview_Table_Steps.performanceMenuClicked=false;
+		} catch (Exception e) {
+			log.info("Waiting for Performance Over Time Saction Loading");
+			try {
+				Thread.sleep(2000);
+			} catch (InterruptedException e1) {
+
+			}
+			waitforperformanceovertimesaction();
+		}
+	}
+	
+	/**
+	 * This method is used to wait till the loading of Test Score OverView section
+	 */
+	public static void waitfortestscoreoverviewsaction() {
+		HomePage homePage = PageFactory.initElements(Driver.webdriver, HomePage.class);
+		try {
+			Assert.assertTrue(homePage.testscoreoverviewtext.isDisplayed());
+			log.info("test score overview Saction is now Displaying");
+			waitforcontextheadersaction();
+			Standard_Overview_Table_Steps.underStudentContext=false;
+			Standard_Overview_Table_Steps.testScoreMenuClicked=false;
+		} catch (Exception e) {
+			log.info("Waiting for test score overview  Saction Loading");
+			try {
+				Thread.sleep(2000);
+			} catch (InterruptedException e1) {
+
+			}
+			waitfortestscoreoverviewsaction();
+		}
+	}
+
+	/**
+	 * This method is used to wait till the loading of Test Score Detail section
+	 */
+	public static void waitfortestscoredetailsaction() {
+		HomePage homePage = PageFactory.initElements(Driver.webdriver, HomePage.class);
+		try {
+			Assert.assertTrue(homePage.datesubmittedtext.isDisplayed());
+			log.info("test score detail Saction is now Displaying");
+			waitforcontextheadersaction();
+			Standard_Overview_Table_Steps.underClassContext=false;
+			Standard_Overview_Table_Steps.testScoreMenuClicked=false;
+		} catch (Exception e) {
+			log.info("Waiting for test score detail Saction Loading");
+			try {
+				Thread.sleep(2000);
+			} catch (InterruptedException e1) {
+
+			}
+			waitfortestscoredetailsaction();
+		}
+	}
+	
+	/**
+	 * This method is used to wait till the loading of context header section
+	 */
+	public static void waitforcontextheadersaction() {
+		HomePage homePage = PageFactory.initElements(Driver.webdriver, HomePage.class);
+		String firstData;
+		if (homePage.contextheaderdatalist.get(0).getText().contains("...")) {
+			new Actions(Driver.webdriver).moveToElement(homePage.contextheaderdatalist.get(0)).build().perform();
+			firstData = homePage.contextheadertooltiplist.get(0).getText();
+		} else {
+			firstData = homePage.contextheaderdatalist.get(0).getText();
+		}
+		if (firstData.equals("")) {
+			log.info("Web Elements are still loading...");
+			try {
+				Thread.sleep(2000);
+				waitforcontextheadersaction();
+			} catch (InterruptedException e1) {
+			}
+
+		} else {
+			log.info("Context Header Saction is now clickable");
+			new Actions(Driver.webdriver).moveToElement(homePage.overviewtext).build().perform();
+		}
+	}
+	
+	/**
+	 * This method is used to wait for the loading of left and/or right section of content once you comes from visiting any page context and page menu
+	 */
+	public static void waitforpageload() {
+		log.info("underStudentContext:"+Standard_Overview_Table_Steps.underStudentContext);
+		log.info("underClassContext:"+Standard_Overview_Table_Steps.underClassContext);
+		log.info("performanceMenuClicked:"+Standard_Overview_Table_Steps.performanceMenuClicked);
+		log.info("testScoreMenuClicked:"+Standard_Overview_Table_Steps.testScoreMenuClicked);
+		if (Standard_Overview_Table_Steps.underStudentContext) {
+			try {
+				Thread.sleep(3000);
+			} catch (InterruptedException e) {
+
+			}
+			if (Standard_Overview_Table_Steps.performanceMenuClicked) {
+				waitforperformanceovertimesaction();
+			} else {
+				waitfortestscoreoverviewsaction();
+			}
+		} else if (Standard_Overview_Table_Steps.underClassContext) {
+			if (Standard_Overview_Table_Steps.performanceMenuClicked) {
+				waitforstudentlistsaction();
+			} else {
+				waitfortestscoredetailsaction();
+			}
+		}
+	}
+	
+	/**
+	 * This method is used to verify the Date List is in Descending order
+	 * @param a
+	 * @return
+	 */
+	public static boolean isDatesSortedInDecendingOrder(List<Date> a) {
+		for (int i = 0; i < a.size() - 1; i++) {
+			if (a.get(i).getTime() >= a.get(i + 1).getTime()) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+	
+	/**
+	 * This method is used to verify the Date List is in Ascending order
+	 * @param a
+	 * @return
+	 */
+	public static boolean isDatesSortedInAscendingOrder(List<Date> a) {
+		for (int i = 0; i < a.size() - 1; i++) {
+			if (a.get(i).getTime() <= a.get(i + 1).getTime()) {
+				return true;
+			}
+		}
+		return false;
+	}
 }

@@ -74,8 +74,7 @@ public class FlyInMenuBehaviourSteps {
 			select.selectByVisibleText(usertype);
 			Thread.sleep(2000);
 			homePage.loginbtn.click();
-			//Thread.sleep(5000);
-			IWait.explicit_wait(Driver.webdriver, homePage.overviewtext);					
+			IWait.waitForLoad(Driver.webdriver);	
 			Assert.assertTrue("User is on SSO portal's home screen", homePage.overviewtext.isDisplayed());
 		} catch (Exception e) {
 			UtilityMethods.processException(e);
@@ -110,6 +109,7 @@ public class FlyInMenuBehaviourSteps {
 			Thread.sleep(1000);
 			Assert.assertTrue(homePage.openarrow.isDisplayed());
 			CBTConfiguration.score = "pass";
+			Standard_Overview_Table_Steps.resetStatus();
 		} catch (Exception e) {
 			UtilityMethods.processException(e);
 		}
@@ -143,14 +143,15 @@ public class FlyInMenuBehaviourSteps {
 	public void user_should_be_able_to_select_school_and_Class_and_student_as_and_apply_and_verify_with_context_header_information(String studentType) throws Throwable {
 		try {
 			String selectedSchool,selectedClass,selectedStudent;
-			String classNameonCH,studentTextonCH;
 			// selecting school from dropdown
 			UtilityMethods.scrollPageDown(Driver.webdriver,3);
 			homePage.schooldropdownbtn.click();
 			Thread.sleep(1000);
-			int randomSchoolIndex=UtilityMethods.generateRandomNumberBySkippingIndex(homePage.schoollist.size(), 0);
-			selectedSchool=homePage.schoollist.get(randomSchoolIndex).getText();
-			homePage.schoollist.get(randomSchoolIndex).click();			
+			int randomIndex=UtilityMethods.generateRandomNumberBySkippingIndex(homePage.schoollist.size(), 0);
+			UtilityMethods.scroll_Div(homePage.schoollist.get(randomIndex), 20);
+			Thread.sleep(1000);
+			selectedSchool=homePage.schoollist.get(randomIndex).getText();
+			homePage.schoollist.get(randomIndex).click();			
 			log.info("Selected School is:" +selectedSchool );
 
 			int count = 1;
@@ -169,8 +170,12 @@ public class FlyInMenuBehaviourSteps {
 			// selecting class from dropdown
 			homePage.classdropdownbtn.click();
 			Thread.sleep(1000);
-			selectedClass=homePage.classlist.get(0).getText();
-			homePage.classlist.get(0).click();
+			randomIndex=UtilityMethods.generateRandomNumberBySkippingIndex(homePage.classlist.size(), 0);
+			UtilityMethods.scroll_Div(homePage.classlist.get(randomIndex), 20);
+			Thread.sleep(1000);
+			selectedClass=homePage.classlist.get(randomIndex).getText();
+			homePage.classlist.get(randomIndex).click();
+			Thread.sleep(1000);
 			log.info("Selected Class is:" + selectedClass);
 
 			try {
@@ -188,25 +193,28 @@ public class FlyInMenuBehaviourSteps {
 			Thread.sleep(1000);
 			int customSize=0;
 			//This is to unselect all student from dropdown,as default is all selected
-			homePage.studentalllist.get(0).click();
+			homePage.studentdropdownallcheckbox.click();
 			Thread.sleep(1000);
 			UtilityMethods.scrollPageDown(Driver.webdriver,5);
 			switch (studentType) {
 			case "single":
-				homePage.studentalllist.get(2).click();
+				homePage.studentlistondropdown.get(2).click();
+				Standard_Overview_Table_Steps.underStudentContext=true;
 				break;
 			case "multiple":
-				for (int i = 1; i < homePage.studentalllist.size(); i=i+2) {
-					if(homePage.studentalllist.get(i).getText().equals("")) {
-						UtilityMethods.scroll_Div(homePage.studentalllist.get(i), 20);
+				for (int i = 1; i < homePage.studentlistondropdown.size(); i=i+2) {
+					if(homePage.studentlistondropdown.get(i).getText().equals("")) {
+						UtilityMethods.scroll_Div(homePage.studentlistondropdown.get(i), 20);
 					}
-					homePage.studentalllist.get(i).click();
+					homePage.studentlistondropdown.get(i).click();
 					Thread.sleep(1000);
 					customSize++;
 				}
+				Standard_Overview_Table_Steps.underClassContext=true;
 				break;
 			default:
-				homePage.studentalllist.get(0).click();
+				homePage.studentdropdownallcheckbox.click();
+				Standard_Overview_Table_Steps.underClassContext=true;
 				break;
 			}
 			Thread.sleep(1000);
@@ -216,14 +224,17 @@ public class FlyInMenuBehaviourSteps {
 			homePage.rosterapplybtn.click();
 			Thread.sleep(3000);
 			UtilityMethods.scrollPageUp(Driver.webdriver);
-			Thread.sleep(2000);
+			UtilityMethods.waitforcontextheadersaction();
 			/**
 			 * verifying class and school and student on context menu by comparing dropdown
 			 * text and context menu values
 			 */
 
-			/*homePage.tripledotsoncontextheader.click();
+			/*
+			  homePage.tripledotsoncontextheader.click();
 			Thread.sleep(1500);
+			*/
+			String classNameonCH,studentTextonCH,schoolNameonCH;
 			
 			if (homePage.schoolnameoncontextheader.getText().contains("...")) {
 				new Actions(Driver.webdriver).moveToElement(homePage.schoolnameoncontextheader).build().perform();
@@ -232,8 +243,9 @@ public class FlyInMenuBehaviourSteps {
 			} else {
 				schoolNameonCH = homePage.schoolnameoncontextheader.getText();
 			}
+			log.info("School name on CH:"+schoolNameonCH);
 			Assert.assertTrue(selectedSchool.equals(schoolNameonCH));			
-			*/
+			
 
 			if (homePage.classnameoncontextheader.getText().contains("...")) {
 				new Actions(Driver.webdriver).moveToElement(homePage.classnameoncontextheader).build().perform();
@@ -243,7 +255,7 @@ public class FlyInMenuBehaviourSteps {
 			else {
 				classNameonCH = homePage.classnameoncontextheader.getText();
 			}
-
+			log.info("class name on CH:"+classNameonCH);
 			Assert.assertTrue(selectedClass.equals(classNameonCH));
 
 			switch (studentType) {
@@ -256,7 +268,7 @@ public class FlyInMenuBehaviourSteps {
 				} else {
 					studentTextonCH = homePage.studentnameoncontextheader.getText();
 				}
-
+				log.info("Student name on CH:"+studentTextonCH);
 				Assert.assertTrue(studentTextonCH.contains(selectedStudent));
 				Assert.assertTrue(homePage.activestudentmenu.isDisplayed());
 				break;
@@ -269,6 +281,7 @@ public class FlyInMenuBehaviourSteps {
 				} else {
 					studentTextonCH = homePage.studentnameoncontextheader.getText();
 				}
+				log.info("Student name on CH:"+studentTextonCH);
 				Assert.assertTrue(studentTextonCH.equals("Custom ("+customSize+")"));
 				Assert.assertTrue(homePage.activeclassmenu.isDisplayed());
 				break;
@@ -309,11 +322,11 @@ public class FlyInMenuBehaviourSteps {
 	@When("^User Click on Test tab within the Universal Selector Tab$")
 	public void user_Click_on_Test_tab_within_the_Universal_Selector_Tab() throws Throwable {
 		try {
-			IWait.explicit_wait(Driver.webdriver,homePage.testtab);
+			UtilityMethods.waitforcontextheadersaction();
 			homePage.testtab.click();
 			IWait.explicit_wait(Driver.webdriver, homePage.searchbarontesttab);
 			Verify.verify(homePage.searchbarontesttab.isDisplayed());
-			Thread.sleep(500);
+			Thread.sleep(1000);
 		} catch (Exception e) {
 			UtilityMethods.processException(e);
 		}
@@ -335,11 +348,10 @@ public class FlyInMenuBehaviourSteps {
 			randomNumber = (int) (Math.random() * testCheckBoxListSize);
 			switch (testType) {
 			case "single":
-				UtilityMethods.scrollPageDown(Driver.webdriver, randomNumber+1);
-				selectedTestName=homePage.testnameslist.get(randomNumber).getText();
+				UtilityMethods.scroll_Div(homePage.testnameslist.get(randomNumber), 20);
 				Thread.sleep(1000);
+				selectedTestName=homePage.testnameslist.get(randomNumber).getText();
 				homePage.testscheckboxlist.get(randomNumber).click();
-				//new Actions(Driver.webdriver).moveToElement(homePage.testscheckboxlist.get(randomNumber)).click().build().perform();
 				Thread.sleep(1000);
 				UtilityMethods.scrollPageDown(Driver.webdriver);
 				Thread.sleep(1000);
@@ -347,8 +359,10 @@ public class FlyInMenuBehaviourSteps {
 				Thread.sleep(1000);
 				new Actions(Driver.webdriver).moveToElement(homePage.testapplybtn).click().build().perform();
 				Thread.sleep(3000);
-				UtilityMethods.scrollPageUp(Driver.webdriver);
-				Thread.sleep(2000);
+				Standard_Overview_Table_Steps.underStudentContext=true;
+				Standard_Overview_Table_Steps.performanceMenuClicked=true;
+				UtilityMethods.scrollPageUp(Driver.webdriver);				
+				UtilityMethods.waitforpageload();
 				new Actions(Driver.webdriver).moveToElement(homePage.nooftestoncontextheader).build().perform();
 				Assert.assertTrue(selectedTestName.equals(homePage.tooltipoftestnameoncontextheader.getText()));
 				break;
@@ -362,8 +376,10 @@ public class FlyInMenuBehaviourSteps {
 				}
 				homePage.testapplybtn.click();
 				Thread.sleep(3000);
+				Standard_Overview_Table_Steps.underClassContext=true;
+				Standard_Overview_Table_Steps.performanceMenuClicked=true;
 				UtilityMethods.scrollPageUp(Driver.webdriver);
-				Thread.sleep(2000);
+				UtilityMethods.waitforpageload();
 				Assert.assertTrue(homePage.nooftestoncontextheader.getText().equals("Custom ("+noOfSelectedTest+")"));
 				break;
 			}
@@ -489,7 +505,7 @@ public class FlyInMenuBehaviourSteps {
 		try {
 			// Verifying for tooltiptext
 			Assert.assertTrue(toolTipText.equals(toolTip));
-			System.out.println(tabName+" shows tooltip "+toolTip);
+			log.info(tabName+" shows tooltip "+toolTip);
 			CBTConfiguration.score = "pass";
 		} catch (Exception e) {
 			UtilityMethods.processException(e);

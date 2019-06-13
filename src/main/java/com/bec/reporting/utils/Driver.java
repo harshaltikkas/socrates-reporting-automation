@@ -66,7 +66,7 @@ public class Driver {
 	/**
 	 * This method close the all running instance of browser
 	 */
-	private static class BrowserCleanup implements Runnable {
+	public static class BrowserCleanup implements Runnable {
 		public void run() {
 			log.info("Cleaning up the browser");
 			try {
@@ -279,13 +279,21 @@ public class Driver {
 			TakesScreenshot ts = (TakesScreenshot) Driver.webdriver;
 			File sourcePath = ts.getScreenshotAs(OutputType.FILE);
 			File destinationPath;
-			if(os.equalsIgnoreCase("linux")) {
+			/*if(os.equalsIgnoreCase("linux")) {
 				destinationPath= new File(System.getProperty("user.dir") + "/target/cucumber-reports/extent_report/screenshots/"
 						+ screenshotName + "_" + ExtentCucumberFormatter.exeDateTime + ".png");
 			}
 			else {
 				destinationPath= new File(System.getProperty("user.dir") + "\\target\\cucumber-reports\\extent_report\\screenshots\\"
 						+ screenshotName + "_" + ExtentCucumberFormatter.exeDateTime + ".png");
+			}*/
+			if(os.equalsIgnoreCase("linux")) {
+				destinationPath= new File(System.getProperty("user.dir") + "/target/cucumber-reports/extent_report/screenshots/"
+						+ screenshotName +  ".png");
+			}
+			else {
+				destinationPath= new File(System.getProperty("user.dir") + "\\target\\cucumber-reports\\extent_report\\screenshots\\"
+						+ screenshotName + ".png");
 			}
 			FileUtils.copyFile(sourcePath, destinationPath);
 			Reporter.addScreenCaptureFromPath(destinationPath.toString());

@@ -11,10 +11,10 @@ Feature: Test Tab Design and Behaviour
   @Scenario19 @TC39
   Scenario: Verifying the state of the checkbox when deselected the option/test
     Given User is on portal's login screen with username as "superadmin" and password as "password" and usertype as "techsupport"
+		#When User Click on Standard Performance tab within the Class Context
     When User Click on Test tab within the Universal Selector Tab
     Then verify checkbox state as deselected while unchecked on checkbox.
 
-  #Class attribute value of headers are not same so test script will failing.
   @Scenario20 @TC42
   Scenario Outline: Check the position and specification of the object/elements within the test tab test list.
     Given User is on portal's login screen with username as "superadmin" and password as "password" and usertype as "techsupport"
@@ -25,8 +25,8 @@ Feature: Test Tab Design and Behaviour
       | elements          | tooltiptext                      |
       | Name              | Test Name                        |
       | Number of Results | Number of Test Results Available |
-      | Earliest Date     | Earliest Submission Date         |
-      | Latest Date       | Latest Submission Date           |
+      | Earliest Date     | Earliest Submission date         |
+      | Latest Date       | Latest Submission date           |
 
   ##story 2e)
   @Scenario21 @TC43
@@ -41,14 +41,13 @@ Feature: Test Tab Design and Behaviour
   #4)Results down arrow: 10-1
   #5)Date up arrows: oldest to newest
   #6)Date down arrows: newest to oldest
-  # failing because the earliest date list not in descending order.
+  
   @Scenario28 @TC39
   Scenario: Check whether the earliest date is displaying in descending by defaultly
     Given User is on portal's login screen with username as "superadmin" and password as "password" and usertype as "techsupport"
     When User Click on Test tab within the Universal Selector Tab
     Then verify earliest date is dispalying in descending order
 
-  #TC57 is not implemented yet , UI is not as per the requirement.once done, will add code for TC57.
   ##story 2d)
   @Scenario29 @TC_0051 @TC_0052 @TC_0053 @TC_0055 @TC_0057
   Scenario: Verify the search bar not scrollable and has the 'X' to cancel searched option and search icon to search the option within test tab

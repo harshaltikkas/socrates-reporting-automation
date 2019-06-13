@@ -5,14 +5,14 @@ Feature: Pagination of Dropdown List
   @Scenario14 @TC22 @TC24 @TC26 @TC38 @TC41
   Scenario Outline: verifying list size and paginator features of Roster tab
     Given User is on portal's login screen with username as "superadmin" and password as "password" and usertype as "techsupport"
-    When user clicks on Roster tab and clicks on "<rostertabdropdownlist>" dropdown list,list items are more than 30
+    When user clicks on Roster tab and clicks on "<rostertabdropdownlist>" dropdown list,list items are more than 20
     Then Paginator will be displayed beneath the list if "<rostertabdropdownlist>" returns more than "<itemssizeperpage>" items and arrows will appear in both side of circle in paginator
 
     Examples: 
       | rostertabdropdownlist | itemssizeperpage |
-      | School                |               10 |
-      | Class                 |               10 |
-      | Student               |               10 |
+      | School                |               20 |
+      | Class                 |               20 |
+      | Student               |               20 |
 
   @Scenario15 @TC23 @TC25 @TC27
   Scenario: verifying list size and paginator features of Test tab
@@ -28,6 +28,6 @@ Feature: Pagination of Dropdown List
 
     Examples: 
       | rostertabdropdownlist | itemssize |
-      | School                |        10 |
-      | Class                 |        10 |
-      | Student               |        10 |
+      | School                |        20 |
+      | Class                 |        20 |
+      | Student               |        20 |

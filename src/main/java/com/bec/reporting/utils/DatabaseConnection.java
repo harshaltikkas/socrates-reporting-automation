@@ -37,13 +37,10 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 import java.util.TreeMap;
-
-import com.bec.reporting.steps.PaginationOfDropDownListSteps;
 import com.google.common.base.Verify;
 import com.jayway.restassured.RestAssured;
 import com.jayway.restassured.path.json.JsonPath;
 import com.jayway.restassured.response.Response;
-
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -51,6 +48,9 @@ public class DatabaseConnection {
 	public static Properties prop;
 	public static Map<String,Integer> schoolAvgRange=new HashMap<>();
 	public static Map<String,Integer> districtAvgRange=new HashMap<>();
+	public static Connection conn=ConnectionPool.getDBConnection();
+	public static String token=DatabaseConnection.getToken();
+	
 	/*
 	 * API Methods Here
 	 */
@@ -100,7 +100,6 @@ public class DatabaseConnection {
 				districtId=rs.getInt(1);
 			}
 		} catch (Exception e) {
-			log.error(e.getMessage());
 			UtilityMethods.processException(e);
 		}
 		return districtId;
@@ -118,7 +117,7 @@ public class DatabaseConnection {
 			prop = FileRead.readProperties();
 			String apiUrl = prop.getProperty("apiURL") + "/schools?page=0&size=10000&direction=ASC";
 			Response response = RestAssured.given()
-					.header("Authorization", "Bearer " + PaginationOfDropDownListSteps.token).get(apiUrl);
+					.header("Authorization", "Bearer " + DatabaseConnection.token).get(apiUrl);
 			if (response.getStatusCode() != 200) {
 				log.info("Error occurred. status code : " + response.getStatusCode());
 				return null;
@@ -147,7 +146,7 @@ public class DatabaseConnection {
 			prop = FileRead.readProperties();
 			String apiUrl = prop.getProperty("apiURL") + "/schools?page=0&size=10000&direction=ASC";
 			Response response = RestAssured.given()
-					.header("Authorization", "Bearer " + PaginationOfDropDownListSteps.token).get(apiUrl);
+					.header("Authorization", "Bearer " + DatabaseConnection.token).get(apiUrl);
 			if (response.getStatusCode() != 200) {
 				log.info("Error occurred. status code : " + response.getStatusCode());
 				return null;
@@ -176,9 +175,9 @@ public class DatabaseConnection {
 		try {
 			prop = FileRead.readProperties();
 			String apiUrl = prop.getProperty("apiURL") + "/classes?schoolId=" + schoolId
-					+ "&districtId=" + getDistrictIdBySchoolId(PaginationOfDropDownListSteps.conn, schoolId);
+					+ "&districtId=" + getDistrictIdBySchoolId(DatabaseConnection.conn, schoolId);
 			Response response = RestAssured.given()
-					.header("Authorization", "Bearer " + PaginationOfDropDownListSteps.token).get(apiUrl);
+					.header("Authorization", "Bearer " + DatabaseConnection.token).get(apiUrl);
 			if (response.getStatusCode() != 200) {
 				log.info("Error occurred. status code : " + response.getStatusCode());
 				return null;
@@ -217,10 +216,9 @@ public class DatabaseConnection {
 	 * 
 	 * @return
 	 */
-	public static String getFirstAlphaClassNameBySchoolName(String schoolName) {
+	public static String getFirstAlphaClassNameBySchoolName(Integer schoolId) {
 		String className = "";
 		try {
-			int schoolId=getSchoolIDBySchoolName(schoolName);
 			className = getAllClassesNamesBySchoolName(schoolId).keySet().stream().findFirst().get();
 		} catch (Exception e) {
 			log.error(e.getMessage());
@@ -241,10 +239,10 @@ public class DatabaseConnection {
 		Map<String, Integer> studentMap = new TreeMap<String, Integer>();
 		try {
 			prop = FileRead.readProperties();
-			String apiUrl = prop.getProperty("apiURL") + "/students?schoolId=" + schoolId + "&districtId=" + getDistrictIdBySchoolId(PaginationOfDropDownListSteps.conn, schoolId)
+			String apiUrl = prop.getProperty("apiURL") + "/students?schoolId=" + schoolId + "&districtId=" + getDistrictIdBySchoolId(DatabaseConnection.conn, schoolId)
 					+ "&classId=" + classId;
 			Response response = RestAssured.given()
-					.header("Authorization", "Bearer " + PaginationOfDropDownListSteps.token).get(apiUrl);
+					.header("Authorization", "Bearer " + DatabaseConnection.token).get(apiUrl);
 			if (response.getStatusCode() != 200) {
 				log.info("Error occurred. status code : " + response.getStatusCode());
 				return null;
@@ -274,9 +272,9 @@ public class DatabaseConnection {
 		try {
 			prop = FileRead.readProperties();
 			String apiUrl = prop.getProperty("apiURL") + "/classes?schoolId=" +schoolId
-					+ "&districtId=" + getDistrictIdBySchoolId(PaginationOfDropDownListSteps.conn, schoolId);
+					+ "&districtId=" + getDistrictIdBySchoolId(DatabaseConnection.conn, schoolId);
 			Response response = RestAssured.given()
-					.header("Authorization", "Bearer " + PaginationOfDropDownListSteps.token).get(apiUrl);
+					.header("Authorization", "Bearer " + DatabaseConnection.token).get(apiUrl);
 			if (response.getStatusCode() != 200) {
 				log.info("Error occurred. status code : " + response.getStatusCode());
 				return null;
@@ -307,10 +305,10 @@ public class DatabaseConnection {
 			String className = getAllClassesNamesBySchoolName(schoolId).keySet().stream().findFirst().get();
 			int classId = getClassIDBySchoolIdAndClassName(schoolId, className);
 			prop = FileRead.readProperties();
-			String apiUrl = prop.getProperty("apiURL") + "/students?schoolId=" + schoolId + "&districtId=" + getDistrictIdBySchoolId(PaginationOfDropDownListSteps.conn, schoolId)
+			String apiUrl = prop.getProperty("apiURL") + "/students?schoolId=" + schoolId + "&districtId=" + getDistrictIdBySchoolId(DatabaseConnection.conn, schoolId)
 					+ "&classId=" + classId;
 			Response response = RestAssured.given()
-					.header("Authorization", "Bearer " + PaginationOfDropDownListSteps.token).get(apiUrl);
+					.header("Authorization", "Bearer " + DatabaseConnection.token).get(apiUrl);
 			if (response.getStatusCode() != 200) {
 				log.info("Error occurred. status code : " + response.getStatusCode());
 				return null;
@@ -339,10 +337,10 @@ public class DatabaseConnection {
 		String studentName = "";
 		try {
 			prop = FileRead.readProperties();
-			String apiUrl = prop.getProperty("apiURL") + "/students?schoolId=" + schoolId + "&districtId=" + getDistrictIdBySchoolId(PaginationOfDropDownListSteps.conn, schoolId)
+			String apiUrl = prop.getProperty("apiURL") + "/students?schoolId=" + schoolId + "&districtId=" + getDistrictIdBySchoolId(DatabaseConnection.conn, schoolId)
 					+ "&classId=" + classId;
 			Response response = RestAssured.given()
-					.header("Authorization", "Bearer " + PaginationOfDropDownListSteps.token).get(apiUrl);
+					.header("Authorization", "Bearer " + DatabaseConnection.token).get(apiUrl);
 			if (response.getStatusCode() != 200) {
 				log.info("Error occurred. status code : " + response.getStatusCode());
 				return null;
@@ -385,7 +383,7 @@ public class DatabaseConnection {
 		// 509446, 1213286, "Grade 4 Unit 1 Assessment", "CCSS.ELA-Literacy.L.4.2"));
 		/*System.out.println(getStudentDetailListInSPInClassByStrand(ConnectionPool.getDBConnection(),
 				509446, 1213286, "Language"));*/
-		System.out.println(getSchoolAvgInTSInClass(PaginationOfDropDownListSteps.conn, 1130544, "Grade 2 Unit 3 Assessment"));
+		System.out.println(getSchoolAvgInTSInClass(DatabaseConnection.conn, 1130544, "Grade 2 Unit 3 Assessment"));
 	}
 
 	/**************** Db Methods are here **********************/
@@ -457,7 +455,6 @@ public class DatabaseConnection {
 			}
 		} catch (Exception e) {
 			log.error(e.getMessage());
-			System.out.println(e.getMessage());
 		}
 		return list;
 	}
@@ -500,7 +497,6 @@ public class DatabaseConnection {
 			}
 		} catch (Exception e) {
 			log.error(e.getMessage());
-			System.out.println(e.getMessage());
 		}
 		return list;
 	}
@@ -611,7 +607,7 @@ public class DatabaseConnection {
 		try {
 			Statement stmt = con.createStatement();
 			ResultSet rs = null;
-			int districtId=getDistrictIdBySchoolId(PaginationOfDropDownListSteps.conn, schoolId);
+			int districtId=getDistrictIdBySchoolId(DatabaseConnection.conn, schoolId);
 			String str = "SELECT ROUND((SUM(score)/SUM(max_score))*100) AS strand_Avg FROM (SELECT "
 					+ "bu_district_id,bu_school_id,collective_noun_id,student_id,component_code,component_title,identifier,"
 					+ "max(cast(updated_at as datetime)) as updated_at,max(max_score) max_score,score,"
@@ -656,7 +652,7 @@ public class DatabaseConnection {
 			String str = "SELECT * from (SELECT bu_district_id,bu_school_id,collective_noun_id,student_id,component_code,component_title,test_score,"
 					+ "updated_at,max_score,identifier,dense_rank() OVER (PARTITION BY student_id,component_code,identifier ORDER BY response_identifier DESC) rnk,"
 					+ "dense_rank() OVER (PARTITION BY bu_district_id,bu_school_id,collective_noun_id,student_id,component_code,component_title,identifier ORDER BY CAST(updated_at AS datetime) DESC) rnk_latest_dt "
-					+ "FROM bec_edw_dev.bu_assessment_reporting_detail WHERE bu_district_id = " + getDistrictIdBySchoolId(PaginationOfDropDownListSteps.conn, schoolId)
+					+ "FROM bec_edw_dev.bu_assessment_reporting_detail WHERE bu_district_id = " + getDistrictIdBySchoolId(DatabaseConnection.conn, schoolId)
 					+ " AND bu_school_id = " + schoolId + " AND collective_noun_id = " + classId + " AND student_id = "
 					+ studentId + ") X " + "where rnk = 1 AND rnk_latest_dt = 1 AND component_title='" + componentTitle
 					+ "' ORDER BY updated_at,identifier";
@@ -701,7 +697,7 @@ public class DatabaseConnection {
 				String str = "SELECT * from (SELECT bu_district_id,bu_school_id,collective_noun_id,student_id,component_code,component_title,test_score,"
 						+ "updated_at,max_score,identifier,dense_rank() OVER (PARTITION BY student_id,component_code,identifier ORDER BY response_identifier DESC) rnk,"
 						+ "dense_rank() OVER (PARTITION BY bu_district_id,bu_school_id,collective_noun_id,student_id,component_code,component_title,identifier ORDER BY CAST(updated_at AS datetime) DESC) rnk_latest_dt "
-						+ "FROM bec_edw_dev.bu_assessment_reporting_detail WHERE bu_district_id = " + getDistrictIdBySchoolId(PaginationOfDropDownListSteps.conn, schoolId)
+						+ "FROM bec_edw_dev.bu_assessment_reporting_detail WHERE bu_district_id = " + getDistrictIdBySchoolId(DatabaseConnection.conn, schoolId)
 						+ " AND bu_school_id = " + schoolId + " AND collective_noun_id = " + classId
 						+ " AND student_id = " + studentId + ") X "
 						+ "where rnk = 1 AND rnk_latest_dt = 1 AND component_title='" + componentTitle
@@ -763,7 +759,7 @@ public class DatabaseConnection {
 				String str = "SELECT * from (SELECT bu_district_id,bu_school_id,collective_noun_id,student_id,component_code,component_title,test_score,"
 						+ "updated_at,max_score,identifier,dense_rank() OVER (PARTITION BY student_id,component_code,identifier ORDER BY response_identifier DESC) rnk,"
 						+ "dense_rank() OVER (PARTITION BY bu_district_id,bu_school_id,collective_noun_id,student_id,component_code,component_title,identifier ORDER BY CAST(updated_at AS datetime) DESC) rnk_latest_dt "
-						+ "FROM bec_edw_dev.bu_assessment_reporting_detail WHERE bu_district_id = " + getDistrictIdBySchoolId(PaginationOfDropDownListSteps.conn, schoolId)
+						+ "FROM bec_edw_dev.bu_assessment_reporting_detail WHERE bu_district_id = " + getDistrictIdBySchoolId(DatabaseConnection.conn, schoolId)
 						+ " AND bu_school_id = " + schoolId + " AND collective_noun_id = " + classId
 						+ " AND student_id = " + studentId + ") X "
 						+ "where rnk = 1 AND rnk_latest_dt = 1 AND component_title='" + componentTitle
@@ -784,7 +780,7 @@ public class DatabaseConnection {
 			String str = "SELECT * from (SELECT bu_district_id,bu_school_id,collective_noun_id,student_id,component_code,component_title,test_score,"
 					+ "updated_at,max_score,identifier,dense_rank() OVER (PARTITION BY student_id,component_code,identifier ORDER BY response_identifier DESC) rnk,"
 					+ "dense_rank() OVER (PARTITION BY bu_district_id,bu_school_id,collective_noun_id,student_id,component_code,component_title,identifier ORDER BY CAST(updated_at AS datetime) DESC) rnk_latest_dt "
-					+ "FROM bec_edw_dev.bu_assessment_reporting_detail WHERE bu_district_id = " + getDistrictIdBySchoolId(PaginationOfDropDownListSteps.conn, schoolId)
+					+ "FROM bec_edw_dev.bu_assessment_reporting_detail WHERE bu_district_id = " + getDistrictIdBySchoolId(DatabaseConnection.conn, schoolId)
 					+ " AND bu_school_id = " + schoolId + " AND collective_noun_id = " + classId + ") X "
 					+ "where rnk = 1 AND rnk_latest_dt = 1 AND component_title='" + componentTitle
 					+ "' ORDER BY updated_at,identifier";

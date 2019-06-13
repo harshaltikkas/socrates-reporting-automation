@@ -54,7 +54,6 @@ public class Hooks {
 			 * Initializing DB details and required Data from DB and API
 			 */
 			/**/
-
 			log.info(
 					"***********************************************************************************************************");
 			String browser;
