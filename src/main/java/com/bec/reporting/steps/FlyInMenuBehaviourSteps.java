@@ -70,11 +70,14 @@ public class FlyInMenuBehaviourSteps {
 			homePage.username.sendKeys(username);
 			homePage.password.clear();
 			homePage.password.sendKeys(password);
+			try {
 			Select select=new Select(homePage.usertypedropdown);
 			select.selectByVisibleText(usertype);
-			Thread.sleep(2000);
+			Thread.sleep(1000);
+			}catch(Exception e) {}
 			homePage.loginbtn.click();
-			IWait.waitForLoad(Driver.webdriver);	
+			Thread.sleep(15000);
+			//UtilityMethods.wait_For_Default_Content_Load();
 			Assert.assertTrue("User is on SSO portal's home screen", homePage.overviewtext.isDisplayed());
 		} catch (Exception e) {
 			UtilityMethods.processException(e);
@@ -224,28 +227,12 @@ public class FlyInMenuBehaviourSteps {
 			homePage.rosterapplybtn.click();
 			Thread.sleep(3000);
 			UtilityMethods.scrollPageUp(Driver.webdriver);
-			UtilityMethods.waitforcontextheadersaction();
+			UtilityMethods.wait_For_Context_Header_Section();
 			/**
 			 * verifying class and school and student on context menu by comparing dropdown
 			 * text and context menu values
 			 */
-
-			/*
-			  homePage.tripledotsoncontextheader.click();
-			Thread.sleep(1500);
-			*/
 			String classNameonCH,studentTextonCH,schoolNameonCH;
-			
-			if (homePage.schoolnameoncontextheader.getText().contains("...")) {
-				new Actions(Driver.webdriver).moveToElement(homePage.schoolnameoncontextheader).build().perform();
-				schoolNameonCH = homePage.tooltipofschoolnameoncontextheader.getText();
-				new Actions(Driver.webdriver).moveToElement(homePage.overviewtext).build().perform();
-			} else {
-				schoolNameonCH = homePage.schoolnameoncontextheader.getText();
-			}
-			log.info("School name on CH:"+schoolNameonCH);
-			Assert.assertTrue(selectedSchool.equals(schoolNameonCH));			
-			
 
 			if (homePage.classnameoncontextheader.getText().contains("...")) {
 				new Actions(Driver.webdriver).moveToElement(homePage.classnameoncontextheader).build().perform();
@@ -257,7 +244,21 @@ public class FlyInMenuBehaviourSteps {
 			}
 			log.info("class name on CH:"+classNameonCH);
 			Assert.assertTrue(selectedClass.equals(classNameonCH));
-
+			
+			homePage.tripledotsoncontextheader.click();
+			Thread.sleep(1000);
+			
+			if (homePage.schoolnameoncontextheader.getText().contains("...")) {
+				new Actions(Driver.webdriver).moveToElement(homePage.schoolnameoncontextheader).build().perform();
+				schoolNameonCH = homePage.tooltipofschoolnameoncontextheader.getText();
+				new Actions(Driver.webdriver).moveToElement(homePage.overviewtext).build().perform();
+			} else {
+				schoolNameonCH = homePage.schoolnameoncontextheader.getText();
+			}
+			log.info("School name on CH:"+schoolNameonCH);
+			new Actions(Driver.webdriver).moveToElement(homePage.overviewtext).click().build().perform();
+			Assert.assertTrue(selectedSchool.equals(schoolNameonCH));			
+			
 			switch (studentType) {
 			
 			case "single":
@@ -322,7 +323,7 @@ public class FlyInMenuBehaviourSteps {
 	@When("^User Click on Test tab within the Universal Selector Tab$")
 	public void user_Click_on_Test_tab_within_the_Universal_Selector_Tab() throws Throwable {
 		try {
-			UtilityMethods.waitforcontextheadersaction();
+			UtilityMethods.wait_For_Context_Header_Section();
 			homePage.testtab.click();
 			IWait.explicit_wait(Driver.webdriver, homePage.searchbarontesttab);
 			Verify.verify(homePage.searchbarontesttab.isDisplayed());
@@ -362,8 +363,8 @@ public class FlyInMenuBehaviourSteps {
 				Standard_Overview_Table_Steps.underStudentContext=true;
 				Standard_Overview_Table_Steps.performanceMenuClicked=true;
 				UtilityMethods.scrollPageUp(Driver.webdriver);				
-				UtilityMethods.waitforpageload();
-				new Actions(Driver.webdriver).moveToElement(homePage.nooftestoncontextheader).build().perform();
+				UtilityMethods.wait_For_Page_Section_Load();
+				new Actions(Driver.webdriver).moveToElement(homePage.testsNameoncontextheader).build().perform();
 				Assert.assertTrue(selectedTestName.equals(homePage.tooltipoftestnameoncontextheader.getText()));
 				break;
 			case "multiple":
@@ -379,8 +380,8 @@ public class FlyInMenuBehaviourSteps {
 				Standard_Overview_Table_Steps.underClassContext=true;
 				Standard_Overview_Table_Steps.performanceMenuClicked=true;
 				UtilityMethods.scrollPageUp(Driver.webdriver);
-				UtilityMethods.waitforpageload();
-				Assert.assertTrue(homePage.nooftestoncontextheader.getText().equals("Custom ("+noOfSelectedTest+")"));
+				UtilityMethods.wait_For_Page_Section_Load();
+				Assert.assertTrue(homePage.testsNameoncontextheader.getText().equals("Custom ("+noOfSelectedTest+")"));
 				break;
 			}
 			CBTConfiguration.score = "pass";

@@ -19,7 +19,7 @@
 		<surefire.maven.plugin.version>2.19.1</surefire.maven.plugin.version>
 		<acceptance.test.parallel.count>1</acceptance.test.parallel.count>
 		<jdk.compiler.path>C:\Program Files\Java\jdk1.8.0_212\bin\javac.exe</jdk.compiler.path>
-<!-- 	<jdk.compiler.path>/docker-java-home/bin/javac</jdk.compiler.path> -->
+		<!-- <jdk.compiler.path>/docker-java-home/bin/javac</jdk.compiler.path> -->
 		<restassured.verson>2.9.0</restassured.verson>
 
 	</properties>
@@ -32,6 +32,14 @@
 	</repositories>
 
 	<dependencies>
+
+		<!-- https://mvnrepository.com/artifact/com.itextpdf/itextpdf -->
+		<dependency>
+			<groupId>com.itextpdf</groupId>
+			<artifactId>itextpdf</artifactId>
+			<version>5.5.13</version>
+		</dependency>
+
 
 		<!-- https://mvnrepository.com/artifact/com.jayway.restassured/rest-assured -->
 		<dependency>
@@ -47,7 +55,7 @@
 			<artifactId>commons-lang3</artifactId>
 			<version>3.9</version>
 		</dependency>
-		
+
 
 		<dependency>
 			<groupId>com.jayway.restassured</groupId>
@@ -212,14 +220,14 @@
 		<pluginManagement>
 			<plugins>
 				<plugin>
-            		<groupId>com.spotify</groupId>
-            		<artifactId>dockerfile-maven-plugin</artifactId>
-            		<version>1.4.9</version>
-            		<configuration>
-	               	<repository>${project.artifactId}</repository>
-	               </configuration>
-        	   </plugin>
-				
+					<groupId>com.spotify</groupId>
+					<artifactId>dockerfile-maven-plugin</artifactId>
+					<version>1.4.9</version>
+					<configuration>
+						<repository>${project.artifactId}</repository>
+					</configuration>
+				</plugin>
+
 				<plugin>
 					<groupId>org.projectlombok</groupId>
 					<artifactId>lombok-maven-plugin</artifactId>
@@ -280,8 +288,8 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
-				  <version>3.6.0</version>
-  				<configuration>
+				<version>3.6.0</version>
+				<configuration>
 					<compilerVersion>1.8</compilerVersion>
 					<source>1.8</source>
 					<target>1.8</target>
@@ -324,7 +332,7 @@
 						<configuration>
 							<!-- <outputDirectory>${basedir}/${target.dir}/extra-resources</outputDirectory> -->
 							<outputDirectory>${basedir}/target/extra-resources</outputDirectory>
-<!-- 							<outputDirectory>target/test-classes/com/yourcompany/cucumberjvm</outputDirectory> -->
+							<!-- <outputDirectory>target/test-classes/com/yourcompany/cucumberjvm</outputDirectory> -->
 							<resources>
 								<resource>
 									<directory>src/test/resources</directory>

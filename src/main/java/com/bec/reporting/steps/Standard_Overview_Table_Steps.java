@@ -874,13 +874,13 @@ public class Standard_Overview_Table_Steps {
 	@When("^User click on Class Context and Test Score button$")
 	public void user_click_on_Class_Context_and_Test_Score_button() throws Throwable {
 		try {
+			UtilityMethods.scrollPageUp(Driver.webdriver);
 			JavascriptExecutor jse2 = (JavascriptExecutor)Driver.webdriver;
 			Thread.sleep(1000);
 			try {
 				Assert.assertTrue(homePage.activeclassmenu.getAttribute("class").contains("active"));
 			}
 			catch(Exception e) {
-				UtilityMethods.scrollPageUp(Driver.webdriver);
 				Thread.sleep(3000);
 				jse2.executeScript("arguments[0].click();", homePage.classmenu);
 				Thread.sleep(3000);
@@ -978,7 +978,7 @@ public class Standard_Overview_Table_Steps {
 		try {
 			JavascriptExecutor js = (JavascriptExecutor) Driver.webdriver;
 			UtilityMethods.scrollPageUp(Driver.webdriver);
-			UtilityMethods.waitforcontextheadersaction();
+			UtilityMethods.wait_For_Context_Header_Section();
 
 			try {
 				Assert.assertTrue(homePage.activestudentmenu.getAttribute("class").contains("active"));
@@ -1095,7 +1095,7 @@ public class Standard_Overview_Table_Steps {
 				Assert.assertTrue(homePage.activestudentmenu.getAttribute("class").contains("active"));
 			} catch (Exception e) {
 				UtilityMethods.scrollPageUp(Driver.webdriver);
-				UtilityMethods.waitforcontextheadersaction();
+				UtilityMethods.wait_For_Context_Header_Section();
 				js.executeScript("arguments[0].click();", homePage.studentmenu);
 				Thread.sleep(3000);
 			}
@@ -1108,6 +1108,7 @@ public class Standard_Overview_Table_Steps {
 			}
 			performanceMenuClicked=true;				
 			underStudentContext=true;
+			UtilityMethods.wait_For_Performance_Over_Time_Section_Load();
 		} catch (Exception e) {
 			UtilityMethods.processException(e);
 		}

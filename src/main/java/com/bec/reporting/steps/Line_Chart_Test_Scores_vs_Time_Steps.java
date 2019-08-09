@@ -82,7 +82,7 @@ public class Line_Chart_Test_Scores_vs_Time_Steps {
 	public void verify_x_axis_labeled_with_Test_Names_and_show_tooltip_if_elipsis_in_test_names_and_if_more_than_tests_are_there_then_paginator_should_be_display(
 			int arg1) throws Throwable {
 		try {
-			UtilityMethods.waitforpageload();
+			UtilityMethods.wait_For_Page_Section_Load();
 			UtilityMethods.scrollPageDown(Driver.webdriver, 6);
 
 			Assert.assertTrue(homePage.xaxistexton_linechart.getText().equals("Test Names"));
@@ -217,7 +217,7 @@ public class Line_Chart_Test_Scores_vs_Time_Steps {
 	public void verify_the_overlay_should_be_closed_and_other_is_open_if_click_on_other_circle() throws Throwable {
 		try {
 			UtilityMethods.scrollPageDown(Driver.webdriver, 6);
-			UtilityMethods.waitforcontextheadersaction();
+			UtilityMethods.wait_For_Context_Header_Section();
 			PaginationUtility.methodOne();
 			if (PaginationUtility.paginatorFound) {
 				PaginationUtility.methodTwo();

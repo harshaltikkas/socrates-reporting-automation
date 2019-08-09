@@ -379,7 +379,6 @@ public class PaginationUtility {
 						+ "]//li[not(contains(@class,'StandardsNotAvailable'))]"));
 	}
 		catch(Exception e) {
-			log.error(e.getMessage());
 			UtilityMethods.processException(e);
 		}
 	}

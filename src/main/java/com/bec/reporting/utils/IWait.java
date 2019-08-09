@@ -26,19 +26,13 @@
 package com.bec.reporting.utils;
 
 import java.util.concurrent.TimeUnit;
-
-import org.junit.Assert;
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import lombok.extern.slf4j.Slf4j;
-@Slf4j
 public class IWait {
 
 	/**
@@ -73,8 +67,6 @@ public class IWait {
 	
 	// return ByType of WebElement
 	public static By toByVal(WebElement we) {
-	    // By format = "[foundFrom] -> locator: term"
-	    // see RemoteWebElement toString() implementation
 	    String[] data = we.toString().split(" -> ")[1].replaceFirst("]", "").split(": ");
 	    String locator = data[0];
 	    String term = data[1];
@@ -98,22 +90,4 @@ public class IWait {
 	    return (By) we;
 	}
 	
-	public static void waitForLoad(WebDriver driver) {
-		String errorMsg;
-		ExpectedCondition<Boolean> expectation = new
-                ExpectedCondition<Boolean>() {
-                    public Boolean apply(WebDriver driver) {
-                        return ((JavascriptExecutor) driver).executeScript("return document.readyState").toString().equals("complete");
-                    }
-                };
-        try {
-            Thread.sleep(1000);
-            WebDriverWait wait = new WebDriverWait(driver, 15);
-            wait.until(expectation);
-        } catch (Throwable error) {
-        	errorMsg="Timeout waiting for Page Load Request to complete.";
-        	log.error(errorMsg);
-            Assert.fail(errorMsg);
-        }
-    }
 }

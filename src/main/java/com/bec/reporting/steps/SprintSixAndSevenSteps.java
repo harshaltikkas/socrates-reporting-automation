@@ -26,10 +26,11 @@
 package com.bec.reporting.steps;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
+
 import org.junit.Assert;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.PageFactory;
@@ -38,6 +39,7 @@ import com.bec.reporting.utils.CBTConfiguration;
 import com.bec.reporting.utils.DatabaseConnection;
 import com.bec.reporting.utils.Driver;
 import com.bec.reporting.utils.IWait;
+import com.bec.reporting.utils.PaginationUtility;
 import com.bec.reporting.utils.UtilityMethods;
 import com.google.common.base.Verify;
 
@@ -52,7 +54,7 @@ public class SprintSixAndSevenSteps {
 	 */
 	HomePage homePage = PageFactory.initElements(Driver.webdriver, HomePage.class);
 	static String tooltipText = "Note: Average Score for all standards reports equals (earned points/total points)*100";
-
+	JavascriptExecutor js = (JavascriptExecutor) Driver.webdriver;
 	/**
 	 * Verifying the comparison band for school and district in class context in
 	 * test score page selector
@@ -140,6 +142,7 @@ public class SprintSixAndSevenSteps {
 			} catch (Exception e1) {
 				output = "pass";
 			}
+			Thread.sleep(500);
 			homePage.comparedistrictlabel.click();
 			Thread.sleep(500);
 			try {
@@ -158,22 +161,21 @@ public class SprintSixAndSevenSteps {
 	@Then("^Verify the tooltipicon in performance over time line chart and student list$")
 	public void verify_the_tooltipicon_in_performance_over_time_line_chart_and_student_list() throws Throwable {
 		try {
-			
-			new Actions(Driver.webdriver).moveToElement(homePage.performanceovrtimeicon).click().build().perform();
-			Thread.sleep(2000);
+			UtilityMethods.wait_For_Page_Section_Load();
+		
+			js.executeScript("arguments[0].click();", homePage.performanceovrtimeicon);
+			Thread.sleep(1000);
 			Assert.assertTrue(homePage.infoicononperformanceovrtimeheader.isDisplayed());
-
-			new Actions(Driver.webdriver).moveToElement(homePage.infoicononperformanceovrtimeheader).click().build()
-					.perform();
+		
+			js.executeScript("arguments[0].click();", homePage.infoicononperformanceovrtimeheader);
+			
 			Thread.sleep(1000);
 			Assert.assertTrue(homePage.tooltip.getText().equals(tooltipText));
-
 			Thread.sleep(1000);
 			new Actions(Driver.webdriver).moveToElement(homePage.performanceovrtimeicon).click().build().perform();
 			Thread.sleep(2000);
 			Assert.assertTrue(homePage.infoicononperformanceovrtimeheader.isDisplayed());
-			new Actions(Driver.webdriver).moveToElement(homePage.infoicononperformanceovrtimeheader).click().build()
-					.perform();
+			js.executeScript("arguments[0].click();", homePage.infoicononperformanceovrtimeheader);
 			Thread.sleep(1000);
 			Assert.assertTrue(homePage.tooltip.getText().equals(tooltipText));
 
@@ -185,11 +187,11 @@ public class SprintSixAndSevenSteps {
 	@Then("^Verify the tooltipicon in performance over time line chart$")
 	public void verify_the_tooltipicon_in_performance_over_time_line_chart() throws Throwable {
 		try {
+			UtilityMethods.wait_For_Page_Section_Load();
 			Thread.sleep(2000);
 			Assert.assertTrue(homePage.infoicononperformanceovrtimeheader.isDisplayed());
 			Thread.sleep(1000);
-			new Actions(Driver.webdriver).moveToElement(homePage.infoicononperformanceovrtimeheader).click().build()
-					.perform();
+			js.executeScript("arguments[0].click();", homePage.infoicononperformanceovrtimeheader);
 			Thread.sleep(1000);
 			Assert.assertTrue(homePage.tooltip.getText().equals(tooltipText));
 		} catch (Exception e) {
@@ -199,7 +201,6 @@ public class SprintSixAndSevenSteps {
 
 	@Then("^Verify the tooltipicon is not present$")
 	public void verify_the_tooltipicon_is_not_present() throws Throwable {
-
 		try {
 			Assert.assertTrue(homePage.infoicononperformanceovrtimeheader.isDisplayed());
 			CBTConfiguration.score = "fail";
@@ -216,46 +217,23 @@ public class SprintSixAndSevenSteps {
 	@Then("^verify the diamond shape stroke on the x-axis and Color changes within the Line Charts$")
 	public void verify_the_diamond_shape_stroke_on_the_x_axis_and_Color_changes_within_the_Line_Charts() throws Throwable {
 		try {
-			//this try will execute in class cntext ,standard performance scenario
+			
+			//this try will execute in class context ,standard performance scenario
 			try {
 				Thread.sleep(2000);
 				homePage.performanceovrtimeicon.click();
 				Thread.sleep(2000);
 			}
 			catch(Exception e) {}
-			Actions action = new Actions(Driver.webdriver);
-			WebElement enabledLeftArrow = null;
-			boolean doneWithThreeCircle = false, disableLeftArrowFound = false, enabledLeftArrowFound = false,
-					paginatorFound = false;
-			List<WebElement> circleList = null;
-			try {
-				action.moveToElement(homePage.paginator_onlinechart).build().perform();
-				paginatorFound = true;
-			} catch (Exception e) {
-				log.info("Paginator Not Found");
-			}
-			if (paginatorFound) {
-				try {
-					circleList = homePage.paginationcirclelist_onlinechart;
-					enabledLeftArrow = homePage.enabledleftarrow_onlinechart;
-					enabledLeftArrow.isDisplayed();
-					enabledLeftArrowFound = true;
-				} catch (Exception e) {
-					log.info("Enabled Left Arrow on Paginator is not found");
-				}
-				if (enabledLeftArrowFound) {
+			UtilityMethods.scrollPageDown(Driver.webdriver, 9);
+			if (PaginationUtility.paginatorFound) {
+				PaginationUtility.methodTwo();
+				if (PaginationUtility.enabledLeftArrowFound) {
 					do {
-						try {
-							homePage.disabledleftarrow_onlinechart.isDisplayed();
-							disableLeftArrowFound = true;
-						} catch (Exception e) {
-							log.info("Disabled Left Arrow on Paginator is not found");
-						}
-						if (doneWithThreeCircle) {
-							UtilityMethods.scrollPageDown(Driver.webdriver, 2);
-							Thread.sleep(1000);
-							circleList.get(0).click();
-							Thread.sleep(1000);
+						PaginationUtility.methodThree();
+						if (PaginationUtility.doneWithThreeCircle) {
+							PaginationUtility.methodFour();
+							
 							for (int j = homePage.testNamesonPerPage_onlinechart.size() - 1; j >= 0; j--) {
 								Assert.assertTrue(homePage.diamondshapesymblonPerPage_onlinechart.get(j).isDisplayed());
 								homePage.testScoreValueInCircle_onlinechart.get(j).click();
@@ -265,11 +243,8 @@ public class SprintSixAndSevenSteps {
 							UtilityMethods.scrollPageUp(Driver.webdriver, 2);
 							Thread.sleep(1000);
 						} else {
-							for (int i = circleList.size() - 1; i >= 0; i--) {
-									UtilityMethods.scrollPageDown(Driver.webdriver, 2);
-									Thread.sleep(1000);
-									circleList.get(i).click();
-									Thread.sleep(1000);
+							for (int i = PaginationUtility.circleList.size() - 1; i >= 0; i--) {
+								PaginationUtility.methodFive(i);
 									for (int j = homePage.testNamesonPerPage_onlinechart.size() - 1; j >= 0; j--) {
 										Assert.assertTrue(homePage.diamondshapesymblonPerPage_onlinechart.get(j).isDisplayed());
 										homePage.testScoreValueInCircle_onlinechart.get(j).click();
@@ -279,19 +254,13 @@ public class SprintSixAndSevenSteps {
 									UtilityMethods.scrollPageUp(Driver.webdriver, 2);
 									Thread.sleep(1000);
 								}
-							doneWithThreeCircle = true;
+							PaginationUtility.doneWithThreeCircle = true;
 						}
-						try {
-							enabledLeftArrow.click();
-						} catch (Exception e) {
-						}
-					} while (!disableLeftArrowFound);
+						PaginationUtility.methodSix();
+					} while (!PaginationUtility.disableLeftArrowFound);
 				} else {
-					for (int i = circleList.size() - 1; i >= 0; i--) {
-							UtilityMethods.scrollPageDown(Driver.webdriver, 2);
-							Thread.sleep(1000);
-							circleList.get(i).click();
-							Thread.sleep(1000);
+					for (int i = PaginationUtility.circleList.size() - 1; i >= 0; i--) {
+						PaginationUtility.methodFive(i);
 						for (int j = homePage.testNamesonPerPage_onlinechart.size() - 1; j >= 0; j--) {
 							Assert.assertTrue(homePage.diamondshapesymblonPerPage_onlinechart.get(j).isDisplayed());
 							homePage.testScoreValueInCircle_onlinechart.get(j).click();
@@ -307,7 +276,7 @@ public class SprintSixAndSevenSteps {
 				for (int j = homePage.testNamesonPerPage_onlinechart.size() - 1; j >= 0; j--) {
 					Assert.assertTrue(homePage.diamondshapesymblonPerPage_onlinechart.get(j).isDisplayed());
 					homePage.testScoreValueInCircle_onlinechart.get(j).click();
-					Thread.sleep(3000);
+					Thread.sleep(2000);
 					Assert.assertTrue(homePage.highlightedtestName_onlinechart.isDisplayed());
 				}
 			}
@@ -339,8 +308,9 @@ public class SprintSixAndSevenSteps {
 			new Actions(Driver.webdriver).moveToElement(homePage.classlist.get(1)).click().build().perform();
 			Thread.sleep(3000);
 			homePage.rosterapplybtn.click();
-			Thread.sleep(10000);	
+			Thread.sleep(3000);	
 			new Actions(Driver.webdriver).moveToElement(homePage.overviewtext).build().perform();
+			UtilityMethods.wait_For_Page_Section_Load();
 			int no = (int) (Math.random() * homePage.strandnameslist.size());
 			homePage.strandnameslist.get(no).click();
 			Thread.sleep(3000);
@@ -349,6 +319,7 @@ public class SprintSixAndSevenSteps {
 					"//div[@class='overview-table-body']//div[@class='overview-table-row']//div[@class='overview-table-col']["
 							+ (no + 2) + "]//li[not(contains(@class,'StandardsNotAvailable'))]")).get(0);
 			new Actions(Driver.webdriver).moveToElement(el).build().perform();
+			Thread.sleep(500);
 			el.click();
 			Thread.sleep(3000);
 			try {

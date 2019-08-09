@@ -15,7 +15,7 @@ public enum ExtentProperties {
     ExtentProperties() {
         this.reportPath = "output" + File.separator + "Run_" + System.currentTimeMillis() + File.separator
                 + "report.html";
-        this.projectName = "default";
+        this.projectName = "Benchmark Universe - Assesment Reporting";
     }
 
     /**

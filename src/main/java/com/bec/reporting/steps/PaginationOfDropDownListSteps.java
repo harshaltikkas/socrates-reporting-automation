@@ -27,6 +27,7 @@ package com.bec.reporting.steps;
 import java.util.List;
 import org.junit.Assert;
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 import com.bec.reporting.pageobjects.HomePage;
@@ -58,7 +59,7 @@ public class PaginationOfDropDownListSteps {
 	@When("^user clicks on Roster tab and clicks on \"([^\"]*)\" dropdown list,list items are more than (\\d+)$")
 	public void user_clicks_on_Roster_tab_and_clicks_on_dropdown_list_list_items_are_more_than(String rosterDropDown, int totalListItem) throws Throwable {
 		try {
-			UtilityMethods.waitforcontextheadersaction();
+			UtilityMethods.wait_For_Context_Header_Section();
 			AllPagetotalListItem=totalListItem;
 			homePage.rostertab.click();
 			IWait.explicit_wait(Driver.webdriver, homePage.schoolTitleOnSliderMenu);
@@ -201,7 +202,7 @@ public class PaginationOfDropDownListSteps {
 	@When("^user clicks on Roster tab and clicks on \"([^\"]*)\" dropdown list and select the options from it and check pagination for \"([^\"]*)\"\\.$")
 	public void user_clicks_on_Roster_tab_and_clicks_on_dropdown_list_and_select_the_options_from_it_and_check_pagination_for(String rosterDropDown, String itemsize) throws Throwable {
 		try {
-			UtilityMethods.waitforcontextheadersaction();
+			UtilityMethods.wait_For_Context_Header_Section();
 			homePage.rostertab.click();
 			IWait.explicit_wait(Driver.webdriver, homePage.schoolTitleOnSliderMenu);
 			Verify.verify(homePage.schoolTitleOnSliderMenu.isDisplayed());
@@ -241,7 +242,7 @@ public class PaginationOfDropDownListSteps {
 				try {
 				Driver.webdriver.findElement(By.xpath("//div[@class='menu-title' and contains(text(),'"+rosterDropDown+"')]/following-sibling::div//div[@class='selector-pagination']")).isDisplayed();
 				}
-				catch(org.openqa.selenium.NoSuchElementException e1) {
+				catch(NoSuchElementException e1) {
 				}
 			}
 			CBTConfiguration.score = "pass";				
