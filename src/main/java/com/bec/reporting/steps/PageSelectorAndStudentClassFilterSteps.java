@@ -29,6 +29,7 @@ import java.util.List;
 
 import org.junit.Assert;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.PageFactory;
@@ -71,17 +72,16 @@ public class PageSelectorAndStudentClassFilterSteps {
 	public void user_selects_Test_Scores_button_within_the_page_selector_then_also_the_context_will_remain_same() throws Throwable {
 		try {
 			JavascriptExecutor jse2 = (JavascriptExecutor)Driver.webdriver;
-			//Thread.sleep(10000);
 			UtilityMethods.scrollPageUp(Driver.webdriver);
-			UtilityMethods.waitforcontextheadersaction();
+			UtilityMethods.wait_For_Context_Header_Section();
 			jse2.executeScript("arguments[0].click();", homePage.testscoresbtn);
 			Thread.sleep(3000);
 			Assert.assertTrue(homePage.activeclassmenu.getAttribute("class").contains("active"));
 			try {
 				Assert.assertEquals(false,homePage.activestandardperformancebtn.isDisplayed());
-			    CBTConfiguration.score = "fail";
+				UtilityMethods.processException(new Exception());
 			}
-			catch(Exception e) {
+			catch(NoSuchElementException nse) {
 				log.info("Only one button is enable/selectable at a time");
 				CBTConfiguration.score = "pass";
 			}			
@@ -116,11 +116,11 @@ public class PageSelectorAndStudentClassFilterSteps {
 		try {
 			Thread.sleep(500);
 			Assert.assertTrue(homePage.achievmentlevelslabel.isDisplayed());
-			Assert.assertTrue(homePage.alallwithgraycolor.isDisplayed());
 			Assert.assertTrue(homePage.albelow40withredcolor.isDisplayed());
 			Assert.assertTrue(homePage.al40_59withorangecolor.isDisplayed());
 			Assert.assertTrue(homePage.al60_79withyellowcolor.isDisplayed());
 			Assert.assertTrue(homePage.al80pluswithgreencolor.isDisplayed());
+			Assert.assertTrue(homePage.nodatawithgraycolor.isDisplayed());
 			homePage.reportingkey.click();
 			CBTConfiguration.score="pass";
 			Standard_Overview_Table_Steps.resetStatus();
@@ -160,7 +160,7 @@ public class PageSelectorAndStudentClassFilterSteps {
 	@Then("^Verify labels on context header based on standard performance and test scores button$")
 	public void verify_labels_on_context_header_based_on_standard_performance_and_test_scores_button() throws Throwable {
 		try {
-			UtilityMethods.waitforpageload();
+			UtilityMethods.wait_For_Page_Section_Load();
 
 			List<WebElement> headerList = homePage.contextheadertextlist;
 			if (Standard_Overview_Table_Steps.underStudentContext

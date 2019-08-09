@@ -37,6 +37,9 @@ public class HomePage {
 	@FindBy(xpath="//div[@class='menu-title' and contains(text(),'Class')]/span[@class='data-refresh']//i[@class='material-icons' and contains(text(),'autorenew')]")
 	public WebElement classRefreshIcon;
 	
+	@FindBy(xpath="//div[@class='menu-title' and contains(text(),'District Term')]/span[@class='data-refresh']//i[@class='material-icons' and contains(text(),'autorenew')]")
+	public WebElement dateRefreshIcon;
+	
 	@FindBy(xpath="//div[@class='menu-title' and contains(text(),'Student')]/span[@class='data-refresh']//i[@class='material-icons' and contains(text(),'autorenew')]")
 	public WebElement studentRefreshIcon;
 	
@@ -76,11 +79,26 @@ public class HomePage {
 	@FindBy(xpath="//span[@class='menu-name' and contains(text(),'Test')]")
 	public WebElement testtab;
 	
+	@FindBy(xpath="//button[@class='btn universal-selector-applyfilter']")
+	public WebElement doneBtn;
+	
+	@FindBy(xpath="//span[contains(text(),'Test Type')]/ancestor::div[@class='test-type-input-field']//button/span")
+	public WebElement testtypedropdown;
+	
+	@FindBy(xpath="//div[@class='menu-dropdown-list-inr']//li/div[@class='testTypesingleitem']//input")
+	public List<WebElement> testtypecheckboxlist;
+	
+	@FindBy(xpath="//span[contains(text(),'Test Type')]/ancestor::div[@class='menu-title']/following-sibling::div[@class='menu-selector active-selector']//li")
+	public List<WebElement> testtypenameslist;
+	
 	@FindBy(xpath="//span[@class='menu-name' and contains(text(),'Date')]")
 	public WebElement datetab;
 
 	@FindBy(xpath="//div[@class='menu-title' and contains(text(),'School')]/following-sibling::div/button")
 	public WebElement schooldropdownbtn;
+	
+	@FindBy(xpath="//div[@class='menu-title' and contains(text(),'Teachers')]/following-sibling::div/button")
+	public WebElement teachersdropdownbtn;
 	
 	@FindBy(xpath="//div[@class='menu-title' and contains(text(),'School')]/following-sibling::div/button//div[@class='bec_tooltip_content']")
 	public WebElement schooldropdownbtntooltip;
@@ -154,12 +172,15 @@ public class HomePage {
 	@FindBy(xpath="//div[@class='menu-title' and contains(text(),'Class')]/following-sibling::div//div[@class='menu-dropdown-list-inr']/ul//li")
 	public List<WebElement> classlist;
 	
+	@FindBy(xpath="//div[@class='menu-title' and contains(text(),'Teachers')]/following-sibling::div//div[@class='menu-dropdown-list-inr']/ul//li")
+	public List<WebElement> teacherslist;
+	
 	@FindBy(xpath="//div[@class='menu-title' and contains(text(),'Class')]/following-sibling::div//div[@class='menu-dropdown-list-inr']/ul//div[contains(@style,'position: relative; display: block; width: 100%; cursor: pointer; border-radius: inherit; background-color: rgba(0, 0, 0, 0.2); height: 139px; transform: translateY(0px);')]")
 	public WebElement classlistScroll;
 	
 	@FindBy(xpath="//div[@class='menu-title' and contains(text(),'Student')]/following-sibling::div//div[@class='menu-dropdown-list-inr']//ul//div/li")
 	public List<WebElement> studentlistondropdown;
-	
+		
 	@FindBy(xpath="//div[@class='menu-title' and contains(text(),'Student')]/following-sibling::div//div[@class='menu-dropdown-list-inr']//ul//div/li//input")
 	public List<WebElement> studentlistondropdownwithinput;
 	
@@ -219,7 +240,22 @@ public class HomePage {
 	public WebElement studentpaginator;
 	
 	@FindBy(xpath="//div[@class='menu-item']/following-sibling::div//div[@class='selector-pagination']")
-	public WebElement testpaginator;	
+	public WebElement testpaginator;
+	
+	@FindBy(xpath="//div[@class='date-selector activeCalendar']/button")
+	public WebElement activeDate;
+	
+	@FindBy(xpath="//div[@class='dateBottomTitleText']")
+	public WebElement dateRangeValueOnUI;
+	
+	@FindBy(xpath="//div[@class='date-selector']/button")
+	public WebElement edate;
+	
+	@FindBy(xpath="//div[@class='menu-title' and contains(text(),'Date Range')]/following-sibling::div//li")
+	public List<WebElement> dateRangelist;
+	
+	@FindBy(xpath="//div[@class='weekMarkUpDates']//div//button[@class='Day']")
+	public List<WebElement> activeDateRangelistoOnCalender;
 	
 	/*School pagination circle list,enable right arrow and disable right arrow*/
 	@FindBy(xpath="//div[@class='menu-title' and contains(text(),'School')]/following-sibling::div//div[@class='PaginationBubblesAndCount']//ul[@class='m-0 page-circle-list']//span")
@@ -278,14 +314,20 @@ public class HomePage {
 	@FindBy(xpath="//span[@class='context-header-text']//div[@class='bec_tooltip_content']")
 	public List<WebElement> contextheadertooltiplist;
 	
-	@FindBy(xpath="//div[@class='context-header-main']//span[contains(text(),'School:')]/following-sibling::span")
+	@FindBy(xpath="//div[contains(text(),'School:')]/ancestor::div[@class='title_and_attribute']//span")
 	public WebElement schoolnameoncontextheader;
+	
+	@FindBy(xpath="//div[contains(text(),'District:')]/ancestor::div[@class='title_and_attribute']//span")
+	public WebElement districtnameoncontextheader;
 	
 	@FindBy(xpath="//span[@class='context-header-title']//i[contains(text(),'more_vert')]")
 	public WebElement tripledotsoncontextheader;
 	
-	@FindBy(xpath="//div[@class='context-header-main']//span[contains(text(),'School:')]/following-sibling::span//div[@class='bec_tooltip_content']")
+	@FindBy(xpath="//div[contains(text(),'School:')]/ancestor::div[@class='title_and_attribute']//span//div[@class='bec_tooltip_content']")
 	public WebElement tooltipofschoolnameoncontextheader;
+	
+	@FindBy(xpath="//div[contains(text(),'District:')]/ancestor::div[@class='title_and_attribute']//span//div[@class='bec_tooltip_content']")
+	public WebElement tooltipofdistrictnameoncontextheader;
 	
 	@FindBy(xpath="//div[@class='context-header-main']//span[contains(text(),'Class:')]/following-sibling::span")
 	public WebElement classnameoncontextheader;
@@ -302,8 +344,14 @@ public class HomePage {
 	@FindBy(xpath="//div[@class='context-header-main']//span[contains(text(),'Tests:')]/following-sibling::span//div[@class='bec_tooltip_content']")
 	public WebElement tooltipoftestnameoncontextheader;
 	
+	@FindBy(xpath="//div[@class='context-header-main']//span[contains(text(),'Teacher:')]/following-sibling::span//div[@class='bec_tooltip_content']")
+	public WebElement tooltipofteachernameoncontextheader;
+	
 	@FindBy(xpath="//div[@class='context-header-main']//span[contains(text(),'Tests:')]/following-sibling::span")
-	public WebElement nooftestoncontextheader;
+	public WebElement testsNameoncontextheader;
+	
+	@FindBy(xpath="//div[@class='context-header-main']//span[contains(text(),'Teacher:')]/following-sibling::span")
+	public WebElement teacherNameoncontextheader;
 	
 	@FindBy(xpath="//div[@class='context-header-main']//span[contains(text(),'Dates:')]/following-sibling::span")
 	public WebElement datesoncontextheader;
@@ -321,27 +369,15 @@ public class HomePage {
 	public WebElement testscoresbtn;
 	
 	@FindBy(xpath="//span[contains(text(),'Class')]/ancestor::div[contains(@class,'single-filter text-center active-filter')]")
-	public WebElement activeclassmenu_dev;
-	
-	@FindBy(xpath="//span[contains(text(),'Student')]/ancestor::div[contains(@class,'single-filter text-center active-filter')]")
-	public WebElement activestudentmenu_dev;
-	
-	@FindBy(xpath="//div[contains(text(),'Class')]/ancestor::div[contains(@class,'single-filter text-center active-filter')]")
 	public WebElement activeclassmenu;
 	
-	@FindBy(xpath="//div[contains(text(),'Student')]/ancestor::div[contains(@class,'single-filter text-center active-filter')]")
+	@FindBy(xpath="//span[contains(text(),'Student')]/ancestor::div[contains(@class,'single-filter text-center active-filter')]")
 	public WebElement activestudentmenu;
-	
-	@FindBy(xpath="//div[@class='single-filter-text' and contains(text(),'Student')]/preceding-sibling::div")
+		
+	@FindBy(xpath="//div[@class='single-filter-text']//span[contains(text(),'Student')]")
 	public WebElement studentmenu;
 	
-	@FindBy(xpath="//div[@class='single-filter-text']//span[contains(text(),'Student')]")
-	public WebElement studentmenu_dev;
-	
 	@FindBy(xpath="//div[@class='single-filter-text']//span[contains(text(),'Class')]")
-	public WebElement classmenu_dev;
-	
-	@FindBy(xpath="//div[@class='single-filter-text' and contains(text(),'Class')]/preceding-sibling::div")
 	public WebElement classmenu;
 	
 	@FindBy(xpath="//li[.='Standards Performance']")
@@ -350,8 +386,8 @@ public class HomePage {
 	@FindBy(xpath="//div[@class='footer-indicate-title' and contains(text(),'Achievement Levels')]")
 	public WebElement achievmentlevelslabel;
 	
-	@FindBy(xpath="//div[@class='footer-key-bar grey']/ancestor::div[@class='footer-single-indicator']/following-sibling::div[@class='footer-single-indicator-title' and contains(text(),'All')]")
-	public WebElement alallwithgraycolor;
+	@FindBy(xpath="//div[@class='footer-key-bar grey']/ancestor::div[@class='footer-single-indicator']/following-sibling::div[@class='footer-single-indicator-title' and contains(text(),'No Data Available')]")
+	public WebElement nodatawithgraycolor;
 	
 	@FindBy(xpath="//div[@class='footer-key-bar red']/ancestor::div[@class='footer-single-indicator']/following-sibling::div[@class='footer-single-indicator-title' and contains(text(),'Below 40%')]")
 	public WebElement albelow40withredcolor;
@@ -529,7 +565,7 @@ public class HomePage {
 	@FindBy(xpath="//div[@class='tooltip_row_right']//div")
 	public WebElement studentscorerightcontentontt;
 	
-	@FindBy(xpath="//*[name()='g']//*[name()='circle']/following-sibling::*[name()='text']")
+	@FindBy(xpath="//div[@class='comparison-block text-center']/following-sibling::div//*[name()='g']//*[name()='circle']/following-sibling::*[name()='text']")
 	public List<WebElement> testScoreValueInCircle_onlinechart;
 	
 	@FindBy(xpath="//span[@class='progress-text' and contains(text(),'All')]/preceding-sibling::span[@class='progress-number grey']")
@@ -667,7 +703,7 @@ public class HomePage {
 	@FindBy(xpath="//span[contains(text(),'School')]/ancestor::li[@class='compareCheckBoxesSingleUI school-compare']/label")
 	public WebElement compareschoollabel;
 	
-	@FindBy(xpath="//span[contains(text(),'District')]/ancestor::li[@class='compareCheckBoxesSingleUI district-compare']/label")
+	@FindBy(xpath="//span[contains(text(),'District')]/ancestor::li/label")
 	public WebElement comparedistrictlabel;
 	
 	@FindBy(xpath="//span[contains(text(),'Class')]/ancestor::li[@class='compareCheckBoxesSingleUI class-compare']/label")
@@ -691,8 +727,11 @@ public class HomePage {
 	@FindBy(xpath="//*[name()='path' and @stroke-dasharray='4,4']")
 	public WebElement districtpath;
 	
-	@FindBy(xpath="//*[.='Number of Questions']")
+	@FindBy(xpath="//*[.='No. of Qns']")
 	public WebElement noofquestionstext;
+	
+	@FindBy(xpath="//*[.='Students']")
+	public WebElement studentstextinstudentlist;
 	
 	@FindBy(xpath="//span[contains(text(),'Date Submitted')]")
 	public WebElement datesubmittedtext;
@@ -700,4 +739,121 @@ public class HomePage {
 	@FindBy(xpath="//span[contains(text(),'Test Score Overview')]")
 	public WebElement testscoreoverviewtext;
 	
+	@FindBy(xpath="//div[@class='standard-grid-filter-view']/div[@class='standard-grid-filter-view-label' and contains(text(),'Test(s) assessed for:')]/following-sibling::div/button")
+	public WebElement gradeDropDown;
+	
+	@FindBy(xpath="//div[@class='standard-grid-filter-view']/div[contains(text(),'Assessed with:')]/following-sibling::div/button")
+	public WebElement questionDropDown;
+	
+	@FindBy(xpath="//div[@class='standard-grid-filter-view']/div[contains(text(),'View :')]/following-sibling::div/button")
+	public WebElement viewDropDown;
+
+	@FindBy(xpath="//div[@class='standard-grid-filter-view']/div[contains(text(),'View :')]/following-sibling::div/button//div[@class='bec_tooltip_content']")
+	public WebElement viewDropDownToolTipText;
+	
+	@FindBy(xpath="//span[@class='print_pdf_icon']/div/i[contains(text(),'print')]")
+	public WebElement printIcon;
+	
+	@FindBy(xpath="//div[@class='standard-grid-filter-view']/div[@class='standard-grid-filter-view-label' and contains(text(),'Test(s) assessed for:')]/following-sibling::div//div//ul/li/div")
+	public List<WebElement> gradeList;
+	
+	/**
+	 * Print PDF Sections Xpath
+	 */
+	@FindBy(xpath="//div[@class='print_pdf_logo']/img")
+	public WebElement pdfLogo;
+	
+	@FindBy(xpath="//div[@class='print_pdf_context_header']//div[@class='print_pdf_header_row']/ul/li/span/b")
+	public List<WebElement> headerRowList;
+	
+	/**
+	 * Grouping Tab
+	 * 
+	 */
+	@FindBy(xpath="//li[contains(text(),'Grouping')]")
+	public WebElement groupingTab;
+	
+	@FindBy(xpath="//div[@class='bec_groups_popup_modal_row_label' and contains(text(),'Select Strands:')]/ancestor::div[@class='bec_groups_popup_modal_row_left_txt']/following-sibling::span[@class='group-data-reload']//i[contains(text(),'cached')]")
+	public WebElement strandSelectRefreshIconTab;
+	
+	@FindBy(xpath="//div[@class='bec_groups_popup_modal_row_label' and contains(text(),'Assessed with :')]/ancestor::div[@class='bec_groups_popup_modal_row_left_txt']/following-sibling::span[@class='group-data-reload']//i[contains(text(),'cached')]")
+	public WebElement AssessedWithRefreshIconTab;
+	
+	@FindBy(xpath="//div[@class='bec_group_multi_list_header_label']")
+	public WebElement strandsTextAfterApplyBtnOnGroupingTab;
+	
+	@FindBy(xpath="//div[@class='bec_groups_popup_modal_submit_button']//button[contains(text(),'Apply')]")
+	public WebElement applyBtnOngroupingTab;
+	
+	@FindBy(xpath="//div[contains(text(),' Test(s) assessed for : ')]/ancestor::div[@class='bec_groups_popup_modal_row']//div[@class='bec_groups_popup_dropdown_main']/button")
+	public WebElement testAssessedForGradeGroupingTab;
+	
+	@FindBy(xpath="//div[contains(text(),'Assessed with :')]/ancestor::div[@class='bec_groups_popup_modal_row']//div[@class='bec_groups_popup_dropdown_main']/button")
+	public WebElement assessedWithGroupingTab;
+	
+	@FindBy(xpath="//div[contains(text(),'Select Strands:')]/ancestor::div[@class='bec_groups_popup_modal_row']//div[@class='bec_groups_popup_dropdown_main']/button")
+	public WebElement selectStrandsOnGroupingTab;
+	
+	@FindBy(xpath="//div[@class='bec_groups_popup_modal_row_full_length']")
+	public WebElement noteOnGroupingTab;
+	
+	@FindBy(xpath="//button[@class='btn universal-selector-applyfilter']")
+	public WebElement doneBtnOnSelectStrandOnGroupingTab;
+	
+	@FindBy(xpath="//div[@class='bec_groups_popup_dropdown_strands-cancel-btn float-left' and contains(text(),'Cancel')]")
+	public WebElement cancelBtnOnSelectStrandOnGroupingTab;
+	
+	@FindBy(xpath="//span[contains(text(),'Select All')]")
+	public WebElement selectAllchkboxOnGroupingTab;
+	
+	@FindBy(xpath="//div[@class='bec_groups_popup_modal_row_label' and contains(text(),'Number of Groups')]")
+	public WebElement noofgroupsLabelOnGroupingTab;
+	
+	@FindBy(xpath="//i[@class='material-icons' and contains(text(),'remove_circle_outline')]")
+	public WebElement minusIconOfnoofgroupsLabelOnGroupingTab;
+	
+	@FindBy(xpath="//div[@class='bec_groups_popup_modal_row_dropdown_fieldBox']//input[@type='text' and @value]")
+	public WebElement textOfnoofgroupsLabelOnGroupingTab;
+	
+	@FindBy(xpath="//i[@class='material-icons' and contains(text(),'add_circle_outline')]")
+	public WebElement plusIconOfnoofgroupsLabelOnGroupingTab;
+	
+	@FindBy(xpath="//i[@class='material-icons-outlined' and contains(text(),'info')]")
+	public WebElement tooltipIconOfnoofgroupsLabelOnGroupingTab;
+	
+	@FindBy(xpath="//li[@class='activeGroupPopupRadio']//span[@class='bec_groups_popup_modal_radio_label']")
+	public WebElement selectedGrpNameOnUI;
+	
+	@FindBy(xpath="//div[@class='bec_groups_popup_modal_row']//span[contains(text(),'Group by')]")
+	public WebElement GrpByTextOnGroupingTab;
+	
+	@FindBy(xpath="//div[@class='bec_group_tab_main']//span[contains(text(),'Group by')]")
+	public WebElement GrpByTextOnUI;
+	
+	@FindBy(xpath="//div[@class='bec_group_tab_header_block_edit_label']//span[contains(text(),'Edit Groups')]")
+	public WebElement EditGrpTextOnUI;
+	
+	@FindBy(xpath="//i[@class='material-icons' and contains(text(),'print')]")
+	public WebElement printIconforGroupDataOnUI;
+	
+	@FindBy(xpath="//span[@class='bec_group_multi_list_sub_header_avg_score_label' and contains(text(),'Average % Score')]")
+	public WebElement avgperScoreOnGroupingTable;
+	
+	@FindBy(xpath="//div[contains(text(),' Test(s) assessed for : ')]/ancestor::div[@class='bec_groups_popup_modal_row']//div[@class='bec_groups_popup_dropdown_main']//div[@class='groupingtab_single_dropdown_element']")
+	public List<WebElement> testAssessedForGradeListGroupingTab;
+	
+	@FindBy(xpath="//div[@class='bec_groups_popup_modal_row_radio_buttons']//span[@class='bec_groups_popup_modal_radio_label']")
+	public List<WebElement> groupByListOnGroupingTab;
+	
+	@FindBy(xpath="//div[contains(text(),'Assessed with :')]/ancestor::div[@class='bec_groups_popup_modal_row']//div[@class='bec_groups_popup_dropdown_main']//div[@class='groupingtab_single_dropdown_element']")
+	public List<WebElement> assessedWithListGroupingTab;
+	
+	@FindBy(xpath="//div[contains(@class,'bec_groups_popup_dropdown_label')]")
+	public List<WebElement> selectStrandsListInDropdownGroupingTab;
+	
+	@FindBy(xpath="//div[@class='Beneath_Strands']//div")
+	public List<WebElement> selectedStrandsListOnGroupingTab;
+	
+	@FindBy(xpath="//div[@class='bec_group_multi_list_header_strands_single']")
+	public List<WebElement> groupingTableHeaderList;
 }

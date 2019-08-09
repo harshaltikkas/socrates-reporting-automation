@@ -358,16 +358,17 @@ public class DatabaseConnection {
 	}
 
 	public static void main(String args[]) {
-		/*
-		 * List<Model>
-		 * lm=getStandardAvgPerListInClassContext(ConnectionPool.getDBConnection(),
-		 * 509446, 1213286, "Language"); for (Model model : lm) {
-		 * System.out.println(model.getAvg_per());
-		 * System.out.println(model.getStandard_shortvalue());
-		 * System.out.println(model.getStandard_category());
-		 * System.out.println(model.getStandard_subcategory());
-		 * System.out.println(model.getStandard_description()); }
-		 */
+		
+		/*List<Model> lm = getStandardAvgPerListInClassContext(conn, 509446, 1213286,
+				"Language");
+		for (Model model : lm) {
+			System.out.println(model.getAvg_per());
+			System.out.println(model.getStandard_shortvalue());
+			System.out.println(model.getStandard_category());
+			System.out.println(model.getStandard_subcategory());
+			System.out.println(model.getStandard_description());
+		}*/
+		 System.out.println(getViewTexonomy(conn, 509446, 1213286));
 		// System.out.println(getSchoolIDBySchoolName("Church of England Primary
 		// School"));
 		// System.out.println(getAllSchoolNames());
@@ -946,5 +947,134 @@ public class DatabaseConnection {
 			UtilityMethods.processException(e);
 		}
 		return districtResult;
+	}
+
+	/**
+	 * This method is used to return the View Texonomy text from DB
+	 * @param con
+	 * @param schoolId
+	 * @param classId
+	 * @return
+	 */
+	public static String getViewTexonomy(Connection con, Integer schoolId, Integer classId) {
+		String taxonomy = "", viewText = "";
+		int size = 0, ccss_count = 0, caccss_count = 0;
+		List<String> ls = new ArrayList<String>();
+		try {
+			Statement stmt = con.createStatement();
+			ResultSet rs = null;
+			String str = "Select cscc.standard_id from bec_edw_dev.bu_strand_details_vw sd inner join bec_edw_dev.content_standard_common_core cscc \r\n"
+					+ "on cscc.standard_id=sd.standard_id and "
+					+ "sd.component_title in (select distinct component_title from bec_edw_dev.bu_assessment_reporting_detail where bu_school_id="
+					+ schoolId + " and collective_noun_id=" + classId + ") and " + "sd.bu_school_id=" + schoolId
+					+ " and sd.collective_noun_id=" + classId + " group by cscc.standard_id";
+			rs = stmt.executeQuery(str);
+			while (rs.next()) {
+				taxonomy = rs.getString(1);
+				ls.add(taxonomy.substring(0, taxonomy.indexOf(".")));
+			}
+		} catch (Exception e) {
+			log.error(e.getMessage());
+			UtilityMethods.processException(e);
+		}
+		size = ls.size();
+		for (String string : ls) {
+			if (string.equals("CCSS")) {
+				ccss_count++;
+			}
+			if (string.equals("CaCCSS")) {
+				caccss_count++;
+			}
+		}
+
+		if (size == ccss_count) {
+			viewText = "CCSS English Language Arts";
+		} else if (size == caccss_count) {
+			viewText = "CaCCSS English Language Arts";
+		}
+		return viewText;
+	}
+	
+	/**
+	 * This method is used to fetch Grade List from DB for school and class
+	 * @param con
+	 * @param schoolId
+	 * @param classId
+	 * @return
+	 */
+	public static List<String> getGradeTexonomy(Connection con, Integer schoolId, Integer classId) {
+		String taxonomy = "";
+		List<String> ls = new ArrayList<String>();
+		try {
+			Statement stmt = con.createStatement();
+			ResultSet rs = null;
+			String str = "SELECT distinct(sd.grade) FROM bec_edw_dev.bu_assessment_reporting_detail sd where sd.bu_school_id = "
+					+ schoolId + " and sd.collective_noun_id=" + classId ;
+			rs = stmt.executeQuery(str);
+			while (rs.next()) {
+				taxonomy = rs.getString(1);
+				ls.add(convert(taxonomy).replace("_", " "));
+			}
+		} catch (Exception e) {
+			log.error(e.getMessage());
+			UtilityMethods.processException(e);
+		}
+		return ls;
+	}
+	
+	/**
+	 * This method is used to fetch Grade Text from DB for Student
+	 * @param con
+	 * @param schoolId
+	 * @param classId
+	 * @param studentId
+	 * @return
+	 */
+	public static String getGradeTexonomyForStudent(Connection con, Integer schoolId, Integer classId,Integer studentId) {
+		String gradeTaxonomy = "";
+		try {
+			Statement stmt = con.createStatement();
+			ResultSet rs = null;
+			String str = "SELECT distinct(sd.grade) FROM bec_edw_dev.bu_assessment_reporting_detail sd where sd.bu_school_id = "
+					+ schoolId + " and sd.collective_noun_id=" + classId +" AND sd.student_id="+studentId;
+			rs = stmt.executeQuery(str);
+			while (rs.next()) {
+				gradeTaxonomy = rs.getString(1);
+			}
+		} catch (Exception e) {
+			log.error(e.getMessage());
+			UtilityMethods.processException(e);
+		}
+		return gradeTaxonomy;
+	}
+	
+	static String convert(String str) {
+
+		// Create a char array of given String
+		char ch[] = str.toCharArray();
+		for (int i = 0; i < str.length(); i++) {
+
+			// If first character of a word is found
+			if (i == 0 && ch[i] != ' ' || ch[i] != ' ' && ch[i - 1] == ' ') {
+
+				// If it is in lower-case
+				if (ch[i] >= 'a' && ch[i] <= 'z') {
+
+					// Convert into Upper-case
+					ch[i] = (char) (ch[i] - 'a' + 'A');
+				}
+			}
+
+			// If apart from first character
+			// Any one is in Upper-case
+			else if (ch[i] >= 'A' && ch[i] <= 'Z')
+
+				// Convert into Lower-Case
+				ch[i] = (char) (ch[i] + 'a' - 'A');
+		}
+
+		// Convert the char array to equivalent String
+		String st = new String(ch);
+		return st;
 	}
 }

@@ -119,6 +119,7 @@ public class UtilityMethods {
 	 */
 	public static void processException(Exception e) {
 		CBTConfiguration.score = "fail";
+		Standard_Overview_Table_Steps.resetStatus();
 		log.error(e.getMessage());
 		Assert.fail();
 	}
@@ -229,16 +230,18 @@ public class UtilityMethods {
 	 * expression
 	 * 
 	 * @param submissionDate
+	 * @return 
 	 */
-	public static void checkDateFormat(String submissionDate) {
+	public static boolean checkDateFormat(String submissionDate) {
+		Matcher matcher = null;
 		try {
 			String regex = "^(1[0-2]|0[1-9])/(3[01]|[12][0-9]|0[1-9])/[0-9]{4}$";
 			Pattern pattern = Pattern.compile(regex);
-			Matcher matcher = pattern.matcher(submissionDate);
-			Assert.assertTrue(matcher.matches());
+			matcher = pattern.matcher(submissionDate);
 		} catch (Exception e) {
 			UtilityMethods.processException(e);
 		}
+		return matcher.matches();
 	}
 
 	/*
@@ -294,17 +297,17 @@ public class UtilityMethods {
 	 * This is recursive method used to search,on focus & click for the specific
 	 * element till page end,if element found return true
 	 * 
-	 * @param standardList
+	 * @param standardName
 	 * @return
 	 */
-	public static boolean searchandClickonELement(WebElement standardList, Model m, int standardIndex, String cat,
+	public static boolean searchandClickonELement(WebElement standardName, Model m, int standardIndex, String cat,
 			String subcat, String desc, int strandIndex, Connection conn, String standardId, int schoolId,
 			int classId) {
 		try {
 			new Actions(Driver.webdriver)
 					.moveToElement(Driver.webdriver.findElement(By.xpath("//li[contains(text(),'Overview')]"))).build()
 					.perform();
-			standardList.click();
+			standardName.click();
 			cat = Driver.webdriver.findElements(By.xpath(
 					"//div[@class='overview-table-body']//div[@class='overview-table-row']//div[@class='overview-table-col']["
 							+ (strandIndex + 2)
@@ -328,7 +331,7 @@ public class UtilityMethods {
 			//Assert.assertTrue(UtilityMethods.VerifyTestScore(conn, standardId, schoolId, classId));
 		} catch (Exception e) {
 			UtilityMethods.scrollPageDown(Driver.webdriver, 1);
-			searchandClickonELement(standardList, m, standardIndex, cat, subcat, desc, strandIndex, conn, standardId,
+			searchandClickonELement(standardName, m, standardIndex, cat, subcat, desc, strandIndex, conn, standardId,
 					schoolId, classId);
 		}
 		return true;
@@ -549,20 +552,25 @@ public class UtilityMethods {
 		try {
 			String schoolName, className;
 			HomePage homePage = PageFactory.initElements(Driver.webdriver, HomePage.class);
-			new Actions(Driver.webdriver).moveToElement(homePage.schoolnameoncontextheader).build().perform();
-			if (homePage.schoolnameoncontextheader.getText().contains("...")) {
-				schoolName = homePage.tooltipofschoolnameoncontextheader.getText();
-			} else {
-				schoolName = homePage.schoolnameoncontextheader.getText();
-			}
-			new Actions(Driver.webdriver).moveToElement(homePage.overviewtext).build().perform();
+			new Actions(Driver.webdriver).moveToElement(homePage.overviewtext).click().build().perform();
+			Thread.sleep(500);
 			new Actions(Driver.webdriver).moveToElement(homePage.classnameoncontextheader).build().perform();
 			if (homePage.classnameoncontextheader.getText().contains("...")) {
 				className = homePage.tooltipofclassnameoncontextheader.getText();
 			} else {
 				className = homePage.classnameoncontextheader.getText();
 			}
-			new Actions(Driver.webdriver).moveToElement(homePage.overviewtext).build().perform();
+			new Actions(Driver.webdriver).moveToElement(homePage.tripledotsoncontextheader).click().build().perform();
+			Thread.sleep(1000);
+			new Actions(Driver.webdriver).moveToElement(homePage.schoolnameoncontextheader).build().perform();
+			Thread.sleep(1000);
+			if (homePage.schoolnameoncontextheader.getText().contains("...")) {
+				schoolName = homePage.tooltipofschoolnameoncontextheader.getText();
+			} else {
+				schoolName = homePage.schoolnameoncontextheader.getText();
+			}
+			new Actions(Driver.webdriver).moveToElement(homePage.overviewtext).click().build().perform();
+			Thread.sleep(500);
 			Integer schoolId = DatabaseConnection.getSchoolIDBySchoolName(schoolName);
 			Integer classId = DatabaseConnection.getClassIDBySchoolIdAndClassName(schoolId, className);
 			Ids.put(schoolId, classId);
@@ -580,42 +588,238 @@ public class UtilityMethods {
 			for(Map.Entry<Integer,Integer> entry:ids.entrySet()) {
 				schoolId=entry.getKey();
 				classId=entry.getValue();
-			}
-			
+			}			
 			studentId=UtilityMethods.getStudentId();
 	 */
 	
 	/**
+	 * This method is used to retrieve Student Name on UI
+	 * @return
+	 */
+	public static String getStudentNameonUI() {
+		HomePage homePage = PageFactory.initElements(Driver.webdriver, HomePage.class);
+		String studentTextonCH="";
+		try {
+			new Actions(Driver.webdriver).moveToElement(homePage.studentnameoncontextheader).build().perform();
+			if (homePage.studentnameoncontextheader.getText().contains("...")) {
+				studentTextonCH = homePage.studentnameoncontextheadertooltiptext.getText();
+			} else {
+				studentTextonCH = homePage.studentnameoncontextheader.getText();
+			}
+			new Actions(Driver.webdriver).moveToElement(homePage.overviewtext).build().perform();
+		} catch (Exception e) {
+			processException(e);
+		}
+		return studentTextonCH;
+	}
+
+	/**
+	 * This method is used to retrieve School Name on UI
+	 * @return
+	 */
+	public static String getSchoolNameonUI() {
+		HomePage homePage = PageFactory.initElements(Driver.webdriver, HomePage.class);
+		String schoolName = "";
+		try {
+			new Actions(Driver.webdriver).moveToElement(homePage.tripledotsoncontextheader).click().build().perform();
+			Thread.sleep(1000);
+			new Actions(Driver.webdriver).moveToElement(homePage.schoolnameoncontextheader).build().perform();
+			Thread.sleep(1000);
+			if (homePage.schoolnameoncontextheader.getText().contains("...")) {
+				schoolName = homePage.tooltipofschoolnameoncontextheader.getText();
+			} else {
+				schoolName = homePage.schoolnameoncontextheader.getText();
+			}
+			new Actions(Driver.webdriver).moveToElement(homePage.overviewtext).click().build().perform();
+			Thread.sleep(500);
+		} catch (Exception e) {
+			processException(e);
+		}
+		return schoolName;
+	}
+	
+	/**
+	 * This method is used to retrieve District Name on UI
+	 * @return
+	 */
+	public static String getDistrictNameonUI() {
+		HomePage homePage = PageFactory.initElements(Driver.webdriver, HomePage.class);
+		String districtName = "";
+		try {
+			new Actions(Driver.webdriver).moveToElement(homePage.tripledotsoncontextheader).click().build().perform();
+			Thread.sleep(1000);
+			new Actions(Driver.webdriver).moveToElement(homePage.districtnameoncontextheader).build().perform();
+			Thread.sleep(1000);
+			if (homePage.districtnameoncontextheader.getText().contains("...")) {
+				districtName = homePage.tooltipofdistrictnameoncontextheader.getText();
+			} else {
+				districtName = homePage.districtnameoncontextheader.getText();
+			}
+			new Actions(Driver.webdriver).moveToElement(homePage.overviewtext).click().build().perform();
+			Thread.sleep(500);
+		} catch (Exception e) {
+			processException(e);
+		}
+		return districtName;
+	}
+	
+	/**
+	 * This method is used to retrieve Test Name value on UI
+	 * @return
+	 */
+	public static String getTestsNameonUI() {
+		HomePage homePage = PageFactory.initElements(Driver.webdriver, HomePage.class);
+		String testsName = "";
+		try {
+			new Actions(Driver.webdriver).moveToElement(homePage.testsNameoncontextheader).build().perform();
+			Thread.sleep(1000);
+			if (homePage.testsNameoncontextheader.getText().contains("...")) {
+				testsName = homePage.tooltipoftestnameoncontextheader.getText();
+			} else {
+				testsName = homePage.testsNameoncontextheader.getText();
+			}
+			new Actions(Driver.webdriver).moveToElement(homePage.overviewtext).click().build().perform();
+			Thread.sleep(500);
+		} catch (Exception e) {
+			processException(e);
+		}
+		return testsName;
+	}
+	
+	/**
+	 * This method is used to retrieve Teacher Name value on UI
+	 * @return
+	 */
+	public static String getTeacherNameonUI() {
+		HomePage homePage = PageFactory.initElements(Driver.webdriver, HomePage.class);
+		String testsName = "";
+		try {
+			new Actions(Driver.webdriver).moveToElement(homePage.testsNameoncontextheader).build().perform();
+			Thread.sleep(1000);
+			if (homePage.testsNameoncontextheader.getText().contains("...")) {
+				testsName = homePage.tooltipoftestnameoncontextheader.getText();
+			} else {
+				testsName = homePage.testsNameoncontextheader.getText();
+			}
+			new Actions(Driver.webdriver).moveToElement(homePage.overviewtext).click().build().perform();
+			Thread.sleep(500);
+		} catch (Exception e) {
+			processException(e);
+		}
+		return testsName;
+	}
+	
+	/**
+	 * This method is used to retrieve AssessedWith value on UI
+	 * @return
+	 */
+	public static String getAssessedWithonUI() {
+		HomePage homePage = PageFactory.initElements(Driver.webdriver, HomePage.class);
+		String assessedWithTxt = "";
+		try {
+			new Actions(Driver.webdriver).moveToElement(homePage.questionDropDown).click().build().perform();
+			Thread.sleep(1000);
+			
+			assessedWithTxt = homePage.questionDropDown.getText();
+			new Actions(Driver.webdriver).moveToElement(homePage.overviewtext).click().build().perform();
+			Thread.sleep(500);
+		} catch (Exception e) {
+			processException(e);
+		}
+		return assessedWithTxt;
+	}
+	
+	/**
+	 * This method is used to retrieve TestDataAssessedForGrade value on UI
+	 * @return
+	 */
+	public static String getTestDataAssessedForGradeonUI() {
+		HomePage homePage = PageFactory.initElements(Driver.webdriver, HomePage.class);
+		String testDataAssessedForGrade = "";
+		try {
+			new Actions(Driver.webdriver).moveToElement(homePage.gradeDropDown).click().build().perform();
+			Thread.sleep(1000);
+			
+			testDataAssessedForGrade = homePage.gradeDropDown.getText();
+			new Actions(Driver.webdriver).moveToElement(homePage.overviewtext).click().build().perform();
+			Thread.sleep(500);
+		} catch (Exception e) {
+			processException(e);
+		}
+		return testDataAssessedForGrade;
+	}
+	
+	/**
+	 * This method is used to retrieve Dates value on UI
+	 * @return
+	 */
+	public static String getDatesonContextHeaderUI() {
+		HomePage homePage = PageFactory.initElements(Driver.webdriver, HomePage.class);
+		String testsName = "";
+		try {
+			new Actions(Driver.webdriver).moveToElement(homePage.datesoncontextheader).build().perform();
+			Thread.sleep(1000);
+			testsName = homePage.datesoncontextheader.getText();
+			new Actions(Driver.webdriver).moveToElement(homePage.overviewtext).click().build().perform();
+			Thread.sleep(500);
+		} catch (Exception e) {
+			processException(e);
+		}
+		return testsName;
+	}
+	
+	/**
+	 * This method is used to retrieve Class Name on UI
+	 * 
+	 * @return
+	 */
+	public static String getClassNameonUI() {
+		HomePage homePage = PageFactory.initElements(Driver.webdriver, HomePage.class);
+		String className = "";
+		try {
+			new Actions(Driver.webdriver).moveToElement(homePage.classnameoncontextheader).build().perform();
+			if (homePage.classnameoncontextheader.getText().contains("...")) {
+				className = homePage.tooltipofclassnameoncontextheader.getText();
+			} else {
+				className = homePage.classnameoncontextheader.getText();
+			}
+			new Actions(Driver.webdriver).moveToElement(homePage.overviewtext).click().build().perform();
+			Thread.sleep(500);
+		} catch (Exception e) {
+			processException(e);
+		}
+		return className;
+	}
+	
+	/**
 	 * This method is used to wait till the loading of Student List section
 	 */
-	public static void waitforstudentlistsaction() {
+	public static void wait_For_Student_List_Section_Load() {
 		HomePage homePage = PageFactory.initElements(Driver.webdriver, HomePage.class);
 		try {
 			Assert.assertTrue(homePage.noofquestionstext.isDisplayed());
-			log.info("Student List Saction is now Displaying");
-			waitforcontextheadersaction();
-			Standard_Overview_Table_Steps.underClassContext=false;
-			Standard_Overview_Table_Steps.performanceMenuClicked=false;
+			log.info("Student List Section is now Displaying");
+			wait_For_Context_Header_Section();
 		} catch (Exception e) {
-			log.info("Waiting for Student List Saction Loading");
+			log.info("Waiting for Student List Section Loading");
 			try {
 				Thread.sleep(2000);
 			} catch (InterruptedException e1) {
 
 			}
-			waitforstudentlistsaction();
+			wait_For_Student_List_Section_Load();
 		}
 	}
 	
 	/**
 	 * This method is used to wait till the loading of Performance Over Time Line Chart section
 	 */
-	public static void waitforperformanceovertimesaction() {
+	public static void wait_For_Performance_Over_Time_Section_Load() {
 		HomePage homePage = PageFactory.initElements(Driver.webdriver, HomePage.class);
 		try {
 			Assert.assertTrue(homePage.infoicononperformanceovrtimeheader.isDisplayed());
 			log.info("Perfomance Over Time Saction is now Displaying");
-			waitforcontextheadersaction();
+			wait_For_Context_Header_Section();
 			Standard_Overview_Table_Steps.underStudentContext=false;
 			Standard_Overview_Table_Steps.performanceMenuClicked=false;
 		} catch (Exception e) {
@@ -625,19 +829,20 @@ public class UtilityMethods {
 			} catch (InterruptedException e1) {
 
 			}
-			waitforperformanceovertimesaction();
+			wait_For_Performance_Over_Time_Section_Load();
 		}
 	}
+	
 	
 	/**
 	 * This method is used to wait till the loading of Test Score OverView section
 	 */
-	public static void waitfortestscoreoverviewsaction() {
+	public static void wait_For_Test_Score_Overview_Section_Load() {
 		HomePage homePage = PageFactory.initElements(Driver.webdriver, HomePage.class);
 		try {
 			Assert.assertTrue(homePage.testscoreoverviewtext.isDisplayed());
 			log.info("test score overview Saction is now Displaying");
-			waitforcontextheadersaction();
+			wait_For_Context_Header_Section();
 			Standard_Overview_Table_Steps.underStudentContext=false;
 			Standard_Overview_Table_Steps.testScoreMenuClicked=false;
 		} catch (Exception e) {
@@ -647,19 +852,19 @@ public class UtilityMethods {
 			} catch (InterruptedException e1) {
 
 			}
-			waitfortestscoreoverviewsaction();
+			wait_For_Test_Score_Overview_Section_Load();
 		}
 	}
 
 	/**
 	 * This method is used to wait till the loading of Test Score Detail section
 	 */
-	public static void waitfortestscoredetailsaction() {
+	public static void wait_For_Test_Score_Detail_Section() {
 		HomePage homePage = PageFactory.initElements(Driver.webdriver, HomePage.class);
 		try {
 			Assert.assertTrue(homePage.datesubmittedtext.isDisplayed());
 			log.info("test score detail Saction is now Displaying");
-			waitforcontextheadersaction();
+			wait_For_Context_Header_Section();
 			Standard_Overview_Table_Steps.underClassContext=false;
 			Standard_Overview_Table_Steps.testScoreMenuClicked=false;
 		} catch (Exception e) {
@@ -669,14 +874,14 @@ public class UtilityMethods {
 			} catch (InterruptedException e1) {
 
 			}
-			waitfortestscoredetailsaction();
+			wait_For_Test_Score_Detail_Section();
 		}
 	}
 	
 	/**
 	 * This method is used to wait till the loading of context header section
 	 */
-	public static void waitforcontextheadersaction() {
+	public static void wait_For_Context_Header_Section() {
 		HomePage homePage = PageFactory.initElements(Driver.webdriver, HomePage.class);
 		String firstData;
 		if (homePage.contextheaderdatalist.get(0).getText().contains("...")) {
@@ -689,12 +894,12 @@ public class UtilityMethods {
 			log.info("Web Elements are still loading...");
 			try {
 				Thread.sleep(2000);
-				waitforcontextheadersaction();
+				wait_For_Context_Header_Section();
 			} catch (InterruptedException e1) {
 			}
 
 		} else {
-			log.info("Context Header Saction is now clickable");
+			log.info("Context Header Section is now clickable");
 			new Actions(Driver.webdriver).moveToElement(homePage.overviewtext).build().perform();
 		}
 	}
@@ -702,11 +907,13 @@ public class UtilityMethods {
 	/**
 	 * This method is used to wait for the loading of left and/or right section of content once you comes from visiting any page context and page menu
 	 */
-	public static void waitforpageload() {
-		log.info("underStudentContext:"+Standard_Overview_Table_Steps.underStudentContext);
-		log.info("underClassContext:"+Standard_Overview_Table_Steps.underClassContext);
-		log.info("performanceMenuClicked:"+Standard_Overview_Table_Steps.performanceMenuClicked);
-		log.info("testScoreMenuClicked:"+Standard_Overview_Table_Steps.testScoreMenuClicked);
+	public static void wait_For_Page_Section_Load() {
+		
+		log.info("Under Student Context:=>"+Standard_Overview_Table_Steps.underStudentContext);
+		log.info("Under Class Context:=>"+Standard_Overview_Table_Steps.underClassContext);
+		log.info("Performance Menu Clicked:=>"+Standard_Overview_Table_Steps.performanceMenuClicked);
+		log.info("Test Score Menu Clicked:=>"+Standard_Overview_Table_Steps.testScoreMenuClicked);
+		
 		if (Standard_Overview_Table_Steps.underStudentContext) {
 			try {
 				Thread.sleep(3000);
@@ -714,16 +921,31 @@ public class UtilityMethods {
 
 			}
 			if (Standard_Overview_Table_Steps.performanceMenuClicked) {
-				waitforperformanceovertimesaction();
+				wait_For_Performance_Over_Time_Section_Load();
 			} else {
-				waitfortestscoreoverviewsaction();
+				wait_For_Test_Score_Overview_Section_Load();
 			}
 		} else if (Standard_Overview_Table_Steps.underClassContext) {
 			if (Standard_Overview_Table_Steps.performanceMenuClicked) {
-				waitforstudentlistsaction();
+				wait_For_Student_List_Section_Load();
 			} else {
-				waitfortestscoredetailsaction();
+				wait_For_Test_Score_Detail_Section();
 			}
+		}
+	}
+	
+	public static void wait_For_Default_Content_Load() {
+		HomePage homePage = PageFactory.initElements(Driver.webdriver, HomePage.class);
+		try {
+			Assert.assertTrue(homePage.activeclassmenu.isDisplayed());
+		}
+		catch(Exception e) {
+			try {
+				Thread.sleep(2000);
+				log.info("waiting for page load");
+			} catch (InterruptedException e1) {
+			}
+			wait_For_Default_Content_Load();
 		}
 	}
 	
@@ -754,5 +976,66 @@ public class UtilityMethods {
 			}
 		}
 		return false;
+	}
+	
+	public static String checkedTestAndReturnTestName() {
+		HomePage homePage = PageFactory.initElements(Driver.webdriver, HomePage.class);
+		String name="";
+		try {
+			for (int i = 0; i < homePage.testnameslist.size(); i++) {
+				if(homePage.testscheckboxlistwithinput.get(i).getAttribute("value").equals("true")) {
+					name= homePage.testnameslist.get(i).getText();
+				}
+			}
+		}catch(Exception e) {
+			processException(e);
+		}
+		return name;
+	}
+	
+	@SuppressWarnings("unused")
+	public static String TestNamefromTestTab() {
+		String name = "";
+
+		try {
+			PaginationUtility.studentListMethodOne();
+			if (PaginationUtility.paginatorFound) {
+				PaginationUtility.studentListMethodTwo();
+				if (PaginationUtility.enabledRightArrowFound) {
+					do {
+						PaginationUtility.studentListMethodThree();
+						if (PaginationUtility.doneWithThreeCircle) {
+							PaginationUtility.studentListMethodFour();
+							name = checkedTestAndReturnTestName();
+							break;
+						} else {
+							for (int x = 0; x < PaginationUtility.circleList.size(); x++) {
+								Thread.sleep(1000);
+								PaginationUtility.circleList.get(x).click();
+								Thread.sleep(1000);
+								name = checkedTestAndReturnTestName();
+								break;
+							}
+							PaginationUtility.doneWithThreeCircle = true;
+						}
+						PaginationUtility.studentListMethodSix();
+					} while (!PaginationUtility.disableRightArrowFound);
+				} else {
+					for (int x = 0; x < PaginationUtility.circleList.size(); x++) {
+						Thread.sleep(1000);
+						PaginationUtility.circleList.get(x).click();
+						Thread.sleep(1000);
+						name = checkedTestAndReturnTestName();
+						break;
+					}
+				}
+				PaginationUtility.paginatorFound = false;
+			} else {
+				name = checkedTestAndReturnTestName();
+			}
+		} catch (Exception e) {
+			processException(e);
+		}
+		return name;
 	}
 }
