@@ -46,7 +46,7 @@ Feature: Sprint 8 and 10 User Stories
   Given User is on portal's login screen with username as "AliceTPitts" and password as "password" and usertype as "realm1"
   Then verify Test Data assessed for Grade dropdown within the Grouping tab selection window 
   
-   ##BE-910,BE-911,912 and 913 will done after few days. as need to get data validate from db with UI
+   ##BE-910 Done,BE-911,912 and 913 will done after few days. as need to get data validate from db with UI
   Scenario: Verify To check The Strand and or Standard element of the grouping table within the grouping page
   Given User is on portal's login screen with username as "AliceTPitts" and password as "password" and usertype as "realm1"
   Then verify To check The Strand and or Standard element of the grouping table within the grouping page

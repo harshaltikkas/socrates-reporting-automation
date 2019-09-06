@@ -1,24 +1,6 @@
 @Feature
 Feature: Roster Tab Dropdown Behaviour
 
-  ##story 1c)
-  
-  #  @Scenario9 @TC12
-  ##Data incomplete we need role of teacher for single and multiple class allocation.
-  ##  @SmokeTests
-  ##  Scenario Outline: Single or Multiple Selection of class Dropdown
-  ##    Given User is on portal's login screen with username as "superadmin" and password as "password" and usertype as "techsupport"
-  ##    When within the Universal Selector Tab "<usertype>" with "<singleormultipleclass>" selection of class click on roster tab
-  ##    Then by default "All" student should be selected and "<usertype>" with "<singleormultipleclass>" should be able to select Student drop downlist
-  ##    And verify class list and school list and student lastname starts in alpha order
-  ##  Examples:
-  ##      | 	usertype  				|	singleormultipleclass	|
-  ##      | Student  				  |												|
-  ##      | Teacher  				  |		single							|
-  ##      | Teacher  		 			|		multiple						|
-  ##      | School Admin 	 		|												|
-  ##      | District Admin 		|												|
-  
  ##story Loading Icon
   @Scenario10 @TC16
   Scenario: Verify that the selected option should appear at the top of the list and the user should select one option from the dropdown list at a time.

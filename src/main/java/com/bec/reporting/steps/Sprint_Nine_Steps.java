@@ -156,11 +156,11 @@ public class Sprint_Nine_Steps {
 		String output = "fail";
 		Integer schoolId = 0, classId = 0;
 		try {
-			Map<Integer, Integer> ids = UtilityMethods.getSchoolIdAndClassId();
-			for (Map.Entry<Integer, Integer> entry : ids.entrySet()) {
-				schoolId = entry.getKey();
-				classId = entry.getValue();
-			}
+			
+			  Map<Integer, Integer> ids = UtilityMethods.getSchoolIdAndClassId(); for
+			  (Map.Entry<Integer, Integer> entry : ids.entrySet()) { schoolId =
+			  entry.getKey(); classId = entry.getValue(); }
+			 
 
 			if (Standard_Overview_Table_Steps.performanceMenuClicked) {
 				Assert.assertTrue(homePage.questionDropDown.isDisplayed());
@@ -188,49 +188,45 @@ public class Sprint_Nine_Steps {
 	public void verify_Context_header_content_for_the_Standards_Overview_context_selected_shown_in_all_PDF_s()
 			throws Throwable {
 		String output = "";
-		String classN,grade,school,district,tests,dates,assessedWith,testDataAssessedForGrade;
-		String studentN,teacherN;
-
-		Integer schoolId=0,classId=0,studentId;
-
+		String school, classN, district, tests, dates, assessedWith, testDataAssessedForGrade;
+		String studentN, teacherN, grade;
+		Integer schoolId = 0, classId = 0, studentId;
 		try {
-			Map<Integer,Integer> ids=UtilityMethods.getSchoolIdAndClassId();
-			for(Map.Entry<Integer,Integer> entry:ids.entrySet()) {
-				schoolId=entry.getKey();
-				classId=entry.getValue();
+			Map<Integer, Integer> ids = UtilityMethods.getSchoolIdAndClassId();
+			for (Map.Entry<Integer, Integer> entry : ids.entrySet()) {
+				schoolId = entry.getKey();
+				classId = entry.getValue();
 			}
-			
-			classN=UtilityMethods.getClassNameonUI();
-			school=UtilityMethods.getSchoolNameonUI();
-			district=UtilityMethods.getDistrictNameonUI();
-			tests=UtilityMethods.getTestsNameonUI();
-			dates=UtilityMethods.getDatesonContextHeaderUI();
-			assessedWith=UtilityMethods.getAssessedWithonUI();
-			testDataAssessedForGrade=UtilityMethods.getTestDataAssessedForGradeonUI();
+
+			classN = UtilityMethods.getClassNameonUI();
+			school = UtilityMethods.getSchoolNameonUI();
+			district = UtilityMethods.getDistrictNameonUI();
+			tests = UtilityMethods.getTestsNameonUI();
+			dates = UtilityMethods.getDatesonContextHeaderUI();
+			assessedWith = UtilityMethods.getAssessedWithonUI();
+			testDataAssessedForGrade = UtilityMethods.getTestDataAssessedForGradeonUI();
 			if (Standard_Overview_Table_Steps.performanceMenuClicked
 					&& Standard_Overview_Table_Steps.underClassContext) {
 				Assert.assertTrue(homePage.printIcon.isDisplayed());
-				//grade=UtilityMethods.getTestDataAssessedForGradeonUI();
+				// grade=UtilityMethods.getTestDataAssessedForGradeonUI();
 				Assert.assertTrue(homePage.headerRowList.get(0).getText().contains(classN));
 				Assert.assertTrue(homePage.headerRowList.get(1).getText().contains(school));
 				Assert.assertTrue(homePage.headerRowList.get(2).getText().contains(district));
 				Assert.assertTrue(homePage.headerRowList.get(3).getText().contains(tests));
 				Assert.assertTrue(homePage.headerRowList.get(4).getText().contains(dates));
 				Assert.assertTrue(homePage.headerRowList.get(5).getText().contains(assessedWith));
-				Assert.assertTrue(homePage.headerRowList.get(6).getText().contains(testDataAssessedForGrade));	
-				
-				
+				Assert.assertTrue(homePage.headerRowList.get(6).getText().contains(testDataAssessedForGrade));
+
 				output = "pass";
-			}
-			else if (Standard_Overview_Table_Steps.performanceMenuClicked
+			} else if (Standard_Overview_Table_Steps.performanceMenuClicked
 					&& Standard_Overview_Table_Steps.underStudentContext) {
 				Assert.assertTrue(homePage.printIcon.isDisplayed());
-				studentId=UtilityMethods.getStudentId();
-				grade=DatabaseConnection.getGradeTexonomyForStudent(DatabaseConnection.conn, schoolId, classId,studentId);
-				
+				// studentId=UtilityMethods.getStudentId();
+				// grade=DatabaseConnection.getGradeTexonomyForStudent(DatabaseConnection.conn,
+				// schoolId, classId,studentId);
+
 				output = "pass";
-			}
-			else if (Standard_Overview_Table_Steps.testScoreMenuClicked) {
+			} else if (Standard_Overview_Table_Steps.testScoreMenuClicked) {
 				try {
 					Assert.assertTrue(homePage.gradeDropDown.isDisplayed());
 					UtilityMethods.processException(new Exception());
@@ -239,7 +235,6 @@ public class Sprint_Nine_Steps {
 				}
 			}
 
-			
 		} catch (Exception e) {
 			UtilityMethods.processException(e);
 		}

@@ -33,16 +33,20 @@ import java.util.Map;
 import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
 import org.junit.Assert;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.PageFactory;
+
 import com.bec.reporting.pageobjects.HomePage;
 import com.bec.reporting.steps.Standard_Overview_Table_Steps;
+
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -373,7 +377,7 @@ public class UtilityMethods {
 				scroll_Div(webelement, scrollPoints);
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			log.error(e.getMessage());
 			return false;
 		}
 		ctr = 0;
@@ -692,21 +696,23 @@ public class UtilityMethods {
 	 */
 	public static String getTeacherNameonUI() {
 		HomePage homePage = PageFactory.initElements(Driver.webdriver, HomePage.class);
-		String testsName = "";
+		String teachersName = "";
+		JavascriptExecutor js = (JavascriptExecutor) Driver.webdriver;
 		try {
-			new Actions(Driver.webdriver).moveToElement(homePage.testsNameoncontextheader).build().perform();
+			new Actions(Driver.webdriver).moveToElement(homePage.contextheaderdatalist.get(1)).build().perform();
 			Thread.sleep(1000);
-			if (homePage.testsNameoncontextheader.getText().contains("...")) {
-				testsName = homePage.tooltipoftestnameoncontextheader.getText();
+			if (homePage.teacherNameoncontextheader.getText().contains("...")) {
+				teachersName = homePage.tooltipofteachernameoncontextheader.getText();
 			} else {
-				testsName = homePage.testsNameoncontextheader.getText();
+				teachersName = homePage.teacherNameoncontextheader.getText();
 			}
-			new Actions(Driver.webdriver).moveToElement(homePage.overviewtext).click().build().perform();
+
+			js.executeScript("arguments[0].click();", homePage.overviewtext);
 			Thread.sleep(500);
 		} catch (Exception e) {
 			processException(e);
 		}
-		return testsName;
+		return teachersName;
 	}
 	
 	/**
@@ -794,22 +800,23 @@ public class UtilityMethods {
 	/**
 	 * This method is used to wait till the loading of Student List section
 	 */
-	public static void wait_For_Student_List_Section_Load() {
+	public static void wait_For_Student_List_AND_OR_Class_List_Section_Load() {
 		HomePage homePage = PageFactory.initElements(Driver.webdriver, HomePage.class);
 		try {
 			Assert.assertTrue(homePage.noofquestionstext.isDisplayed());
-			log.info("Student List Section is now Displaying");
+			log.info("Student/Class List Section is now Displaying");
 			wait_For_Context_Header_Section();
 		} catch (Exception e) {
-			log.info("Waiting for Student List Section Loading");
+			log.info("Waiting for Student/Class List Section Loading");
 			try {
 				Thread.sleep(2000);
 			} catch (InterruptedException e1) {
 
 			}
-			wait_For_Student_List_Section_Load();
+			wait_For_Student_List_AND_OR_Class_List_Section_Load();
 		}
 	}
+	
 	
 	/**
 	 * This method is used to wait till the loading of Performance Over Time Line Chart section
@@ -900,7 +907,8 @@ public class UtilityMethods {
 
 		} else {
 			log.info("Context Header Section is now clickable");
-			new Actions(Driver.webdriver).moveToElement(homePage.overviewtext).build().perform();
+			new Actions(Driver.webdriver).moveByOffset(200, 200).build().perform();
+			try{Thread.sleep(500);}catch(Exception e) {}
 		}
 	}
 	
@@ -927,7 +935,7 @@ public class UtilityMethods {
 			}
 		} else if (Standard_Overview_Table_Steps.underClassContext) {
 			if (Standard_Overview_Table_Steps.performanceMenuClicked) {
-				wait_For_Student_List_Section_Load();
+				wait_For_Student_List_AND_OR_Class_List_Section_Load();
 			} else {
 				wait_For_Test_Score_Detail_Section();
 			}

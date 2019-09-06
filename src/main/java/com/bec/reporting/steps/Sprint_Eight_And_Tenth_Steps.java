@@ -347,7 +347,7 @@ public class Sprint_Eight_And_Tenth_Steps {
 			Thread.sleep(1000);
 			UtilityMethods.scrollPageUp(Driver.webdriver);
 			Thread.sleep(500);
-			UtilityMethods.wait_For_Student_List_Section_Load();
+			UtilityMethods.wait_For_Student_List_AND_OR_Class_List_Section_Load();
 			if (Integer.parseInt(noOfTestSelected) == 1) {
 				if (homePage.testsNameoncontextheader.getText().contains("...")) {
 					new Actions(Driver.webdriver).moveToElement(homePage.testsNameoncontextheader).build().perform();
@@ -493,7 +493,7 @@ public class Sprint_Eight_And_Tenth_Steps {
 		}
 	}
 	
-	private void wait_For_Strands_Text_After_Apply_BtnOn_GroupingTab() {
+	protected void wait_For_Strands_Text_After_Apply_BtnOn_GroupingTab() {
 		try {
 			Thread.sleep(100);
 			Assert.assertTrue(homePage.strandsTextAfterApplyBtnOnGroupingTab.isDisplayed());
