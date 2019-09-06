@@ -112,6 +112,9 @@ public class HomePage {
 	@FindBy(xpath="//div[@class='menu-title' and contains(text(),'Student')]/following-sibling::div/button")
 	public WebElement studentdropdownbtn;
 	
+	@FindBy(xpath="//div[@class='menu-title' and contains(text(),'Grades')]/following-sibling::div/button")
+	public WebElement gradedropdownbtn;
+	
 	@FindBy(xpath="//div[@class='menu-title' and contains(text(),'District Term')]/following-sibling::div/button")
 	public WebElement districttermdropdownbtn;
 	
@@ -168,6 +171,9 @@ public class HomePage {
 	
 	@FindBy(xpath="//div[@class='menu-title' and contains(text(),'School')]/following-sibling::div//div[@class='menu-dropdown-list-inr']/ul//li")
 	public List<WebElement> schoollist;
+	
+	@FindBy(xpath="//div[@class='menu-title' and contains(text(),'Grades')]/following-sibling::div//div[@class='menu-dropdown-list-inr']/ul//li")
+	public List<WebElement> gradelist;
 	
 	@FindBy(xpath="//div[@class='menu-title' and contains(text(),'Class')]/following-sibling::div//div[@class='menu-dropdown-list-inr']/ul//li")
 	public List<WebElement> classlist;
@@ -250,6 +256,12 @@ public class HomePage {
 	
 	@FindBy(xpath="//div[@class='date-selector']/button")
 	public WebElement edate;
+	
+	@FindBy(xpath="//div[@class='TermYear_Selector']/button")
+	public WebElement monthDropDown;
+	
+	@FindBy(xpath="//div[@class='TermYearSelector']//li")
+	public List<WebElement> monthDropDownList;
 	
 	@FindBy(xpath="//div[@class='menu-title' and contains(text(),'Date Range')]/following-sibling::div//li")
 	public List<WebElement> dateRangelist;
@@ -359,17 +371,38 @@ public class HomePage {
 	@FindBy(xpath="//div[@class='test-results-body']//div[.='No Records Found']")
 	public WebElement norecordontestsearch;
 	
-	@FindBy(xpath="//li[@class='active' and contains(text(),'Standards Performance')]")
+	@FindBy(xpath="//li[@class='active_tab' and contains(text(),'Standards Performance')]")
 	public WebElement activestandardperformancebtn;
 	
-	@FindBy(xpath="//li[@class='active' and contains(text(),'Test Scores')]")
+	@FindBy(xpath="//li[@class='active' and contains(text(),'Assessements')]")
+	public WebElement activeAssessementsbtn;
+	
+	@FindBy(xpath="//li[@class='active_tab' and contains(text(),'Test Scores')]")
 	public WebElement activetestscoresbtn;
+	
+	@FindBy(xpath="//span[@class='sidewidget-header-title' and contains(text(),'Class List')]")
+	public WebElement activeClassListPage;
+	
+	@FindBy(xpath="//span[@class='sidewidget-header-title' and contains(text(),'School List')]")
+	public WebElement activeSchoolListPage;
+	
+	@FindBy(xpath="//span[@class='sidewidget-header-title' and contains(text(),'Student List')]")
+	public WebElement activeStudentListPage;
+	
+	@FindBy(xpath="//span[@class='sidewidget-header-title' and contains(text(),'Performance Over Time')]")
+	public WebElement activePerformanceOverTimePage;
 	
 	@FindBy(xpath="//div[@class='page-selectors-inr']//li[.='Test Scores']")
 	public WebElement testscoresbtn;
 	
 	@FindBy(xpath="//span[contains(text(),'Class')]/ancestor::div[contains(@class,'single-filter text-center active-filter')]")
 	public WebElement activeclassmenu;
+	
+	@FindBy(xpath="//span[contains(text(),'School')]/ancestor::div[contains(@class,'single-filter text-center active-filter')]")
+	public WebElement activeschoolmenu;
+	
+	@FindBy(xpath="//span[contains(text(),'District')]/ancestor::div[contains(@class,'single-filter text-center active-filter')]")
+	public WebElement activedistrictmenu;
 	
 	@FindBy(xpath="//span[contains(text(),'Student')]/ancestor::div[contains(@class,'single-filter text-center active-filter')]")
 	public WebElement activestudentmenu;
@@ -379,6 +412,9 @@ public class HomePage {
 	
 	@FindBy(xpath="//div[@class='single-filter-text']//span[contains(text(),'Class')]")
 	public WebElement classmenu;
+	
+	@FindBy(xpath="//div[@class='single-filter-text']//span[contains(text(),'School')]")
+	public WebElement schoolmenu;
 	
 	@FindBy(xpath="//li[.='Standards Performance']")
 	public WebElement standardperformancebtn;
@@ -403,6 +439,9 @@ public class HomePage {
 	
 	@FindBy(xpath="//li[contains(text(),'Overview')]")
 	public WebElement overviewtext;
+	
+	@FindBy(xpath="//p[contains(text(),'Reports')]")
+	public WebElement reportstext;
 
 	/*Footer Elements*/
 	@FindBy(xpath="//div[@class='footer-bottom']")
@@ -757,6 +796,21 @@ public class HomePage {
 	@FindBy(xpath="//div[@class='standard-grid-filter-view']/div[@class='standard-grid-filter-view-label' and contains(text(),'Test(s) assessed for:')]/following-sibling::div//div//ul/li/div")
 	public List<WebElement> gradeList;
 	
+	@FindBy(xpath="//div[contains(text(),'No data available!')]")
+	public WebElement nodatavailable;
+	
+	@FindBy(xpath="//div[contains(text(),'No data available for your selection.')]")
+	public WebElement nodatavailableforyourselection;
+	
+	@FindBy(xpath="//h1[.='Benchmark Universe']")
+	public WebElement beclogo;
+	
+	@FindBy(xpath="//div[contains(text(),'Take me back')]")
+	public WebElement takemeback;
+	
+	@FindBy(xpath="//div[contains(text(),'Return to previous report')]")
+	public WebElement returntopreviousreport;
+	
 	/**
 	 * Print PDF Sections Xpath
 	 */
@@ -772,6 +826,9 @@ public class HomePage {
 	 */
 	@FindBy(xpath="//li[contains(text(),'Grouping')]")
 	public WebElement groupingTab;
+	
+	@FindBy(xpath="//div[@class='bec_groups_popup_modal_header_text']")
+	public WebElement groupingTabText;
 	
 	@FindBy(xpath="//div[@class='bec_groups_popup_modal_row_label' and contains(text(),'Select Strands:')]/ancestor::div[@class='bec_groups_popup_modal_row_left_txt']/following-sibling::span[@class='group-data-reload']//i[contains(text(),'cached')]")
 	public WebElement strandSelectRefreshIconTab;
@@ -839,8 +896,20 @@ public class HomePage {
 	@FindBy(xpath="//span[@class='bec_group_multi_list_sub_header_avg_score_label' and contains(text(),'Average % Score')]")
 	public WebElement avgperScoreOnGroupingTable;
 	
+	@FindBy(xpath="//div[@class='bec_groups_move_student_popup_title']")
+	public WebElement movingTxtonModelOnGroupingTable;
+	
+	@FindBy(xpath="//button[@class='bec_groups_move_student_popup_submit_actions_apply']")
+	public WebElement moveBtnonModelOnGroupingTable;
+	
 	@FindBy(xpath="//div[contains(text(),' Test(s) assessed for : ')]/ancestor::div[@class='bec_groups_popup_modal_row']//div[@class='bec_groups_popup_dropdown_main']//div[@class='groupingtab_single_dropdown_element']")
 	public List<WebElement> testAssessedForGradeListGroupingTab;
+	
+	@FindBy(xpath="//div[@class='bec_groups_move_student_popup_modal_main_inr_groups_single_row_group_name']")
+	public List<WebElement> NoOfGrpsononModelOnGroupingTable;
+	
+	@FindBy(xpath="//span[@class='bec_group_multi_list_Single_group_body_row_student_name_Name' and contains(text(),'Victor')]/ancestor::div[@class='bec_group_multi_list_Single_group_body_row_student_name']//div[@class='bec_groups_tab_tooltip_strand_score_single_line']")
+	public List<WebElement> tooltipListOnGroupingTable;
 	
 	@FindBy(xpath="//div[@class='bec_groups_popup_modal_row_radio_buttons']//span[@class='bec_groups_popup_modal_radio_label']")
 	public List<WebElement> groupByListOnGroupingTab;
@@ -856,4 +925,25 @@ public class HomePage {
 	
 	@FindBy(xpath="//div[@class='bec_group_multi_list_header_strands_single']")
 	public List<WebElement> groupingTableHeaderList;
+	
+	@FindBy(xpath="//span[@class='bec_group_multi_list_Single_group_body_row_student_name_Name']")
+	public List<WebElement> studentNamesOnGroupingTable;
+	
+	@FindBy(xpath="//span[@class='bec_group_multi_list_Single_group_body_row_student_swap']//i[contains(text(),'swap_vert')]")
+	public List<WebElement> visibleArrowListOnGroupingTable;
+	
+	@FindBy(xpath="//span[@class='student-list-col-head-name']")
+	public List<WebElement> classORSchoolListPageHeadersList;
+	
+	@FindBy(xpath="//div[@class='student-list-row']//div[@class='student-list-col'][1]")
+	public List<WebElement> classORSchoolNamesListInClassListPageHeaders;
+	
+	@FindBy(xpath="//span[@class='student-list-col-head-name' and contains(text(),'Class')]//span[@class='standard_perfomance_list_head_tooltip_Definition']")
+	public WebElement classListPageTooltipForClass;
+	
+	@FindBy(xpath="//span[@class='student-list-col-head-name' and contains(text(),'School')]//span[@class='standard_perfomance_list_head_tooltip_Definition']")
+	public WebElement schoolListPageTooltipForClass;
+	
+	@FindBy(xpath="//span[@class='student-list-col-head-name' and contains(text(),'% Students Complete')]//span[@class='standard_perfomance_list_head_tooltip_Definition']")
+	public WebElement classORSchoolListPageTooltipForStuCmplt;
 }

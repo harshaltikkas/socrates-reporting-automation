@@ -1,5 +1,5 @@
-@Feature
-Feature: Sprint 9 User Stories
+@Feature1
+Feature: Spint 9 User Stories
 
    ##BE-832,833,834
    ##NOTE: failing because of not able to get url of newly opened tab for validation 
