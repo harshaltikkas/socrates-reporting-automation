@@ -475,6 +475,14 @@ public class Sprint_Eleven_And_Twelve_Steps {
 			Thread.sleep(1000);
 			homePage.gradedropdownbtn.click();
 			Thread.sleep(500);
+			// check the list in Descending order
+			List<String> gradeList = new ArrayList<String>();
+			int length = homePage.gradelist.size();
+			for (int i = 0; i < length; i++) {
+				gradeList.add(homePage.gradelist.get(i).getText());
+			}
+			Assert.assertTrue(Ordering.natural().reverse().isOrdered(gradeList));
+			Thread.sleep(500);
 			homePage.gradelist.get(1).click();
 			Thread.sleep(500);
 			UtilityMethods.scrollPageDown(Driver.webdriver, 3);
@@ -498,4 +506,72 @@ public class Sprint_Eleven_And_Twelve_Steps {
 		}
 		log.info("Scenario BE-1130 completed");
 	}
+
+	@Then("^verify The Persistence across level and reports of Standard Performance Overview$")
+	public void verify_The_Persistence_across_level_and_reports_of_Standard_Performance_Overview() throws Throwable {
+		try {
+			Assert.assertTrue(homePage.activeschoolmenu.isDisplayed());
+			Assert.assertTrue(homePage.activestandardperformancebtn.isDisplayed());
+			UtilityMethods.scrollPageDown(Driver.webdriver, 3);
+			int randNo=UtilityMethods.generateRandomNumberBySkippingIndex(homePage.strandnameslist.size(), 0);
+			new Actions(Driver.webdriver).moveToElement(homePage.strandnameslist.get(randNo)).click().build()
+			.perform();
+			Thread.sleep(3000);
+			List<WebElement> standardList=Driver.webdriver.findElements(By.xpath(
+			"//div[@class='overview-table-body']//div[@class='overview-table-row']//div[@class='overview-table-col']["
+					+ (randNo + 2) + "]//li[not(contains(@class,'StandardsNotAvailable'))]"));
+			new Actions(Driver.webdriver).moveToElement(standardList.get(0)).build().perform();Thread.sleep(500);
+			new Actions(Driver.webdriver).moveToElement(standardList.get(0)).click().build().perform();
+			Thread.sleep(5000);
+			UtilityMethods.scrollPageDown(Driver.webdriver, 8);
+			Assert.assertTrue(homePage.noofquestionstext.isDisplayed());
+			new Actions(Driver.webdriver).moveToElement(homePage.classORSchoolNamesListInClassListPageHeaders.get(0)).click().build().perform();
+			Thread.sleep(5000);
+			UtilityMethods.scrollPageUp(Driver.webdriver);Thread.sleep(5000);
+			Assert.assertTrue(homePage.activeclassmenu.isDisplayed());
+			//verify class level based standard performance at DB level
+			UtilityMethods.scrollPageDown(Driver.webdriver, 10);
+			Assert.assertTrue(homePage.noofquestionstext.isDisplayed());
+			new Actions(Driver.webdriver).moveToElement(homePage.classORSchoolNamesListInClassListPageHeaders.get(0)).click().build().perform();
+			Thread.sleep(5000);
+			UtilityMethods.scrollPageUp(Driver.webdriver);Thread.sleep(500);
+			Assert.assertTrue(homePage.activestudentmenu.isDisplayed());
+			CBTConfiguration.score = "pass";
+		} catch (Exception e) {
+			UtilityMethods.processException(e);
+		}
+		log.info("Scenario BE-1184 completed");
+	}
+	//TODO---TC is failing because once click on class list 's class ... no data available popup is showing.
+	@Then("^verify The Persistence across level and reports of Test Scores Overview$")
+	public void verify_The_Persistence_across_level_and_reports_of_Test_Scores_Overview() throws Throwable {
+		try{
+			Assert.assertTrue(homePage.activeschoolmenu.isDisplayed());
+			Assert.assertTrue(homePage.activestandardperformancebtn.isDisplayed());
+			homePage.testscoresbtn.click();Thread.sleep(3000);
+			Assert.assertTrue(homePage.testscoreovertimelinechart.isDisplayed());
+			UtilityMethods.scrollPageDown(Driver.webdriver, 7);
+			Thread.sleep(3000);
+			int randNo=UtilityMethods.generateRandomNumberBySkippingIndex(homePage.testNamesonPerPage_onlinechart.size(), homePage.testNamesonPerPage_onlinechart.size()-1);
+			new Actions(Driver.webdriver).moveToElement(homePage.testScoreValueInCircle_onlinechart.get(randNo)).click().build().perform();
+			Thread.sleep(3000);
+			new Actions(Driver.webdriver).moveToElement(homePage.testNamesonPerPage_onlinechart.get(randNo)).build().perform();
+			Thread.sleep(500);
+			String testNameOnleftSide=homePage.testNametooltip_onlinechart.getText();
+			Thread.sleep(500);
+			new Actions(Driver.webdriver).moveToElement(homePage.testScoresPercentage).build().perform();
+			Thread.sleep(500);
+			new Actions(Driver.webdriver).moveToElement(homePage.testNameOnTestScoreDetail).build().perform();
+			Thread.sleep(500);
+			String testNameOnRightSide=homePage.tooltipOftestNameOnTestScoreDetail.getText();			
+			Assert.assertTrue(testNameOnRightSide.equals(testNameOnleftSide));
+			new Actions(Driver.webdriver).moveToElement(homePage.classORSchoolNamesListInClassListPageHeaders.get(0)).click().build().perform();
+			Thread.sleep(5000);
+			CBTConfiguration.score = "pass";
+		} catch (Exception e) {
+			UtilityMethods.processException(e);
+		}
+		log.info("Scenario BE-1185 completed");
+	}
+
 }

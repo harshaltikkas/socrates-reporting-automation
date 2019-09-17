@@ -132,7 +132,7 @@ public class PaginationUtility {
 			String tooltiptext = homePage.testNametooltip_onlinechart.getText();
 			Assert.assertTrue(tooltiptext.contains(testName));
 			Thread.sleep(500);
-			new Actions(Driver.webdriver).moveToElement(homePage.testscoreovertimetext).build().perform();
+			new Actions(Driver.webdriver).moveToElement(homePage.testScoresPercentage).build().perform();
 		} catch (InterruptedException e) {
 			log.error(e.getMessage());
 			UtilityMethods.processException(e);
@@ -162,7 +162,7 @@ public class PaginationUtility {
 			} catch (Exception e1) {
 				try {
 					Thread.sleep(500);
-					new Actions(Driver.webdriver).moveToElement(homePage.testscoreovertimetext).click().build()
+					new Actions(Driver.webdriver).moveToElement(homePage.testScoresPercentage).click().build()
 							.perform();
 				} catch (InterruptedException e2) {
 				}
@@ -187,9 +187,9 @@ public class PaginationUtility {
 			Assert.assertTrue(
 					Integer.parseInt(homePage.testScoreValueInCircle_onlinechart.get(index).getText()) == testScoreAvg);
 
-			new Actions(Driver.webdriver).moveToElement(homePage.selectedTestName).build().perform();
+			new Actions(Driver.webdriver).moveToElement(homePage.testNameOnTestScoreDetail).build().perform();
 
-			Assert.assertTrue(homePage.tooltipofselectedTest.getText().equals(toolTipTextofTest));
+			Assert.assertTrue(homePage.tooltipOftestNameOnTestScoreDetail.equals(toolTipTextofTest));
 			new Actions(Driver.webdriver).moveToElement(homePage.testscoredetail).build().perform();
 			String submittedDateText = homePage.selectedTestSubmittedDate.getText();
 			UtilityMethods.checkDateFormat(submittedDateText.substring(11, 21));
@@ -278,7 +278,7 @@ public class PaginationUtility {
 			}
 			Assert.assertTrue(homePage.questionlistarea.isDisplayed());
 			try {
-				new Actions(Driver.webdriver).moveToElement(homePage.testscoreovertimetext).click().build().perform();
+				new Actions(Driver.webdriver).moveToElement(homePage.testScoresPercentage).click().build().perform();
 			} catch (Exception e) {
 				try {
 					new Actions(Driver.webdriver).moveToElement(homePage.testNamesonPerPage_onlinechart.get(index))
@@ -412,7 +412,7 @@ public class PaginationUtility {
 						.equals(submittedDateText.substring(12, 22)));
 				Assert.assertTrue(new SimpleDateFormat("MM/dd/yyyy").format(m.getMaxDate())
 						.equals(submittedDateText.substring(24)));
-				new Actions(Driver.webdriver).moveToElement(homePage.testscoreovertimetext).click().build().perform();
+				new Actions(Driver.webdriver).moveToElement(homePage.testScoresPercentage).click().build().perform();
 				Thread.sleep(1000);
 			}
 		}

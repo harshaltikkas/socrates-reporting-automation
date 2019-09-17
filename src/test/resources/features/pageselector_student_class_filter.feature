@@ -2,7 +2,7 @@
 Feature: Page Selector and Class Student Filter
 
   ##STUDENT/CLASS FILTER , PAGE SELECTOR , CONTEXT HEADER, FLY-IN-KEY
-   @Scenario22 @TC1 @TC3
+  @Scenario22 @TC1 @TC3
   Scenario: Verify by default Standards Performance button should be selected with the Class context from the Student/Class Filter.
     Given User is on portal's login screen with username as "superadmin" and password as "password" and usertype as "techsupport"
     When default Standards Performance button should be selected with the Class context
@@ -32,4 +32,3 @@ Feature: Page Selector and Class Student Filter
     Then Verify labels on context header based on standard performance and test scores button
     When User Click on Standard Performance tab within the Student Context
     Then Verify labels on context header based on standard performance and test scores button
-

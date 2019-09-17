@@ -11,7 +11,7 @@ Feature: Test Tab Design and Behaviour
   @Scenario19 @TC39
   Scenario: Verifying the state of the checkbox when deselected the option/test
     Given User is on portal's login screen with username as "superadmin" and password as "password" and usertype as "techsupport"
-		#When User Click on Standard Performance tab within the Class Context
+    #When User Click on Standard Performance tab within the Class Context
     When User Click on Test tab within the Universal Selector Tab
     Then verify checkbox state as deselected while unchecked on checkbox.
 
@@ -41,7 +41,6 @@ Feature: Test Tab Design and Behaviour
   #4)Results down arrow: 10-1
   #5)Date up arrows: oldest to newest
   #6)Date down arrows: newest to oldest
-  
   @Scenario28 @TC39
   Scenario: Check whether the earliest date is displaying in descending by defaultly
     Given User is on portal's login screen with username as "superadmin" and password as "password" and usertype as "techsupport"

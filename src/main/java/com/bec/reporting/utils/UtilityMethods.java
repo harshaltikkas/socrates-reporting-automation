@@ -886,6 +886,27 @@ public class UtilityMethods {
 	}
 	
 	/**
+	 * This method is used to wait till the loading of Standard Performance Table section
+	 */
+	public static void wait_For_Standard_Performance_Table_Section() {
+		HomePage homePage = PageFactory.initElements(Driver.webdriver, HomePage.class);
+		try {
+			Assert.assertTrue(homePage.standardnameslist.get(0).isDisplayed());
+			log.info("loading of Standard Performance Table Section is now Displaying");
+			wait_For_Context_Header_Section();
+			Standard_Overview_Table_Steps.resetStatus();
+		} catch (Exception e) {
+			log.info("Waiting for loading of Standard Performance Table  Section Loading");
+			try {
+				Thread.sleep(2000);
+			} catch (InterruptedException e1) {
+
+			}
+			wait_For_Standard_Performance_Table_Section();
+		}
+	}
+	
+	/**
 	 * This method is used to wait till the loading of context header section
 	 */
 	public static void wait_For_Context_Header_Section() {
@@ -939,21 +960,6 @@ public class UtilityMethods {
 			} else {
 				wait_For_Test_Score_Detail_Section();
 			}
-		}
-	}
-	
-	public static void wait_For_Default_Content_Load() {
-		HomePage homePage = PageFactory.initElements(Driver.webdriver, HomePage.class);
-		try {
-			Assert.assertTrue(homePage.activeclassmenu.isDisplayed());
-		}
-		catch(Exception e) {
-			try {
-				Thread.sleep(2000);
-				log.info("waiting for page load");
-			} catch (InterruptedException e1) {
-			}
-			wait_For_Default_Content_Load();
 		}
 	}
 	

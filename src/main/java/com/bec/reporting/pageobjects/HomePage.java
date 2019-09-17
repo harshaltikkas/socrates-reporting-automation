@@ -392,7 +392,7 @@ public class HomePage {
 	@FindBy(xpath="//span[@class='sidewidget-header-title' and contains(text(),'Performance Over Time')]")
 	public WebElement activePerformanceOverTimePage;
 	
-	@FindBy(xpath="//div[@class='page-selectors-inr']//li[.='Test Scores']")
+	@FindBy(xpath="//li[.='Test Scores']")
 	public WebElement testscoresbtn;
 	
 	@FindBy(xpath="//span[contains(text(),'Class')]/ancestor::div[contains(@class,'single-filter text-center active-filter')]")
@@ -581,7 +581,7 @@ public class HomePage {
 	public List<WebElement> noofstudentsinlist;	
 	
 	@FindBy(xpath="//*[name()='tspan' and contains(text(),'Test Scores (%)')]")
-	public WebElement testscoreovertimetext;
+	public WebElement testScoresPercentage;
 	
 	@FindBy(xpath="//*[name()='tspan' and contains(text(),'100')]")
 	public WebElement hundredtextontsot;
@@ -686,13 +686,13 @@ public class HomePage {
 	public WebElement studentlistsubheader;
 	
 	@FindBy(xpath="//div[@class='class_test_overview_table_header_left']")
-	public WebElement selectedTestName;
+	public WebElement testNameOnTestScoreDetail;
 	
 	@FindBy(xpath="//div[@class='class_test_overview_table_header_right']/span")
 	public WebElement selectedTestSubmittedDate;
 	
 	@FindBy(xpath="//div[@class='class_test_overview_table_header_left']//div[@class='bec_tooltip_content']")
-	public WebElement tooltipofselectedTest;
+	public WebElement tooltipOftestNameOnTestScoreDetail;
 	
 	@FindBy(xpath="//span[@class='student-list-col-head-name' and contains(text(),'Students')]")
 	public WebElement StudentRecordsSize;

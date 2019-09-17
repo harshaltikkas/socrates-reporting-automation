@@ -1,7 +1,7 @@
 @Feature
-Feature: Roster Tab Dropdown Behaviour
+Feature: Ros1ter Tab Dropdown Behaviour
 
- ##story Loading Icon
+  ##story Loading Icon
   @Scenario10 @TC16
   Scenario: Verify that the selected option should appear at the top of the list and the user should select one option from the dropdown list at a time.
     Given User is on portal's login screen with username as "superadmin" and password as "password" and usertype as "techsupport"

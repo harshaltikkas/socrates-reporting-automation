@@ -54,7 +54,6 @@ Feature: Fly In Menu Behaviour
   ### Given User is on portal's login screen with username as "superadmin" and password as "password" and usertype as "techsupport"
   ### When User Click on Date tab within the Universal Selector Tab
   ### Then User should be able to select district term and click on apply filter button
-
   @Scenario7 @TC8
   Scenario: Verify to close the Fly-In menu of the Date Tab.
     Given User is on portal's login screen with username as "superadmin" and password as "password" and usertype as "techsupport"
