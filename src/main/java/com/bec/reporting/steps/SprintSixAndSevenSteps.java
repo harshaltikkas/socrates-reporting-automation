@@ -71,8 +71,8 @@ public class SprintSixAndSevenSteps {
 			for (Map.Entry<Integer, Integer> entry : ids.entrySet()) {
 				schoolId = entry.getKey();
 			}
-			new Actions(Driver.webdriver).moveToElement(homePage.selectedTestName).build().perform();
-			testName = homePage.tooltipofselectedTest.getText();
+			new Actions(Driver.webdriver).moveToElement(homePage.testNameOnTestScoreDetail).build().perform();
+			testName = homePage.tooltipOftestNameOnTestScoreDetail.getText();
 
 			homePage.compareschoollabel.click();
 			Thread.sleep(1000);

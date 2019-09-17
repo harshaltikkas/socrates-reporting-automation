@@ -1012,7 +1012,7 @@ public class Standard_Overview_Table_Steps {
 	public void line_chart_of_Test_score_over_time_should_be_displayed_of_that_student_but_Student_list_should_not_be_displayed()
 			throws Throwable {
 		try {
-			Assert.assertTrue(homePage.testscoreovertimetext.isDisplayed());
+			Assert.assertTrue(homePage.testScoresPercentage.isDisplayed());
 			Integer schoolId = 0, classId = 0, studentId = 0;
 
 			Map<Integer, Integer> ids = UtilityMethods.getSchoolIdAndClassId();
