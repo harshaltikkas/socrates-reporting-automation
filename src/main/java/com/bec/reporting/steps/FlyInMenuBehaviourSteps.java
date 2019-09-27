@@ -29,7 +29,6 @@ import java.util.Properties;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.Select;
@@ -47,20 +46,24 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class FlyInMenuBehaviourSteps {
-	
+
 	/**
-	 *This is used to initialize webelement of the webpages 
+	 * This is used to initialize webelement of the webpages
 	 */
 	HomePage homePage = PageFactory.initElements(Driver.webdriver, HomePage.class);
 	public static Properties prop;
-	public static String toolTipText="";	
-	
+	public static String toolTipText = "";
+	public static String classNameonCH,schoolNameonCH, teacherNameonCH, gradeNameonCH,studentTextonCH;
+
 	/**
-	 * method used to launch the browser with the url and provide the username,password and usertype 
+	 * method used to launch the browser with the url and provide the
+	 * username,password and usertype
+	 * 
 	 * @throws Throwable
 	 */
 	@Given("^User is on portal's login screen with username as \"([^\"]*)\" and password as \"([^\"]*)\" and usertype as \"([^\"]*)\"$")
-	public void user_is_on_portal_s_login_screen_with_username_as_and_password_as_and_usertype_as(String username, String password,String usertype) throws Throwable {
+	public void user_is_on_portal_s_login_screen_with_username_as_and_password_as_and_usertype_as(String username,
+			String password, String usertype) throws Throwable {
 		log.info("User is on portal's login screen");
 		try {
 			prop = FileRead.readProperties();
@@ -70,36 +73,37 @@ public class FlyInMenuBehaviourSteps {
 			homePage.username.sendKeys(username);
 			homePage.password.clear();
 			homePage.password.sendKeys(password);
-			try {
-			Select select=new Select(homePage.usertypedropdown);
-			select.selectByVisibleText(usertype);
+			Thread.sleep(500);
+			Select select = new Select(homePage.usertypedropdown);
+			Thread.sleep(500);
+			select.selectByValue(usertype);
 			Thread.sleep(1000);
-			}catch(Exception e) {}
 			homePage.loginbtn.click();
-			Thread.sleep(15000);
-			//UtilityMethods.wait_For_Default_Content_Load();
-
+			//Thread.sleep(3000);
+			IWait.explicit_wait(Driver.webdriver, homePage.studentmenu);
 		} catch (Exception e) {
 			UtilityMethods.processException(e);
 		}
 	}
-	
+
 	/**
 	 * This method is used to open and close the Universal Selector Tab one by one
+	 * 
 	 * @param tabName
 	 * @throws Throwable
 	 */
 	@Then("^User is able to open and close the \"([^\"]*)\" tab within the Universal Selector Tab$")
-	public void user_is_able_to_open_and_close_the_tab_within_the_Universal_Selector_Tab(String tabName) throws Throwable {
+	public void user_is_able_to_open_and_close_the_tab_within_the_Universal_Selector_Tab(String tabName)
+			throws Throwable {
 		try {
-			IWait.explicit_wait(Driver.webdriver, homePage.openarrow);
+			// IWait.explicit_wait(Driver.webdriver, homePage.openarrow);
 			Verify.verify(homePage.openarrow.isDisplayed());
 			Driver.webdriver.findElement(By.xpath("//span[@class='menu-name' and contains(text(),'" + tabName + "')]"))
 					.click();
 			Thread.sleep(1000);
 			if (tabName.equals("Roster")) {
-				IWait.explicit_wait(Driver.webdriver, homePage.schoolTitleOnSliderMenu);
-				Verify.verify(homePage.schoolTitleOnSliderMenu.isDisplayed());
+				IWait.explicit_wait(Driver.webdriver, homePage.studentTitleOnSliderMenu);
+				Verify.verify(homePage.studentTitleOnSliderMenu.isDisplayed());
 			} else if (tabName.equals("Test")) {
 				IWait.explicit_wait(Driver.webdriver, homePage.searchbarontesttab);
 				Verify.verify(homePage.searchbarontesttab.isDisplayed());
@@ -116,11 +120,13 @@ public class FlyInMenuBehaviourSteps {
 		} catch (Exception e) {
 			UtilityMethods.processException(e);
 		}
-		log.info("Scenario 1 for "+tabName+" Completed");		
+		log.info("Scenario 1 for " + tabName + " Completed");
 	}
 
 	/**
-	 * method used to click on roster tab and verify school text above school dropdown 
+	 * method used to click on roster tab and verify school text above school
+	 * dropdown
+	 * 
 	 * @throws Throwable
 	 */
 	@When("^User Click on Roster tab within the Universal Selector Tab$")
@@ -128,187 +134,285 @@ public class FlyInMenuBehaviourSteps {
 		try {
 			IWait.explicit_wait(Driver.webdriver, homePage.rostertab);
 			homePage.rostertab.click();
-			IWait.explicit_wait(Driver.webdriver, homePage.schoolTitleOnSliderMenu);
-			Verify.verify(homePage.schoolTitleOnSliderMenu.isDisplayed());
+			IWait.explicit_wait(Driver.webdriver, homePage.studentTitleOnSliderMenu);
+			Verify.verify(homePage.studentTitleOnSliderMenu.isDisplayed());
 			Thread.sleep(500);
 		} catch (Exception e) {
 			UtilityMethods.processException(e);
 		}
 	}
-	
+
 	/**
-	 * This method is used to verify the different student type selection in Roster Tab and after applying button verify the content with
-	 * context header info
+	 * This method is used to verify the different student type selection in Roster
+	 * Tab and after applying button verify the content with context header info
+	 * 
 	 * @param studentType
 	 * @throws Throwable
 	 */
 	@Then("^User should be able to select school and Class and student as \"([^\"]*)\" and apply and verify with context header information$")
-	public void user_should_be_able_to_select_school_and_Class_and_student_as_and_apply_and_verify_with_context_header_information(String studentType) throws Throwable {
+	public void user_should_be_able_to_select_school_and_Class_and_student_as_and_apply_and_verify_with_context_header_information(
+			String selectiontype) throws Throwable {
 		try {
-			String selectedSchool,selectedClass,selectedStudent;
+			Thread.sleep(5000);
+			String selectedSchool = "", selectedClass = "", selectedStudent = "", selectedGrade = "",
+					selectedTeacher = "";
+			int customSize = 0;
 			// selecting school from dropdown
-			UtilityMethods.scrollPageDown(Driver.webdriver,3);
+			UtilityMethods.scrollPageDown(Driver.webdriver, 3);
 			homePage.schooldropdownbtn.click();
 			Thread.sleep(1000);
-			int randomIndex=UtilityMethods.generateRandomNumberBySkippingIndex(homePage.schoollist.size(), 0);
-			UtilityMethods.scroll_Div(homePage.schoollist.get(randomIndex), 20);
+			int randomIndex = 0;
+			homePage.searchbaronschooldropdown.sendKeys("Steiner Academy Bristol");
+			Thread.sleep(500);
+			selectedSchool = homePage.schoollist.get(randomIndex).getText();
+			homePage.schoollist.get(0).click();
+			log.info("Selected School is:" + selectedSchool);
+			// selecting Grade from dropdown
 			Thread.sleep(1000);
-			selectedSchool=homePage.schoollist.get(randomIndex).getText();
-			homePage.schoollist.get(randomIndex).click();			
-			log.info("Selected School is:" +selectedSchool );
-
-			int count = 1;
-			try {
-				Assert.assertTrue(homePage.classRefreshIcon.isDisplayed());
-				do {
-					log.info("Thread sleep called for class Loading :" + count + " Times");
-					Thread.sleep(2000);
-					count++;
-				} while (homePage.classRefreshIcon.isDisplayed());
-			} catch (Exception e) {
-				log.info("Class Refresh Icon Display off");
-				count = 1;
-			}
+			homePage.gradedropdownbtn.click();
+			Thread.sleep(1000);
+			selectedGrade = homePage.gradelist.get(1).getText();
+			homePage.gradelist.get(1).click();
+			log.info("Selected Grade is:" + selectedGrade);
+			Thread.sleep(1000);
 			UtilityMethods.scrollPageDown(Driver.webdriver, 3);
-			// selecting class from dropdown
-			homePage.classdropdownbtn.click();
 			Thread.sleep(1000);
-			randomIndex=UtilityMethods.generateRandomNumberBySkippingIndex(homePage.classlist.size(), 0);
-			UtilityMethods.scroll_Div(homePage.classlist.get(randomIndex), 20);
+			homePage.teachersdropdownbtn.click();
 			Thread.sleep(1000);
-			selectedClass=homePage.classlist.get(randomIndex).getText();
-			homePage.classlist.get(randomIndex).click();
-			Thread.sleep(1000);
-			log.info("Selected Class is:" + selectedClass);
-
-			try {
-				Assert.assertTrue(homePage.studentRefreshIcon.isDisplayed());
-				do {
-					log.info("Thread sleep called for Student Loading :" + count + " Times");
-					Thread.sleep(2000);
-					count++;
-				} while (homePage.studentRefreshIcon.isDisplayed());
-			} catch (Exception e) {
-				log.info("Student Refresh Icon Display off");
-			}
-			// selecting student from dropdown
-			homePage.studentdropdownbtn.click();
-			Thread.sleep(1000);
-			int customSize=0;
-			//This is to unselect all student from dropdown,as default is all selected
-			homePage.studentdropdownallcheckbox.click();
-			Thread.sleep(1000);
-			UtilityMethods.scrollPageDown(Driver.webdriver,5);
-			switch (studentType) {
+			// de-selecting first time"all" teachers
+			homePage.teacherslist.get(0).click();
+			Thread.sleep(500);
+			switch (selectiontype) {
 			case "single":
-				homePage.studentlistondropdown.get(2).click();
-				Standard_Overview_Table_Steps.underStudentContext=true;
+				// selecting Teacher from dropdown
+				Thread.sleep(1000);
+				selectedTeacher = homePage.teacherslist.get(2).getText();
+				homePage.teacherslist.get(2).click();
+				log.info("Selected Teacher is:" + selectedTeacher);
+				homePage.teachersdropdownbtn.click();
+				// selecting class from dropdown
+				Thread.sleep(1000);
+				UtilityMethods.scrollPageDown(Driver.webdriver, 3);
+				Thread.sleep(500);
+				homePage.classdropdownbtn.click();
+				Thread.sleep(1000);
+				// de-selecting first time"all" classes
+				homePage.classlist.get(0).click();
+				Thread.sleep(500);
+				Thread.sleep(1000);
+				selectedClass = homePage.classlist.get(2).getText();
+				homePage.classlist.get(2).click();
+				log.info("Selected Class is:" + selectedClass);
+				homePage.classdropdownbtn.click();
+				// selecting student from dropdown
+				Thread.sleep(1000);
+				homePage.studentdropdownbtn.click();
+				Thread.sleep(1000);
+				// de-selecting first time"all" students
+				// This is to unselect all student from dropdown,as default is all selected
+				homePage.studentdropdownallcheckbox.click();
+				Thread.sleep(500);
+				randomIndex = UtilityMethods.generateRandomNumberBySkippingIndex(homePage.studentlistwithall.size(), 0);
+				UtilityMethods.scroll_Div(homePage.studentlistwithall.get(randomIndex), 20);
+				Thread.sleep(500);
+				selectedStudent = homePage.studentlistwithall.get(randomIndex).getText();
+				UtilityMethods.scrollPageDown(Driver.webdriver, 2);
+				Thread.sleep(500);
+				homePage.studentlistwithall.get(randomIndex).click();
+				Thread.sleep(500);
+				log.info("Selected Student is:" + selectedStudent);
+				homePage.studentdropdownbtn.click();
 				break;
 			case "multiple":
-				for (int i = 1; i < homePage.studentlistondropdown.size(); i=i+2) {
-					if(homePage.studentlistondropdown.get(i).getText().equals("")) {
+				// selecting Teacher from dropdown
+				Thread.sleep(1000);
+				selectedTeacher = homePage.teacherslist.get(2).getText();
+				homePage.teacherslist.get(2).click();
+				log.info("Selected Teacher is:" + selectedTeacher);
+				homePage.teachersdropdownbtn.click();
+				// selecting class from dropdown
+				Thread.sleep(1000);
+				UtilityMethods.scrollPageDown(Driver.webdriver, 3);
+				Thread.sleep(500);
+				homePage.classdropdownbtn.click();
+				Thread.sleep(1000);
+				// de-selecting first time"all" classes
+				homePage.classlist.get(0).click();
+				Thread.sleep(500);
+				Thread.sleep(1000);
+				selectedClass = homePage.classlist.get(2).getText();
+				homePage.classlist.get(2).click();
+				log.info("Selected Class is:" + selectedClass);
+				homePage.classdropdownbtn.click();
+				Thread.sleep(1000);
+				// selecting student from dropdown
+				homePage.studentdropdownbtn.click();
+				Thread.sleep(1000);
+				// de-selecting first time"all" students
+				// This is to unselect all student from dropdown,as default is all selected
+				homePage.studentdropdownallcheckbox.click();
+				Thread.sleep(500);
+				// selecting custom Teacher from dropdown
+				for (int i = 1; i < homePage.studentlistondropdown.size(); i = i + 2) {
+					if (homePage.studentlistondropdown.get(i).getText().equals("")) {
 						UtilityMethods.scroll_Div(homePage.studentlistondropdown.get(i), 20);
 					}
 					homePage.studentlistondropdown.get(i).click();
 					Thread.sleep(1000);
 					customSize++;
 				}
-				Standard_Overview_Table_Steps.underClassContext=true;
+				homePage.studentdropdownbtn.click();
+				Thread.sleep(1000);
 				break;
 			default:
-				homePage.studentdropdownallcheckbox.click();
-				Standard_Overview_Table_Steps.underClassContext=true;
+				// de-selecting first time"all" teachers
+				homePage.teacherslist.get(0).click();
+				Thread.sleep(500);
+				homePage.teachersdropdownbtn.click();
+				Thread.sleep(1000);
 				break;
 			}
-			Thread.sleep(1000);
-			selectedStudent=homePage.studentdropdownbtn.getText();
-			log.info("Selected Student is:" + selectedStudent);
-
+			Thread.sleep(500);
 			homePage.rosterapplybtn.click();
-			Thread.sleep(3000);
 			UtilityMethods.scrollPageUp(Driver.webdriver);
 			UtilityMethods.wait_For_Context_Header_Section();
+			Thread.sleep(5000);
+
 			/**
-			 * verifying class and school and student on context menu by comparing dropdown
-			 * text and context menu values
+			 * verifying class and school,teacher,grade and student on context menu by
+			 * comparing dropdown text and context menu values
 			 */
-			String classNameonCH,studentTextonCH,schoolNameonCH;
 
-			if (homePage.classnameoncontextheader.getText().contains("...")) {
-				new Actions(Driver.webdriver).moveToElement(homePage.classnameoncontextheader).build().perform();
-				classNameonCH = homePage.tooltipofclassnameoncontextheader.getText();
-				new Actions(Driver.webdriver).moveToElement(homePage.overviewtext).build().perform();
-			}
-			else {
-				classNameonCH = homePage.classnameoncontextheader.getText();
-			}
-			log.info("class name on CH:"+classNameonCH);
-			Assert.assertTrue(selectedClass.equals(classNameonCH));
-			
-			homePage.tripledotsoncontextheader.click();
-			Thread.sleep(1000);
-			
-			if (homePage.schoolnameoncontextheader.getText().contains("...")) {
-				new Actions(Driver.webdriver).moveToElement(homePage.schoolnameoncontextheader).build().perform();
-				schoolNameonCH = homePage.tooltipofschoolnameoncontextheader.getText();
-				new Actions(Driver.webdriver).moveToElement(homePage.overviewtext).build().perform();
-			} else {
-				schoolNameonCH = homePage.schoolnameoncontextheader.getText();
-			}
-			log.info("School name on CH:"+schoolNameonCH);
-			new Actions(Driver.webdriver).moveToElement(homePage.overviewtext).click().build().perform();
-			Assert.assertTrue(selectedSchool.equals(schoolNameonCH));			
-			
-			switch (studentType) {
-			
+			switch (selectiontype) {
 			case "single":
-
+				Thread.sleep(3000);
+				verify_Single_Selection_context_header_content(selectedClass,selectedGrade,selectedSchool,selectedTeacher);
+			
 				if (homePage.studentnameoncontextheader.getText().contains("...")) {
 					new Actions(Driver.webdriver).moveToElement(homePage.studentnameoncontextheader).build().perform();
 					studentTextonCH = homePage.studentnameoncontextheadertooltiptext.getText();
 				} else {
 					studentTextonCH = homePage.studentnameoncontextheader.getText();
 				}
-				log.info("Student name on CH:"+studentTextonCH);
+				log.info("Student name on CH:" + studentTextonCH);
 				Assert.assertTrue(studentTextonCH.contains(selectedStudent));
 				Assert.assertTrue(homePage.activestudentmenu.isDisplayed());
 				break;
 
 			case "multiple":
-				
+				Thread.sleep(3000);
+				verify_Single_Selection_context_header_content(selectedClass,selectedGrade,selectedSchool,selectedTeacher);
 				if (homePage.studentnameoncontextheader.getText().contains("...")) {
 					new Actions(Driver.webdriver).moveToElement(homePage.studentnameoncontextheader).build().perform();
 					studentTextonCH = homePage.studentnameoncontextheadertooltiptext.getText();
 				} else {
 					studentTextonCH = homePage.studentnameoncontextheader.getText();
 				}
-				log.info("Student name on CH:"+studentTextonCH);
-				Assert.assertTrue(studentTextonCH.equals("Custom ("+customSize+")"));
+				log.info("Student name on CH:" + studentTextonCH);
+				Assert.assertTrue(studentTextonCH.equals("Custom (" + customSize + ")"));
 				Assert.assertTrue(homePage.activeclassmenu.isDisplayed());
 				break;
-				
-			default:
-				Assert.assertTrue(homePage.activeclassmenu.isDisplayed());
+
+			default:				
+				Thread.sleep(1000);
+				// verifying Grade name context header
+				if (homePage.gradenameoncontextheader.getText().contains("...")) {
+					new Actions(Driver.webdriver).moveToElement(homePage.gradenameoncontextheader).build().perform();
+					gradeNameonCH = homePage.tooltipofgradenameoncontextheader.getText();
+					new Actions(Driver.webdriver).moveToElement(homePage.overviewtext).build().perform();
+				} else {
+					gradeNameonCH = homePage.gradenameoncontextheader.getText();
+				}
+				log.info("Grade name on CH:" + gradeNameonCH);
+				selectedGrade = selectedGrade.substring(selectedGrade.indexOf(" ") + 1);
+				Assert.assertTrue(selectedGrade.equals(gradeNameonCH));
+				new Actions(Driver.webdriver).moveToElement(homePage.overviewtext).click().perform();
+				// verifying school name context header
+				if (homePage.schoolnameoncontextheader.getText().contains("...")) {
+					new Actions(Driver.webdriver).moveToElement(homePage.schoolnameoncontextheader).build().perform();
+					schoolNameonCH = homePage.tooltipofschoolnameoncontextheader.getText();
+					new Actions(Driver.webdriver).moveToElement(homePage.overviewtext).build().perform();
+				} else {
+					schoolNameonCH = homePage.schoolnameoncontextheader.getText();
+				}
+				log.info("School name on CH:" + schoolNameonCH);
+				Assert.assertTrue(selectedSchool.equals(schoolNameonCH));
+				Assert.assertTrue(homePage.activeschoolmenu.isDisplayed());
 				break;
 			}
 			CBTConfiguration.score = "pass";
 		} catch (Exception e) {
 			UtilityMethods.processException(e);
 		}
-		log.info("Scenario 2 for "+studentType+" Completed");		
+		log.info("Scenario 2 for " + selectiontype + " Completed");
+	}
+
+	private void verify_Single_Selection_context_header_content(String selectedClass,String selectedGrade,String selectedSchool,String selectedTeacher) {
+		try {
+			// verifying class name on context header
+			Actions actions = new Actions(Driver.webdriver);
+			if (homePage.classnameoncontextheader.getText().contains("...")) {
+				actions.moveToElement(homePage.classnameoncontextheader).build().perform();
+				classNameonCH = homePage.tooltipofclassnameoncontextheader.getText();
+				actions.moveToElement(homePage.overviewtext).build().perform();
+			} else {
+				classNameonCH = homePage.classnameoncontextheader.getText();
+			}
+			log.info("class name on CH:" + classNameonCH);
+			Assert.assertTrue(selectedClass.equals(classNameonCH));
+			actions.moveToElement(homePage.overviewtext).click().perform();
+			// verifying teacher name on context header
+			if (homePage.teachernameoncontextheader.getText().contains("...")) {
+				new Actions(Driver.webdriver).moveToElement(homePage.teachernameoncontextheader).build().perform();
+				teacherNameonCH = homePage.tooltipofteachernameoncontextheader.getText();
+				new Actions(Driver.webdriver).moveToElement(homePage.overviewtext).build().perform();
+			} else {
+				teacherNameonCH = homePage.teachernameoncontextheader.getText();
+			}
+			log.info("Teacher name on CH:" + teacherNameonCH);
+			Assert.assertTrue(selectedTeacher.equals(teacherNameonCH));
+
+			homePage.tripledotsoncontextheader.click();
+			Thread.sleep(1000);
+			// verifying Grade name context header
+			if (homePage.gradenameontripledot.getText().contains("...")) {
+				new Actions(Driver.webdriver).moveToElement(homePage.gradenameontripledot).build().perform();
+				gradeNameonCH = homePage.tooltipofgradenameontripledot.getText();
+				new Actions(Driver.webdriver).moveToElement(homePage.overviewtext).build().perform();
+			} else {
+				gradeNameonCH = homePage.gradenameontripledot.getText();
+			}
+			log.info("Grade name on CH:" + gradeNameonCH);
+			selectedGrade = selectedGrade.substring(selectedGrade.indexOf(" ") + 1);
+			Assert.assertTrue(selectedGrade.equals(gradeNameonCH));
+			// verifying school name context header
+			if (homePage.schoolnameontripledot.getText().contains("...")) {
+				new Actions(Driver.webdriver).moveToElement(homePage.schoolnameontripledot).build().perform();
+				schoolNameonCH = homePage.tooltipofschoolnameontripledot.getText();
+				new Actions(Driver.webdriver).moveToElement(homePage.overviewtext).build().perform();
+			} else {
+				schoolNameonCH = homePage.schoolnameontripledot.getText();
+			}
+			log.info("School name on CH:" + schoolNameonCH);
+			Assert.assertTrue(selectedSchool.equals(schoolNameonCH));
+			actions.moveToElement(homePage.overviewtext).click().perform();
+		} catch (Exception e) {
+		}
+
 	}
 
 	/**
-	 * method used to click on cancel button on roster tab 
+	 * method used to click on cancel button on roster tab
+	 * 
 	 * @throws Throwable
-	 */	
+	 */
 	@Then("^User should be able to click on cancel button to close the Roster Tab\\.$")
 	public void user_should_be_able_to_click_on_cancel_button_to_close_the_Roster_Tab() throws Throwable {
-		try {		
-			UtilityMethods.scrollPageDown(Driver.webdriver,4);
+		try {
+			UtilityMethods.scrollPageDown(Driver.webdriver, 4);
 			homePage.rostercancelbtn.click();
 			Thread.sleep(500);
-			Assert.assertEquals(false, homePage.schoolTitleOnSliderMenu.isDisplayed());
+			Assert.assertEquals(false, homePage.studentTitleOnSliderMenu.isDisplayed());
 			CBTConfiguration.score = "pass";
 		} catch (Exception e) {
 			UtilityMethods.processException(e);
@@ -317,9 +421,10 @@ public class FlyInMenuBehaviourSteps {
 	}
 
 	/**
-	 * method used to click on test tab on universal selector 
+	 * method used to click on test tab on universal selector
+	 * 
 	 * @throws Throwable
-	 */	
+	 */
 	@When("^User Click on Test tab within the Universal Selector Tab$")
 	public void user_Click_on_Test_tab_within_the_Universal_Selector_Tab() throws Throwable {
 		try {
@@ -332,56 +437,52 @@ public class FlyInMenuBehaviourSteps {
 			UtilityMethods.processException(e);
 		}
 	}
-	
+
 	/**
-	 * method used to select test(s) and apply filter on test tab and verify with context header 
+	 * method used to select test(s) and apply filter on test tab and verify with
+	 * context header
+	 * 
 	 * @throws Throwable
-	 */	
+	 */
 	@Then("^User should be able to select \"([^\"]*)\" Test and click on apply filter button$")
 	public void user_should_be_able_to_select_Test_and_click_on_apply_filter_button(String testType) throws Throwable {
 		try {
+			UtilityMethods.scrollPageDown(Driver.webdriver, 4);
 			Thread.sleep(1000);
 			homePage.allcheckbox.click();
-			Thread.sleep(1000);
+			Thread.sleep(500);
 			String selectedTestName;
 			int testCheckBoxListSize = 0, randomNumber = 0;
 			testCheckBoxListSize = homePage.testscheckboxlist.size();
 			randomNumber = (int) (Math.random() * testCheckBoxListSize);
 			switch (testType) {
 			case "single":
-				UtilityMethods.scroll_Div(homePage.testnameslist.get(randomNumber), 20);
-				Thread.sleep(1000);
-				selectedTestName=homePage.testnameslist.get(randomNumber).getText();
-				homePage.testscheckboxlist.get(randomNumber).click();
-				Thread.sleep(1000);
-				UtilityMethods.scrollPageDown(Driver.webdriver);
-				Thread.sleep(1000);
-				UtilityMethods.scrollPageDown(Driver.webdriver);
-				Thread.sleep(1000);
+				selectedTestName = homePage.testnameslist.get(randomNumber).getText();
+				log.info("Selected Test :"+selectedTestName);
+				homePage.searchbarontesttab.sendKeys(selectedTestName);Thread.sleep(500);
+				homePage.testscheckboxlist.get(0).click();
+				Thread.sleep(500);
 				new Actions(Driver.webdriver).moveToElement(homePage.testapplybtn).click().build().perform();
 				Thread.sleep(3000);
-				Standard_Overview_Table_Steps.underStudentContext=true;
-				Standard_Overview_Table_Steps.performanceMenuClicked=true;
-				UtilityMethods.scrollPageUp(Driver.webdriver);				
-				UtilityMethods.wait_For_Page_Section_Load();
+				UtilityMethods.scrollPageUp(Driver.webdriver);
+				Thread.sleep(2000);
 				new Actions(Driver.webdriver).moveToElement(homePage.testsNameoncontextheader).build().perform();
 				Assert.assertTrue(selectedTestName.equals(homePage.tooltipoftestnameoncontextheader.getText()));
 				break;
 			case "multiple":
-				int noOfSelectedTest=0;
-				for (int i = 0; i <testCheckBoxListSize; i = i + 2) {
-					UtilityMethods.scrollPageDown(Driver.webdriver, i+2);
+				int noOfSelectedTest = 0;
+				for (int i = 0; i < testCheckBoxListSize; i = i + 2) {
 					homePage.testscheckboxlist.get(i).click();
 					Thread.sleep(500);
+					UtilityMethods.scrollPageDown(Driver.webdriver, i );
 					noOfSelectedTest++;
 				}
 				homePage.testapplybtn.click();
 				Thread.sleep(3000);
-				Standard_Overview_Table_Steps.underClassContext=true;
-				Standard_Overview_Table_Steps.performanceMenuClicked=true;
 				UtilityMethods.scrollPageUp(Driver.webdriver);
-				UtilityMethods.wait_For_Page_Section_Load();
-				Assert.assertTrue(homePage.testsNameoncontextheader.getText().equals("Custom ("+noOfSelectedTest+")"));
+				Thread.sleep(2000);
+				Assert.assertTrue(
+						homePage.testsNameoncontextheader.getText().equals("Custom (" + noOfSelectedTest + ")"));
 				break;
 			}
 			CBTConfiguration.score = "pass";
@@ -392,9 +493,10 @@ public class FlyInMenuBehaviourSteps {
 	}
 
 	/**
-	 * method used to click on cancel button on test tab 
+	 * method used to click on cancel button on test tab
+	 * 
 	 * @throws Throwable
-	 */	
+	 */
 	@Then("^User should be able to click on cancel button to close the Test Tab\\.$")
 	public void user_should_be_able_to_click_on_cancel_button_to_close_the_Test_Tab() throws Throwable {
 		try {
@@ -409,14 +511,16 @@ public class FlyInMenuBehaviourSteps {
 		}
 		log.info("Scenario 5 Completed");
 	}
-	
+
 	/**
-	 * method used to click on date tab within universal selector 
+	 * method used to click on date tab within universal selector
+	 * 
 	 * @throws Throwable
-	 */	
+	 */
 	@When("^User Click on Date tab within the Universal Selector Tab$")
 	public void user_Click_on_Date_tab_within_the_Universal_Selector_Tab() throws Throwable {
 		try {
+			UtilityMethods.wait_For_Context_Header_Section();
 			homePage.datetab.click();
 			IWait.explicit_wait(Driver.webdriver, homePage.districtNameOnSliderMenu);
 			Verify.verify(homePage.districtNameOnSliderMenu.isDisplayed());
@@ -426,28 +530,30 @@ public class FlyInMenuBehaviourSteps {
 	}
 
 	/**
-	 * method used to select District Term on date tab and apply filter and verify with context header
+	 * method used to select District Term on date tab and apply filter and verify
+	 * with context header
+	 * 
 	 * @throws Throwable
-	 */	
+	 */
 	@Then("^User should be able to select district term and click on apply filter button$")
 	public void user_should_be_able_to_select_district_term_and_click_on_apply_filter_button() throws Throwable {
 		try {
 			// selecting Random District Term from the list
-			homePage.districttermdropdownbtn.click();
-			int count = 0, selectdistrictterm = 0;
-			count = homePage.districttermlist.size();
-			selectdistrictterm = (int) (Math.random() * count);
-			homePage.districttermlist.get(selectdistrictterm).click();
+			homePage.districttermdropdownbtn.click();Thread.sleep(500);
+			homePage.districttermlist.get(1).click();
 			Thread.sleep(500);
 			String districtterm = homePage.districttermdropdownbtn.getText();
-			Thread.sleep(500);
+			log.info("selected district term:"+districtterm);
 			homePage.dateapplybtn.click();
-			Thread.sleep(500);
+			Thread.sleep(5000);
 			/**
-			 * Verifying District Term on context menu by comparing dropdown text and
-			 * context menu values
+			 * Verifying District Term on context header by comparing dropdown text and
+			 * context header values
 			 */
-			Assert.assertEquals(districtterm, homePage.datesoncontextheader.getText().trim());
+			String datesonCH= homePage.datesoncontextheader.getText().trim();
+			datesonCH=datesonCH.substring(6,10)+"-"+datesonCH.substring(17);
+			log.info("datesonCH :"+datesonCH);
+			Assert.assertEquals(districtterm,datesonCH);
 			CBTConfiguration.score = "pass";
 		} catch (Exception e) {
 			UtilityMethods.processException(e);
@@ -456,9 +562,10 @@ public class FlyInMenuBehaviourSteps {
 	}
 
 	/**
-	 * method used to click on cancel button on Date tab 
+	 * method used to click on cancel button on Date tab
+	 * 
 	 * @throws Throwable
-	 */	
+	 */
 	@Then("^User should be able to click on cancel button to close the Date Tab\\.$")
 	public void user_should_be_able_to_click_on_cancel_button_to_close_the_Date_Tab() throws Throwable {
 		try {
@@ -476,20 +583,20 @@ public class FlyInMenuBehaviourSteps {
 
 	/**
 	 * method used to mouse hover on tab in universal selector
-	 * @param tabName 
+	 * 
+	 * @param tabName
 	 * @throws Throwable
-	 */	
+	 */
 	@When("^User mousehover on \"([^\"]*)\" tab within the Universal Selector Tab$")
 	public void user_mousehover_on_tab_within_the_Universal_Selector_Tab(String tabName) throws Throwable {
 		try {
-			IWait.explicit_wait(Driver.webdriver,homePage.rostertab);
+			IWait.explicit_wait(Driver.webdriver, homePage.rostertab);
 			WebElement el = Driver.webdriver.findElement(By.xpath("//span[@class='menu-name' and contains(text(),'"
 					+ tabName + "')]/ancestor::div[@class='menu-item']"));
-			Actions builder = new Actions(Driver.webdriver);
-			Action mouseOver = builder.moveToElement(el).build();
-			mouseOver.perform();
-			WebElement ttt=Driver.webdriver.findElement(By.xpath("//span[@class='menu-name' and contains(text(),'"+tabName+"')]/ancestor::div[@class='menu-item']//div[@class='bec_tooltip_content']"));
-			toolTipText=ttt.getText();
+			new Actions(Driver.webdriver).moveToElement(el).build().perform();
+			WebElement ttt = Driver.webdriver.findElement(By.xpath("//span[@class='menu-name' and contains(text(),'"
+					+ tabName + "')]/ancestor::div[@class='menu-item']//div[@class='bec_tooltip_content']"));
+			toolTipText = ttt.getText();
 		} catch (Exception e) {
 			UtilityMethods.processException(e);
 		}
@@ -497,16 +604,17 @@ public class FlyInMenuBehaviourSteps {
 
 	/**
 	 * method used to verify tooltip text of Tab on universal selector
-	 * @param tabName 
-	 * @param toolTip 
+	 * 
+	 * @param tabName
+	 * @param toolTip
 	 * @throws Throwable
-	 */	
+	 */
 	@Then("^\"([^\"]*)\" tab show tool tip \"([^\"]*)\"$")
 	public void tab_show_tool_tip(String tabName, String toolTip) throws Throwable {
 		try {
 			// Verifying for tooltiptext
 			Assert.assertTrue(toolTipText.equals(toolTip));
-			log.info(tabName+" shows tooltip "+toolTip);
+			log.info(tabName + " shows tooltip " + toolTip);
 			CBTConfiguration.score = "pass";
 		} catch (Exception e) {
 			UtilityMethods.processException(e);

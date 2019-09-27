@@ -37,6 +37,12 @@ public class HomePage {
 	@FindBy(xpath="//div[@class='menu-title' and contains(text(),'Class')]/span[@class='data-refresh']//i[@class='material-icons' and contains(text(),'autorenew')]")
 	public WebElement classRefreshIcon;
 	
+	@FindBy(xpath="//div[@class='menu-title' and contains(text(),'Grades')]/span[@class='data-refresh']//i[@class='material-icons' and contains(text(),'autorenew')]")
+	public WebElement gradeRefreshIcon;
+	
+	@FindBy(xpath="//div[@class='menu-title' and contains(text(),'Teachers')]/span[@class='data-refresh']//i[@class='material-icons' and contains(text(),'autorenew')]")
+	public WebElement teachersRefreshIcon;
+	
 	@FindBy(xpath="//div[@class='menu-title' and contains(text(),'District Term')]/span[@class='data-refresh']//i[@class='material-icons' and contains(text(),'autorenew')]")
 	public WebElement dateRefreshIcon;
 	
@@ -49,7 +55,7 @@ public class HomePage {
 	@FindBy(xpath="//input[@name='password']")
 	public WebElement password;
 	
-	@FindBy(xpath="//*[@class='field selectBox']")
+	@FindBy(xpath="//select[@class='field selectBox']")
 	public WebElement usertypedropdown;
 	
 	@FindBy(xpath="//input[@id='login']")
@@ -64,8 +70,8 @@ public class HomePage {
 	@FindBy(xpath="//i[contains(text(),'chevron_left')]/ancestor::span[@class='float-right']")
 	public WebElement closearrow;
 	
-	@FindBy(xpath="//div[@class='menu-title' and contains(text(),'School')]")
-	public WebElement schoolTitleOnSliderMenu;	
+	@FindBy(xpath="//div[@class='menu-title' and contains(text(),'Student')]")
+	public WebElement studentTitleOnSliderMenu;	
 	
 	@FindBy(xpath="//div[@class='menu-title' and contains(text(),'District Term')]")
 	public WebElement districtNameOnSliderMenu;
@@ -177,6 +183,9 @@ public class HomePage {
 	
 	@FindBy(xpath="//div[@class='menu-title' and contains(text(),'Class')]/following-sibling::div//div[@class='menu-dropdown-list-inr']/ul//li")
 	public List<WebElement> classlist;
+	
+	@FindBy(xpath="//div[@class='menu-title' and contains(text(),'Student')]/following-sibling::div//div[@class='menu-dropdown-list-inr']/ul//li")
+	public List<WebElement> studentlistwithall;
 	
 	@FindBy(xpath="//div[@class='menu-title' and contains(text(),'Teachers')]/following-sibling::div//div[@class='menu-dropdown-list-inr']/ul//li")
 	public List<WebElement> teacherslist;
@@ -315,7 +324,9 @@ public class HomePage {
 	@FindBy(xpath="//div[@class='menu-title' and contains(text(),'Student')]/following-sibling::div//span[@class='scroll-right scroll-active float-right']")
 	public WebElement studentenabledrightarrow;
 	
-
+	@FindBy(xpath="//a[contains(text(),'try again')]")
+	public WebElement try_again_link;
+	
 	/*Context Header Elements*/
 	@FindBy(xpath="//div[@class='context-header-main']//li/span[@class='context-header-title']")
 	public List<WebElement> contextheadertextlist;
@@ -327,26 +338,50 @@ public class HomePage {
 	public List<WebElement> contextheadertooltiplist;
 	
 	@FindBy(xpath="//div[contains(text(),'School:')]/ancestor::div[@class='title_and_attribute']//span")
+	public WebElement schoolnameontripledot;
+	
+	@FindBy(xpath="//div[@class='context-header-main']//span[contains(text(),'School:')]/following-sibling::span")
 	public WebElement schoolnameoncontextheader;
 	
+	@FindBy(xpath="//div[contains(text(),'Grade:')]/following-sibling::div")
+	public WebElement gradenameontripledot;
+	
+	@FindBy(xpath="//div[@class='context-header-main']//span[contains(text(),'Grade:')]/following-sibling::span")
+	public WebElement gradenameoncontextheader;
+	
 	@FindBy(xpath="//div[contains(text(),'District:')]/ancestor::div[@class='title_and_attribute']//span")
+	public WebElement districtnameontripledot;
+	
+	@FindBy(xpath="//div[@class='context-header-main']//span[contains(text(),'District:')]/following-sibling::span")
 	public WebElement districtnameoncontextheader;
 	
 	@FindBy(xpath="//span[@class='context-header-title']//i[contains(text(),'more_vert')]")
 	public WebElement tripledotsoncontextheader;
 	
 	@FindBy(xpath="//div[contains(text(),'School:')]/ancestor::div[@class='title_and_attribute']//span//div[@class='bec_tooltip_content']")
+	public WebElement tooltipofschoolnameontripledot;
+	
+	@FindBy(xpath="//div[contains(text(),'Grade:')]/ancestor::div[@class='title_and_attribute']//span//div[@class='bec_tooltip_content']")
+	public WebElement tooltipofgradenameontripledot;
+	
+	@FindBy(xpath="//div[@class='context-header-main']//span[contains(text(),'Grade:')]/following-sibling::span//div[@class='bec_tooltip_content']")
+	public WebElement tooltipofgradenameoncontextheader;
+	
+	@FindBy(xpath="//div[@class='context-header-main']//span[contains(text(),'School:')]/following-sibling::span//div[@class='bec_tooltip_content']")
 	public WebElement tooltipofschoolnameoncontextheader;
 	
 	@FindBy(xpath="//div[contains(text(),'District:')]/ancestor::div[@class='title_and_attribute']//span//div[@class='bec_tooltip_content']")
-	public WebElement tooltipofdistrictnameoncontextheader;
+	public WebElement tooltipofdistrictnameontripledot;
 	
 	@FindBy(xpath="//div[@class='context-header-main']//span[contains(text(),'Class:')]/following-sibling::span")
 	public WebElement classnameoncontextheader;
 	
+	@FindBy(xpath="//div[@class='context-header-main']//span[contains(text(),'Teacher:')]/following-sibling::span")
+	public WebElement teachernameoncontextheader;
+	
 	@FindBy(xpath="//div[@class='context-header-main']//span[contains(text(),'Class:')]/following-sibling::span//div[@class='bec_tooltip_content']")
 	public WebElement tooltipofclassnameoncontextheader;
-
+	
 	@FindBy(xpath="//div[@class='context-header-main']//span[contains(text(),'Student:')]/following-sibling::span")
 	public WebElement studentnameoncontextheader;
 	

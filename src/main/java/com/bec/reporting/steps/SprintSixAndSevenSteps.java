@@ -295,8 +295,8 @@ public class SprintSixAndSevenSteps {
 			boolean isClassComparePresence=false;
 			Thread.sleep(2000);
 			homePage.rostertab.click();
-			IWait.explicit_wait(Driver.webdriver, homePage.schoolTitleOnSliderMenu);
-			Verify.verify(homePage.schoolTitleOnSliderMenu.isDisplayed());
+			IWait.explicit_wait(Driver.webdriver, homePage.studentTitleOnSliderMenu);
+			Verify.verify(homePage.studentTitleOnSliderMenu.isDisplayed());
 			Thread.sleep(500);
 			homePage.schooldropdownbtn.click();
 			Thread.sleep(2000);

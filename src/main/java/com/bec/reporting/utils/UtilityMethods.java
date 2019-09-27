@@ -569,7 +569,7 @@ public class UtilityMethods {
 			new Actions(Driver.webdriver).moveToElement(homePage.schoolnameoncontextheader).build().perform();
 			Thread.sleep(1000);
 			if (homePage.schoolnameoncontextheader.getText().contains("...")) {
-				schoolName = homePage.tooltipofschoolnameoncontextheader.getText();
+				schoolName = homePage.tooltipofschoolnameontripledot.getText();
 			} else {
 				schoolName = homePage.schoolnameoncontextheader.getText();
 			}
@@ -630,7 +630,7 @@ public class UtilityMethods {
 			new Actions(Driver.webdriver).moveToElement(homePage.schoolnameoncontextheader).build().perform();
 			Thread.sleep(1000);
 			if (homePage.schoolnameoncontextheader.getText().contains("...")) {
-				schoolName = homePage.tooltipofschoolnameoncontextheader.getText();
+				schoolName = homePage.tooltipofschoolnameontripledot.getText();
 			} else {
 				schoolName = homePage.schoolnameoncontextheader.getText();
 			}
@@ -652,12 +652,12 @@ public class UtilityMethods {
 		try {
 			new Actions(Driver.webdriver).moveToElement(homePage.tripledotsoncontextheader).click().build().perform();
 			Thread.sleep(1000);
-			new Actions(Driver.webdriver).moveToElement(homePage.districtnameoncontextheader).build().perform();
+			new Actions(Driver.webdriver).moveToElement(homePage.districtnameontripledot).build().perform();
 			Thread.sleep(1000);
-			if (homePage.districtnameoncontextheader.getText().contains("...")) {
-				districtName = homePage.tooltipofdistrictnameoncontextheader.getText();
+			if (homePage.districtnameontripledot.getText().contains("...")) {
+				districtName = homePage.tooltipofdistrictnameontripledot.getText();
 			} else {
-				districtName = homePage.districtnameoncontextheader.getText();
+				districtName = homePage.districtnameontripledot.getText();
 			}
 			new Actions(Driver.webdriver).moveToElement(homePage.overviewtext).click().build().perform();
 			Thread.sleep(500);
@@ -706,7 +706,6 @@ public class UtilityMethods {
 			} else {
 				teachersName = homePage.teacherNameoncontextheader.getText();
 			}
-
 			js.executeScript("arguments[0].click();", homePage.overviewtext);
 			Thread.sleep(500);
 		} catch (Exception e) {
@@ -1051,5 +1050,20 @@ public class UtilityMethods {
 			processException(e);
 		}
 		return name;
+	}
+	
+	public static void wait_For_Refresh_Icon_onRosterTab(WebElement el) {
+		int count = 1;
+		try {
+			Assert.assertTrue(el.isDisplayed());
+			do {
+				log.info("Thread sleep called for "+el.getText()+" Loading :" + count + " Times");
+				Thread.sleep(2000);
+				count++;
+			} while (el.isDisplayed());
+		} catch (Exception e) {
+			log.info(el.getText()+" Refresh Icon Display off");
+			count = 1;
+		}
 	}
 }

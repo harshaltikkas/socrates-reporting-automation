@@ -65,8 +65,8 @@ public class DatabaseConnection {
 		String token = "";
 		try {
 			prop = FileRead.readProperties();
-			String payload = "{\n" + "  \"username\": \"superadmin\",\n" + "  \"password\": \"password\",\n"
-					+ "  \"realm\": \"techsupport\"\n" + "}";
+			String payload = "{\n" + "  \"username\": \"SarahMMerritt\",\n" + "  \"password\": \"password\",\n"
+					+ "  \"realm\": \"realm1\"\n" + "}";
 			String apiUrl = prop.getProperty("atlantis_api_url");
 			Response response = RestAssured.given().body(payload).get(apiUrl);
 			if (response.getStatusCode() != 200) {
