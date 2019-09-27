@@ -61,8 +61,8 @@ public class RosterTabDropDownBehaviour {
 		try {
 			UtilityMethods.wait_For_Context_Header_Section();
 			homePage.rostertab.click();
-			IWait.explicit_wait(Driver.webdriver, homePage.schoolTitleOnSliderMenu);
-			Verify.verify(homePage.schoolTitleOnSliderMenu.isDisplayed());
+			IWait.explicit_wait(Driver.webdriver, homePage.studentTitleOnSliderMenu);
+			Verify.verify(homePage.studentTitleOnSliderMenu.isDisplayed());
 			Thread.sleep(500);
 			String defaultSelectedSchool,defaultSelectedClass;
 			String apiFirstSchool=DatabaseConnection.getFirstAlphaSchoolName();
@@ -110,8 +110,8 @@ public class RosterTabDropDownBehaviour {
 			List<String> studentList=new ArrayList<>();
 			Thread.sleep(1000);
 			homePage.rostertab.click();
-			IWait.explicit_wait(Driver.webdriver, homePage.schoolTitleOnSliderMenu);
-			Verify.verify(homePage.schoolTitleOnSliderMenu.isDisplayed());
+			IWait.explicit_wait(Driver.webdriver, homePage.studentTitleOnSliderMenu);
+			Verify.verify(homePage.studentTitleOnSliderMenu.isDisplayed());
 			Thread.sleep(1000);
 			
 			//**checking school dropdown in ascending order*//
@@ -233,8 +233,8 @@ public class RosterTabDropDownBehaviour {
 			UtilityMethods.scrollPageUp(Driver.webdriver);
 			UtilityMethods.scrollPageDown(Driver.webdriver,4);
 			new Actions(Driver.webdriver).moveToElement(homePage.rostertab).click().build().perform();
-			IWait.explicit_wait(Driver.webdriver, homePage.schoolTitleOnSliderMenu);
-			Verify.verify(homePage.schoolTitleOnSliderMenu.isDisplayed());
+			IWait.explicit_wait(Driver.webdriver, homePage.studentTitleOnSliderMenu);
+			Verify.verify(homePage.studentTitleOnSliderMenu.isDisplayed());
 			Thread.sleep(500);
 			
 			homePage.schooldropdownbtn.click();
@@ -475,8 +475,8 @@ public class RosterTabDropDownBehaviour {
 			UtilityMethods.scrollPageUp(Driver.webdriver);
 			IWait.explicit_wait(Driver.webdriver, homePage.rostertab);
 			homePage.rostertab.click();
-			IWait.explicit_wait(Driver.webdriver, homePage.schoolTitleOnSliderMenu);
-			Verify.verify(homePage.schoolTitleOnSliderMenu.isDisplayed());
+			IWait.explicit_wait(Driver.webdriver, homePage.studentTitleOnSliderMenu);
+			Verify.verify(homePage.studentTitleOnSliderMenu.isDisplayed());
 			Thread.sleep(500);
 			homePage.studentdropdownbtn.click();
 			Thread.sleep(1000);

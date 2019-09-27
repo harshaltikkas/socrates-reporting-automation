@@ -62,8 +62,8 @@ public class PaginationOfDropDownListSteps {
 			UtilityMethods.wait_For_Context_Header_Section();
 			AllPagetotalListItem=totalListItem;
 			homePage.rostertab.click();
-			IWait.explicit_wait(Driver.webdriver, homePage.schoolTitleOnSliderMenu);
-			Verify.verify(homePage.schoolTitleOnSliderMenu.isDisplayed());
+			IWait.explicit_wait(Driver.webdriver, homePage.studentTitleOnSliderMenu);
+			Verify.verify(homePage.studentTitleOnSliderMenu.isDisplayed());
 			Thread.sleep(500);
 			Driver.webdriver.findElement(By.xpath("//div[@class='menu-title' and contains(text(),'"+rosterDropDown+"')]/following-sibling::div/button"))
 			.click();
@@ -204,8 +204,8 @@ public class PaginationOfDropDownListSteps {
 		try {
 			UtilityMethods.wait_For_Context_Header_Section();
 			homePage.rostertab.click();
-			IWait.explicit_wait(Driver.webdriver, homePage.schoolTitleOnSliderMenu);
-			Verify.verify(homePage.schoolTitleOnSliderMenu.isDisplayed());
+			IWait.explicit_wait(Driver.webdriver, homePage.studentTitleOnSliderMenu);
+			Verify.verify(homePage.studentTitleOnSliderMenu.isDisplayed());
 			Thread.sleep(500);
 			WebElement ddbtn=Driver.webdriver.findElement(By.xpath("//div[@class='menu-title' and contains(text(),'"+rosterDropDown+"')]/following-sibling::div/button"));
 			if(!ddbtn.getText().contains("...")) {

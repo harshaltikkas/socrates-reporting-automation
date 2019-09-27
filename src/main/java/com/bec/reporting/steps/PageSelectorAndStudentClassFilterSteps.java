@@ -206,7 +206,7 @@ public class PageSelectorAndStudentClassFilterSteps {
 				Thread.sleep(500);
 				if (headerText.equals("Class:") || headerText.equals("School:") || headerText.equals("Student:")) {
 					Assert.assertTrue(homePage.rostertab.isDisplayed());
-					Verify.verify(homePage.schoolTitleOnSliderMenu.isDisplayed());
+					Verify.verify(homePage.studentTitleOnSliderMenu.isDisplayed());
 				} else if (headerText.equals("Tests:")) {
 					Assert.assertTrue(homePage.testtab.isDisplayed());
 					Verify.verify(homePage.searchbarontesttab.isDisplayed());

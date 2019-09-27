@@ -1365,7 +1365,7 @@ public class Standard_Overview_Table_Steps {
 			HomePage homePage = PageFactory.initElements(Driver.webdriver, HomePage.class);
 			new Actions(Driver.webdriver).moveToElement(homePage.schoolnameoncontextheader).build().perform();
 			if (homePage.schoolnameoncontextheader.getText().contains("...")) {
-				schoolName = homePage.tooltipofschoolnameoncontextheader.getText();
+				schoolName = homePage.tooltipofschoolnameontripledot.getText();
 			} else {
 				schoolName = homePage.schoolnameoncontextheader.getText();
 			}

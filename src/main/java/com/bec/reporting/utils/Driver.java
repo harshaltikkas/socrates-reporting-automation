@@ -160,7 +160,6 @@ public class Driver {
 	 * @param browserName
 	 * @return
 	 */
-	@SuppressWarnings("deprecation")
 	public static RemoteWebDriver selectLocalBrowser(String browserName) {
 		String os = System.getProperty("os.name");
 		log.info("OS " + os);
