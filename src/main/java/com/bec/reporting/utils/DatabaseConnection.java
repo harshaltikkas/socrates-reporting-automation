@@ -37,6 +37,8 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 import java.util.TreeMap;
+
+import com.bec.reporting.steps.FlyInMenuBehaviourSteps;
 import com.google.common.base.Verify;
 import com.jayway.restassured.RestAssured;
 import com.jayway.restassured.path.json.JsonPath;
@@ -65,8 +67,8 @@ public class DatabaseConnection {
 		String token = "";
 		try {
 			prop = FileRead.readProperties();
-			String payload = "{\n" + "  \"username\": \"SarahMMerritt\",\n" + "  \"password\": \"password\",\n"
-					+ "  \"realm\": \"realm1\"\n" + "}";
+			String payload = "{\n" + "  \"username\": \""+FlyInMenuBehaviourSteps.uname+"\",\n" + "  \"password\": \""+FlyInMenuBehaviourSteps.passwd+"\",\n"
+					+ "  \"realm\": \""+FlyInMenuBehaviourSteps.realm+"\"\n" + "}";
 			String apiUrl = prop.getProperty("atlantis_api_url");
 			Response response = RestAssured.given().body(payload).get(apiUrl);
 			if (response.getStatusCode() != 200) {

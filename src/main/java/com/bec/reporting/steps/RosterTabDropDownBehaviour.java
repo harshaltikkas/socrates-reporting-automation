@@ -24,6 +24,7 @@
  * ========================================================================
  */
 package com.bec.reporting.steps;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,221 +47,254 @@ import lombok.extern.slf4j.Slf4j;
 public class RosterTabDropDownBehaviour {
 
 	/**
-	 *This is used to initialize webelement of the webpages 
+	 * This is used to initialize webelement of the webpages
 	 */
 	HomePage homePage = PageFactory.initElements(Driver.webdriver, HomePage.class);
-	public static String selectedSchoolText,selectedclassText,selectedStudentText;
-	int schoolcount=0,selectedschool=0,classcount=0,selectedclassIndex=0,studentcount=0,selectedstudent=0;
+	public static String selectedSchoolName, selectedclassText, selectedStudentText;
+	int schoolcount = 0, selectedschoolIndex = 0, classcount = 0, selectedclassIndex = 0, studentcount = 0,
+			selectedstudent = 0;
 
 	/**
-	 * This method is used to click on roster tab and verify the default first alphabatical selection of school and class and 'all' as student.
+	 * This method is used to click on roster tab and verify the default first
+	 * alphabatical selection of school and class and 'all' as student.
+	 * 
 	 * @throws Throwable
 	 */
-	@Then("^User Click on Roster tab within the Universal Selector Tab and bydefault first alpha school and first alpha class and 'all' student are selected$")
-	public void user_Click_on_Roster_tab_within_the_Universal_Selector_Tab_and_bydefault_first_alpha_school_and_first_alpha_class_and_all_student_are_selected() throws Throwable {
+	@Then("^User Click on Roster tab within the Universal Selector Tab and school value and class value and 'all' student are selected$")
+	public void user_Click_on_Roster_tab_within_the_Universal_Selector_Tab_and_school_value_and_class_value_and_all_student_are_selected()
+			throws Throwable {
 		try {
-			UtilityMethods.wait_For_Context_Header_Section();
+			String defaultSelectedSchool, defaultSelectedClass, apiFirstSchool = "", apiFirstClass = "";
+			int scListSize = DatabaseConnection.getAllSchoolNames().size();
+			int schoolId = 0, clListSize = 0;
+			boolean disabled_classAndstudent = false;
+			if (scListSize > 1) {
+				apiFirstSchool = "All";
+			} else if (scListSize == 1) {
+				apiFirstSchool = DatabaseConnection.getFirstAlphaSchoolName();
+				schoolId = DatabaseConnection.getSchoolIDBySchoolName(apiFirstSchool);
+			}
+
+			if (apiFirstSchool.equalsIgnoreCase("all")) {
+				disabled_classAndstudent = true;
+			} else {
+				clListSize = DatabaseConnection.getAllClassesNamesBySchoolName(schoolId).size();
+				if (clListSize > 1) {
+					apiFirstClass = "All";
+				} else if (clListSize > 1) {
+					apiFirstClass = DatabaseConnection.getFirstAlphaClassNameBySchoolName(schoolId);
+				}
+			}
+			Thread.sleep(500);
 			homePage.rostertab.click();
 			IWait.explicit_wait(Driver.webdriver, homePage.studentTitleOnSliderMenu);
 			Verify.verify(homePage.studentTitleOnSliderMenu.isDisplayed());
 			Thread.sleep(500);
-			String defaultSelectedSchool,defaultSelectedClass;
-			String apiFirstSchool=DatabaseConnection.getFirstAlphaSchoolName();
-			int schoolId=DatabaseConnection.getSchoolIDBySchoolName(apiFirstSchool);
-			String apiFirstClass=DatabaseConnection.getFirstAlphaClassNameBySchoolName(schoolId);
-			Thread.sleep(500);
-			if(homePage.schooldropdownbtn.getText().contains("...")) {
-				new Actions(Driver.webdriver).moveToElement(homePage.schooldropdownbtn).build().perform();				
-				defaultSelectedSchool=homePage.schooldropdownbtntooltip.getText();
+			if (disabled_classAndstudent) {
+				UtilityMethods.scrollPageDown(Driver.webdriver, 2);
 				Thread.sleep(500);
+				Assert.assertTrue(homePage.schooldropdownbtn.getText().equals(apiFirstSchool));
+				Assert.assertTrue(homePage.classdropdownbtn.getText().equals("Select Class"));
+				Assert.assertTrue(homePage.studentdropdownbtn.getText().equals("Select Student"));
+			} else {
+				if (homePage.schooldropdownbtn.getText().contains("...")) {
+					new Actions(Driver.webdriver).moveToElement(homePage.schooldropdownbtn).build().perform();
+					defaultSelectedSchool = homePage.schooldropdownbtntooltip.getText();
+					Thread.sleep(500);
+				} else {
+					defaultSelectedSchool = homePage.schooldropdownbtn.getText();
+				}
+				new Actions(Driver.webdriver).moveToElement(homePage.studentTitleOnSliderMenu).build().perform();
+				UtilityMethods.scrollPageDown(Driver.webdriver, 2);
+				Thread.sleep(500);
+				schoolId = DatabaseConnection.getSchoolIDBySchoolName(defaultSelectedSchool);
+				clListSize = DatabaseConnection.getAllClassesNamesBySchoolName(schoolId).size();
+				if (clListSize > 1) {
+					apiFirstClass = "All";
+				} else if (clListSize > 1) {
+					apiFirstClass = DatabaseConnection.getFirstAlphaClassNameBySchoolName(schoolId);
+				}
+				if (homePage.classdropdownbtn.getText().contains("...")) {
+					new Actions(Driver.webdriver).moveToElement(homePage.classdropdownbtn).build().perform();
+					defaultSelectedClass = homePage.classdropdownbtntooltip.getText();
+					Thread.sleep(500);
+				} else {
+					defaultSelectedClass = homePage.classdropdownbtn.getText();
+				}
+				Assert.assertTrue(defaultSelectedSchool.equals(apiFirstSchool));
+				Assert.assertTrue(defaultSelectedClass.equals(apiFirstClass));
+				Assert.assertTrue(homePage.studentdropdownbtn.getText().equals("All"));
 			}
-			else {
-				defaultSelectedSchool=homePage.schooldropdownbtn.getText();
-			}
-			
-			if(homePage.classdropdownbtn.getText().contains("...")) {
-				new Actions(Driver.webdriver).moveToElement(homePage.classdropdownbtn).build().perform();
-				defaultSelectedClass=homePage.classdropdownbtntooltip.getText();
-				Thread.sleep(500);				
-			}
-			else {
-				defaultSelectedClass=homePage.classdropdownbtn.getText();
-			}
-			Assert.assertTrue(defaultSelectedSchool.equals(apiFirstSchool));
-			Assert.assertTrue(defaultSelectedClass.equals(apiFirstClass));
-			Assert.assertTrue(homePage.studentdropdownbtn.getText().equals("All"));
 			homePage.rostercancelbtn.click();
+			UtilityMethods.scrollPageUp(Driver.webdriver);
+			Thread.sleep(500);
 			CBTConfiguration.score = "pass";
 		} catch (Exception e) {
 			UtilityMethods.processException(e);
 		}
 		log.info("Scenario 10_1 Completed");
 	}
-	
+
 	/**
-	 * This method is used to click on roster and verify the school and class name should be in alphabatical order 
-	 * and the student list shuld be in alphabatical order based on last name
+	 * This method is used to click on roster and verify the school and class name
+	 * should be in alphabatical order and the student list shuld be in alphabatical
+	 * order based on last name
+	 * 
 	 * @throws Throwable
 	 */
-	@Then("^User Click on Roster tab within the Universal Selector Tab and the School and Class names and the student last names should be displayed in alphabetical ascending order within their respective dropdowns$")
-	public void user_Click_on_Roster_tab_within_the_Universal_Selector_Tab_and_the_School_and_Class_names_and_the_student_last_names_should_be_displayed_in_alphabetical_ascending_order_within_their_respective_dropdowns() throws Throwable {
+	@Then("^User Click on Roster tab within the Universal Selector Tab and the School and Class and students last names should be displayed in alphabetical ascending order with selection of \"([^\"]*)\" school and \"([^\"]*)\" class and \"([^\"]*)\" as student$")
+	public void user_Click_on_Roster_tab_within_the_Universal_Selector_Tab_and_the_School_and_Class_and_students_last_names_should_be_displayed_in_alphabetical_ascending_order_with_selection_of_school_and_class_and_as_student(
+			String sc, String cl, String st) throws Throwable {
 		try {
 			List<String> schoolList = new ArrayList<>();
-			List<String> classList=new ArrayList<>();
-			List<String> studentList=new ArrayList<>();
-			Thread.sleep(1000);
+			List<String> classList = new ArrayList<>();
+			List<String> studentList = new ArrayList<>();
 			homePage.rostertab.click();
 			IWait.explicit_wait(Driver.webdriver, homePage.studentTitleOnSliderMenu);
 			Verify.verify(homePage.studentTitleOnSliderMenu.isDisplayed());
-			Thread.sleep(1000);
-			
-			//**checking school dropdown in ascending order*//
+			Thread.sleep(500);
+
+			// **checking school dropdown in ascending order*//
 			homePage.schooldropdownbtn.click();
-			Thread.sleep(2000);
-			schoolcount=homePage.schoollist.size();
+			Thread.sleep(500);
+			UtilityMethods.uncheck_check_All("School");
+			schoolcount = homePage.schoollist.size();
 			String scName;
 			for (int i = 0; i < schoolcount; i++) {
-				scName=homePage.schoollist.get(i).getText();
+				scName = homePage.schoollist.get(i).getText();
 				if (scName.equals("")) {
 					UtilityMethods.scroll_Div(homePage.schoollist.get(i), 10);
 				}
 				schoolList.add(homePage.schoollist.get(i).getText());
 			}
 			Assert.assertTrue(Ordering.natural().isOrdered(schoolList));
-			
-			selectedschool=(int) (Math.random()*schoolcount);
-			selectedSchoolText=schoolList.get(selectedschool);
-			log.info("Selected School:"+selectedSchoolText);
-			
-			homePage.searchbaronschooldropdown.sendKeys(selectedSchoolText);
-			Thread.sleep(1000);
-			Driver.webdriver.findElement(By.xpath("//li[.='"+selectedSchoolText+"']")).click();
-			int count = 1;
-			try {
-				do {
-					log.info("Thread sleep called for class Loading :" + count +" Times");
-					Thread.sleep(2000);
-					count++;
-					if(count>10) {
-						log.error("Issue in Class Data Loading");
-						UtilityMethods.processException(new Exception());
-					}
-				} while (homePage.classRefreshIcon.isDisplayed() && count<=10);
-			} catch (Exception e) {
-				log.info("Class Refresh Icon Display off");
-				count = 1;
-			}
-			Thread.sleep(2000);
-			//**checking class dropdown in ascending order*//
+
+			selectedSchoolName = sc;
+			log.info("Selected School:" + sc);
+
+			homePage.searchbaronschooldropdown.sendKeys(selectedSchoolName);
+			Thread.sleep(500);
+			Driver.webdriver.findElement(By.xpath("//li[.='" + selectedSchoolName + "']")).click();
+			Thread.sleep(500);
+			new Actions(Driver.webdriver).moveToElement(homePage.searchcancelonschooldropdown).click().build()
+					.perform();
+			Thread.sleep(500);
+			homePage.schooldropdownbtn.click();
+
+			new Actions(Driver.webdriver).moveToElement(homePage.studentTitleOnSliderMenu).build().perform();
+
+			UtilityMethods.wait_For_Refresh_Icon_onRosterTab(homePage.gradeRefreshIcon, "Grade");
+			UtilityMethods.scrollPageDown(Driver.webdriver, 10);
+
+			// **checking class dropdown in ascending order*//
 			homePage.classdropdownbtn.click();
-			Thread.sleep(2000);
-			classcount=homePage.classlist.size();			
+			Thread.sleep(500);
+			UtilityMethods.uncheck_check_All("Class");
+			classcount = homePage.classlist.size();
 			String clName;
 			for (int i = 0; i < classcount; i++) {
-				clName=homePage.classlist.get(i).getText();
+				clName = homePage.classlist.get(i).getText();
 				if (clName.equals("")) {
 					UtilityMethods.scroll_Div(homePage.classlist.get(i), 10);
 				}
 				classList.add(homePage.classlist.get(i).getText());
 			}
 			Assert.assertTrue(Ordering.natural().isOrdered(classList));
-			selectedclassIndex=(int) (Math.random()*classcount);
-			selectedclassText=classList.get(selectedclassIndex);
-			log.info("Selected Class:"+selectedclassText);
+
+			selectedclassText = cl;
+			log.info("Selected Class:" + selectedclassText);
 			Thread.sleep(1000);
 			homePage.searchbaronclassdropdown.sendKeys(selectedclassText);
 			Thread.sleep(1000);
-			Driver.webdriver.findElement(By.xpath("//li[.='"+selectedclassText+"']")).click();
-			try {
-				do {
-					log.info("Thread sleep called for Student Loading :" + count +" Times");
-					Thread.sleep(2000);
-					count++;
-					if(count>10) {
-						log.error("Issue in Student Data Loading");
-						UtilityMethods.processException(new Exception());
-					}
-				} while (homePage.studentRefreshIcon.isDisplayed()  && count<=10);
-			} catch (Exception e) {
-				log.info("Student Refresh Icon Display off");
-			}
-			Thread.sleep(2000);
-			//**checking student dropdown in ascending order*//
+			Driver.webdriver.findElement(By.xpath("//li[.='" + selectedclassText + "']")).click();
+			Thread.sleep(500);
+			new Actions(Driver.webdriver).moveToElement(homePage.searchcancelonclassdropdown).click().build().perform();
+			Thread.sleep(500);
+			homePage.classdropdownbtn.click();
+			Thread.sleep(500);
+			new Actions(Driver.webdriver).moveToElement(homePage.studentTitleOnSliderMenu).build().perform();
+
+			UtilityMethods.wait_For_Refresh_Icon_onRosterTab(homePage.studentRefreshIcon, "Student");
+
+			// **checking student dropdown in ascending order*//
 			homePage.studentdropdownbtn.click();
-			Thread.sleep(2000);
-			studentcount=homePage.studentlistondropdown.size();
+			Thread.sleep(500);
+			studentcount = homePage.studentlistondropdown.size();
 			String tempString;
-			UtilityMethods.scrollPageDown(Driver.webdriver, 4);
-			List<String> list=new ArrayList<>();
+			UtilityMethods.scrollPageDown(Driver.webdriver, 2);
+			List<String> list = new ArrayList<>();
 			for (int i = 0; i < studentcount; i++) {
-				tempString=homePage.studentlistondropdown.get(i).getText();
+				tempString = homePage.studentlistondropdown.get(i).getText();
 				if (tempString.equals("")) {
 					UtilityMethods.scroll_Div(homePage.studentlistondropdown.get(i), 10);
-					tempString=homePage.studentlistondropdown.get(i).getText();
+					tempString = homePage.studentlistondropdown.get(i).getText();
 				}
 				list.add(tempString);
-				studentList.add(tempString.substring(tempString.indexOf(" ")+1)+" "+tempString.substring(0, tempString.indexOf(" ")));
+				studentList.add(tempString.substring(tempString.indexOf(" ") + 1) + " "
+						+ tempString.substring(0, tempString.indexOf(" ")));
 			}
-			
+
 			Assert.assertTrue(Ordering.natural().isOrdered(studentList));
-			homePage.studentdropdownallcheckbox.click();
-			Thread.sleep(500);
-			selectedstudent=(int) (Math.random()*studentcount);
-			Thread.sleep(1000);
-			selectedStudentText=list.get(selectedstudent);
-			log.info("Selected Student:"+selectedStudentText);	
+			UtilityMethods.uncheck_check_All("Student");
+
+			selectedStudentText = st;
+			log.info("Selected Student:" + selectedStudentText);
 			homePage.searchbaronstudentdropdown.sendKeys(selectedStudentText);
-			Thread.sleep(1000);
-			Driver.webdriver.findElement(By.xpath("//li[.='"+selectedStudentText+"']")).click();
+			Thread.sleep(500);
+			Driver.webdriver.findElement(By.xpath("//li[.='" + selectedStudentText + "']")).click();
 			Thread.sleep(500);
 			homePage.rosterapplybtn.click();
-			Thread.sleep(2000);	
+
 			UtilityMethods.scrollPageUp(Driver.webdriver);
+			Thread.sleep(500);
 			CBTConfiguration.score = "pass";
 		} catch (Exception e) {
 			UtilityMethods.processException(e);
 		}
-		log.info("Scenario 10_2 Completed");
+		log.info("Scenario 10_2 and Scenario 12 are Completed");
 	}
 
 	/**
-	 * This method verify that selected option from the dropdown in school,class and student should be on top while comes back to dropdown
+	 * This method verify that selected option from the dropdown in school,class and
+	 * student should be on top while comes back to dropdown
+	 * 
 	 * @throws Throwable
 	 */
-	@Then("^Verify selected option should appear at the top of the list$")
-	public void verify_selected_option_should_appear_at_the_top_of_the_list() throws Throwable {
+	@Then("^Verify selected option should appear in respected dropdowns$")
+	public void verify_selected_option_should_appear_in_respected_dropdowns() throws Throwable {
 		try {
-			UtilityMethods.scrollPageUp(Driver.webdriver);
-			UtilityMethods.scrollPageDown(Driver.webdriver,4);
-			new Actions(Driver.webdriver).moveToElement(homePage.rostertab).click().build().perform();
+			UtilityMethods.scrollPageDown(Driver.webdriver, 2);
+			Thread.sleep(500);
+			homePage.rostertab.click();
 			IWait.explicit_wait(Driver.webdriver, homePage.studentTitleOnSliderMenu);
 			Verify.verify(homePage.studentTitleOnSliderMenu.isDisplayed());
 			Thread.sleep(500);
-			
-			homePage.schooldropdownbtn.click();
-			Thread.sleep(500);
-			Assert.assertTrue(homePage.schoollist.get(0).getText().equals(selectedSchoolText));
-			homePage.schooldropdownbtn.click();
-			Thread.sleep(500);
-			try {
+			String recentlySelectedSchool, renctlySelectedClass, recentlySelectedStudent;
+			if (homePage.schooldropdownbtn.getText().contains("...")) {
+				new Actions(Driver.webdriver).moveToElement(homePage.schooldropdownbtn).build().perform();
+				recentlySelectedSchool = homePage.schooldropdownbtntooltip.getText();
+				Thread.sleep(500);
+			} else {
+				recentlySelectedSchool = homePage.schooldropdownbtn.getText();
+			}
+			new Actions(Driver.webdriver).moveToElement(homePage.studentTitleOnSliderMenu).build().perform();
+
+			Assert.assertTrue(recentlySelectedSchool.equals(selectedSchoolName));
+			if (homePage.classdropdownbtn.getText().contains("...")) {
 				new Actions(Driver.webdriver).moveToElement(homePage.classdropdownbtn).build().perform();
-				String clName = Driver.webdriver.findElement(By.xpath(
-						"//div[@class='menu-title' and contains(text(),'Class')]/following-sibling::div/button//div[@class='bec_tooltip_content']"))
-						.getText();
-				Assert.assertTrue(clName.equals(selectedclassText));	
-			}
-			catch(Exception e) {
-				homePage.classdropdownbtn.click();
+				renctlySelectedClass = homePage.classdropdownbtntooltip.getText();
 				Thread.sleep(500);
-				Assert.assertTrue(homePage.classlist.get(0).getText().equals(selectedclassText));
-				homePage.classdropdownbtn.click();
-				Thread.sleep(500);
-		
+			} else {
+				renctlySelectedClass = homePage.classdropdownbtn.getText();
 			}
-			homePage.studentdropdownbtn.click();
-			Thread.sleep(500);
-			Assert.assertTrue(homePage.studentlistondropdown.get(0).getText().equals(selectedStudentText));
-			homePage.studentdropdownbtn.click();
+			new Actions(Driver.webdriver).moveToElement(homePage.studentTitleOnSliderMenu).build().perform();
+
+			Assert.assertTrue(renctlySelectedClass.equals(selectedclassText));
+
+			recentlySelectedStudent = homePage.studentdropdownbtn.getText();
+			new Actions(Driver.webdriver).moveToElement(homePage.studentTitleOnSliderMenu).build().perform();
+			Assert.assertTrue(recentlySelectedStudent.equals(selectedStudentText));
+
 			Thread.sleep(500);
 			CBTConfiguration.score = "pass";
 		} catch (Exception e) {
@@ -270,129 +304,36 @@ public class RosterTabDropDownBehaviour {
 	}
 
 	/**
+	 * This method is used to verify All option should be in top in student dropdown
+	 * and once selected it show All as selected text in dropdown
 	 * 
-	 * This method seaches school,class and student on their respected search bar and randomly select within found result and if not record found click on cancel icon 'X' 
 	 * @throws Throwable
 	 */
-	@Then("^Searches anything what’s being typed in showing \"([^\"]*)\" to cancel and displays them as options to select from below the search bar and filters the list\\.$")
-	public void searches_anything_what_s_being_typed_in_showing_to_cancel_and_displays_them_as_options_to_select_from_below_the_search_bar_and_filters_the_list(String arg1) throws Throwable {
+	@Then("^select school as \"([^\"]*)\" and 'All' option should be display at first position in student list and can not be scrollable$")
+	public void select_school_as_and_All_option_should_be_display_at_first_position_in_student_list_and_can_not_be_scrollable(
+			String sc) throws Throwable {
 		try {
-			String defSchool,defClass;
-			int count = 0;
-			if(homePage.schooldropdownbtn.getText().contains("...")) {
-				new Actions(Driver.webdriver).moveToElement(homePage.schooldropdownbtn).build().perform();				
-				defSchool=homePage.schooldropdownbtntooltip.getText();
-				Thread.sleep(500);
-			}
-			else {
-				defSchool=homePage.schooldropdownbtn.getText();
-			}
-			
-			if(homePage.classdropdownbtn.getText().contains("...")) {
-				new Actions(Driver.webdriver).moveToElement(homePage.classdropdownbtn).build().perform();
-				defClass=homePage.classdropdownbtntooltip.getText();
-				Thread.sleep(500);				
-			}
-			else {
-				defClass=homePage.classdropdownbtn.getText();
-			}
-			//school dropdown search test
+			UtilityMethods.scrollPageDown(Driver.webdriver, 2);
 			homePage.schooldropdownbtn.click();
-			Thread.sleep(1000);
-			UtilityMethods.scrollPageDown(Driver.webdriver, 2);
-			Verify.verify(homePage.searchbaronschooldropdown.isDisplayed());
-			homePage.searchbaronschooldropdown.sendKeys(UtilityMethods.generateRandomString(1));
-			Thread.sleep(1000);
-			Verify.verify(homePage.searchcancelonschooldropdown.isDisplayed());
-			if(homePage.schoollist.get(0).getText().equals("No Records Available") || homePage.schoollist.get(0).getText().equals(defSchool)) {
-				homePage.searchcancelonschooldropdown.click();
-				homePage.schooldropdownbtn.click();
-				Thread.sleep(2000);
-			}
-			else {
-				Thread.sleep(500);
-				homePage.schoollist.get(0).click();
-				try {
-					do {
-						log.info("Thread sleep called for class Loading :" + count +" Times");
-						Thread.sleep(2000);
-						count++;
-					} while (homePage.classRefreshIcon.isDisplayed());
-				} catch (Exception e) {
-					log.info("Class Refresh Icon Display off");
-					count = 1;
-				}
-				Thread.sleep(1000);
-			}
-			
-			//class dropdown search test
-			if(!homePage.classdropdownbtn.getText().contains("...")) {
-			homePage.classdropdownbtn.click();
-			Thread.sleep(1000);
-			UtilityMethods.scrollPageDown(Driver.webdriver, 2);
-			Verify.verify(homePage.searchbaronclassdropdown.isDisplayed());
-			homePage.searchbaronclassdropdown.sendKeys(UtilityMethods.generateRandomString(1));
 			Thread.sleep(500);
-			Verify.verify(homePage.searchcancelonclassdropdown.isDisplayed());
-			if(homePage.classlist.get(0).getText().equals("No Records Available") || homePage.classlist.get(0).getText().equals(defClass)) {
-				homePage.searchcancelonclassdropdown.click();
-				homePage.classdropdownbtn.click();
-				Thread.sleep(2000);
-			}
-			else {
-				homePage.classlist.get(0).click();	
-				try {
-					do {
-						log.info("Thread sleep called for class Loading :" + count +" Times");
-						Thread.sleep(2000);
-					} while (homePage.studentRefreshIcon.isDisplayed());
-				} catch (Exception e) {
-					log.info("Student Refresh Icon Display off");				
-				}
-				Thread.sleep(2000);
-			}
-			}
-			//student dropdown search test
-			homePage.studentdropdownbtn.click();
-			Thread.sleep(2000);
-			UtilityMethods.scrollPageDown(Driver.webdriver, 3);
-			homePage.studentdropdownallcheckbox.click();
-			Thread.sleep(500);
-			Verify.verify(homePage.searchbaronstudentdropdown.isDisplayed());
-			homePage.searchbaronstudentdropdown.sendKeys(UtilityMethods.generateRandomString(1));
-			Thread.sleep(500);
-			Verify.verify(homePage.searchcancelonstudentdropdown.isDisplayed());
-			if(homePage.studentlistondropdown.get(0).getText().equals("No Records Available")) {
-				homePage.searchcancelonstudentdropdown.click();
-				Thread.sleep(500);
-				homePage.studentdropdownbtn.click();
-				Thread.sleep(2000);
-			}
-			else {
-				studentcount=homePage.studentlistondropdown.size();
-				selectedstudent=(int) (Math.random()*studentcount);
-				UtilityMethods.scroll_Div(homePage.studentlistondropdown.get(selectedstudent), 20);
-				Thread.sleep(500);
-				homePage.studentlistondropdown.get(selectedstudent).click();				
-			}
-			Thread.sleep(1000);
-			CBTConfiguration.score = "pass";
-		} catch (Exception e) {
-			UtilityMethods.processException(e);
-		}
-		log.info("Scenario 12 Completed");
-	}
+			UtilityMethods.uncheck_check_All("School");
+			log.info("Selected School:" + sc);
 
-	/**
-	 * This method is used to verify All option should be in top in student dropdown and once selected it show All as selected text in dropdown
-	 * @throws Throwable
-	 */
-	@Then("^\"([^\"]*)\" option should be display at first position in list and can not be scrollable$")
-	public void option_should_be_display_at_first_position_in_list_and_can_not_be_scrollable(String arg1) throws Throwable {
-		try {
-			UtilityMethods.scrollPageDown(Driver.webdriver, 3);
+			homePage.searchbaronschooldropdown.sendKeys(sc);
+			Thread.sleep(500);
+			Driver.webdriver.findElement(By.xpath("//li[.='" + sc + "']")).click();
+			Thread.sleep(500);
+			new Actions(Driver.webdriver).moveToElement(homePage.searchcancelonschooldropdown).click().build()
+					.perform();
+			Thread.sleep(500);
+			homePage.schooldropdownbtn.click();
+			new Actions(Driver.webdriver).moveToElement(homePage.studentTitleOnSliderMenu).build().perform();
+
+			UtilityMethods.wait_For_Refresh_Icon_onRosterTab(homePage.gradeRefreshIcon, "Grade");
+			UtilityMethods.scrollPageDown(Driver.webdriver, 8);
+			Thread.sleep(500);
 			homePage.studentdropdownbtn.click();
-			Thread.sleep(2000);
+			Thread.sleep(500);
 			Assert.assertTrue(homePage.studentdropdownallcheckbox.getText().equals("All"));
 			CBTConfiguration.score = "pass";
 		} catch (Exception e) {
@@ -402,88 +343,82 @@ public class RosterTabDropDownBehaviour {
 	}
 
 	/**
-	 * This method is used to select /deselect multiple student from student dropdown in roster tab
-	 * and also check once selection done and revisit the student dropdown, then the selected options should be in top
+	 * This method is used to select /deselect multiple student from student
+	 * dropdown in roster tab and also check once selection done and revisit the
+	 * student dropdown, then the selected options should be in top
+	 * 
 	 * @throws Throwable
 	 */
-	@Then("^Veriy the previously selected students should be on top in student dropdown$")
-	public void veriy_the_previously_selected_students_should_be_on_top_in_student_dropdown() throws Throwable {
+	@Then("^select school as \"([^\"]*)\" and Veriy the previously selected students should be on top in student dropdown$")
+	public void select_school_as_and_Veriy_the_previously_selected_students_should_be_on_top_in_student_dropdown(
+			String sc) throws Throwable {
+
 		try {
 			UtilityMethods.scrollPageDown(Driver.webdriver, 3);
-			String selectedSchool,selectedClass,selectedStudent;
+			String selectedClass, selectedStudent;
 			// selecting school from dropdown
 			homePage.schooldropdownbtn.click();
-			Thread.sleep(1000);
-			int randomSchoolIndex=UtilityMethods.generateRandomNumberBySkippingIndex(homePage.schoollist.size(), 0);
-			selectedSchool=homePage.schoollist.get(randomSchoolIndex).getText();
-			UtilityMethods.scroll_Div(homePage.schoollist.get(randomSchoolIndex), 20);
-			homePage.schoollist.get(randomSchoolIndex).click();			
-			log.info("Selected School is:" +selectedSchool );
-			int count = 1;
-			try {
-				Assert.assertTrue(homePage.classRefreshIcon.isDisplayed());
-				do {
-					log.info("Thread sleep called for class Loading :" + count + " Times");
-					Thread.sleep(2000);
-					count++;
-				} while (homePage.classRefreshIcon.isDisplayed());
-			} catch (Exception e) {
-				log.info("Class Refresh Icon Display off");
-				count = 1;
-			}
-			UtilityMethods.scrollPageDown(Driver.webdriver, 3);
+			Thread.sleep(500);
+			UtilityMethods.uncheck_check_All("School");
+			log.info("Selected School:" + sc);
+
+			homePage.searchbaronschooldropdown.sendKeys(sc);
+			Thread.sleep(500);
+			Driver.webdriver.findElement(By.xpath("//li[.='" + sc + "']")).click();
+			Thread.sleep(500);
+			new Actions(Driver.webdriver).moveToElement(homePage.searchcancelonschooldropdown).click().build()
+					.perform();
+			Thread.sleep(500);
+			homePage.schooldropdownbtn.click();
+			new Actions(Driver.webdriver).moveToElement(homePage.studentTitleOnSliderMenu).build().perform();
+
+			UtilityMethods.wait_For_Refresh_Icon_onRosterTab(homePage.gradeRefreshIcon, "Grade");
+			UtilityMethods.scrollPageDown(Driver.webdriver, 8);
 			// selecting class from dropdown
 			homePage.classdropdownbtn.click();
-			Thread.sleep(1000);
-			selectedClass=homePage.classlist.get(0).getText();
+			Thread.sleep(500);
+			UtilityMethods.uncheck_check_All("Class");
+			selectedClass = homePage.classlist.get(0).getText();
 			homePage.classlist.get(0).click();
 			log.info("Selected Class is:" + selectedClass);
-			try {
-				Assert.assertTrue(homePage.studentRefreshIcon.isDisplayed());
-				do {
-					log.info("Thread sleep called for Student Loading :" + count + " Times");
-					Thread.sleep(2000);
-					count++;
-				} while (homePage.studentRefreshIcon.isDisplayed());
-			} catch (Exception e) {
-				log.info("Student Refresh Icon Display off");
-			}
+			homePage.classdropdownbtn.click();
+			UtilityMethods.wait_For_Refresh_Icon_onRosterTab(homePage.studentRefreshIcon, "Student");
 			// selecting student from dropdown
 			homePage.studentdropdownbtn.click();
-			Thread.sleep(1000);
-			int customSize=0;
-			//This is to unselect all student from dropdown,as default is all selected
-			homePage.studentdropdownallcheckbox.click();
-			Thread.sleep(1000);
-			UtilityMethods.scrollPageDown(Driver.webdriver,5);
-			
-			for (int i = 1; i < homePage.studentlistondropdown.size(); i=i+2) {
-					if(homePage.studentlistondropdown.get(i).getText().equals("")) {
-						UtilityMethods.scroll_Div(homePage.studentlistondropdown.get(i), 20);
-					}
-					homePage.studentlistondropdown.get(i).click();
-					Thread.sleep(1000);
-					customSize++;
+			Thread.sleep(500);
+			int customSize = 0;
+			// This is to unselect all student from dropdown,as default is all selected
+			UtilityMethods.uncheck_check_All("Student");
+			Thread.sleep(500);
+			UtilityMethods.scrollPageDown(Driver.webdriver, 5);
+
+			for (int i = 1; i < homePage.studentlistondropdown.size(); i = i + 2) {
+				if (homePage.studentlistondropdown.get(i).getText().equals("")) {
+					UtilityMethods.scroll_Div(homePage.studentlistondropdown.get(i), 20);
 				}
-			
-			Thread.sleep(1000);
-			selectedStudent=homePage.studentdropdownbtn.getText();
+				homePage.studentlistondropdown.get(i).click();
+				Thread.sleep(500);
+				customSize++;
+			}
+
+			selectedStudent = homePage.studentdropdownbtn.getText();
 			log.info("Selected Student is:" + selectedStudent);
 
 			homePage.rosterapplybtn.click();
-			Thread.sleep(3000);
 			UtilityMethods.scrollPageUp(Driver.webdriver);
+			Thread.sleep(3000);
+
 			IWait.explicit_wait(Driver.webdriver, homePage.rostertab);
 			homePage.rostertab.click();
 			IWait.explicit_wait(Driver.webdriver, homePage.studentTitleOnSliderMenu);
 			Verify.verify(homePage.studentTitleOnSliderMenu.isDisplayed());
 			Thread.sleep(500);
 			homePage.studentdropdownbtn.click();
-			Thread.sleep(1000);
+			Thread.sleep(500);
 			UtilityMethods.scrollPageDown(Driver.webdriver, 8);
-			//verifying after applying result,selected student names are on top
+			// verifying after applying result,selected student names are on top
 			UtilityMethods.scroll_Div_UP(homePage.studentlistondropdownwithinput.get(0), -20);
-			
+
 			for (int i = 0; i < customSize; i++) {
 				if (homePage.studentlistondropdown.get(i).getText().equals("")) {
 					UtilityMethods.scroll_Div(homePage.studentlistondropdown.get(i), 20);
@@ -491,9 +426,10 @@ public class RosterTabDropDownBehaviour {
 				Assert.assertTrue(homePage.studentlistondropdownwithinput.get(i).isSelected());
 				Thread.sleep(500);
 			}
-			Thread.sleep(1000);
-			//now,delselecting the selected student and verify with content select student on dropdown
-			for (int i = 0; i <customSize; i++) {
+			Thread.sleep(500);
+			// now,delselecting the selected student and verify with content select student
+			// on dropdown
+			for (int i = 0; i < customSize; i++) {
 				if (homePage.studentlistondropdown.get(i).getText().equals("")) {
 					UtilityMethods.scroll_Div(homePage.studentlistondropdown.get(i), 20);
 				}
@@ -501,8 +437,9 @@ public class RosterTabDropDownBehaviour {
 				homePage.studentlistondropdown.get(i).click();
 				Thread.sleep(500);
 			}
-			Assert.assertTrue(homePage.studentdropdownbtn.getText().equals("Select Student"));
-				
+			// Assert.assertTrue(homePage.studentdropdownbtn.getText().equals("Select
+			// Student"));
+
 			CBTConfiguration.score = "pass";
 		} catch (Exception e) {
 			UtilityMethods.processException(e);

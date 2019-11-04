@@ -40,13 +40,13 @@ public class IWait {
 	 * @param time
 	 * @return
 	 */
-	public static boolean implicit_wait(long time) {
+	public static void implicit_wait(long time) {
 		try {
 			Driver.webdriver.manage().timeouts().implicitlyWait(time, TimeUnit.SECONDS);
 		} catch (Exception e) {
-			return false;
+			System.out.println("failed_in_implicit_wait");
+			UtilityMethods.processException(e);
 		}
-		return true;
 	}
 
 	/**
@@ -55,19 +55,20 @@ public class IWait {
 	 * @param el
 	 * @return
 	 */
-	public static boolean explicit_wait(WebDriver driver, WebElement el) {
+	public static void explicit_wait(WebDriver driver, WebElement el) {
 		try {
-			new WebDriverWait(driver, 10).ignoring(StaleElementReferenceException.class)
+			new WebDriverWait(driver, 16).ignoring(StaleElementReferenceException.class)
 			  .until(ExpectedConditions.visibilityOfElementLocated(toByVal(el)));
 		} catch (Exception e) {
-			return false;
+			System.out.println("failed_in_explicit_wait");
+			UtilityMethods.processException(e);
 		}
-		return true;
 	}
 	
 	// return ByType of WebElement
 	public static By toByVal(WebElement we) {
-	    String[] data = we.toString().split(" -> ")[1].replaceFirst("]", "").split(": ");
+		String str=we.toString().substring(0, we.toString().length()-1);
+	    String[] data = str.split(" -> ")[1].split(": ");
 	    String locator = data[0];
 	    String term = data[1];
 

@@ -1,10 +1,10 @@
-@Feature
+@Feature1
 Feature: Spint 9 User Stories
 
   ##BE-832,833,834
   ##NOTE: failing because of not able to get url of newly opened tab for validation
   #Scenario: Verify Showing grading page in new browser tab when clicked on the question number within the test overlay
-  #Given User is on portal's login screen with username as "superadmin" and password as "password" and usertype as "techsupport"
+  #Given User is on portal's login screen with username as "SarahMMerritt" and password as "password" and usertype as "realm1"
   #When User Click on Standard Performance tab within the Class Context
   #Then To check the grading page in new browser tab should open by clicking on the question number within the test overlay
   #When User Click on Standard Performance tab within the Student Context

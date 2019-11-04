@@ -154,13 +154,13 @@ public class Sprint_Nine_Steps {
 	public void verify_Standards_Question_Filter_dropdown_label_and_position_within_Standard_Performance_Overview()
 			throws Throwable {
 		String output = "fail";
-		Integer schoolId = 0, classId = 0;
+		//Integer schoolId = 0, classId = 0;
 		try {
 			
-			  Map<Integer, Integer> ids = UtilityMethods.getSchoolIdAndClassId(); for
+			/*  Map<Integer, Integer> ids = UtilityMethods.getSchoolIdAndClassId(); for
 			  (Map.Entry<Integer, Integer> entry : ids.entrySet()) { schoolId =
 			  entry.getKey(); classId = entry.getValue(); }
-			 
+			 */
 
 			if (Standard_Overview_Table_Steps.performanceMenuClicked) {
 				Assert.assertTrue(homePage.questionDropDown.isDisplayed());
@@ -189,15 +189,16 @@ public class Sprint_Nine_Steps {
 			throws Throwable {
 		String output = "";
 		String school, classN, district, tests, dates, assessedWith, testDataAssessedForGrade;
-		String studentN, teacherN, grade;
-		Integer schoolId = 0, classId = 0, studentId;
+		/*String studentN, teacherN, grade;
+		Integer schoolId = 0, classId = 0, studentId;*/
 		try {
+			/*
 			Map<Integer, Integer> ids = UtilityMethods.getSchoolIdAndClassId();
 			for (Map.Entry<Integer, Integer> entry : ids.entrySet()) {
 				schoolId = entry.getKey();
 				classId = entry.getValue();
 			}
-
+			 */
 			classN = UtilityMethods.getClassNameonUI();
 			school = UtilityMethods.getSchoolNameonUI();
 			district = UtilityMethods.getDistrictNameonUI();
