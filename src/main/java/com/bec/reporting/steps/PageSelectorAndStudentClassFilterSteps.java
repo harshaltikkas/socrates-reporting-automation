@@ -26,7 +26,6 @@
 package com.bec.reporting.steps;
 
 import java.util.List;
-
 import org.junit.Assert;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoSuchElementException;
@@ -57,8 +56,8 @@ public class PageSelectorAndStudentClassFilterSteps {
 	@When("^default Standards Performance button should be selected with the Class context$")
 	public void default_Standards_Performance_button_should_be_selected_with_the_Class_context() throws Throwable {
 		try {
-			Verify.verify(homePage.activeclassmenu.isEnabled());
-			Verify.verify(homePage.activestandardperformancebtn.isEnabled());
+			Verify.verify(homePage.activeclassmenu.isDisplayed());
+			Verify.verify(homePage.activestandardperformancebtn.isDisplayed());
 		} catch (Exception e) {
 			UtilityMethods.processException(e);
 		}
@@ -72,7 +71,7 @@ public class PageSelectorAndStudentClassFilterSteps {
 	public void user_selects_Test_Scores_button_within_the_page_selector_then_also_the_context_will_remain_same() throws Throwable {
 		try {
 			JavascriptExecutor jse2 = (JavascriptExecutor)Driver.webdriver;
-			UtilityMethods.scrollPageUp(Driver.webdriver);
+			UtilityMethods.scrollPageUp(Driver.webdriver);Thread.sleep(500);
 			UtilityMethods.wait_For_Context_Header_Section();
 			jse2.executeScript("arguments[0].click();", homePage.testscoresbtn);
 			Thread.sleep(3000);
@@ -154,44 +153,39 @@ public class PageSelectorAndStudentClassFilterSteps {
 	
 
 	/**
-	 * This method is used to verify the heading on context header for standard performance & Test Score menu
+	 * This method is used to verify the heading on context header Based on page selector and menu
 	 * @throws Throwable
 	 */
-	@Then("^Verify labels on context header based on standard performance and test scores button$")
-	public void verify_labels_on_context_header_based_on_standard_performance_and_test_scores_button() throws Throwable {
+	@Then("^Verify labels on context header based on selection of menus$")
+	public void verify_labels_on_context_header_based_on_selection_of_menus() throws Throwable {
 		try {
 			UtilityMethods.wait_For_Page_Section_Load();
-
 			List<WebElement> headerList = homePage.contextheadertextlist;
 			if (Standard_Overview_Table_Steps.underStudentContext
 					&& (Standard_Overview_Table_Steps.performanceMenuClicked
 							|| Standard_Overview_Table_Steps.testScoreMenuClicked)) {
 				Assert.assertTrue(headerList.get(0).getText().equals("Student:"));
 				Assert.assertTrue(headerList.get(1).getText().equals("Class:"));
-				Assert.assertTrue(headerList.get(2).getText().equals("School:"));
+				Assert.assertTrue(headerList.get(2).getText().equals("Teacher:"));
 				Assert.assertTrue(headerList.get(3).getText().equals("Tests:"));
 				Assert.assertTrue(headerList.get(4).getText().equals("Dates:"));
 			}
 			else if (Standard_Overview_Table_Steps.underClassContext && (Standard_Overview_Table_Steps.performanceMenuClicked
 					|| Standard_Overview_Table_Steps.testScoreMenuClicked)) {
 				Assert.assertTrue(headerList.get(0).getText().equals("Class:"));
-				Assert.assertTrue(headerList.get(1).getText().equals("School:"));
-				Assert.assertTrue(headerList.get(2).getText().equals("Tests:"));
-				Assert.assertTrue(headerList.get(3).getText().equals("Dates:"));
+				Assert.assertTrue(headerList.get(1).getText().equals("Teacher:"));
+				Assert.assertTrue(headerList.get(2).getText().equals("Grade:"));
+				Assert.assertTrue(headerList.get(3).getText().equals("Tests:"));
+				Assert.assertTrue(headerList.get(4).getText().equals("Dates:"));
 			}
 			
 			String compareText,tooltiptext;
 			for (int i = 0,tooltipcount=0; i < homePage.contextheaderdatalist.size(); i++) {
 				if (homePage.contextheaderdatalist.get(i).getText().contains("...")) {
-					if (Standard_Overview_Table_Steps.underClassContext && (Standard_Overview_Table_Steps.performanceMenuClicked
-							|| Standard_Overview_Table_Steps.testScoreMenuClicked)) {
-						Thread.sleep(5000);						
-					}
-
-					new Actions(Driver.webdriver).moveToElement(homePage.contextheaderdatalist.get(i)).perform();
+									new Actions(Driver.webdriver).moveToElement(homePage.contextheaderdatalist.get(i)).perform();
 					tooltiptext=homePage.contextheadertooltiplist.get(tooltipcount).getText();
 					new Actions(Driver.webdriver).moveToElement(homePage.overviewtext).build().perform();
-					Thread.sleep(1000);
+					Thread.sleep(500);
 					compareText = UtilityMethods.elipsisRemoval(homePage.contextheaderdatalist.get(i).getText());
 					Assert.assertTrue(tooltiptext.contains(compareText));
 					Thread.sleep(500);
@@ -204,7 +198,7 @@ public class PageSelectorAndStudentClassFilterSteps {
 				headerText = homePage.contextheadertextlist.get(i).getText();
 				new Actions(Driver.webdriver).moveToElement(homePage.contextheaderdatalist.get(i)).click().build().perform();;
 				Thread.sleep(500);
-				if (headerText.equals("Class:") || headerText.equals("School:") || headerText.equals("Student:")) {
+				if (headerText.equals("Class:") || headerText.equals("Student:")) {
 					Assert.assertTrue(homePage.rostertab.isDisplayed());
 					Verify.verify(homePage.studentTitleOnSliderMenu.isDisplayed());
 				} else if (headerText.equals("Tests:")) {
@@ -214,15 +208,11 @@ public class PageSelectorAndStudentClassFilterSteps {
 					  Assert.assertTrue(homePage.datetab.isDisplayed());
 					  Verify.verify(homePage.districtNameOnSliderMenu.isDisplayed());					 
 				} else {
-					log.info("Nothing should be verify while clicking on Grade");
+					log.info("Nothing should be verify while clicking on Grade/Teacher");
 				}
 				new Actions(Driver.webdriver).moveToElement(homePage.overviewtext).click().build().perform();
 			}
-			Standard_Overview_Table_Steps.underClassContext=false;
-			Standard_Overview_Table_Steps.underStudentContext=false;
-			Standard_Overview_Table_Steps.testScoreMenuClicked=false;
-			Standard_Overview_Table_Steps.performanceMenuClicked=false;
-			
+			Standard_Overview_Table_Steps.resetStatus();
 			CBTConfiguration.score = "pass";
 		} catch (Exception e) {
 			UtilityMethods.processException(e);

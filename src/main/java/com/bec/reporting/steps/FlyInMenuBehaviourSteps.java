@@ -54,6 +54,7 @@ public class FlyInMenuBehaviourSteps {
 	public static Properties prop;
 	public static String toolTipText = "";
 	public static String classNameonCH,schoolNameonCH, teacherNameonCH, gradeNameonCH,studentTextonCH;
+	public static String uname,passwd,realm;
 
 	/**
 	 * method used to launch the browser with the url and provide the
@@ -66,6 +67,9 @@ public class FlyInMenuBehaviourSteps {
 			String password, String usertype) throws Throwable {
 		log.info("User is on portal's login screen");
 		try {
+			uname=username;
+			passwd=password;
+			realm=usertype;
 			prop = FileRead.readProperties();
 			Driver.launch_browser(prop.getProperty("portalUrl"));
 			Thread.sleep(3000);
@@ -79,9 +83,9 @@ public class FlyInMenuBehaviourSteps {
 			select.selectByValue(usertype);
 			Thread.sleep(1000);
 			homePage.loginbtn.click();
-			//Thread.sleep(3000);
 			IWait.explicit_wait(Driver.webdriver, homePage.studentmenu);
 		} catch (Exception e) {
+			System.out.println("failed");
 			UtilityMethods.processException(e);
 		}
 	}
@@ -96,7 +100,6 @@ public class FlyInMenuBehaviourSteps {
 	public void user_is_able_to_open_and_close_the_tab_within_the_Universal_Selector_Tab(String tabName)
 			throws Throwable {
 		try {
-			// IWait.explicit_wait(Driver.webdriver, homePage.openarrow);
 			Verify.verify(homePage.openarrow.isDisplayed());
 			Driver.webdriver.findElement(By.xpath("//span[@class='menu-name' and contains(text(),'" + tabName + "')]"))
 					.click();
@@ -149,69 +152,74 @@ public class FlyInMenuBehaviourSteps {
 	 * @param studentType
 	 * @throws Throwable
 	 */
-	@Then("^User should be able to select school and Class and student as \"([^\"]*)\" and apply and verify with context header information$")
-	public void user_should_be_able_to_select_school_and_Class_and_student_as_and_apply_and_verify_with_context_header_information(
-			String selectiontype) throws Throwable {
+	@Then("^User should be able to select school as \"([^\"]*)\" and select grade as \"([^\"]*)\" and Class and student as \"([^\"]*)\" and apply and verify with context header information$")
+	public void user_should_be_able_to_select_school_as_and_select_grade_as_and_Class_and_student_as_and_apply_and_verify_with_context_header_information(String sc, String grade, String selectiontype) throws Throwable {
 		try {
-			Thread.sleep(5000);
 			String selectedSchool = "", selectedClass = "", selectedStudent = "", selectedGrade = "",
 					selectedTeacher = "";
-			int customSize = 0;
+			int customSize = 0,randomIndex=0;
 			// selecting school from dropdown
-			UtilityMethods.scrollPageDown(Driver.webdriver, 3);
 			homePage.schooldropdownbtn.click();
-			Thread.sleep(1000);
-			int randomIndex = 0;
-			homePage.searchbaronschooldropdown.sendKeys("Steiner Academy Bristol");
 			Thread.sleep(500);
-			selectedSchool = homePage.schoollist.get(randomIndex).getText();
-			homePage.schoollist.get(0).click();
-			log.info("Selected School is:" + selectedSchool);
+			UtilityMethods.uncheck_check_All("School");
+			log.info("Selected School:" + sc);
+			selectedSchool=sc;
+			homePage.searchbaronschooldropdown.sendKeys(sc);
+			Thread.sleep(500);
+			Driver.webdriver.findElement(By.xpath("//li[.='" + sc + "']")).click();
+			Thread.sleep(500);
+			new Actions(Driver.webdriver).moveToElement(homePage.searchcancelonschooldropdown).click().build().perform();
+			Thread.sleep(500);
+			homePage.schooldropdownbtn.click();
+			Thread.sleep(500);
+			new Actions(Driver.webdriver).moveToElement(homePage.studentTitleOnSliderMenu).build().perform();
+			UtilityMethods.wait_For_Refresh_Icon_onRosterTab(homePage.gradeRefreshIcon,"Grade");
+	    	UtilityMethods.scrollPageDown(Driver.webdriver, 3);Thread.sleep(500);
+			
 			// selecting Grade from dropdown
-			Thread.sleep(1000);
 			homePage.gradedropdownbtn.click();
-			Thread.sleep(1000);
-			selectedGrade = homePage.gradelist.get(1).getText();
-			homePage.gradelist.get(1).click();
-			log.info("Selected Grade is:" + selectedGrade);
-			Thread.sleep(1000);
-			UtilityMethods.scrollPageDown(Driver.webdriver, 3);
-			Thread.sleep(1000);
-			homePage.teachersdropdownbtn.click();
-			Thread.sleep(1000);
-			// de-selecting first time"all" teachers
-			homePage.teacherslist.get(0).click();
 			Thread.sleep(500);
+			log.info("Selected Grade:" + grade);
+			selectedGrade=grade;
+			Driver.webdriver.findElement(By.xpath("//li[.='" + grade + "']")).click();
+			Thread.sleep(500);
+			homePage.gradedropdownbtn.click();
+			Thread.sleep(500);
+			new Actions(Driver.webdriver).moveToElement(homePage.studentTitleOnSliderMenu).build().perform();
+			UtilityMethods.wait_For_Refresh_Icon_onRosterTab(homePage.teachersRefreshIcon,"Teachers");
+			UtilityMethods.scrollPageDown(Driver.webdriver, 4);Thread.sleep(500);
+			
+			homePage.teachersdropdownbtn.click();
+			Thread.sleep(500);
+			// de-selecting first time"all" teachers
+			UtilityMethods.uncheck_check_All("Teachers");
 			switch (selectiontype) {
 			case "single":
 				// selecting Teacher from dropdown
-				Thread.sleep(1000);
+				Thread.sleep(500);
 				selectedTeacher = homePage.teacherslist.get(2).getText();
 				homePage.teacherslist.get(2).click();
 				log.info("Selected Teacher is:" + selectedTeacher);
 				homePage.teachersdropdownbtn.click();
+				Thread.sleep(500);
 				// selecting class from dropdown
-				Thread.sleep(1000);
-				UtilityMethods.scrollPageDown(Driver.webdriver, 3);
+				UtilityMethods.scrollPageDown(Driver.webdriver, 2);
 				Thread.sleep(500);
 				homePage.classdropdownbtn.click();
-				Thread.sleep(1000);
-				// de-selecting first time"all" classes
-				homePage.classlist.get(0).click();
 				Thread.sleep(500);
-				Thread.sleep(1000);
-				selectedClass = homePage.classlist.get(2).getText();
-				homePage.classlist.get(2).click();
+				// de-selecting first time"all" classes
+				UtilityMethods.uncheck_check_All("Class");
+				selectedClass = homePage.classlist.get(1).getText();
+				homePage.classlist.get(1).click();
 				log.info("Selected Class is:" + selectedClass);
 				homePage.classdropdownbtn.click();
 				// selecting student from dropdown
-				Thread.sleep(1000);
+				Thread.sleep(500);
 				homePage.studentdropdownbtn.click();
-				Thread.sleep(1000);
+				Thread.sleep(500);
 				// de-selecting first time"all" students
 				// This is to unselect all student from dropdown,as default is all selected
-				homePage.studentdropdownallcheckbox.click();
-				Thread.sleep(500);
+				UtilityMethods.uncheck_check_All("Student");
 				randomIndex = UtilityMethods.generateRandomNumberBySkippingIndex(homePage.studentlistwithall.size(), 0);
 				UtilityMethods.scroll_Div(homePage.studentlistwithall.get(randomIndex), 20);
 				Thread.sleep(500);
@@ -231,52 +239,52 @@ public class FlyInMenuBehaviourSteps {
 				log.info("Selected Teacher is:" + selectedTeacher);
 				homePage.teachersdropdownbtn.click();
 				// selecting class from dropdown
-				Thread.sleep(1000);
-				UtilityMethods.scrollPageDown(Driver.webdriver, 3);
+				Thread.sleep(500);
+				UtilityMethods.scrollPageDown(Driver.webdriver, 1);
 				Thread.sleep(500);
 				homePage.classdropdownbtn.click();
-				Thread.sleep(1000);
-				// de-selecting first time"all" classes
-				homePage.classlist.get(0).click();
 				Thread.sleep(500);
-				Thread.sleep(1000);
-				selectedClass = homePage.classlist.get(2).getText();
-				homePage.classlist.get(2).click();
+				// de-selecting first time"all" classes
+				UtilityMethods.uncheck_check_All("Class");
+				selectedClass = homePage.classlist.get(1).getText();
+				homePage.classlist.get(1).click();
+				Thread.sleep(500);
 				log.info("Selected Class is:" + selectedClass);
 				homePage.classdropdownbtn.click();
-				Thread.sleep(1000);
+				Thread.sleep(500);
 				// selecting student from dropdown
 				homePage.studentdropdownbtn.click();
-				Thread.sleep(1000);
+				Thread.sleep(500);
 				// de-selecting first time"all" students
 				// This is to unselect all student from dropdown,as default is all selected
-				homePage.studentdropdownallcheckbox.click();
-				Thread.sleep(500);
+				UtilityMethods.uncheck_check_All("Student");
 				// selecting custom Teacher from dropdown
 				for (int i = 1; i < homePage.studentlistondropdown.size(); i = i + 2) {
 					if (homePage.studentlistondropdown.get(i).getText().equals("")) {
 						UtilityMethods.scroll_Div(homePage.studentlistondropdown.get(i), 20);
 					}
 					homePage.studentlistondropdown.get(i).click();
-					Thread.sleep(1000);
+					Thread.sleep(500);
 					customSize++;
 				}
 				homePage.studentdropdownbtn.click();
-				Thread.sleep(1000);
+				Thread.sleep(500);
 				break;
 			default:
 				// de-selecting first time"all" teachers
 				homePage.teacherslist.get(0).click();
 				Thread.sleep(500);
 				homePage.teachersdropdownbtn.click();
-				Thread.sleep(1000);
+				Thread.sleep(500);
 				break;
 			}
 			Thread.sleep(500);
 			homePage.rosterapplybtn.click();
+			Thread.sleep(3000);
 			UtilityMethods.scrollPageUp(Driver.webdriver);
+			Thread.sleep(500);
 			UtilityMethods.wait_For_Context_Header_Section();
-			Thread.sleep(5000);
+			
 
 			/**
 			 * verifying class and school,teacher,grade and student on context menu by
@@ -286,8 +294,6 @@ public class FlyInMenuBehaviourSteps {
 			switch (selectiontype) {
 			case "single":
 				Thread.sleep(3000);
-				verify_Single_Selection_context_header_content(selectedClass,selectedGrade,selectedSchool,selectedTeacher);
-			
 				if (homePage.studentnameoncontextheader.getText().contains("...")) {
 					new Actions(Driver.webdriver).moveToElement(homePage.studentnameoncontextheader).build().perform();
 					studentTextonCH = homePage.studentnameoncontextheadertooltiptext.getText();
@@ -297,11 +303,11 @@ public class FlyInMenuBehaviourSteps {
 				log.info("Student name on CH:" + studentTextonCH);
 				Assert.assertTrue(studentTextonCH.contains(selectedStudent));
 				Assert.assertTrue(homePage.activestudentmenu.isDisplayed());
+				verify_Single_Selection_context_header_content(selectedClass,selectedGrade,selectedSchool,selectedTeacher);
 				break;
 
 			case "multiple":
 				Thread.sleep(3000);
-				verify_Single_Selection_context_header_content(selectedClass,selectedGrade,selectedSchool,selectedTeacher);
 				if (homePage.studentnameoncontextheader.getText().contains("...")) {
 					new Actions(Driver.webdriver).moveToElement(homePage.studentnameoncontextheader).build().perform();
 					studentTextonCH = homePage.studentnameoncontextheadertooltiptext.getText();
@@ -311,6 +317,7 @@ public class FlyInMenuBehaviourSteps {
 				log.info("Student name on CH:" + studentTextonCH);
 				Assert.assertTrue(studentTextonCH.equals("Custom (" + customSize + ")"));
 				Assert.assertTrue(homePage.activeclassmenu.isDisplayed());
+				verify_Single_Selection_context_header_content(selectedClass,selectedGrade,selectedSchool,selectedTeacher);
 				break;
 
 			default:				
@@ -326,7 +333,7 @@ public class FlyInMenuBehaviourSteps {
 				log.info("Grade name on CH:" + gradeNameonCH);
 				selectedGrade = selectedGrade.substring(selectedGrade.indexOf(" ") + 1);
 				Assert.assertTrue(selectedGrade.equals(gradeNameonCH));
-				new Actions(Driver.webdriver).moveToElement(homePage.overviewtext).click().perform();
+				new Actions(Driver.webdriver).moveByOffset(200, 200).build().perform();
 				// verifying school name context header
 				if (homePage.schoolnameoncontextheader.getText().contains("...")) {
 					new Actions(Driver.webdriver).moveToElement(homePage.schoolnameoncontextheader).build().perform();
@@ -351,6 +358,7 @@ public class FlyInMenuBehaviourSteps {
 		try {
 			// verifying class name on context header
 			Actions actions = new Actions(Driver.webdriver);
+			actions.moveByOffset(200, 200).build().perform();Thread.sleep(500);
 			if (homePage.classnameoncontextheader.getText().contains("...")) {
 				actions.moveToElement(homePage.classnameoncontextheader).build().perform();
 				classNameonCH = homePage.tooltipofclassnameoncontextheader.getText();
@@ -406,12 +414,12 @@ public class FlyInMenuBehaviourSteps {
 	 * 
 	 * @throws Throwable
 	 */
-	@Then("^User should be able to click on cancel button to close the Roster Tab\\.$")
+	@Then("^User should be able to click on cancel button to close the Roster Tab$")
 	public void user_should_be_able_to_click_on_cancel_button_to_close_the_Roster_Tab() throws Throwable {
 		try {
 			UtilityMethods.scrollPageDown(Driver.webdriver, 4);
-			homePage.rostercancelbtn.click();
 			Thread.sleep(500);
+			homePage.rostercancelbtn.click();Thread.sleep(500);
 			Assert.assertEquals(false, homePage.studentTitleOnSliderMenu.isDisplayed());
 			CBTConfiguration.score = "pass";
 		} catch (Exception e) {
@@ -428,11 +436,10 @@ public class FlyInMenuBehaviourSteps {
 	@When("^User Click on Test tab within the Universal Selector Tab$")
 	public void user_Click_on_Test_tab_within_the_Universal_Selector_Tab() throws Throwable {
 		try {
-			UtilityMethods.wait_For_Context_Header_Section();
 			homePage.testtab.click();
 			IWait.explicit_wait(Driver.webdriver, homePage.searchbarontesttab);
 			Verify.verify(homePage.searchbarontesttab.isDisplayed());
-			Thread.sleep(1000);
+			Thread.sleep(500);
 		} catch (Exception e) {
 			UtilityMethods.processException(e);
 		}
@@ -497,13 +504,13 @@ public class FlyInMenuBehaviourSteps {
 	 * 
 	 * @throws Throwable
 	 */
-	@Then("^User should be able to click on cancel button to close the Test Tab\\.$")
+	@Then("^User should be able to click on cancel button to close the Test Tab$")
 	public void user_should_be_able_to_click_on_cancel_button_to_close_the_Test_Tab() throws Throwable {
 		try {
 			UtilityMethods.scrollPageDown(Driver.webdriver, 11);
+			Thread.sleep(500);
 			homePage.testcancelbtn.click();
 			Thread.sleep(500);
-			UtilityMethods.scrollPageUp(Driver.webdriver);
 			Assert.assertEquals(false, homePage.searchbarontesttab.isDisplayed());
 			CBTConfiguration.score = "pass";
 		} catch (Exception e) {
@@ -543,9 +550,12 @@ public class FlyInMenuBehaviourSteps {
 			homePage.districttermlist.get(1).click();
 			Thread.sleep(500);
 			String districtterm = homePage.districttermdropdownbtn.getText();
+			districtterm=districtterm.substring(0,districtterm.indexOf(" "));
 			log.info("selected district term:"+districtterm);
 			homePage.dateapplybtn.click();
-			Thread.sleep(5000);
+			
+			UtilityMethods.scrollPageUp(Driver.webdriver);
+			Thread.sleep(30000);
 			/**
 			 * Verifying District Term on context header by comparing dropdown text and
 			 * context header values
@@ -566,7 +576,7 @@ public class FlyInMenuBehaviourSteps {
 	 * 
 	 * @throws Throwable
 	 */
-	@Then("^User should be able to click on cancel button to close the Date Tab\\.$")
+	@Then("^User should be able to click on cancel button to close the Date Tab$")
 	public void user_should_be_able_to_click_on_cancel_button_to_close_the_Date_Tab() throws Throwable {
 		try {
 			UtilityMethods.scrollPageDown(Driver.webdriver, 3);
@@ -590,6 +600,7 @@ public class FlyInMenuBehaviourSteps {
 	@When("^User mousehover on \"([^\"]*)\" tab within the Universal Selector Tab$")
 	public void user_mousehover_on_tab_within_the_Universal_Selector_Tab(String tabName) throws Throwable {
 		try {
+			Thread.sleep(1000);
 			IWait.explicit_wait(Driver.webdriver, homePage.rostertab);
 			WebElement el = Driver.webdriver.findElement(By.xpath("//span[@class='menu-name' and contains(text(),'"
 					+ tabName + "')]/ancestor::div[@class='menu-item']"));

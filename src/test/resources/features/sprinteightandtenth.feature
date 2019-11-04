@@ -1,4 +1,4 @@
-@Feature
+@Feature1
 Feature: Sprint 8 and 10 User Stories
 
   ######## Sprint 8 User Stories ################
@@ -33,12 +33,12 @@ Feature: Sprint 8 and 10 User Stories
 
   ##BE-872
   Scenario: Verify no appearance of the grouping tab for other than teacher
-    Given User is on portal's login screen with username as "superadmin" and password as "password" and usertype as "techsupport"
+    Given User is on portal's login screen with username as "SarahMMerritt" and password as "password" and usertype as "realm1"
     Then verify no appearance of the grouping tab for other than teacher
 
   ##BE-881
   Scenario: Verify Context header Updates - Test tab selections
-    Given User is on portal's login screen with username as "superadmin" and password as "password" and usertype as "techsupport"
+    Given User is on portal's login screen with username as "SarahMMerritt" and password as "password" and usertype as "realm1"
     Then verify Context header Updates - Test tab selections
 
   ##BE-901,902,903,904,905,906,909

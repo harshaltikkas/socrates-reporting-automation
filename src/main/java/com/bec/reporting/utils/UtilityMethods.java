@@ -66,7 +66,7 @@ public class UtilityMethods {
 	}
 
 	/**
-	 * This method used to page up to top 
+	 * This method used to page up to top
 	 * 
 	 * @param driver
 	 */
@@ -77,15 +77,17 @@ public class UtilityMethods {
 
 	/**
 	 * This methd is used to scroll down till bottom
+	 * 
 	 * @param driver
 	 */
 	public static void scrollPageDown(WebDriver driver) {
 		Actions builder = new Actions(driver);
 		builder.sendKeys(Keys.PAGE_DOWN).build().perform();
 	}
-	
+
 	/**
 	 * This method is used to scroll page up till the count value
+	 * 
 	 * @param driver
 	 * @param count
 	 */
@@ -234,7 +236,7 @@ public class UtilityMethods {
 	 * expression
 	 * 
 	 * @param submissionDate
-	 * @return 
+	 * @return
 	 */
 	public static boolean checkDateFormat(String submissionDate) {
 		Matcher matcher = null;
@@ -332,7 +334,8 @@ public class UtilityMethods {
 			Assert.assertTrue(subcat.equals(m.getStandard_subcategory()));
 			Assert.assertTrue(desc.equals(m.getStandard_description()));
 			// code here
-			//Assert.assertTrue(UtilityMethods.VerifyTestScore(conn, standardId, schoolId, classId));
+			// Assert.assertTrue(UtilityMethods.VerifyTestScore(conn, standardId, schoolId,
+			// classId));
 		} catch (Exception e) {
 			UtilityMethods.scrollPageDown(Driver.webdriver, 1);
 			searchandClickonELement(standardName, m, standardIndex, cat, subcat, desc, strandIndex, conn, standardId,
@@ -348,10 +351,10 @@ public class UtilityMethods {
 	 * @param numberLength
 	 * @return
 	 */
-	public static int generateRandomNumberBySkippingIndex(int numberLength,int skipIndex) {
+	public static int generateRandomNumberBySkippingIndex(int numberLength, int skipIndex) {
 		int number = (int) (Math.random() * numberLength);
 		if (number == skipIndex) {
-			number=generateRandomNumberBySkippingIndex(numberLength, skipIndex);
+			number = generateRandomNumberBySkippingIndex(numberLength, skipIndex);
 		}
 		return number;
 	}
@@ -406,10 +409,11 @@ public class UtilityMethods {
 		}
 		return true;
 	}
-	
+
 	/**
-	 * This method is used to click on performance icon on line chart and verify on line chart test name,test score, questions
-	 * Submitted Date
+	 * This method is used to click on performance icon on line chart and verify on
+	 * line chart test name,test score, questions Submitted Date
+	 * 
 	 * @param con
 	 * @param standardId
 	 * @param schoolId
@@ -424,17 +428,17 @@ public class UtilityMethods {
 			Thread.sleep(1000);
 			new Actions(Driver.webdriver).moveToElement(homePage.performanceovrtimeicon).click().build().perform();
 			Thread.sleep(2000);
-			new Actions(Driver.webdriver).moveToElement(homePage.xaxistexton_linechart).build().perform();
+			new Actions(Driver.webdriver).moveToElement(homePage.testnameslabel_onlinechart_tsot).build().perform();
 			Thread.sleep(1000);
 			// =============================================================================
-			PaginationUtility.methodOne();
+			PaginationUtility.checkPaginator_on_tsot();
 			if (PaginationUtility.paginatorFound) {
-				PaginationUtility.methodTwo();
+				PaginationUtility.check_Enabled_Left_Arrow_on_Paginator_on_tsot();
 				if (PaginationUtility.enabledLeftArrowFound) {
 					do {
-						PaginationUtility.methodThree();
+						PaginationUtility.check_Disabled_Left_Arrow_on_Paginator();
 						if (PaginationUtility.doneWithThreeCircle) {
-							PaginationUtility.methodFour();
+							PaginationUtility.clicking_on_first_circle_of_paginator();
 							PaginationUtility.testNamesList.clear();
 							for (int i = 0; i < homePage.testNamesonPerPage_onlinechart.size(); i++) {
 								new Actions(Driver.webdriver)
@@ -442,45 +446,45 @@ public class UtilityMethods {
 										.perform();
 								PaginationUtility.testNamesList.add(homePage.testNametooltip_onlinechart.getText());
 								Thread.sleep(500);
-								new Actions(Driver.webdriver).moveToElement(homePage.xaxistexton_linechart).build()
-										.perform();
+								new Actions(Driver.webdriver).moveToElement(homePage.testnameslabel_onlinechart_tsot)
+										.build().perform();
 							}
-						PaginationUtility.checkTestScoreDetails(schoolId, classId, standardId);
+							PaginationUtility.checkTestScoreDetails(schoolId, classId, standardId);
 
 						} else {
 							for (int k = PaginationUtility.circleList.size() - 1; k >= 0; k--) {
 								PaginationUtility.testNamesList.clear();
-								PaginationUtility.methodFive(k);
+								PaginationUtility.clicking_on_indexed_circle_of_paginator(k);
 								for (int i = 0; i < homePage.testNamesonPerPage_onlinechart.size(); i++) {
 									new Actions(Driver.webdriver)
 											.moveToElement(homePage.testNamesonPerPage_onlinechart.get(i)).build()
 											.perform();
 									PaginationUtility.testNamesList.add(homePage.testNametooltip_onlinechart.getText());
 									Thread.sleep(500);
-									new Actions(Driver.webdriver).moveToElement(homePage.xaxistexton_linechart).build()
-											.perform();
+									new Actions(Driver.webdriver)
+											.moveToElement(homePage.testnameslabel_onlinechart_tsot).build().perform();
 								}
 								PaginationUtility.checkTestScoreDetails(schoolId, classId, standardId);
 
 							}
 							PaginationUtility.doneWithThreeCircle = true;
 						}
-						PaginationUtility.methodSix();
+						PaginationUtility.clicking_on_enabled_left_Arrow_of_paginator();
 					} while (!PaginationUtility.disableLeftArrowFound);
 				}
 
 				else {
 					for (int k = 0; k <= PaginationUtility.circleList.size() - 1; k++) {
 						PaginationUtility.testNamesList.clear();
-						PaginationUtility.methodFive(k);
+						PaginationUtility.clicking_on_indexed_circle_of_paginator(k);
 
 						for (int i = 0; i < homePage.testNamesonPerPage_onlinechart.size(); i++) {
 							new Actions(Driver.webdriver).moveToElement(homePage.testNamesonPerPage_onlinechart.get(i))
 									.build().perform();
 							PaginationUtility.testNamesList.add(homePage.testNametooltip_onlinechart.getText());
 							Thread.sleep(500);
-							new Actions(Driver.webdriver).moveToElement(homePage.xaxistexton_linechart).build()
-									.perform();
+							new Actions(Driver.webdriver).moveToElement(homePage.testnameslabel_onlinechart_tsot)
+									.build().perform();
 						}
 						PaginationUtility.checkTestScoreDetails(schoolId, classId, standardId);
 					}
@@ -494,7 +498,8 @@ public class UtilityMethods {
 							.perform();
 					PaginationUtility.testNamesList.add(homePage.testNametooltip_onlinechart.getText());
 					Thread.sleep(500);
-					new Actions(Driver.webdriver).moveToElement(homePage.xaxistexton_linechart).build().perform();
+					new Actions(Driver.webdriver).moveToElement(homePage.testnameslabel_onlinechart_tsot).build()
+							.perform();
 				}
 				PaginationUtility.checkTestScoreDetails(schoolId, classId, standardId);
 			}
@@ -507,13 +512,14 @@ public class UtilityMethods {
 			Assert.assertTrue(homePage.tooltip.getText().equals(tooltipText));
 			new Actions(Driver.webdriver).moveToElement(homePage.defaultstrandnameinpotchart).click().build().perform();
 			PaginationUtility.avgPerOnSubHeading = (PaginationUtility.tsum / PaginationUtility.TestCount);
-			WebElement avgInfo = Driver.webdriver.findElement(By.xpath("//span[.='Average Score: " + PaginationUtility.avgPerOnSubHeading
-					+ "% based on " + PaginationUtility.totalQuestionCount + " questions']"));
+			WebElement avgInfo = Driver.webdriver
+					.findElement(By.xpath("//span[.='Average Score: " + PaginationUtility.avgPerOnSubHeading
+							+ "% based on " + PaginationUtility.totalQuestionCount + " questions']"));
 			Assert.assertTrue(avgInfo.isDisplayed());
 			Thread.sleep(1000);
 			new Actions(Driver.webdriver).moveToElement(homePage.performanceovrtimeicon).click().build().perform();
 			Thread.sleep(2000);
-			//Verifying avg info on student list as well
+			// Verifying avg info on student list as well
 			Assert.assertTrue(avgInfo.isDisplayed());
 		} catch (Exception e) {
 			processException(e);
@@ -546,9 +552,11 @@ public class UtilityMethods {
 		}
 		return stuId;
 	}
-	
+
 	/**
-	 * This method is used to return schoolID and classID based on UI school name and class name
+	 * This method is used to return schoolID and classID based on UI school name
+	 * and class name
+	 * 
 	 * @return
 	 */
 	public static Map<Integer, Integer> getSchoolIdAndClassId() {
@@ -583,26 +591,25 @@ public class UtilityMethods {
 		}
 		return Ids;
 	}
-	
-	/**
-	 * To get school id ,class id and student id called the below code
-	  Integer schoolId=0,classId=0;
 
-			Map<Integer,Integer> ids=UtilityMethods.getSchoolIdAndClassId();
-			for(Map.Entry<Integer,Integer> entry:ids.entrySet()) {
-				schoolId=entry.getKey();
-				classId=entry.getValue();
-			}			
-			studentId=UtilityMethods.getStudentId();
+	/**
+	 * To get school id ,class id and student id called the below code Integer
+	 * schoolId=0,classId=0;
+	 * 
+	 * Map<Integer,Integer> ids=UtilityMethods.getSchoolIdAndClassId();
+	 * for(Map.Entry<Integer,Integer> entry:ids.entrySet()) {
+	 * schoolId=entry.getKey(); classId=entry.getValue(); }
+	 * studentId=UtilityMethods.getStudentId();
 	 */
-	
+
 	/**
 	 * This method is used to retrieve Student Name on UI
+	 * 
 	 * @return
 	 */
 	public static String getStudentNameonUI() {
 		HomePage homePage = PageFactory.initElements(Driver.webdriver, HomePage.class);
-		String studentTextonCH="";
+		String studentTextonCH = "";
 		try {
 			new Actions(Driver.webdriver).moveToElement(homePage.studentnameoncontextheader).build().perform();
 			if (homePage.studentnameoncontextheader.getText().contains("...")) {
@@ -619,6 +626,7 @@ public class UtilityMethods {
 
 	/**
 	 * This method is used to retrieve School Name on UI
+	 * 
 	 * @return
 	 */
 	public static String getSchoolNameonUI() {
@@ -641,9 +649,10 @@ public class UtilityMethods {
 		}
 		return schoolName;
 	}
-	
+
 	/**
 	 * This method is used to retrieve District Name on UI
+	 * 
 	 * @return
 	 */
 	public static String getDistrictNameonUI() {
@@ -666,9 +675,10 @@ public class UtilityMethods {
 		}
 		return districtName;
 	}
-	
+
 	/**
 	 * This method is used to retrieve Test Name value on UI
+	 * 
 	 * @return
 	 */
 	public static String getTestsNameonUI() {
@@ -689,9 +699,10 @@ public class UtilityMethods {
 		}
 		return testsName;
 	}
-	
+
 	/**
 	 * This method is used to retrieve Teacher Name value on UI
+	 * 
 	 * @return
 	 */
 	public static String getTeacherNameonUI() {
@@ -713,9 +724,10 @@ public class UtilityMethods {
 		}
 		return teachersName;
 	}
-	
+
 	/**
 	 * This method is used to retrieve AssessedWith value on UI
+	 * 
 	 * @return
 	 */
 	public static String getAssessedWithonUI() {
@@ -724,7 +736,7 @@ public class UtilityMethods {
 		try {
 			new Actions(Driver.webdriver).moveToElement(homePage.questionDropDown).click().build().perform();
 			Thread.sleep(1000);
-			
+
 			assessedWithTxt = homePage.questionDropDown.getText();
 			new Actions(Driver.webdriver).moveToElement(homePage.overviewtext).click().build().perform();
 			Thread.sleep(500);
@@ -733,9 +745,10 @@ public class UtilityMethods {
 		}
 		return assessedWithTxt;
 	}
-	
+
 	/**
 	 * This method is used to retrieve TestDataAssessedForGrade value on UI
+	 * 
 	 * @return
 	 */
 	public static String getTestDataAssessedForGradeonUI() {
@@ -744,7 +757,7 @@ public class UtilityMethods {
 		try {
 			new Actions(Driver.webdriver).moveToElement(homePage.gradeDropDown).click().build().perform();
 			Thread.sleep(1000);
-			
+
 			testDataAssessedForGrade = homePage.gradeDropDown.getText();
 			new Actions(Driver.webdriver).moveToElement(homePage.overviewtext).click().build().perform();
 			Thread.sleep(500);
@@ -753,9 +766,10 @@ public class UtilityMethods {
 		}
 		return testDataAssessedForGrade;
 	}
-	
+
 	/**
 	 * This method is used to retrieve Dates value on UI
+	 * 
 	 * @return
 	 */
 	public static String getDatesonContextHeaderUI() {
@@ -772,7 +786,7 @@ public class UtilityMethods {
 		}
 		return testsName;
 	}
-	
+
 	/**
 	 * This method is used to retrieve Class Name on UI
 	 * 
@@ -795,7 +809,7 @@ public class UtilityMethods {
 		}
 		return className;
 	}
-	
+
 	/**
 	 * This method is used to wait till the loading of Student List section
 	 */
@@ -815,10 +829,10 @@ public class UtilityMethods {
 			wait_For_Student_List_AND_OR_Class_List_Section_Load();
 		}
 	}
-	
-	
+
 	/**
-	 * This method is used to wait till the loading of Performance Over Time Line Chart section
+	 * This method is used to wait till the loading of Performance Over Time Line
+	 * Chart section
 	 */
 	public static void wait_For_Performance_Over_Time_Section_Load() {
 		HomePage homePage = PageFactory.initElements(Driver.webdriver, HomePage.class);
@@ -826,8 +840,8 @@ public class UtilityMethods {
 			Assert.assertTrue(homePage.infoicononperformanceovrtimeheader.isDisplayed());
 			log.info("Perfomance Over Time Saction is now Displaying");
 			wait_For_Context_Header_Section();
-			Standard_Overview_Table_Steps.underStudentContext=false;
-			Standard_Overview_Table_Steps.performanceMenuClicked=false;
+			Standard_Overview_Table_Steps.underStudentContext = false;
+			Standard_Overview_Table_Steps.performanceMenuClicked = false;
 		} catch (Exception e) {
 			log.info("Waiting for Performance Over Time Saction Loading");
 			try {
@@ -838,8 +852,7 @@ public class UtilityMethods {
 			wait_For_Performance_Over_Time_Section_Load();
 		}
 	}
-	
-	
+
 	/**
 	 * This method is used to wait till the loading of Test Score OverView section
 	 */
@@ -849,8 +862,6 @@ public class UtilityMethods {
 			Assert.assertTrue(homePage.testscoreoverviewtext.isDisplayed());
 			log.info("test score overview Saction is now Displaying");
 			wait_For_Context_Header_Section();
-			Standard_Overview_Table_Steps.underStudentContext=false;
-			Standard_Overview_Table_Steps.testScoreMenuClicked=false;
 		} catch (Exception e) {
 			log.info("Waiting for test score overview  Saction Loading");
 			try {
@@ -869,12 +880,14 @@ public class UtilityMethods {
 		HomePage homePage = PageFactory.initElements(Driver.webdriver, HomePage.class);
 		try {
 			Assert.assertTrue(homePage.datesubmittedtext.isDisplayed());
-			log.info("test score detail Saction is now Displaying");
+			log.info("test score detail Section is now Displaying");
 			wait_For_Context_Header_Section();
-			Standard_Overview_Table_Steps.underClassContext=false;
-			Standard_Overview_Table_Steps.testScoreMenuClicked=false;
+			/*
+			 * Standard_Overview_Table_Steps.underClassContext=false;
+			 * Standard_Overview_Table_Steps.testScoreMenuClicked=false;
+			 */
 		} catch (Exception e) {
-			log.info("Waiting for test score detail Saction Loading");
+			log.info("Waiting for test score detail Section Loading");
 			try {
 				Thread.sleep(2000);
 			} catch (InterruptedException e1) {
@@ -883,9 +896,10 @@ public class UtilityMethods {
 			wait_For_Test_Score_Detail_Section();
 		}
 	}
-	
+
 	/**
-	 * This method is used to wait till the loading of Standard Performance Table section
+	 * This method is used to wait till the loading of Standard Performance Table
+	 * section
 	 */
 	public static void wait_For_Standard_Performance_Table_Section() {
 		HomePage homePage = PageFactory.initElements(Driver.webdriver, HomePage.class);
@@ -904,7 +918,7 @@ public class UtilityMethods {
 			wait_For_Standard_Performance_Table_Section();
 		}
 	}
-	
+
 	/**
 	 * This method is used to wait till the loading of context header section
 	 */
@@ -928,20 +942,24 @@ public class UtilityMethods {
 		} else {
 			log.info("Context Header Section is now clickable");
 			new Actions(Driver.webdriver).moveByOffset(200, 200).build().perform();
-			try{Thread.sleep(500);}catch(Exception e) {}
+			try {
+				Thread.sleep(500);
+			} catch (Exception e) {
+			}
 		}
 	}
-	
+
 	/**
-	 * This method is used to wait for the loading of left and/or right section of content once you comes from visiting any page context and page menu
+	 * This method is used to wait for the loading of left and/or right section of
+	 * content once you comes from visiting any page context and page menu
 	 */
 	public static void wait_For_Page_Section_Load() {
-		
-		log.info("Under Student Context:=>"+Standard_Overview_Table_Steps.underStudentContext);
-		log.info("Under Class Context:=>"+Standard_Overview_Table_Steps.underClassContext);
-		log.info("Performance Menu Clicked:=>"+Standard_Overview_Table_Steps.performanceMenuClicked);
-		log.info("Test Score Menu Clicked:=>"+Standard_Overview_Table_Steps.testScoreMenuClicked);
-		
+
+		log.info("Under Student Context:=>" + Standard_Overview_Table_Steps.underStudentContext);
+		log.info("Under Class Context:=>" + Standard_Overview_Table_Steps.underClassContext);
+		log.info("Performance Menu Clicked:=>" + Standard_Overview_Table_Steps.performanceMenuClicked);
+		log.info("Test Score Menu Clicked:=>" + Standard_Overview_Table_Steps.testScoreMenuClicked);
+
 		if (Standard_Overview_Table_Steps.underStudentContext) {
 			try {
 				Thread.sleep(3000);
@@ -961,9 +979,10 @@ public class UtilityMethods {
 			}
 		}
 	}
-	
+
 	/**
 	 * This method is used to verify the Date List is in Descending order
+	 * 
 	 * @param a
 	 * @return
 	 */
@@ -976,9 +995,10 @@ public class UtilityMethods {
 
 		return false;
 	}
-	
+
 	/**
 	 * This method is used to verify the Date List is in Ascending order
+	 * 
 	 * @param a
 	 * @return
 	 */
@@ -990,22 +1010,22 @@ public class UtilityMethods {
 		}
 		return false;
 	}
-	
+
 	public static String checkedTestAndReturnTestName() {
 		HomePage homePage = PageFactory.initElements(Driver.webdriver, HomePage.class);
-		String name="";
+		String name = "";
 		try {
 			for (int i = 0; i < homePage.testnameslist.size(); i++) {
-				if(homePage.testscheckboxlistwithinput.get(i).getAttribute("value").equals("true")) {
-					name= homePage.testnameslist.get(i).getText();
+				if (homePage.testscheckboxlistwithinput.get(i).getAttribute("value").equals("true")) {
+					name = homePage.testnameslist.get(i).getText();
 				}
 			}
-		}catch(Exception e) {
+		} catch (Exception e) {
 			processException(e);
 		}
 		return name;
 	}
-	
+
 	@SuppressWarnings("unused")
 	public static String TestNamefromTestTab() {
 		String name = "";
@@ -1051,19 +1071,30 @@ public class UtilityMethods {
 		}
 		return name;
 	}
-	
-	public static void wait_For_Refresh_Icon_onRosterTab(WebElement el) {
+
+	public static void wait_For_Refresh_Icon_onRosterTab(WebElement el,String str) {
 		int count = 1;
 		try {
-			Assert.assertTrue(el.isDisplayed());
 			do {
-				log.info("Thread sleep called for "+el.getText()+" Loading :" + count + " Times");
+				log.info("Thread sleep called for " + str + " Loading :" + count + " Times");
 				Thread.sleep(2000);
 				count++;
-			} while (el.isDisplayed());
+				if (count > 10) {
+					log.error("Issue in " +str + " Data Loading");
+					UtilityMethods.processException(new Exception());
+				}
+			} while (el.isDisplayed() && count <= 10);
 		} catch (Exception e) {
-			log.info(el.getText()+" Refresh Icon Display off");
-			count = 1;
+			log.info(str + " Refresh Icon Display off");
+		}
+	}
+	
+	public static void uncheck_check_All(String roster_field) {
+		try {
+			Driver.webdriver.findElement(By.xpath("//div[@class='menu-title' and contains(text(),'"+roster_field+"')]/following-sibling::div//div[@class='menu-dropdown-list-inr']/ul/li")).click();
+			Thread.sleep(500);
+		}catch(Exception e) {
+			processException(e);
 		}
 	}
 }

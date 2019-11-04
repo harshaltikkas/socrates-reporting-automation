@@ -1,4 +1,4 @@
-@Feature
+@Feature1
 Feature: Sprint 11 & Sprint 12 & Sprint 13 & Sprint 14 & Sprint 15 User Stories
 
   ##BE-918,919

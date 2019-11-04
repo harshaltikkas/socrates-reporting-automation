@@ -495,17 +495,20 @@ public class HomePage {
 	 * Xpath list for Line_Chart_Test_Scores_vs_Time
 	 */
 	
-	@FindBy(xpath="//*[name()='text' and @class='vx-axis-label y---axis']/*[name()='tspan']")
-	public WebElement yaxistexton_linechart;
+	@FindBy(xpath="//div[@class='class_widget_title test_score_overtime']/following-sibling::div/div//div[@class='line_chart_graph']//*[name()='text' and @class='vx-axis-label y---axis']/*[name()='tspan']")
+	public WebElement yaxistexton_linechart_tsot;
 	
-	@FindBy(xpath="//*[name()='line' and @class='vx-line' and @stroke-width='1']")
-	public List<WebElement> horizontalline_onlinechart;
+	@FindBy(xpath="//div[@class='class_widget_title test_score_overtime']/following-sibling::div/div//div[@class='line_chart_graph']//*[name()='line' and @class='vx-line' and @stroke-width='1']")
+	public List<WebElement> horizontalline_onlinechart_tsot;
 	
-	@FindBy(xpath="//*[name()='line' and @class='vx-line']/following-sibling::*[name()='svg']//*[name()='tspan']")
+	@FindBy(xpath="//div[@class='class_widget_title test_score_overtime']/following-sibling::div/div//div[@class='line_chart_graph']//*[name()='line' and @class='vx-line']/following-sibling::*[name()='svg']//*[name()='tspan']")
 	public List<WebElement> yaxislabelsonhorizontalline_onlinechart;
 	
-	@FindBy(xpath="//div[@class='Test_names_label']")
-	public WebElement xaxistexton_linechart;
+	@FindBy(xpath="//div[@class='class_widget_title test_score_overtime']/following-sibling::div/div/div[@class='Test_names_label']")
+	public WebElement testnameslabel_onlinechart_tsot;
+	
+	@FindBy(xpath="//div[@class='class_widget_title test_score_overtime']/following-sibling::div/div//div[@class='test-results-pagination']")
+	public WebElement paginator_onlinechart_tsot;
 	
 	@FindBy(xpath="//div[@class='test-results-pagination']")
 	public WebElement paginator_onlinechart;
@@ -516,8 +519,8 @@ public class HomePage {
 	@FindBy(xpath="//div[@class='test-results-pagination']//span[@class='scroll-left float-left scroll-active ']/i[.='chevron_left']")
 	public WebElement enabledleftarrow_onlinechart;
 	
-	@FindBy(xpath="//div[@class='test-results-pagination']//span[@class='scroll-left float-left scroll-disable']/i[.='chevron_left']")
-	public WebElement disabledleftarrow_onlinechart;
+	@FindBy(xpath="//div[@class='class_widget_title test_score_overtime']/following-sibling::div/div//div[@class='test-results-pagination']//span[@class='scroll-left float-left scroll-disable']/i[.='chevron_left']")
+	public WebElement disabledleftarrow_onlinechart_on_tsot;
 
 	@FindBy(xpath="//div[@class='comparison-block text-center']/following-sibling::div//*[name()='text' and @transform='rotate(-45)']")
 	public List<WebElement> testNamesonPerPage_onlinechart;

@@ -58,8 +58,9 @@ public class Line_Chart_Test_Scores_vs_Time_Steps {
 		try {
 			int range = 0;
 			UtilityMethods.scrollPageDown(Driver.webdriver, 6);
-			Assert.assertTrue(homePage.yaxistexton_linechart.getText().equals("Test Scores (%)"));
-			Assert.assertTrue(homePage.horizontalline_onlinechart.size() == 11);
+			Thread.sleep(500);
+			Assert.assertTrue(homePage.yaxistexton_linechart_tsot.getText().equals("Test Scores (%)"));
+			Assert.assertTrue(homePage.horizontalline_onlinechart_tsot.size() == 11);
 			List<WebElement> list = homePage.yaxislabelsonhorizontalline_onlinechart;
 			for (int i = 0; i < list.size(); i++) {
 				Assert.assertTrue(Integer.parseInt(list.get(i).getText()) == range);
@@ -83,49 +84,36 @@ public class Line_Chart_Test_Scores_vs_Time_Steps {
 			int arg1) throws Throwable {
 		try {
 			UtilityMethods.wait_For_Page_Section_Load();
-			UtilityMethods.scrollPageDown(Driver.webdriver, 6);
-
-			Assert.assertTrue(homePage.xaxistexton_linechart.getText().equals("Test Names"));
-			PaginationUtility.methodOne();
-			if (PaginationUtility.paginatorFound) {
-				PaginationUtility.methodTwo();
-				if (PaginationUtility.enabledLeftArrowFound) {
-					do {
-						PaginationUtility.methodThree();
-						if (PaginationUtility.doneWithThreeCircle) {
-							PaginationUtility.methodFour();
-							Assert.assertTrue(homePage.testNamesonPerPage_onlinechart.size() <= 10);
-							for (int j = homePage.testNamesonPerPage_onlinechart.size() - 1; j >= 0; j--) {
-								PaginationUtility.verifyTestNamesAndToolTipText(j);
-							}
-							UtilityMethods.scrollPageUp(Driver.webdriver, 2);
-						} else {
-							for (int i = PaginationUtility.circleList.size() - 1; i >= 0; i--) {
-
-								PaginationUtility.methodFive(i);
-								Assert.assertTrue(homePage.testNamesonPerPage_onlinechart.size() <= 10);
-								for (int j = homePage.testNamesonPerPage_onlinechart.size() - 1; j >= 0; j--) {
-									PaginationUtility.verifyTestNamesAndToolTipText(j);
-								}
-								UtilityMethods.scrollPageUp(Driver.webdriver, 2);
-							}
-							PaginationUtility.doneWithThreeCircle = true;
-						}
-						PaginationUtility.methodSix();
-					} while (!PaginationUtility.disableLeftArrowFound);
-				} else {
-					for (int i = PaginationUtility.circleList.size() - 1; i >= 0; i--) {
-
-						PaginationUtility.methodFive(i);
+			UtilityMethods.scrollPageDown(Driver.webdriver, 7);
+			Thread.sleep(500);
+			Assert.assertTrue(homePage.testnameslabel_onlinechart_tsot.getText().equals("Test Names"));
+			//checking for paginator
+			if (PaginationUtility.checkPaginator_on_tsot()) {
+				//this lool will execute for the no. of circle available on paginator
+				for (int i = PaginationUtility.circleList.size() - 1; i >= 0; i--) {
+					PaginationUtility.clicking_on_indexed_circle_of_paginator(i);
+					Assert.assertTrue(homePage.testNamesonPerPage_onlinechart.size() <= 10);
+					for (int j = homePage.testNamesonPerPage_onlinechart.size() - 1; j >= 0; j--) {
+						PaginationUtility.verifyTestNamesAndToolTipText(j);
+					}
+				}
+				//check for left arrow enabled and click on it and click on first circle and validate
+				do {
+					if (PaginationUtility.check_Enabled_Left_Arrow_on_Paginator_on_tsot()) {
+						PaginationUtility.clicking_on_enabled_left_Arrow_of_paginator();
+						PaginationUtility.clicking_on_first_circle_of_paginator();
 						Assert.assertTrue(homePage.testNamesonPerPage_onlinechart.size() <= 10);
 						for (int j = homePage.testNamesonPerPage_onlinechart.size() - 1; j >= 0; j--) {
 							PaginationUtility.verifyTestNamesAndToolTipText(j);
 						}
-						UtilityMethods.scrollPageUp(Driver.webdriver, 2);
+					} else {
+						break;
 					}
-				}
+				} while (!(PaginationUtility.check_Disabled_Left_Arrow_on_Paginator()));
 
+				
 			} else {
+				//when paginator is not found
 				Assert.assertTrue(homePage.testNamesonPerPage_onlinechart.size() <= 10);
 				for (int i = homePage.testNamesonPerPage_onlinechart.size() - 1; i >= 0; i--) {
 					PaginationUtility.verifyTestNamesAndToolTipText(i);
@@ -155,16 +143,16 @@ public class Line_Chart_Test_Scores_vs_Time_Steps {
 			} catch (Exception e) {
 				log.info("user clicked on SP under student context");
 			}
-			UtilityMethods.scrollPageDown(Driver.webdriver, 6);
-
-			PaginationUtility.methodOne();
+			UtilityMethods.scrollPageDown(Driver.webdriver, 10);
+			Thread.sleep(500);
+			PaginationUtility.checkPaginator();
 			if (PaginationUtility.paginatorFound) {
-				PaginationUtility.methodTwo();
+				PaginationUtility.check_Enabled_Left_Arrow_on_Paginator_on_tsot();
 				if (PaginationUtility.enabledLeftArrowFound) {
 					do {
-						PaginationUtility.methodThree();
+						PaginationUtility.check_Disabled_Left_Arrow_on_Paginator();
 						if (PaginationUtility.doneWithThreeCircle) {
-							PaginationUtility.methodFour();
+							PaginationUtility.clicking_on_first_circle_of_paginator();
 							for (int j = 0; j < homePage.testNamesonPerPage_onlinechart.size(); j++) {
 								UtilityMethods.verifyColorAndScoreOnLineChart(
 										homePage.testScoreCircleClronPerPage_onlinechart.get(j),
@@ -173,7 +161,7 @@ public class Line_Chart_Test_Scores_vs_Time_Steps {
 						} else {
 							for (int i = PaginationUtility.circleList.size() - 1; i >= 0; i--) {
 
-								PaginationUtility.methodFive(i);
+								PaginationUtility.clicking_on_indexed_circle_of_paginator(i);
 								for (int j = 0; j < homePage.testNamesonPerPage_onlinechart.size(); j++) {
 									UtilityMethods.verifyColorAndScoreOnLineChart(
 											homePage.testScoreCircleClronPerPage_onlinechart.get(j), Integer.parseInt(
@@ -182,12 +170,12 @@ public class Line_Chart_Test_Scores_vs_Time_Steps {
 							}
 							PaginationUtility.doneWithThreeCircle = true;
 						}
-						PaginationUtility.methodSix();
+						PaginationUtility.clicking_on_enabled_left_Arrow_of_paginator();
 					} while (!PaginationUtility.disableLeftArrowFound);
 				} else {
 					for (int i = PaginationUtility.circleList.size() - 1; i >= 0; i--) {
 
-						PaginationUtility.methodFive(i);
+						PaginationUtility.clicking_on_indexed_circle_of_paginator(i);
 						for (int j = 0; j < homePage.testNamesonPerPage_onlinechart.size(); j++) {
 							UtilityMethods.verifyColorAndScoreOnLineChart(
 									homePage.testScoreCircleClronPerPage_onlinechart.get(j),
@@ -210,40 +198,42 @@ public class Line_Chart_Test_Scores_vs_Time_Steps {
 	}
 
 	/**
-	 * This method is used to verify the tooltip's avg score and circle's avg score and also verify while clicking on outside the tooltip ,it should disappear
+	 * This method is used to verify the tooltip's avg score and circle's avg score
+	 * and also verify while clicking on outside the tooltip ,it should disappear
+	 * 
 	 * @throws Throwable
 	 */
 	@Then("^Verify the overlay should be closed and other is open if click on other circle$")
 	public void verify_the_overlay_should_be_closed_and_other_is_open_if_click_on_other_circle() throws Throwable {
 		try {
 			UtilityMethods.scrollPageDown(Driver.webdriver, 6);
-			UtilityMethods.wait_For_Context_Header_Section();
-			PaginationUtility.methodOne();
+			Thread.sleep(500);
+			PaginationUtility.checkPaginator_on_tsot();
 			if (PaginationUtility.paginatorFound) {
-				PaginationUtility.methodTwo();
+				PaginationUtility.check_Enabled_Left_Arrow_on_Paginator_on_tsot();
 				if (PaginationUtility.enabledLeftArrowFound) {
 					do {
-						PaginationUtility.methodThree();
+						PaginationUtility.check_Disabled_Left_Arrow_on_Paginator();
 						if (PaginationUtility.doneWithThreeCircle) {
-							PaginationUtility.methodFour();
+							PaginationUtility.clicking_on_first_circle_of_paginator();
 							for (int j = 0; j < homePage.testScoresonPerPage_onlinechart.size(); j++) {
 								PaginationUtility.verifyTestScorePerAndPerOnToolTip(j);
 							}
 
 						} else {
 							for (int i = PaginationUtility.circleList.size() - 1; i >= 0; i--) {
-								PaginationUtility.methodFive(i);
+								PaginationUtility.clicking_on_indexed_circle_of_paginator(i);
 								for (int j = 0; j < homePage.testScoresonPerPage_onlinechart.size(); j++) {
 									PaginationUtility.verifyTestScorePerAndPerOnToolTip(j);
 								}
 							}
 							PaginationUtility.doneWithThreeCircle = true;
 						}
-						PaginationUtility.methodSix();
+						PaginationUtility.clicking_on_enabled_left_Arrow_of_paginator();
 					} while (!PaginationUtility.disableLeftArrowFound);
 				} else {
 					for (int i = PaginationUtility.circleList.size() - 1; i >= 0; i--) {
-						PaginationUtility.methodFive(i);
+						PaginationUtility.clicking_on_indexed_circle_of_paginator(i);
 						for (int j = 0; j < homePage.testScoresonPerPage_onlinechart.size(); j++) {
 							PaginationUtility.verifyTestScorePerAndPerOnToolTip(j);
 						}

@@ -24,6 +24,7 @@
  * ========================================================================
  */
 package com.bec.reporting.steps;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -53,15 +54,19 @@ public class Standard_Overview_Table_Steps {
 	 * This is used to initialize webelement of the webpages
 	 */
 	HomePage homePage = PageFactory.initElements(Driver.webdriver, HomePage.class);
-	public static boolean performanceMenuClicked = false,underClassContext=false,testScoreMenuClicked=false,underStudentContext=false;
+	public static boolean performanceMenuClicked = false, underClassContext = false, testScoreMenuClicked = false,
+			underStudentContext = false, underSchoolContext = false;
 	static String headerOnToolTip, subHeaderOnToolTip;
-	
+	public static JavascriptExecutor jse = (JavascriptExecutor) Driver.webdriver;
+
 	public static void resetStatus() {
 		Standard_Overview_Table_Steps.performanceMenuClicked = false;
 		Standard_Overview_Table_Steps.underClassContext = false;
+		Standard_Overview_Table_Steps.underSchoolContext = false;
 		Standard_Overview_Table_Steps.testScoreMenuClicked = false;
 		Standard_Overview_Table_Steps.underStudentContext = false;
 	}
+
 	/**
 	 * This method is used to click on standard performance tab in class context
 	 * 
@@ -70,31 +75,22 @@ public class Standard_Overview_Table_Steps {
 	@When("^User Click on Standard Performance tab within the Class Context$")
 	public void user_Click_on_Standard_Performance_tab_within_the_Class_Context() throws Throwable {
 		try {
-			JavascriptExecutor js = (JavascriptExecutor) Driver.webdriver;
-			Thread.sleep(3000);
-			UtilityMethods.scrollPageUp(Driver.webdriver);
-			Thread.sleep(1000);
-			try {
-				Assert.assertTrue(homePage.activeclassmenu.getAttribute("class").contains("active"));
-			}
-			catch(Exception e) {
-				Thread.sleep(1000);
-				js.executeScript("arguments[0].click();", homePage.classmenu);
-				Thread.sleep(3000);
-			}
-			try {
-				Assert.assertTrue(homePage.activestandardperformancebtn.getAttribute("class").contains("active"));
-			}
-			catch(Exception e) {
-				Thread.sleep(1000);
-				js.executeScript("arguments[0].click();", homePage.standardperformancebtn);
-				Thread.sleep(3000);
-			}
-			performanceMenuClicked = true;
-			underClassContext=true;
+			UtilityMethods.wait_For_Context_Header_Section();
+			Assert.assertTrue(homePage.activeclassmenu.getAttribute("class").contains("active"));
 		} catch (Exception e) {
-			UtilityMethods.processException(e);
+			Thread.sleep(500);
+			jse.executeScript("arguments[0].click();", homePage.classmenu);
+			Thread.sleep(3000);
 		}
+		try {
+			Assert.assertTrue(homePage.activestandardperformancebtn.getAttribute("class").contains("active_tab"));
+		} catch (Exception e) {
+			Thread.sleep(1000);
+			jse.executeScript("arguments[0].click();", homePage.standardperformancebtn);
+			Thread.sleep(3000);
+		}
+		Standard_Overview_Table_Steps.performanceMenuClicked = true;
+		Standard_Overview_Table_Steps.underClassContext = true;
 	}
 
 	/**
@@ -108,8 +104,7 @@ public class Standard_Overview_Table_Steps {
 		try {
 			Assert.assertTrue(homePage.yaxislabelonstndrdperformanceinclass.getText().equals(yaxisText));
 			CBTConfiguration.score = "pass";
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			UtilityMethods.processException(e);
 		}
 		log.info("Scenario 36_1 completed");
@@ -169,8 +164,7 @@ public class Standard_Overview_Table_Steps {
 						reverseStandardList.add(elList.get(j).getText());
 					}
 					Thread.sleep(1000);
-					JavascriptExecutor js = (JavascriptExecutor) Driver.webdriver;
-					js.executeScript("arguments[0].click();", homePage.reduparrow);
+					jse.executeScript("arguments[0].click();", homePage.reduparrow);
 					Thread.sleep(2000);
 					elList = Driver.webdriver.findElements(By.xpath(
 							"//div[@class='overview-table-body']//div[@class='overview-table-row']//div[@class='overview-table-col']["
@@ -196,8 +190,7 @@ public class Standard_Overview_Table_Steps {
 							reverseStandardList.add(elList.get(j).getText());
 						}
 						Thread.sleep(1000);
-						JavascriptExecutor js = (JavascriptExecutor) Driver.webdriver;
-						js.executeScript("arguments[0].click();", homePage.reduparrow);
+						jse.executeScript("arguments[0].click();", homePage.reduparrow);
 						Thread.sleep(2000);
 						elList = Driver.webdriver.findElements(By.xpath(
 								"//div[@class='overview-table-body']//div[@class='overview-table-row']//div[@class='overview-table-col']["
@@ -235,28 +228,28 @@ public class Standard_Overview_Table_Steps {
 	 * 
 	 * @throws Throwable
 	 */
-	
+
 	@Then("^click the standard and verify The colour should be changed to that of the achievement level where that standard is present$")
 	public void click_the_standard_and_verify_The_colour_should_be_changed_to_that_of_the_achievement_level_where_that_standard_is_present()
 			throws Throwable {
 		try {
 			WebElement rightArrowEnable = null;
 			boolean enabledRightArrowFound = false;
-			List<Model> lm=new ArrayList<Model>();
+			List<Model> lm = new ArrayList<Model>();
 			List<WebElement> standardList;
-			Integer schoolId = 0, classId=0;
-			String cat="", subcat ="",desc="",strandName;
+			Integer schoolId = 0, classId = 0;
+			String cat = "", subcat = "", desc = "", strandName;
 			do {
-				Map<Integer,Integer> ids=UtilityMethods.getSchoolIdAndClassId();
-				for(Map.Entry<Integer,Integer> entry:ids.entrySet()) {
-					schoolId=entry.getKey();
-					classId=entry.getValue();
+				Map<Integer, Integer> ids = UtilityMethods.getSchoolIdAndClassId();
+				for (Map.Entry<Integer, Integer> entry : ids.entrySet()) {
+					schoolId = entry.getKey();
+					classId = entry.getValue();
 				}
-			
+
 				if (enabledRightArrowFound) {
 					int lastStrandIndex = homePage.strandnameslist.size() - 1;
-					new Actions(Driver.webdriver).moveToElement(homePage.strandnameslist.get(lastStrandIndex)).click().build()
-							.perform();
+					new Actions(Driver.webdriver).moveToElement(homePage.strandnameslist.get(lastStrandIndex)).click()
+							.build().perform();
 					Thread.sleep(3000);
 					standardList = Driver.webdriver.findElements(By.xpath(
 							"//div[@class='overview-table-body']//div[@class='overview-table-row']//div[@class='overview-table-col']["
@@ -266,40 +259,55 @@ public class Standard_Overview_Table_Steps {
 					} else {
 						strandName = homePage.strandnameslist.get(lastStrandIndex).getText();
 					}
-					lm=DatabaseConnection.getStandardAvgPerListInClassContext(DatabaseConnection.conn, schoolId, classId,
-							strandName);
+					lm = DatabaseConnection.getStandardAvgPerListInClassContext(DatabaseConnection.conn, schoolId,
+							classId, strandName);
 
 					Iterator<Model> iterator = lm.iterator();
 					int standardIndex = 0;
 					while (iterator.hasNext()) {
-						Model m = (Model)iterator.next();
+						Model m = (Model) iterator.next();
 						Assert.assertTrue(m.getStandard_shortvalue().equals(standardList.get(standardIndex).getText()));
 						try {
 							standardList.get(standardIndex).click();
-				
-							cat=Driver.webdriver.findElement(By.xpath("//div[@class='overview-table-body']//div[@class='overview-table-row']//div[@class='overview-table-col']["+(lastStrandIndex+2)+"]//li[not(contains(@class,'StandardsNotAvailable'))]//span[@class='strand_Definition']")).getText();								
-							subcat=Driver.webdriver.findElement(By.xpath("//div[@class='overview-table-body']//div[@class='overview-table-row']//div[@class='overview-table-col']["+(lastStrandIndex+2)+"]//li[not(contains(@class,'StandardsNotAvailable'))]//span[@class='standard_sub_Definition']")).getText();
-							desc=Driver.webdriver.findElement(By.xpath("//div[@class='overview-table-body']//div[@class='overview-table-row']//div[@class='overview-table-col']["+(lastStrandIndex+2)+"]//li[not(contains(@class,'StandardsNotAvailable'))]//span[@class='strand_Description']")).getText();
-							
+
+							cat = Driver.webdriver.findElement(By.xpath(
+									"//div[@class='overview-table-body']//div[@class='overview-table-row']//div[@class='overview-table-col']["
+											+ (lastStrandIndex + 2)
+											+ "]//li[not(contains(@class,'StandardsNotAvailable'))]//span[@class='strand_Definition']"))
+									.getText();
+							subcat = Driver.webdriver.findElement(By.xpath(
+									"//div[@class='overview-table-body']//div[@class='overview-table-row']//div[@class='overview-table-col']["
+											+ (lastStrandIndex + 2)
+											+ "]//li[not(contains(@class,'StandardsNotAvailable'))]//span[@class='standard_sub_Definition']"))
+									.getText();
+							desc = Driver.webdriver.findElement(By.xpath(
+									"//div[@class='overview-table-body']//div[@class='overview-table-row']//div[@class='overview-table-col']["
+											+ (lastStrandIndex + 2)
+											+ "]//li[not(contains(@class,'StandardsNotAvailable'))]//span[@class='strand_Description']"))
+									.getText();
+
 							Assert.assertTrue(cat.equals(m.getStandard_category()));
 							Assert.assertTrue(subcat.equals(m.getStandard_subcategory()));
 							Assert.assertTrue(desc.equals(m.getStandard_description()));
-							//code here
-							//Assert.assertTrue(UtilityMethods.VerifyTestScore(conn,m.getStandard_id(),schoolId,classId));
+							// code here
+							// Assert.assertTrue(UtilityMethods.VerifyTestScore(conn,m.getStandard_id(),schoolId,classId));
 						} catch (Exception e) {
-							UtilityMethods.searchandClickonELement(standardList.get(standardIndex),m,standardIndex,cat,subcat,desc,lastStrandIndex,DatabaseConnection.conn,m.getStandard_id(),schoolId,classId);
+							UtilityMethods.searchandClickonELement(standardList.get(standardIndex), m, standardIndex,
+									cat, subcat, desc, lastStrandIndex, DatabaseConnection.conn, m.getStandard_id(),
+									schoolId, classId);
 						}
 
 						Thread.sleep(1000);
-						UtilityMethods.verifyColorAndStandardAvgPercentage(standardList.get(standardIndex), m.getAvg_per());
+						UtilityMethods.verifyColorAndStandardAvgPercentage(standardList.get(standardIndex),
+								m.getAvg_per());
 						standardIndex++;
 					}
 					new Actions(Driver.webdriver).moveToElement(homePage.overviewtext).build().perform();
 					Thread.sleep(1000);
 				} else {
 					for (int strandIndex = 0; strandIndex < homePage.strandnameslist.size(); strandIndex++) {
-						new Actions(Driver.webdriver).moveToElement(homePage.strandnameslist.get(strandIndex)).click().build()
-								.perform();
+						new Actions(Driver.webdriver).moveToElement(homePage.strandnameslist.get(strandIndex)).click()
+								.build().perform();
 						Thread.sleep(3000);
 						standardList = Driver.webdriver.findElements(By.xpath(
 								"//div[@class='overview-table-body']//div[@class='overview-table-row']//div[@class='overview-table-col']["
@@ -309,31 +317,47 @@ public class Standard_Overview_Table_Steps {
 						} else {
 							strandName = homePage.strandnameslist.get(strandIndex).getText();
 						}
-						lm=DatabaseConnection.getStandardAvgPerListInClassContext(DatabaseConnection.conn, schoolId, classId,
-								strandName);					
+						lm = DatabaseConnection.getStandardAvgPerListInClassContext(DatabaseConnection.conn, schoolId,
+								classId, strandName);
 						Iterator<Model> iterator = lm.iterator();
-						
+
 						int standardIndex = 0;
 						while (iterator.hasNext()) {
-							Model m = (Model)iterator.next();
-							Assert.assertTrue(m.getStandard_shortvalue().equals(standardList.get(standardIndex).getText()));
+							Model m = (Model) iterator.next();
+							Assert.assertTrue(
+									m.getStandard_shortvalue().equals(standardList.get(standardIndex).getText()));
 							try {
 								standardList.get(standardIndex).click();
-								cat=Driver.webdriver.findElements(By.xpath("//div[@class='overview-table-body']//div[@class='overview-table-row']//div[@class='overview-table-col']["+(strandIndex+2)+"]//li[not(contains(@class,'StandardsNotAvailable'))]//span[@class='strand_Definition']")).get(standardIndex).getText();								
-								subcat=Driver.webdriver.findElements(By.xpath("//div[@class='overview-table-body']//div[@class='overview-table-row']//div[@class='overview-table-col']["+(strandIndex+2)+"]//li[not(contains(@class,'StandardsNotAvailable'))]//span[@class='standard_sub_Definition']")).get(standardIndex).getText();
-								desc=Driver.webdriver.findElements(By.xpath("//div[@class='overview-table-body']//div[@class='overview-table-row']//div[@class='overview-table-col']["+(strandIndex+2)+"]//li[not(contains(@class,'StandardsNotAvailable'))]//span[@class='strand_Description']")).get(standardIndex).getText();
-								
+								cat = Driver.webdriver.findElements(By.xpath(
+										"//div[@class='overview-table-body']//div[@class='overview-table-row']//div[@class='overview-table-col']["
+												+ (strandIndex + 2)
+												+ "]//li[not(contains(@class,'StandardsNotAvailable'))]//span[@class='strand_Definition']"))
+										.get(standardIndex).getText();
+								subcat = Driver.webdriver.findElements(By.xpath(
+										"//div[@class='overview-table-body']//div[@class='overview-table-row']//div[@class='overview-table-col']["
+												+ (strandIndex + 2)
+												+ "]//li[not(contains(@class,'StandardsNotAvailable'))]//span[@class='standard_sub_Definition']"))
+										.get(standardIndex).getText();
+								desc = Driver.webdriver.findElements(By.xpath(
+										"//div[@class='overview-table-body']//div[@class='overview-table-row']//div[@class='overview-table-col']["
+												+ (strandIndex + 2)
+												+ "]//li[not(contains(@class,'StandardsNotAvailable'))]//span[@class='strand_Description']"))
+										.get(standardIndex).getText();
+
 								Assert.assertTrue(cat.equals(m.getStandard_category()));
 								Assert.assertTrue(subcat.equals(m.getStandard_subcategory()));
 								Assert.assertTrue(desc.equals(m.getStandard_description()));
-								
-								//code here
-								//Assert.assertTrue(UtilityMethods.VerifyTestScore(DatabaseConnection.conn,m.getStandard_id(),schoolId,classId));
+
+								// code here
+								// Assert.assertTrue(UtilityMethods.VerifyTestScore(DatabaseConnection.conn,m.getStandard_id(),schoolId,classId));
 							} catch (Exception e) {
-								UtilityMethods.searchandClickonELement(standardList.get(standardIndex),m,standardIndex,cat,subcat,desc,strandIndex,DatabaseConnection.conn,m.getStandard_id(),schoolId,classId);
+								UtilityMethods.searchandClickonELement(standardList.get(standardIndex), m,
+										standardIndex, cat, subcat, desc, strandIndex, DatabaseConnection.conn,
+										m.getStandard_id(), schoolId, classId);
 							}
 							Thread.sleep(1000);
-							UtilityMethods.verifyColorAndStandardAvgPercentage(standardList.get(standardIndex), m.getAvg_per());
+							UtilityMethods.verifyColorAndStandardAvgPercentage(standardList.get(standardIndex),
+									m.getAvg_per());
 							standardIndex++;
 						}
 						new Actions(Driver.webdriver).moveToElement(homePage.overviewtext).build().perform();
@@ -351,43 +375,45 @@ public class Standard_Overview_Table_Steps {
 				}
 
 			} while (enabledRightArrowFound);
-			
+
 			CBTConfiguration.score = "pass";
 		} catch (Exception e) {
 			UtilityMethods.processException(e);
 		}
 		log.info("Scenario 36_4 completed");
 	}
-	
+
 	/**
 	 * This method is used to see the standard list in strand from student context
+	 * 
 	 * @throws Throwable
 	 */
-	
+
 	@Then("^The user should able to see the list of all the standards from different grades in the standards table$")
-	public void the_user_should_able_to_see_the_list_of_all_the_standards_from_different_grades_in_the_standards_table() throws Throwable {
+	public void the_user_should_able_to_see_the_list_of_all_the_standards_from_different_grades_in_the_standards_table()
+			throws Throwable {
 		try {
 			WebElement rightArrowEnable = null;
 			boolean enabledRightArrowFound = false;
 			String strandName;
-			List<Model> lm=new ArrayList<Model>();
+			List<Model> lm = new ArrayList<Model>();
 			List<WebElement> standardList;
-			Integer schoolId =0,classId=0,studentId=0;
-			
-			Map<Integer,Integer> ids=UtilityMethods.getSchoolIdAndClassId();
-			for(Map.Entry<Integer,Integer> entry:ids.entrySet()) {
-				schoolId=entry.getKey();
-				classId=entry.getValue();
+			Integer schoolId = 0, classId = 0, studentId = 0;
+
+			Map<Integer, Integer> ids = UtilityMethods.getSchoolIdAndClassId();
+			for (Map.Entry<Integer, Integer> entry : ids.entrySet()) {
+				schoolId = entry.getKey();
+				classId = entry.getValue();
 			}
-			
-			studentId=UtilityMethods.getStudentId();
-		
+
+			studentId = UtilityMethods.getStudentId();
+
 			do {
-				
+
 				if (enabledRightArrowFound) {
 					int lastStrandIndex = homePage.strandnameslist.size() - 1;
-					new Actions(Driver.webdriver).moveToElement(homePage.strandnameslist.get(lastStrandIndex)).click().build()
-							.perform();
+					new Actions(Driver.webdriver).moveToElement(homePage.strandnameslist.get(lastStrandIndex)).click()
+							.build().perform();
 					Thread.sleep(3000);
 					standardList = Driver.webdriver.findElements(By.xpath(
 							"//div[@class='overview-table-body']//div[@class='overview-table-row']//div[@class='overview-table-col']["
@@ -397,21 +423,21 @@ public class Standard_Overview_Table_Steps {
 					} else {
 						strandName = homePage.strandnameslist.get(lastStrandIndex).getText();
 					}
-					lm=DatabaseConnection.getStandardAvgPerListInStudentContext(DatabaseConnection.conn, schoolId, classId,
-							strandName,studentId);	
+					lm = DatabaseConnection.getStandardAvgPerListInStudentContext(DatabaseConnection.conn, schoolId,
+							classId, strandName, studentId);
 					Iterator<Model> iterator = lm.iterator();
 					int standardIndex = 0;
 					while (iterator.hasNext()) {
-						Model m = (Model)iterator.next();
+						Model m = (Model) iterator.next();
 						Assert.assertTrue(m.getStandard_shortvalue().equals(standardList.get(standardIndex).getText()));
-						standardIndex++;	
+						standardIndex++;
 					}
 					new Actions(Driver.webdriver).moveToElement(homePage.overviewtext).build().perform();
 					Thread.sleep(1000);
 				} else {
 					for (int strandIndex = 0; strandIndex < homePage.strandnameslist.size(); strandIndex++) {
-						new Actions(Driver.webdriver).moveToElement(homePage.strandnameslist.get(strandIndex)).click().build()
-								.perform();
+						new Actions(Driver.webdriver).moveToElement(homePage.strandnameslist.get(strandIndex)).click()
+								.build().perform();
 						Thread.sleep(3000);
 						standardList = Driver.webdriver.findElements(By.xpath(
 								"//div[@class='overview-table-body']//div[@class='overview-table-row']//div[@class='overview-table-col']["
@@ -421,14 +447,15 @@ public class Standard_Overview_Table_Steps {
 						} else {
 							strandName = homePage.strandnameslist.get(strandIndex).getText();
 						}
-						lm=DatabaseConnection.getStandardAvgPerListInStudentContext(DatabaseConnection.conn, schoolId, classId,
-								strandName,studentId);					
+						lm = DatabaseConnection.getStandardAvgPerListInStudentContext(DatabaseConnection.conn, schoolId,
+								classId, strandName, studentId);
 						Iterator<Model> iterator = lm.iterator();
-						
+
 						int standardIndex = 0;
 						while (iterator.hasNext()) {
-							Model m = (Model)iterator.next();
-							Assert.assertTrue(m.getStandard_shortvalue().equals(standardList.get(standardIndex).getText()));
+							Model m = (Model) iterator.next();
+							Assert.assertTrue(
+									m.getStandard_shortvalue().equals(standardList.get(standardIndex).getText()));
 							standardIndex++;
 						}
 						new Actions(Driver.webdriver).moveToElement(homePage.overviewtext).build().perform();
@@ -441,12 +468,11 @@ public class Standard_Overview_Table_Steps {
 					enabledRightArrowFound = true;
 					rightArrowEnable.click();
 					Thread.sleep(500);
-				} 				
-				catch (Exception e) {
+				} catch (Exception e) {
 					enabledRightArrowFound = false;
 				}
 			} while (enabledRightArrowFound);
-			
+
 			CBTConfiguration.score = "pass";
 		} catch (Exception e) {
 			UtilityMethods.processException(e);
@@ -454,20 +480,20 @@ public class Standard_Overview_Table_Steps {
 		DatabaseConnection.conn.close();
 		log.info("Scenario 36_5 completed");
 	}
-	
+
 	/**
 	 * This method is used to verify by default first strand should be selected
+	 * 
 	 * @throws Throwable
 	 */
 	@Then("^By default the first strands should be selected$")
 	public void by_default_the_first_strands_should_be_selected() throws Throwable {
 		try {
-		
+
 			for (int i = 0; i < homePage.strandnameslist.size(); i++) {
-				if(i==0) {
-				Assert.assertTrue(!homePage.strandnameslist.get(i).getAttribute("class").contains("undefined"));
-				}
-				else {
+				if (i == 0) {
+					Assert.assertTrue(!homePage.strandnameslist.get(i).getAttribute("class").contains("undefined"));
+				} else {
 					Assert.assertTrue(homePage.strandnameslist.get(i).getAttribute("class").contains("undefined"));
 				}
 			}
@@ -478,7 +504,6 @@ public class Standard_Overview_Table_Steps {
 		log.info("Scenario 37_1 completed");
 	}
 
-	
 	/**
 	 * This method is used to verify the x-axis Strands names in alphabetical order
 	 * from left to right
@@ -700,10 +725,11 @@ public class Standard_Overview_Table_Steps {
 			UtilityMethods.processException(e);
 		}
 	}
-	
 
-	/** 
-	 * This method is used to verify the first alpha last name student based on class and student selection  
+	/**
+	 * This method is used to verify the first alpha last name student based on
+	 * class and student selection
+	 * 
 	 * @throws Throwable
 	 */
 	@Then("^first alphabetical student is the one picked when the teacher hits the student button$")
@@ -711,15 +737,15 @@ public class Standard_Overview_Table_Steps {
 			throws Throwable {
 		try {
 			new Actions(Driver.webdriver).moveToElement(homePage.studentnameoncontextheader).build().perform();
-			String studentNameonUI=homePage.studentnameoncontextheadertooltiptext.getText();
-			Assert.assertTrue(DatabaseConnection.getFirstAlphaLastNameStudentByAlphaClassAndSchoolName().equals(studentNameonUI));
+			String studentNameonUI = homePage.studentnameoncontextheadertooltiptext.getText();
+			Assert.assertTrue(
+					DatabaseConnection.getFirstAlphaLastNameStudentByAlphaClassAndSchoolName().equals(studentNameonUI));
 			CBTConfiguration.score = "pass";
 		} catch (Exception e) {
 			UtilityMethods.processException(e);
 		}
 		log.info("Scenario 37_4 completed");
 	}
-
 
 	/**
 	 * This method is used to verify the performance over time minimize and maximize
@@ -780,7 +806,8 @@ public class Standard_Overview_Table_Steps {
 
 	/**
 	 * This method is used to verify the clicking on strand names one by one and
-	 * that name should become the header of performance over time chart here also checking the avg percentage of each strand in their column in SP table.
+	 * that name should become the header of performance over time chart here also
+	 * checking the avg percentage of each strand in their column in SP table.
 	 * 
 	 * @throws Throwable
 	 */
@@ -788,24 +815,24 @@ public class Standard_Overview_Table_Steps {
 	public void select_the_Strand_within_the_Strand_header_from_the_Standard_table_and_selected_strand_becomes_the_header_of_the_Line_Chart()
 			throws Throwable {
 		try {
-			String strandName = "",standard="";
+			String strandName = "", standard = "";
 			WebElement rightArrowEnable = null;
 			boolean enabledRightArrowFound = false;
 			List<WebElement> standardList;
-			
-			Integer schoolId=0,classId=0,avg=0;
 
-			Map<Integer,Integer> ids=UtilityMethods.getSchoolIdAndClassId();
-			for(Map.Entry<Integer,Integer> entry:ids.entrySet()) {
-				schoolId=entry.getKey();
-				classId=entry.getValue();
+			Integer schoolId = 0, classId = 0, avg = 0;
+
+			Map<Integer, Integer> ids = UtilityMethods.getSchoolIdAndClassId();
+			for (Map.Entry<Integer, Integer> entry : ids.entrySet()) {
+				schoolId = entry.getKey();
+				classId = entry.getValue();
 			}
-			
+
 			do {
 				if (enabledRightArrowFound) {
 					new Actions(Driver.webdriver)
-					.moveToElement(homePage.strandnameslist.get(homePage.strandnameslist.size() - 1)).click()
-					.build().perform();
+							.moveToElement(homePage.strandnameslist.get(homePage.strandnameslist.size() - 1)).click()
+							.build().perform();
 					Thread.sleep(3000);
 					if (homePage.strandnameslist.get(homePage.strandnameslist.size() - 1).getText().contains("...")) {
 						strandName = homePage.strandnamestooltip.getText();
@@ -814,12 +841,15 @@ public class Standard_Overview_Table_Steps {
 					}
 					standardList = Driver.webdriver.findElements(By.xpath(
 							"//div[@class='overview-table-body']//div[@class='overview-table-row']//div[@class='overview-table-col']["
-									+ ((homePage.strandnameslist.size() - 1) + 2) + "]//li[not(contains(@class,'StandardsNotAvailable'))]"));
-					standard=standardList.get(0).getText();
-					standard=standard.substring(0, standard.indexOf("."));
-					avg=DatabaseConnection.getStrandAvgInSPInClass(DatabaseConnection.conn, schoolId, classId, standard);
-					Assert.assertTrue(homePage.strandavglist.get(homePage.strandnameslist.size() - 1).getText().equals("Avg. "+avg+"%"));
-					
+									+ ((homePage.strandnameslist.size() - 1) + 2)
+									+ "]//li[not(contains(@class,'StandardsNotAvailable'))]"));
+					standard = standardList.get(0).getText();
+					standard = standard.substring(0, standard.indexOf("."));
+					avg = DatabaseConnection.getStrandAvgInSPInClass(DatabaseConnection.conn, schoolId, classId,
+							standard);
+					Assert.assertTrue(homePage.strandavglist.get(homePage.strandnameslist.size() - 1).getText()
+							.equals("Avg. " + avg + "%"));
+
 					click_on_the_icon_to_maximize_the_Chart();
 					Assert.assertTrue(homePage.defaultstrandnameinpotchart.getText().contains(strandName));
 					new Actions(Driver.webdriver).moveToElement(homePage.overviewtext).build().perform();
@@ -827,7 +857,7 @@ public class Standard_Overview_Table_Steps {
 				} else {
 					for (int i = 0; i < homePage.groupingstripclrlist.size(); i++) {
 						new Actions(Driver.webdriver).moveToElement(homePage.strandnameslist.get(i)).click().build()
-						.perform();
+								.perform();
 						Thread.sleep(3000);
 						if (homePage.strandnameslist.get(i).getText().contains("...")) {
 							strandName = homePage.strandnamestooltip.getText();
@@ -837,17 +867,18 @@ public class Standard_Overview_Table_Steps {
 						standardList = Driver.webdriver.findElements(By.xpath(
 								"//div[@class='overview-table-body']//div[@class='overview-table-row']//div[@class='overview-table-col']["
 										+ (i + 2) + "]//li[not(contains(@class,'StandardsNotAvailable'))]"));
-						standard=standardList.get(0).getText();
-						standard=standard.substring(0, standard.indexOf("."));
-						avg=DatabaseConnection.getStrandAvgInSPInClass(DatabaseConnection.conn, schoolId, classId, standard);
-						Assert.assertTrue(homePage.strandavglist.get(i).getText().equals("Avg. "+avg+"%"));
-						
+						standard = standardList.get(0).getText();
+						standard = standard.substring(0, standard.indexOf("."));
+						avg = DatabaseConnection.getStrandAvgInSPInClass(DatabaseConnection.conn, schoolId, classId,
+								standard);
+						Assert.assertTrue(homePage.strandavglist.get(i).getText().equals("Avg. " + avg + "%"));
+
 						click_on_the_icon_to_maximize_the_Chart();
 						Assert.assertTrue(homePage.defaultstrandnameinpotchart.getText().contains(strandName));
 						new Actions(Driver.webdriver).moveToElement(homePage.overviewtext).build().perform();
 						Thread.sleep(1000);
 					}
-				}				
+				}
 				try {
 					rightArrowEnable = homePage.enabledrightarrow;
 					rightArrowEnable.isEnabled();
@@ -874,34 +905,27 @@ public class Standard_Overview_Table_Steps {
 	@When("^User click on Class Context and Test Score button$")
 	public void user_click_on_Class_Context_and_Test_Score_button() throws Throwable {
 		try {
-			UtilityMethods.scrollPageUp(Driver.webdriver);
-			JavascriptExecutor jse2 = (JavascriptExecutor)Driver.webdriver;
-			Thread.sleep(1000);
-			try {
-				Assert.assertTrue(homePage.activeclassmenu.getAttribute("class").contains("active"));
-			}
-			catch(Exception e) {
-				Thread.sleep(3000);
-				jse2.executeScript("arguments[0].click();", homePage.classmenu);
-				Thread.sleep(3000);
-			}
-			try {
-				Assert.assertTrue(homePage.activetestscoresbtn.getAttribute("class").equals("active"));
-			}
-			catch(Exception e) {
-				Thread.sleep(3000);
-				jse2.executeScript("arguments[0].click();", homePage.testscoresbtn);
-				Thread.sleep(3000);
-			}
-			testScoreMenuClicked=true;
-			underClassContext=true;
+			UtilityMethods.wait_For_Context_Header_Section();
+			Assert.assertTrue(homePage.activeclassmenu.getAttribute("class").contains("active"));
 		} catch (Exception e) {
-			UtilityMethods.processException(e);
+			Thread.sleep(500);
+			jse.executeScript("arguments[0].click();", homePage.classmenu);
+			Thread.sleep(3000);
 		}
+		try {
+			Assert.assertTrue(homePage.activetestscoresbtn.getAttribute("class").equals("active"));
+		} catch (Exception e) {
+			Thread.sleep(500);
+			jse.executeScript("arguments[0].click();", homePage.testscoresbtn);
+			Thread.sleep(3000);
+		}
+		Standard_Overview_Table_Steps.testScoreMenuClicked = true;
+		Standard_Overview_Table_Steps.underClassContext = true;
 	}
 
 	/**
-	 * This method is to verify the student list is display in class context in test score, and also validating with db
+	 * This method is to verify the student list is display in class context in test
+	 * score, and also validating with db
 	 * 
 	 * @throws Throwable
 	 */
@@ -919,14 +943,14 @@ public class Standard_Overview_Table_Steps {
 				classId = entry.getValue();
 			}
 
-			PaginationUtility.methodOne();
+			PaginationUtility.checkPaginator_on_tsot();
 			if (PaginationUtility.paginatorFound) {
-				PaginationUtility.methodTwo();
+				PaginationUtility.check_Enabled_Left_Arrow_on_Paginator_on_tsot();
 				if (PaginationUtility.enabledLeftArrowFound) {
 					do {
-						PaginationUtility.methodThree();
+						PaginationUtility.check_Disabled_Left_Arrow_on_Paginator();
 						if (PaginationUtility.doneWithThreeCircle) {
-							PaginationUtility.methodFour();
+							PaginationUtility.clicking_on_first_circle_of_paginator();
 							for (int j = homePage.testNamesonPerPage_onlinechart.size() - 1; j >= 0; j--) {
 								PaginationUtility.verifyToolTipDatawithTestScoreCircle(j, schoolId, classId);
 							}
@@ -934,7 +958,7 @@ public class Standard_Overview_Table_Steps {
 							Thread.sleep(1000);
 						} else {
 							for (int i = PaginationUtility.circleList.size() - 1; i >= 0; i--) {
-								PaginationUtility.methodFive(i);
+								PaginationUtility.clicking_on_indexed_circle_of_paginator(i);
 								for (int j = homePage.testNamesonPerPage_onlinechart.size() - 1; j >= 0; j--) {
 									PaginationUtility.verifyToolTipDatawithTestScoreCircle(j, schoolId, classId);
 								}
@@ -943,11 +967,11 @@ public class Standard_Overview_Table_Steps {
 							}
 							PaginationUtility.doneWithThreeCircle = true;
 						}
-						PaginationUtility.methodSix();
+						PaginationUtility.clicking_on_enabled_left_Arrow_of_paginator();
 					} while (!PaginationUtility.disableLeftArrowFound);
 				} else {
 					for (int i = PaginationUtility.circleList.size() - 1; i >= 0; i--) {
-						PaginationUtility.methodFive(i);
+						PaginationUtility.clicking_on_indexed_circle_of_paginator(i);
 						for (int j = homePage.testNamesonPerPage_onlinechart.size() - 1; j >= 0; j--) {
 							PaginationUtility.verifyToolTipDatawithTestScoreCircle(j, schoolId, classId);
 						}
@@ -976,30 +1000,22 @@ public class Standard_Overview_Table_Steps {
 	@When("^User click on Student Context and Test Score button$")
 	public void user_click_on_Student_Context_and_Test_Score_button() throws Throwable {
 		try {
-			JavascriptExecutor js = (JavascriptExecutor) Driver.webdriver;
-			UtilityMethods.scrollPageUp(Driver.webdriver);
 			UtilityMethods.wait_For_Context_Header_Section();
-
-			try {
-				Assert.assertTrue(homePage.activestudentmenu.getAttribute("class").contains("active"));
-			}catch(Exception e) {
-				Thread.sleep(1000);
-				js.executeScript("arguments[0].click();", homePage.studentmenu);
-				Thread.sleep(3000);
-			}
-			try {
-				Assert.assertTrue(homePage.activetestscoresbtn.getAttribute("class").equals("active"));
-			}catch(Exception e) {
-				Thread.sleep(1000);
-				js.executeScript("arguments[0].click();", homePage.testscoresbtn);
-				Thread.sleep(3000);
-				testScoreMenuClicked=true;
-			}
-			
-			underStudentContext=true;
+			Assert.assertTrue(homePage.activestudentmenu.getAttribute("class").contains("active"));
 		} catch (Exception e) {
-			UtilityMethods.processException(e);
+			Thread.sleep(500);
+			jse.executeScript("arguments[0].click();", homePage.studentmenu);
+			Thread.sleep(3000);
 		}
+		try {
+			Assert.assertTrue(homePage.activetestscoresbtn.getAttribute("class").equals("active_tab"));
+		} catch (Exception e) {
+			Thread.sleep(500);
+			jse.executeScript("arguments[0].click();", homePage.testscoresbtn);
+			Thread.sleep(3000);
+		}
+		Standard_Overview_Table_Steps.testScoreMenuClicked = true;
+		Standard_Overview_Table_Steps.underStudentContext = true;
 	}
 
 	/**
@@ -1022,14 +1038,14 @@ public class Standard_Overview_Table_Steps {
 			}
 			studentId = UtilityMethods.getStudentId();
 
-			PaginationUtility.methodOne();
+			PaginationUtility.checkPaginator_on_tsot();
 			if (PaginationUtility.paginatorFound) {
-				PaginationUtility.methodTwo();
+				PaginationUtility.check_Enabled_Left_Arrow_on_Paginator_on_tsot();
 				if (PaginationUtility.enabledLeftArrowFound) {
 					do {
-						PaginationUtility.methodThree();
+						PaginationUtility.check_Disabled_Left_Arrow_on_Paginator();
 						if (PaginationUtility.doneWithThreeCircle) {
-							PaginationUtility.methodFour();
+							PaginationUtility.clicking_on_first_circle_of_paginator();
 							for (int j = homePage.testNamesonPerPage_onlinechart.size() - 1; j >= 0; j--) {
 								PaginationUtility.verifyStudentListNotDisplayWithStudentContext(j, schoolId, classId,
 										studentId);
@@ -1038,7 +1054,7 @@ public class Standard_Overview_Table_Steps {
 							Thread.sleep(1000);
 						} else {
 							for (int i = PaginationUtility.circleList.size() - 1; i >= 0; i--) {
-								PaginationUtility.methodFive(i);
+								PaginationUtility.clicking_on_indexed_circle_of_paginator(i);
 								for (int j = homePage.testNamesonPerPage_onlinechart.size() - 1; j >= 0; j--) {
 									PaginationUtility.verifyStudentListNotDisplayWithStudentContext(j, schoolId,
 											classId, studentId);
@@ -1048,11 +1064,11 @@ public class Standard_Overview_Table_Steps {
 							}
 							PaginationUtility.doneWithThreeCircle = true;
 						}
-						PaginationUtility.methodSix();
+						PaginationUtility.clicking_on_enabled_left_Arrow_of_paginator();
 					} while (!PaginationUtility.disableLeftArrowFound);
 				} else {
 					for (int i = PaginationUtility.circleList.size() - 1; i >= 0; i--) {
-						PaginationUtility.methodFive(i);
+						PaginationUtility.clicking_on_indexed_circle_of_paginator(i);
 						for (int j = homePage.testNamesonPerPage_onlinechart.size() - 1; j >= 0; j--) {
 							PaginationUtility.verifyStudentListNotDisplayWithStudentContext(j, schoolId, classId,
 									studentId);
@@ -1089,29 +1105,21 @@ public class Standard_Overview_Table_Steps {
 	@When("^User Click on Standard Performance tab within the Student Context$")
 	public void user_Click_on_Standard_Performance_tab_within_the_Student_Context() throws Throwable {
 		try {
-
-			JavascriptExecutor js = (JavascriptExecutor) Driver.webdriver;
-			try {
-				Assert.assertTrue(homePage.activestudentmenu.getAttribute("class").contains("active"));
-			} catch (Exception e) {
-				UtilityMethods.scrollPageUp(Driver.webdriver);
-				UtilityMethods.wait_For_Context_Header_Section();
-				js.executeScript("arguments[0].click();", homePage.studentmenu);
-				Thread.sleep(3000);
-			}
-			try {
-				Assert.assertTrue(homePage.activestandardperformancebtn.getAttribute("class").equals("active"));
-			} catch (Exception e) {
-				Thread.sleep(1000);
-				js.executeScript("arguments[0].click();", homePage.standardperformancebtn);
-				Thread.sleep(3000);
-			}
-			performanceMenuClicked=true;				
-			underStudentContext=true;
-			UtilityMethods.wait_For_Performance_Over_Time_Section_Load();
+			UtilityMethods.wait_For_Context_Header_Section();
+			Assert.assertTrue(homePage.activestudentmenu.getAttribute("class").contains("active"));
 		} catch (Exception e) {
-			UtilityMethods.processException(e);
+			Thread.sleep(500);
+			jse.executeScript("arguments[0].click();", homePage.studentmenu);
+			Thread.sleep(3000);
 		}
+		try {
+			Assert.assertTrue(homePage.activestandardperformancebtn.getAttribute("class").equals("active_tab"));
+		} catch (Exception e) {
+			jse.executeScript("arguments[0].click();", homePage.standardperformancebtn);
+			Thread.sleep(3000);
+		}
+		Standard_Overview_Table_Steps.performanceMenuClicked = true;
+		Standard_Overview_Table_Steps.underStudentContext = true;
 	}
 
 	/**
@@ -1124,14 +1132,14 @@ public class Standard_Overview_Table_Steps {
 	public void user_click_on_the_circle_within_the_line_chart_and_should_able_to_see_the_overlay_of_Tool_tip_which_have_following_items()
 			throws Throwable {
 		try {
-			PaginationUtility.methodOne();
+			PaginationUtility.checkPaginator_on_tsot();
 			if (PaginationUtility.paginatorFound) {
-				PaginationUtility.methodTwo();
+				PaginationUtility.check_Enabled_Left_Arrow_on_Paginator_on_tsot();
 				if (PaginationUtility.enabledLeftArrowFound) {
 					do {
-						PaginationUtility.methodThree();
+						PaginationUtility.check_Disabled_Left_Arrow_on_Paginator();
 						if (PaginationUtility.doneWithThreeCircle) {
-							PaginationUtility.methodFour();
+							PaginationUtility.clicking_on_first_circle_of_paginator();
 							for (int j = homePage.testNamesonPerPage_onlinechart.size() - 1; j >= 0; j--) {
 								PaginationUtility.verifyToolTipDetailsonLineChart(j);
 							}
@@ -1139,7 +1147,7 @@ public class Standard_Overview_Table_Steps {
 							Thread.sleep(1000);
 						} else {
 							for (int i = PaginationUtility.circleList.size() - 1; i >= 0; i--) {
-								PaginationUtility.methodFive(i);
+								PaginationUtility.clicking_on_indexed_circle_of_paginator(i);
 								for (int j = homePage.testNamesonPerPage_onlinechart.size() - 1; j >= 0; j--) {
 									PaginationUtility.verifyToolTipDetailsonLineChart(j);
 								}
@@ -1148,11 +1156,11 @@ public class Standard_Overview_Table_Steps {
 							}
 							PaginationUtility.doneWithThreeCircle = true;
 						}
-						PaginationUtility.methodSix();
+						PaginationUtility.clicking_on_enabled_left_Arrow_of_paginator();
 					} while (!PaginationUtility.disableLeftArrowFound);
 				} else {
 					for (int i = PaginationUtility.circleList.size() - 1; i >= 0; i--) {
-						PaginationUtility.methodFive(i);
+						PaginationUtility.clicking_on_indexed_circle_of_paginator(i);
 						for (int j = homePage.testNamesonPerPage_onlinechart.size() - 1; j >= 0; j--) {
 							PaginationUtility.verifyToolTipDetailsonLineChart(j);
 						}
@@ -1212,11 +1220,11 @@ public class Standard_Overview_Table_Steps {
 				if (!(homePage.TextInStripOnStudentList.get(i).getText().equals("0"))) {
 					homePage.classcolouredStripOnStudentList.get(i).click();
 					Thread.sleep(1000);
-					Assert.assertTrue(
-							homePage.classcolouredStripOnStudentList.get(i).getAttribute("class").equals("active_progress"));
+					Assert.assertTrue(homePage.classcolouredStripOnStudentList.get(i).getAttribute("class")
+							.equals("active_progress"));
 					Thread.sleep(1000);
 					recordsOnClickedStrip = Integer.parseInt(homePage.TextInStripOnStudentList.get(i).getText());
-					
+
 					PaginationUtility.studentListMethodOne();
 					if (PaginationUtility.paginatorFound) {
 						PaginationUtility.studentListMethodTwo();
@@ -1262,7 +1270,8 @@ public class Standard_Overview_Table_Steps {
 	 * @throws Throwable
 	 */
 	@Then("^user should able to see Student List and the icon next to it can be selected to minimize or maximize the Student List window$")
-	public void user_should_able_to_see_Student_List_and_the_icon_next_to_it_can_be_selected_to_minimize_or_maximize_the_Student_List_window() throws Throwable {
+	public void user_should_able_to_see_Student_List_and_the_icon_next_to_it_can_be_selected_to_minimize_or_maximize_the_Student_List_window()
+			throws Throwable {
 		try {
 			Assert.assertTrue(homePage.studentlist.isDisplayed());
 			// clicking on icon to minimize the student list
@@ -1301,8 +1310,9 @@ public class Standard_Overview_Table_Steps {
 			new Actions(Driver.webdriver).moveToElement(homePage.standardnameslist.get(randomNumber)).build().perform();
 			Thread.sleep(3000);
 			headerOnToolTip = homePage.stranddefinitionlist.get(randomNumber).getText();
-			String subcat= homePage.standardsubdefinitionlist.get(randomNumber).getText();
-			subHeaderOnToolTip =subcat.substring(0, subcat.indexOf(" "))+" "+ homePage.standarddescriptionlist.get(randomNumber).getText();
+			String subcat = homePage.standardsubdefinitionlist.get(randomNumber).getText();
+			subHeaderOnToolTip = subcat.substring(0, subcat.indexOf(" ")) + " "
+					+ homePage.standarddescriptionlist.get(randomNumber).getText();
 			homePage.standardnameslist.get(randomNumber).click();
 			Thread.sleep(5000);
 		} catch (Exception e) {
@@ -1322,8 +1332,10 @@ public class Standard_Overview_Table_Steps {
 		try {
 			Assert.assertTrue(homePage.studentlistheader.getText().equals(headerOnToolTip));
 			Assert.assertTrue(homePage.studentlistsubheader.getText().equals(subHeaderOnToolTip));
-			/** Note :student list related to the selected standard within the perticular strand with the header and the subheader is displayed & 
-			 * already covered in previously created method
+			/**
+			 * Note :student list related to the selected standard within the perticular
+			 * strand with the header and the subheader is displayed & already covered in
+			 * previously created method
 			 */
 			CBTConfiguration.score = "pass";
 		} catch (Exception e) {
@@ -1435,7 +1447,7 @@ public class Standard_Overview_Table_Steps {
 						PaginationUtility.studentListMethodSix();
 					} while (!PaginationUtility.disableRightArrowFound);
 				} else {
-					for (int x = 0; x <PaginationUtility.circleList.size(); x++) {
+					for (int x = 0; x < PaginationUtility.circleList.size(); x++) {
 						PaginationUtility.studentListMethodFive(x);
 						for (int j = 0; j < homePage.studentscorelistinstudentlist.size(); j++) {
 							score = Integer.parseInt(homePage.studentscorelistinstudentlist.get(j).getText());
@@ -1463,31 +1475,36 @@ public class Standard_Overview_Table_Steps {
 	@Then("^All the column headers should be sortable with ascending and descending order$")
 	public void all_the_column_headers_should_be_sortable_with_ascending_and_descending_order() throws Throwable {
 		try {
-			/**Verifying UI Content in Student List with DB data*/
+			/** Verifying UI Content in Student List with DB data */
 			List<Model> lm = new ArrayList<Model>();
-			Integer schoolId=0,classId=0;
+			Integer schoolId = 0, classId = 0;
 
-			Map<Integer,Integer> ids=UtilityMethods.getSchoolIdAndClassId();
-			for(Map.Entry<Integer,Integer> entry:ids.entrySet()) {
-				schoolId=entry.getKey();
-				classId=entry.getValue();
+			Map<Integer, Integer> ids = UtilityMethods.getSchoolIdAndClassId();
+			for (Map.Entry<Integer, Integer> entry : ids.entrySet()) {
+				schoolId = entry.getKey();
+				classId = entry.getValue();
 			}
-			
+
 			String firstStrandName;
 			if (homePage.strandnameslist.get(0).getText().contains("...")) {
 				firstStrandName = homePage.strandnamestooltip.getText();
 			} else {
 				firstStrandName = homePage.strandnameslist.get(0).getText();
 			}
-			lm = DatabaseConnection.getStudentDetailListInSPInClassByStrand(DatabaseConnection.conn, schoolId, classId, firstStrandName);
+			lm = DatabaseConnection.getStudentDetailListInSPInClassByStrand(DatabaseConnection.conn, schoolId, classId,
+					firstStrandName);
 			Iterator<Model> iterator = lm.iterator();
 			int index = 0;
 			while (iterator.hasNext()) {
 				Model m = (Model) iterator.next();
-				Assert.assertTrue(m.getStudent_name().equals(homePage.studentnameslistinstudentlist.get(index).getText()));
-				Assert.assertTrue(m.getNo_of_questions()==Integer.parseInt(homePage.noofquestionsorsubmitdatelistinstudentlist.get(index).getText()));
-				Assert.assertTrue(m.getStudent_score_avg()==Integer.parseInt(homePage.scorelistinstudentlist.get(index).getText()));
-				UtilityMethods.verifyColorAndScoreOnStudentList(homePage.scorelistinstudentlist.get(index), m.getStudent_score_avg());
+				Assert.assertTrue(
+						m.getStudent_name().equals(homePage.studentnameslistinstudentlist.get(index).getText()));
+				Assert.assertTrue(m.getNo_of_questions() == Integer
+						.parseInt(homePage.noofquestionsorsubmitdatelistinstudentlist.get(index).getText()));
+				Assert.assertTrue(m.getStudent_score_avg() == Integer
+						.parseInt(homePage.scorelistinstudentlist.get(index).getText()));
+				UtilityMethods.verifyColorAndScoreOnStudentList(homePage.scorelistinstudentlist.get(index),
+						m.getStudent_score_avg());
 				index++;
 			}
 
@@ -1520,7 +1537,8 @@ public class Standard_Overview_Table_Steps {
 			actions.moveToElement(homePage.studentListquestiondownarrow).click().build().perform();
 			Thread.sleep(500);
 			for (int i = 0; i < homePage.noofquestionsorsubmitdatelistinstudentlist.size(); i++) {
-				numericlistItem.add(Integer.parseInt(homePage.noofquestionsorsubmitdatelistinstudentlist.get(i).getText()));
+				numericlistItem
+						.add(Integer.parseInt(homePage.noofquestionsorsubmitdatelistinstudentlist.get(i).getText()));
 			}
 			Assert.assertTrue(Ordering.natural().reverse().isOrdered(numericlistItem));
 			numericlistItem.clear();
@@ -1529,7 +1547,8 @@ public class Standard_Overview_Table_Steps {
 			actions.moveToElement(homePage.studentListquestionuparrow).click().build().perform();
 			Thread.sleep(500);
 			for (int i = 0; i < homePage.noofquestionsorsubmitdatelistinstudentlist.size(); i++) {
-				numericlistItem.add(Integer.parseInt(homePage.noofquestionsorsubmitdatelistinstudentlist.get(i).getText()));
+				numericlistItem
+						.add(Integer.parseInt(homePage.noofquestionsorsubmitdatelistinstudentlist.get(i).getText()));
 			}
 			Assert.assertTrue(Ordering.natural().isOrdered(numericlistItem));
 			numericlistItem.clear();

@@ -40,7 +40,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class PaginationUtility {
 	
-	public static WebElement enabledLeftArrow = null;
+	public static WebElement enabledLeftArrow = null,disableLeftArrow=null;
 	public static boolean doneWithThreeCircle = false;
 	public static boolean disableLeftArrowFound = false;
 	public static boolean enabledLeftArrowFound = false;
@@ -59,72 +59,92 @@ public class PaginationUtility {
 	
 	static HomePage homePage = PageFactory.initElements(Driver.webdriver, HomePage.class);
 
-	public static void methodOne() {
+	public static boolean checkPaginator_on_tsot() {
 		try {
-			new Actions(Driver.webdriver).moveToElement(homePage.paginator_onlinechart).build().perform();
+			new Actions(Driver.webdriver).moveToElement(homePage.paginator_onlinechart_tsot).build().perform();
+			circleList = homePage.paginationcirclelist_onlinechart;
 			paginatorFound = true;
 		} catch (Exception e) {
 			log.info("Paginator Not Found");
 		}
+		return paginatorFound;
+	}
+	
+	public static boolean checkPaginator() {
+		try {
+			new Actions(Driver.webdriver).moveToElement(homePage.paginator_onlinechart).build().perform();
+			circleList = homePage.paginationcirclelist_onlinechart;
+			paginatorFound = true;
+		} catch (Exception e) {
+			log.info("Paginator Not Found");
+		}
+		return paginatorFound;
 	}
 
-	public static void methodTwo() {
+	public static boolean check_Enabled_Left_Arrow_on_Paginator_on_tsot() {
 		try {
-			circleList = homePage.paginationcirclelist_onlinechart;
+		//	circleList = homePage.paginationcirclelist_onlinechart;
 			enabledLeftArrow = homePage.enabledleftarrow_onlinechart;
 			enabledLeftArrow.isDisplayed();
 			enabledLeftArrowFound = true;
 		} catch (Exception e) {
 			log.info("Enabled Left Arrow on Paginator is not found");
+			enabledLeftArrowFound = false;
 		}
+		return enabledLeftArrowFound;
 	}
 
-	public static void methodThree() {
+	public static boolean check_Disabled_Left_Arrow_on_Paginator() {
 		try {
-			homePage.disabledleftarrow_onlinechart.isDisplayed();
+			disableLeftArrow = homePage.disabledleftarrow_onlinechart_on_tsot;
+			disableLeftArrow.isDisplayed();
 			disableLeftArrowFound = true;
+			Thread.sleep(500);
+			System.out.println("1");
 		} catch (Exception e) {
 			log.info("Disabled Left Arrow on Paginator is not found");
 		}
+		return disableLeftArrowFound;
 	}
 
-	public static void methodFour() {
+	public static void clicking_on_first_circle_of_paginator() {
 		try {
 			UtilityMethods.scrollPageDown(Driver.webdriver, 2);
-			Thread.sleep(1000);
+			Thread.sleep(500);
 			circleList.get(0).click();
 			Thread.sleep(1000);
-			UtilityMethods.scrollPageUp(Driver.webdriver, 2);
+			UtilityMethods.scrollPageUp(Driver.webdriver, 2);Thread.sleep(500);
 		} catch (InterruptedException e) {
 			log.error(e.getMessage());
 			UtilityMethods.processException(e);
 		}
 	}
 
-	public static void methodFive(int index) {
+	public static void clicking_on_indexed_circle_of_paginator(int index) {
 		try {
 			UtilityMethods.scrollPageDown(Driver.webdriver, 2);
-			Thread.sleep(1000);
+			Thread.sleep(500);
 			circleList.get(index).click();
 			Thread.sleep(1000);
 			UtilityMethods.scrollPageUp(Driver.webdriver, 2);
+			Thread.sleep(500);
 		} catch (InterruptedException e) {
 			log.error(e.getMessage());
 			UtilityMethods.processException(e);
 		}
 	}
 
-	public static void methodSix() {
+	public static void clicking_on_enabled_left_Arrow_of_paginator() {
 		try {
 			enabledLeftArrow.click();
 		} catch (Exception e) {
-			log.error(e.getMessage());
-			UtilityMethods.processException(e);
+			log.error("Enabled Left arrow is not found");			
 		}
 	}
 
 	public static void verifyTestNamesAndToolTipText(int index) {
 		try {
+			new Actions(Driver.webdriver).moveToElement(homePage.testScoresPercentage).build().perform();
 			String testName = UtilityMethods
 					.elipsisRemoval(homePage.testNamesonPerPage_onlinechart.get(index).getText());
 			new Actions(Driver.webdriver).moveToElement(homePage.testNamesonPerPage_onlinechart.get(index)).build()
@@ -189,7 +209,7 @@ public class PaginationUtility {
 
 			new Actions(Driver.webdriver).moveToElement(homePage.testNameOnTestScoreDetail).build().perform();
 
-			Assert.assertTrue(homePage.tooltipOftestNameOnTestScoreDetail.equals(toolTipTextofTest));
+			Assert.assertTrue(homePage.tooltipOftestNameOnTestScoreDetail.getText().equals(toolTipTextofTest));
 			new Actions(Driver.webdriver).moveToElement(homePage.testscoredetail).build().perform();
 			String submittedDateText = homePage.selectedTestSubmittedDate.getText();
 			UtilityMethods.checkDateFormat(submittedDateText.substring(11, 21));

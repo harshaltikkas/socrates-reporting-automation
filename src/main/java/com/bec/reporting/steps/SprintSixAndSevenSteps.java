@@ -227,12 +227,12 @@ public class SprintSixAndSevenSteps {
 			catch(Exception e) {}
 			UtilityMethods.scrollPageDown(Driver.webdriver, 9);
 			if (PaginationUtility.paginatorFound) {
-				PaginationUtility.methodTwo();
+				PaginationUtility.check_Enabled_Left_Arrow_on_Paginator_on_tsot();
 				if (PaginationUtility.enabledLeftArrowFound) {
 					do {
-						PaginationUtility.methodThree();
+						PaginationUtility.check_Disabled_Left_Arrow_on_Paginator();
 						if (PaginationUtility.doneWithThreeCircle) {
-							PaginationUtility.methodFour();
+							PaginationUtility.clicking_on_first_circle_of_paginator();
 							
 							for (int j = homePage.testNamesonPerPage_onlinechart.size() - 1; j >= 0; j--) {
 								Assert.assertTrue(homePage.diamondshapesymblonPerPage_onlinechart.get(j).isDisplayed());
@@ -244,7 +244,7 @@ public class SprintSixAndSevenSteps {
 							Thread.sleep(1000);
 						} else {
 							for (int i = PaginationUtility.circleList.size() - 1; i >= 0; i--) {
-								PaginationUtility.methodFive(i);
+								PaginationUtility.clicking_on_indexed_circle_of_paginator(i);
 									for (int j = homePage.testNamesonPerPage_onlinechart.size() - 1; j >= 0; j--) {
 										Assert.assertTrue(homePage.diamondshapesymblonPerPage_onlinechart.get(j).isDisplayed());
 										homePage.testScoreValueInCircle_onlinechart.get(j).click();
@@ -256,11 +256,11 @@ public class SprintSixAndSevenSteps {
 								}
 							PaginationUtility.doneWithThreeCircle = true;
 						}
-						PaginationUtility.methodSix();
+						PaginationUtility.clicking_on_enabled_left_Arrow_of_paginator();
 					} while (!PaginationUtility.disableLeftArrowFound);
 				} else {
 					for (int i = PaginationUtility.circleList.size() - 1; i >= 0; i--) {
-						PaginationUtility.methodFive(i);
+						PaginationUtility.clicking_on_indexed_circle_of_paginator(i);
 						for (int j = homePage.testNamesonPerPage_onlinechart.size() - 1; j >= 0; j--) {
 							Assert.assertTrue(homePage.diamondshapesymblonPerPage_onlinechart.get(j).isDisplayed());
 							homePage.testScoreValueInCircle_onlinechart.get(j).click();
