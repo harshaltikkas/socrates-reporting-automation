@@ -409,7 +409,7 @@ public class HomePage {
 	@FindBy(xpath="//li[@class='active_tab' and contains(text(),'Standards Performance')]")
 	public WebElement activestandardperformancebtn;
 	
-	@FindBy(xpath="//li[@class='active' and contains(text(),'Assessements')]")
+	@FindBy(xpath="//li[@class='active' and contains(text(),'Assessments')]")
 	public WebElement activeAssessementsbtn;
 	
 	@FindBy(xpath="//li[@class='active_tab' and contains(text(),'Test Scores')]")

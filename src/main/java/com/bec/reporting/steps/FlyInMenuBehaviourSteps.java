@@ -53,8 +53,8 @@ public class FlyInMenuBehaviourSteps {
 	HomePage homePage = PageFactory.initElements(Driver.webdriver, HomePage.class);
 	public static Properties prop;
 	public static String toolTipText = "";
-	public static String classNameonCH,schoolNameonCH, teacherNameonCH, gradeNameonCH,studentTextonCH;
-	public static String uname,passwd,realm;
+	public static String classNameonCH, schoolNameonCH, teacherNameonCH, gradeNameonCH, studentTextonCH;
+	public static String uname, passwd, realm;
 
 	/**
 	 * method used to launch the browser with the url and provide the
@@ -67,9 +67,9 @@ public class FlyInMenuBehaviourSteps {
 			String password, String usertype) throws Throwable {
 		log.info("User is on portal's login screen");
 		try {
-			uname=username;
-			passwd=password;
-			realm=usertype;
+			uname = username;
+			passwd = password;
+			realm = usertype;
 			prop = FileRead.readProperties();
 			Driver.launch_browser(prop.getProperty("portalUrl"));
 			Thread.sleep(3000);
@@ -153,42 +153,46 @@ public class FlyInMenuBehaviourSteps {
 	 * @throws Throwable
 	 */
 	@Then("^User should be able to select school as \"([^\"]*)\" and select grade as \"([^\"]*)\" and Class and student as \"([^\"]*)\" and apply and verify with context header information$")
-	public void user_should_be_able_to_select_school_as_and_select_grade_as_and_Class_and_student_as_and_apply_and_verify_with_context_header_information(String sc, String grade, String selectiontype) throws Throwable {
+	public void user_should_be_able_to_select_school_as_and_select_grade_as_and_Class_and_student_as_and_apply_and_verify_with_context_header_information(
+			String sc, String grade, String selectiontype) throws Throwable {
 		try {
 			String selectedSchool = "", selectedClass = "", selectedStudent = "", selectedGrade = "",
 					selectedTeacher = "";
-			int customSize = 0,randomIndex=0;
+			int customSize = 0, randomIndex = 0;
 			// selecting school from dropdown
 			homePage.schooldropdownbtn.click();
 			Thread.sleep(500);
 			UtilityMethods.uncheck_check_All("School");
 			log.info("Selected School:" + sc);
-			selectedSchool=sc;
+			selectedSchool = sc;
 			homePage.searchbaronschooldropdown.sendKeys(sc);
 			Thread.sleep(500);
 			Driver.webdriver.findElement(By.xpath("//li[.='" + sc + "']")).click();
 			Thread.sleep(500);
-			new Actions(Driver.webdriver).moveToElement(homePage.searchcancelonschooldropdown).click().build().perform();
+			new Actions(Driver.webdriver).moveToElement(homePage.searchcancelonschooldropdown).click().build()
+					.perform();
 			Thread.sleep(500);
 			homePage.schooldropdownbtn.click();
 			Thread.sleep(500);
 			new Actions(Driver.webdriver).moveToElement(homePage.studentTitleOnSliderMenu).build().perform();
-			UtilityMethods.wait_For_Refresh_Icon_onRosterTab(homePage.gradeRefreshIcon,"Grade");
-	    	UtilityMethods.scrollPageDown(Driver.webdriver, 3);Thread.sleep(500);
-			
+			UtilityMethods.wait_For_Refresh_Icon_onRosterTab(homePage.gradeRefreshIcon, "Grade");
+			UtilityMethods.scrollPageDown(Driver.webdriver, 3);
+			Thread.sleep(500);
+
 			// selecting Grade from dropdown
 			homePage.gradedropdownbtn.click();
 			Thread.sleep(500);
 			log.info("Selected Grade:" + grade);
-			selectedGrade=grade;
+			selectedGrade = grade;
 			Driver.webdriver.findElement(By.xpath("//li[.='" + grade + "']")).click();
 			Thread.sleep(500);
 			homePage.gradedropdownbtn.click();
 			Thread.sleep(500);
 			new Actions(Driver.webdriver).moveToElement(homePage.studentTitleOnSliderMenu).build().perform();
-			UtilityMethods.wait_For_Refresh_Icon_onRosterTab(homePage.teachersRefreshIcon,"Teachers");
-			UtilityMethods.scrollPageDown(Driver.webdriver, 4);Thread.sleep(500);
-			
+			UtilityMethods.wait_For_Refresh_Icon_onRosterTab(homePage.teachersRefreshIcon, "Teachers");
+			UtilityMethods.scrollPageDown(Driver.webdriver, 4);
+			Thread.sleep(500);
+
 			homePage.teachersdropdownbtn.click();
 			Thread.sleep(500);
 			// de-selecting first time"all" teachers
@@ -284,7 +288,6 @@ public class FlyInMenuBehaviourSteps {
 			UtilityMethods.scrollPageUp(Driver.webdriver);
 			Thread.sleep(500);
 			UtilityMethods.wait_For_Context_Header_Section();
-			
 
 			/**
 			 * verifying class and school,teacher,grade and student on context menu by
@@ -303,7 +306,8 @@ public class FlyInMenuBehaviourSteps {
 				log.info("Student name on CH:" + studentTextonCH);
 				Assert.assertTrue(studentTextonCH.contains(selectedStudent));
 				Assert.assertTrue(homePage.activestudentmenu.isDisplayed());
-				verify_Single_Selection_context_header_content(selectedClass,selectedGrade,selectedSchool,selectedTeacher);
+				verify_Single_Selection_context_header_content(selectedClass, selectedGrade, selectedSchool,
+						selectedTeacher);
 				break;
 
 			case "multiple":
@@ -317,10 +321,11 @@ public class FlyInMenuBehaviourSteps {
 				log.info("Student name on CH:" + studentTextonCH);
 				Assert.assertTrue(studentTextonCH.equals("Custom (" + customSize + ")"));
 				Assert.assertTrue(homePage.activeclassmenu.isDisplayed());
-				verify_Single_Selection_context_header_content(selectedClass,selectedGrade,selectedSchool,selectedTeacher);
+				verify_Single_Selection_context_header_content(selectedClass, selectedGrade, selectedSchool,
+						selectedTeacher);
 				break;
 
-			default:				
+			default:
 				Thread.sleep(1000);
 				// verifying Grade name context header
 				if (homePage.gradenameoncontextheader.getText().contains("...")) {
@@ -354,11 +359,13 @@ public class FlyInMenuBehaviourSteps {
 		log.info("Scenario 2 for " + selectiontype + " Completed");
 	}
 
-	private void verify_Single_Selection_context_header_content(String selectedClass,String selectedGrade,String selectedSchool,String selectedTeacher) {
+	private void verify_Single_Selection_context_header_content(String selectedClass, String selectedGrade,
+			String selectedSchool, String selectedTeacher) {
 		try {
 			// verifying class name on context header
 			Actions actions = new Actions(Driver.webdriver);
-			actions.moveByOffset(200, 200).build().perform();Thread.sleep(500);
+			actions.moveByOffset(200, 200).build().perform();
+			Thread.sleep(500);
 			if (homePage.classnameoncontextheader.getText().contains("...")) {
 				actions.moveToElement(homePage.classnameoncontextheader).build().perform();
 				classNameonCH = homePage.tooltipofclassnameoncontextheader.getText();
@@ -419,7 +426,8 @@ public class FlyInMenuBehaviourSteps {
 		try {
 			UtilityMethods.scrollPageDown(Driver.webdriver, 4);
 			Thread.sleep(500);
-			homePage.rostercancelbtn.click();Thread.sleep(500);
+			homePage.rostercancelbtn.click();
+			Thread.sleep(500);
 			Assert.assertEquals(false, homePage.studentTitleOnSliderMenu.isDisplayed());
 			CBTConfiguration.score = "pass";
 		} catch (Exception e) {
@@ -465,8 +473,9 @@ public class FlyInMenuBehaviourSteps {
 			switch (testType) {
 			case "single":
 				selectedTestName = homePage.testnameslist.get(randomNumber).getText();
-				log.info("Selected Test :"+selectedTestName);
-				homePage.searchbarontesttab.sendKeys(selectedTestName);Thread.sleep(500);
+				log.info("Selected Test :" + selectedTestName);
+				homePage.searchbarontesttab.sendKeys(selectedTestName);
+				Thread.sleep(500);
 				homePage.testscheckboxlist.get(0).click();
 				Thread.sleep(500);
 				new Actions(Driver.webdriver).moveToElement(homePage.testapplybtn).click().build().perform();
@@ -481,7 +490,7 @@ public class FlyInMenuBehaviourSteps {
 				for (int i = 0; i < testCheckBoxListSize; i = i + 2) {
 					homePage.testscheckboxlist.get(i).click();
 					Thread.sleep(500);
-					UtilityMethods.scrollPageDown(Driver.webdriver, i );
+					UtilityMethods.scrollPageDown(Driver.webdriver, i);
 					noOfSelectedTest++;
 				}
 				homePage.testapplybtn.click();
@@ -546,24 +555,25 @@ public class FlyInMenuBehaviourSteps {
 	public void user_should_be_able_to_select_district_term_and_click_on_apply_filter_button() throws Throwable {
 		try {
 			// selecting Random District Term from the list
-			homePage.districttermdropdownbtn.click();Thread.sleep(500);
+			homePage.districttermdropdownbtn.click();
+			Thread.sleep(500);
 			homePage.districttermlist.get(1).click();
 			Thread.sleep(500);
 			String districtterm = homePage.districttermdropdownbtn.getText();
-			districtterm=districtterm.substring(0,districtterm.indexOf(" "));
-			log.info("selected district term:"+districtterm);
+			districtterm = districtterm.substring(0, districtterm.indexOf(" "));
+			log.info("selected district term:" + districtterm);
 			homePage.dateapplybtn.click();
-			
+
 			UtilityMethods.scrollPageUp(Driver.webdriver);
 			Thread.sleep(30000);
 			/**
 			 * Verifying District Term on context header by comparing dropdown text and
 			 * context header values
 			 */
-			String datesonCH= homePage.datesoncontextheader.getText().trim();
-			datesonCH=datesonCH.substring(6,10)+"-"+datesonCH.substring(17);
-			log.info("datesonCH :"+datesonCH);
-			Assert.assertEquals(districtterm,datesonCH);
+			String datesonCH = homePage.datesoncontextheader.getText().trim();
+			datesonCH = datesonCH.substring(6, 10) + "-" + datesonCH.substring(17);
+			log.info("datesonCH :" + datesonCH);
+			Assert.assertEquals(districtterm, datesonCH);
 			CBTConfiguration.score = "pass";
 		} catch (Exception e) {
 			UtilityMethods.processException(e);
