@@ -52,6 +52,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class UtilityMethods {
 	static int ctr = 0;
+	static HomePage homePage = PageFactory.initElements(Driver.webdriver, HomePage.class);
 
 	/**
 	 * This method is used to scroll to element using mousehover
@@ -563,7 +564,7 @@ public class UtilityMethods {
 		Map<Integer, Integer> Ids = new HashMap<Integer, Integer>();
 		try {
 			String schoolName, className;
-			HomePage homePage = PageFactory.initElements(Driver.webdriver, HomePage.class);
+
 			new Actions(Driver.webdriver).moveToElement(homePage.overviewtext).click().build().perform();
 			Thread.sleep(500);
 			new Actions(Driver.webdriver).moveToElement(homePage.classnameoncontextheader).build().perform();
@@ -572,15 +573,29 @@ public class UtilityMethods {
 			} else {
 				className = homePage.classnameoncontextheader.getText();
 			}
-			new Actions(Driver.webdriver).moveToElement(homePage.tripledotsoncontextheader).click().build().perform();
-			Thread.sleep(1000);
-			new Actions(Driver.webdriver).moveToElement(homePage.schoolnameoncontextheader).build().perform();
-			Thread.sleep(1000);
-			if (homePage.schoolnameoncontextheader.getText().contains("...")) {
-				schoolName = homePage.tooltipofschoolnameontripledot.getText();
-			} else {
-				schoolName = homePage.schoolnameoncontextheader.getText();
+			new Actions(Driver.webdriver).moveToElement(homePage.overviewtext).click().build().perform();
+			Thread.sleep(500);
+			try {
+				new Actions(Driver.webdriver).moveToElement(homePage.schoolnameoncontextheader).build().perform();
+				Thread.sleep(1000);
+				if (homePage.schoolnameoncontextheader.getText().contains("...")) {
+					schoolName = homePage.tooltipofschoolnameontripledot.getText();
+				} else {
+					schoolName = homePage.schoolnameoncontextheader.getText();
+				}
+			} catch (Exception e) {
+				new Actions(Driver.webdriver).moveToElement(homePage.tripledotsoncontextheader).click().build()
+						.perform();
+				Thread.sleep(1000);
+				new Actions(Driver.webdriver).moveToElement(homePage.schoolnameontripledot).build().perform();
+				Thread.sleep(1000);
+				if (homePage.schoolnameontripledot.getText().contains("...")) {
+					schoolName = homePage.tooltipofschoolnameontripledot.getText();
+				} else {
+					schoolName = homePage.schoolnameontripledot.getText();
+				}
 			}
+
 			new Actions(Driver.webdriver).moveToElement(homePage.overviewtext).click().build().perform();
 			Thread.sleep(500);
 			Integer schoolId = DatabaseConnection.getSchoolIDBySchoolName(schoolName);
@@ -633,17 +648,26 @@ public class UtilityMethods {
 		HomePage homePage = PageFactory.initElements(Driver.webdriver, HomePage.class);
 		String schoolName = "";
 		try {
-			new Actions(Driver.webdriver).moveToElement(homePage.tripledotsoncontextheader).click().build().perform();
-			Thread.sleep(1000);
-			new Actions(Driver.webdriver).moveToElement(homePage.schoolnameoncontextheader).build().perform();
-			Thread.sleep(1000);
-			if (homePage.schoolnameoncontextheader.getText().contains("...")) {
-				schoolName = homePage.tooltipofschoolnameontripledot.getText();
-			} else {
-				schoolName = homePage.schoolnameoncontextheader.getText();
+			try {
+				new Actions(Driver.webdriver).moveToElement(homePage.schoolnameoncontextheader).build().perform();
+				Thread.sleep(1000);
+				if (homePage.schoolnameoncontextheader.getText().contains("...")) {
+					schoolName = homePage.tooltipofschoolnameontripledot.getText();
+				} else {
+					schoolName = homePage.schoolnameoncontextheader.getText();
+				}
+			} catch (Exception e) {
+				new Actions(Driver.webdriver).moveToElement(homePage.tripledotsoncontextheader).click().build()
+						.perform();
+				Thread.sleep(1000);
+				new Actions(Driver.webdriver).moveToElement(homePage.schoolnameontripledot).build().perform();
+				Thread.sleep(1000);
+				if (homePage.schoolnameontripledot.getText().contains("...")) {
+					schoolName = homePage.tooltipofschoolnameontripledot.getText();
+				} else {
+					schoolName = homePage.schoolnameontripledot.getText();
+				}
 			}
-			new Actions(Driver.webdriver).moveToElement(homePage.overviewtext).click().build().perform();
-			Thread.sleep(500);
 		} catch (Exception e) {
 			processException(e);
 		}
@@ -725,7 +749,6 @@ public class UtilityMethods {
 		return teachersName;
 	}
 
-	
 	/**
 	 * This method is used to retrieve AssessedWith value on UI
 	 * 
@@ -1073,7 +1096,7 @@ public class UtilityMethods {
 		return name;
 	}
 
-	public static void wait_For_Refresh_Icon_onRosterTab(WebElement el,String str) {
+	public static void wait_For_Refresh_Icon_onRosterTab(WebElement el, String str) {
 		int count = 1;
 		try {
 			do {
@@ -1081,7 +1104,7 @@ public class UtilityMethods {
 				Thread.sleep(2000);
 				count++;
 				if (count > 10) {
-					log.error("Issue in " +str + " Data Loading");
+					log.error("Issue in " + str + " Data Loading");
 					UtilityMethods.processException(new Exception());
 				}
 			} while (el.isDisplayed() && count <= 10);
@@ -1089,12 +1112,13 @@ public class UtilityMethods {
 			log.info(str + " Refresh Icon Display off");
 		}
 	}
-	
+
 	public static void uncheck_check_All(String roster_field) {
 		try {
-			Driver.webdriver.findElement(By.xpath("//div[@class='menu-title' and contains(text(),'"+roster_field+"')]/following-sibling::div//div[@class='menu-dropdown-list-inr']/ul/li")).click();
+			Driver.webdriver.findElement(By.xpath("//div[@class='menu-title' and contains(text(),'" + roster_field
+					+ "')]/following-sibling::div//div[@class='menu-dropdown-list-inr']/ul/li")).click();
 			Thread.sleep(500);
-		}catch(Exception e) {
+		} catch (Exception e) {
 			processException(e);
 		}
 	}
