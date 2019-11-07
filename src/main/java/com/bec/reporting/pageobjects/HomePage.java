@@ -828,7 +828,7 @@ public class HomePage {
 	@FindBy(xpath="//div[@class='standard-grid-filter-view']/div[contains(text(),'View :')]/following-sibling::div/button//div[@class='bec_tooltip_content']")
 	public WebElement viewDropDownToolTipText;
 	
-	@FindBy(xpath="//span[@class='print_pdf_icon']/div/i[contains(text(),'print')]")
+	@FindBy(xpath="//span[@class='print_pdf_icon']//span/img")
 	public WebElement printIcon;
 	
 	@FindBy(xpath="//div[@class='standard-grid-filter-view']/div[@class='standard-grid-filter-view-label' and contains(text(),'Test(s) assessed for:')]/following-sibling::div//div//ul/li/div")
@@ -855,7 +855,7 @@ public class HomePage {
 	@FindBy(xpath="//div[@class='print_pdf_logo']/img")
 	public WebElement pdfLogo;
 	
-	@FindBy(xpath="//div[@class='print_pdf_context_header']//div[@class='print_pdf_header_row']/ul/li/span/b")
+	@FindBy(xpath="//div[@class='print_pdf_context_header']//div[@class='print_pdf_header_row']/ul/li")
 	public List<WebElement> headerRowList;
 	
 	/**
