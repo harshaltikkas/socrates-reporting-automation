@@ -80,7 +80,7 @@ public class WritingTestCases {
 			Thread.sleep(1000);
 			webdriver.findElement(By.xpath("//button[@id='login-submit']")).click();
 			Thread.sleep(2000);
-			webdriver.findElement(By.xpath("//input[@id='password']")).sendKeys("Nahipata@143");
+			webdriver.findElement(By.xpath("//input[@id='password']")).sendKeys("############");
 			Thread.sleep(1000);
 			webdriver.findElement(By.xpath("//button[@id='login-submit']")).click();
 			Thread.sleep(10000);
