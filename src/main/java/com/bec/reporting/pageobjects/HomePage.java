@@ -511,6 +511,9 @@ public class HomePage {
 	public WebElement paginator_onlinechart_tsot;
 	
 	@FindBy(xpath="//div[@class='test-results-pagination']")
+	public WebElement paginator_onlinechart_pot;
+	
+	@FindBy(xpath="//div[@class='test-results-pagination']")
 	public WebElement paginator_onlinechart;
 	
 	@FindBy(xpath="//div[@class='table-and-graph-pagination-inr']//ul[@class='page-circle-list']//span")
@@ -522,14 +525,17 @@ public class HomePage {
 	@FindBy(xpath="//div[@class='class_widget_title test_score_overtime']/following-sibling::div/div//div[@class='test-results-pagination']//span[@class='scroll-left float-left scroll-disable']/i[.='chevron_left']")
 	public WebElement disabledleftarrow_onlinechart_on_tsot;
 
-	@FindBy(xpath="//div[@class='comparison-block text-center']/following-sibling::div//*[name()='text' and @transform='rotate(-45)']")
+	@FindBy(xpath="//*[name()='text' and @transform='rotate(-45)']")
 	public List<WebElement> testNamesonPerPage_onlinechart;
 	
-	@FindBy(xpath="//div[@class='line_chart_graph']//*[name()='text' and @transform]/preceding-sibling::*[name()='polygon' and @fill='#606060']")
+	@FindBy(xpath="//*[name()='text' and @transform]/preceding-sibling::*[name()='polygon']")
 	public List<WebElement> diamondshapesymblonPerPage_onlinechart;
 	
-	@FindBy(xpath="//div[@class='line_chart_graph']//*[name()='text' and @transform]/preceding-sibling::*[name()='polygon' and @fill='#00539B']")
+	@FindBy(xpath="//*[name()='text' and @transform]/preceding-sibling::*[name()='polygon' and @fill='#606060']")
 	public WebElement highlightedtestName_onlinechart;
+	
+	@FindBy(xpath="//*[name()='text' and @transform]/preceding-sibling::*[name()='polygon' and @fill='#00539B']")
+	public WebElement highlightedtestName_onlinechart_on_tsot;
 	
 	@FindBy(xpath="//div[@class='graph_tooltip_content']")
 	public WebElement testNametooltip_onlinechart;
@@ -600,7 +606,7 @@ public class HomePage {
 	@FindBy(xpath="//i[@class='material-icons' and contains(text(),'show_chart')]/ancestor::span/following-sibling::span[@class='sidewidget-header-title']")
 	public WebElement performanceovrtimeheader;
 	
-	@FindBy(xpath="//span[@class='infoIconBlock']")
+	@FindBy(xpath="//span[@class='infoIcon' and not(@style)]")
 	public WebElement infoicononperformanceovrtimeheader;
 	
 	@FindBy(xpath="//div[@class='infoIconTooltipBlockInr']")
@@ -620,6 +626,12 @@ public class HomePage {
 	
 	@FindBy(xpath="//*[name()='tspan' and contains(text(),'Test Scores (%)')]")
 	public WebElement testScoresPercentage;
+	
+	@FindBy(xpath="//div[@class='class_widget_title test_score_overtime']/following-sibling::div//*[name()='tspan' and contains(text(),'Test Scores (%)')]")
+	public WebElement testScoresPercentageon_tsot;
+	
+	@FindBy(xpath="//div[@class='studentTestscoreOvertimeChart']//*[name()='tspan' and contains(text(),'Test Scores (%)')]")
+	public WebElement testScoresPercentageon_tso;
 	
 	@FindBy(xpath="//*[name()='tspan' and contains(text(),'100')]")
 	public WebElement hundredtextontsot;
@@ -642,8 +654,11 @@ public class HomePage {
 	@FindBy(xpath="//div[@class='tooltip_row_right']//div")
 	public WebElement studentscorerightcontentontt;
 	
-	@FindBy(xpath="//div[@class='comparison-block text-center']/following-sibling::div//*[name()='g']//*[name()='circle']/following-sibling::*[name()='text']")
+	@FindBy(xpath="//*[name()='g']//*[name()='circle']/following-sibling::*[name()='text']")
 	public List<WebElement> testScoreValueInCircle_onlinechart;
+	
+	@FindBy(xpath="//div[@class='line_chart_graph' and not(@style)]//*[name()='g']//*[name()='circle']/following-sibling::*[name()='text']")
+	public List<WebElement> testScoreValueInCircle_onlinechart_pot;
 	
 	@FindBy(xpath="//span[@class='progress-text' and contains(text(),'All')]/preceding-sibling::span[@class='progress-number grey']")
 	public WebElement textingraystripinstudentlist;
@@ -774,19 +789,19 @@ public class HomePage {
 	@FindBy(xpath="//span[@class='student-list-col-head-name' and contains(text(),'Score')]/following-sibling::span//i[contains(text(),'expand_more')]")
 	public WebElement studentListscoredownarrow;
 
-	@FindBy(xpath="//div[@class='Test_names_label']")
+	@FindBy(xpath="//div[contains(text(),'Test Names')]")
 	public WebElement testNamesLabelOnLineChart;
 	
-	@FindBy(xpath="//span[contains(text(),'School')]/ancestor::li[@class='compareCheckBoxesSingleUI school-compare']/label")
+	@FindBy(xpath="//span[@class='comparisonSingleTitle' and contains(text(),'School')]")
 	public WebElement compareschoollabel;
 	
-	@FindBy(xpath="//span[contains(text(),'District')]/ancestor::li/label")
+	@FindBy(xpath="//span[@class='comparisonSingleTitle' and contains(text(),'District')]")
 	public WebElement comparedistrictlabel;
 	
-	@FindBy(xpath="//span[contains(text(),'Class')]/ancestor::li[@class='compareCheckBoxesSingleUI class-compare']/label")
+	@FindBy(xpath="//span[@class='comparisonSingleTitle' and contains(text(),'Class')]")
 	public WebElement compareclasslabel;
 	
-	@FindBy(xpath="//span[contains(text(),'School')]/ancestor::li[@class='compareCheckBoxesSingleUI school-compare activeCompare']/label")
+	@FindBy(xpath="//li[@class='compareCheckBoxesSingleUI school-compare']//input[@value='on']/ancestor::label")
 	public WebElement selectedcompareschoollabel;
 	
 	@FindBy(xpath="//span[contains(text(),'District')]/ancestor::li[@class='compareCheckBoxesSingleUI district-compare activeCompare']/label")
@@ -795,13 +810,13 @@ public class HomePage {
 	@FindBy(xpath="//span[contains(text(),'Class')]/ancestor::li[@class='compareCheckBoxesSingleUI class-compare activeCompare']/label")
 	public WebElement selectedcompareclasslabel;
 	
-	@FindBy(xpath="//*[name()='path' and @stroke-dasharray='2,2']")
+	@FindBy(xpath="//div[@class='comparison-block text-center']/following-sibling::div//*[name()='path' and @stroke-dasharray='2,2' and @class='vx-linepath LinePath_SchoolCompare']")
 	public WebElement schoolpath;
 	
-	@FindBy(xpath="//*[name()='path' and @stroke-dasharray='2,2']")
+	@FindBy(xpath="//div[@class='comparison-block text-center']/following-sibling::div//*[name()='path' and @stroke-dasharray='2,2' and @class='vx-linepath LinePath_ClassCompare']")
 	public WebElement classpath;
 	
-	@FindBy(xpath="//*[name()='path' and @stroke-dasharray='4,4']")
+	@FindBy(xpath="//div[@class='comparison-block text-center']/following-sibling::div//*[name()='path' and @stroke-dasharray='4,4' and @class='vx-linepath LinePath_DistrictCompare']")
 	public WebElement districtpath;
 	
 	@FindBy(xpath="//*[.='No. of Qns']")

@@ -1,4 +1,4 @@
-@Feature
+@Feature1
 Feature: Spint 9 User Stories
 
   ##BE-832,833,834
