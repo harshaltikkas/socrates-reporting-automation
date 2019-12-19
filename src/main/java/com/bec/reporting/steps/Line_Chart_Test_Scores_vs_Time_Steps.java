@@ -109,9 +109,7 @@ public class Line_Chart_Test_Scores_vs_Time_Steps {
 					} else {
 						break;
 					}
-				} while (!(PaginationUtility.check_Disabled_Left_Arrow_on_Paginator()));
-
-				
+				} while (!(PaginationUtility.check_Disabled_Left_Arrow_on_Paginator()));				
 			} else {
 				//when paginator is not found
 				Assert.assertTrue(homePage.testNamesonPerPage_onlinechart.size() <= 10);

@@ -905,7 +905,7 @@ public class Standard_Overview_Table_Steps {
 	@When("^User click on Class Context and Test Score button$")
 	public void user_click_on_Class_Context_and_Test_Score_button() throws Throwable {
 		try {
-			//UtilityMethods.wait_For_Context_Header_Section();
+			UtilityMethods.wait_For_Context_Header_Section();
 			Assert.assertTrue(homePage.activeclassmenu.getAttribute("class").contains("active"));
 		} catch (Exception e) {
 			Thread.sleep(500);
@@ -921,6 +921,7 @@ public class Standard_Overview_Table_Steps {
 		}
 		Standard_Overview_Table_Steps.testScoreMenuClicked = true;
 		Standard_Overview_Table_Steps.underClassContext = true;
+		UtilityMethods.wait_For_Test_Score_Detail_Section();
 	}
 
 	/**

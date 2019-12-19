@@ -70,6 +70,17 @@ public class PaginationUtility {
 		return paginatorFound;
 	}
 	
+	public static boolean checkPaginator_on_pot() {
+		try {
+			new Actions(Driver.webdriver).moveToElement(homePage.paginator_onlinechart_pot).build().perform();
+			circleList = homePage.paginationcirclelist_onlinechart;
+			paginatorFound = true;
+		} catch (Exception e) {
+			log.info("Paginator Not Found");
+		}
+		return paginatorFound;
+	}
+	
 	public static boolean checkPaginator() {
 		try {
 			new Actions(Driver.webdriver).moveToElement(homePage.paginator_onlinechart).build().perform();
