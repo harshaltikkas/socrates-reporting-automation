@@ -83,9 +83,10 @@ public class FlyInMenuBehaviourSteps {
 			select.selectByValue(usertype);
 			Thread.sleep(1000);
 			homePage.loginbtn.click();
+			Thread.sleep(5000);
 			IWait.explicit_wait(Driver.webdriver, homePage.studentmenu);
 		} catch (Exception e) {
-			System.out.println("failed");
+			log.error("failed to login");
 			UtilityMethods.processException(e);
 		}
 	}
@@ -186,17 +187,16 @@ public class FlyInMenuBehaviourSteps {
 			selectedGrade = grade;
 			Driver.webdriver.findElement(By.xpath("//li[.='" + grade + "']")).click();
 			Thread.sleep(500);
-			homePage.gradedropdownbtn.click();
-			Thread.sleep(500);
+			
 			new Actions(Driver.webdriver).moveToElement(homePage.studentTitleOnSliderMenu).build().perform();
-			UtilityMethods.wait_For_Refresh_Icon_onRosterTab(homePage.teachersRefreshIcon, "Teachers");
+			UtilityMethods.wait_For_Refresh_Icon_onRosterTab(homePage.teachersRefreshIcon, "Teacher");
 			UtilityMethods.scrollPageDown(Driver.webdriver, 4);
 			Thread.sleep(500);
 
 			homePage.teachersdropdownbtn.click();
 			Thread.sleep(500);
 			// de-selecting first time"all" teachers
-			UtilityMethods.uncheck_check_All("Teachers");
+			UtilityMethods.uncheck_check_All("Teacher");
 			switch (selectiontype) {
 			case "single":
 				// selecting Teacher from dropdown

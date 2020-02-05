@@ -160,7 +160,7 @@ public class PageSelectorAndStudentClassFilterSteps {
 	public void verify_labels_on_context_header_based_on_selection_of_menus() throws Throwable {
 		try {
 			UtilityMethods.wait_For_Page_Section_Load();
-			List<WebElement> headerList = homePage.contextheadertextlist;
+			List<WebElement> headerList = homePage.contextheader_title_list;
 			if (Standard_Overview_Table_Steps.underStudentContext
 					&& (Standard_Overview_Table_Steps.performanceMenuClicked
 							|| Standard_Overview_Table_Steps.testScoreMenuClicked)) {
@@ -180,13 +180,13 @@ public class PageSelectorAndStudentClassFilterSteps {
 			}
 			
 			String compareText,tooltiptext;
-			for (int i = 0,tooltipcount=0; i < homePage.contextheaderdatalist.size(); i++) {
-				if (homePage.contextheaderdatalist.get(i).getText().contains("...")) {
-									new Actions(Driver.webdriver).moveToElement(homePage.contextheaderdatalist.get(i)).perform();
+			for (int i = 0,tooltipcount=0; i < homePage.contextheader_text_list.size(); i++) {
+				if (homePage.contextheader_text_list.get(i).getText().contains("...")) {
+									new Actions(Driver.webdriver).moveToElement(homePage.contextheader_text_list.get(i)).perform();
 					tooltiptext=homePage.contextheadertooltiplist.get(tooltipcount).getText();
 					new Actions(Driver.webdriver).moveToElement(homePage.overviewtext).build().perform();
 					Thread.sleep(500);
-					compareText = UtilityMethods.elipsisRemoval(homePage.contextheaderdatalist.get(i).getText());
+					compareText = UtilityMethods.elipsisRemoval(homePage.contextheader_text_list.get(i).getText());
 					Assert.assertTrue(tooltiptext.contains(compareText));
 					Thread.sleep(500);
 					tooltipcount++;
@@ -194,9 +194,9 @@ public class PageSelectorAndStudentClassFilterSteps {
 			}
 			
 			String headerText;
-			for (int i = 0; i < homePage.contextheaderdatalist.size(); i++) {
-				headerText = homePage.contextheadertextlist.get(i).getText();
-				new Actions(Driver.webdriver).moveToElement(homePage.contextheaderdatalist.get(i)).click().build().perform();;
+			for (int i = 0; i < homePage.contextheader_text_list.size(); i++) {
+				headerText = homePage.contextheader_title_list.get(i).getText();
+				new Actions(Driver.webdriver).moveToElement(homePage.contextheader_text_list.get(i)).click().build().perform();;
 				Thread.sleep(500);
 				if (headerText.equals("Class:") || headerText.equals("Student:")) {
 					Assert.assertTrue(homePage.rostertab.isDisplayed());

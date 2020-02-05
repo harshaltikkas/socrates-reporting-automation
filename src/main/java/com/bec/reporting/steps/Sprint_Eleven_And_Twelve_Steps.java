@@ -25,26 +25,20 @@
  */
 package com.bec.reporting.steps;
 
-import java.awt.Robot;
-import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.PageFactory;
-
 import com.bec.reporting.pageobjects.HomePage;
 import com.bec.reporting.utils.CBTConfiguration;
 import com.bec.reporting.utils.Driver;
-import com.bec.reporting.utils.IWait;
 import com.bec.reporting.utils.Driver.BrowserCleanup;
 import com.bec.reporting.utils.UtilityMethods;
 import com.google.common.collect.Ordering;
-
 import cucumber.api.java.en.Then;
 import lombok.extern.slf4j.Slf4j;
 
@@ -61,23 +55,15 @@ public class Sprint_Eleven_And_Twelve_Steps {
 			throws Throwable {
 		try {
 			new Actions(Driver.webdriver).moveToElement(homePage.groupingTab).click().build().perform();
-			Thread.sleep(1000);
-			Robot robot = new Robot();
-			robot.keyPress(KeyEvent.VK_CONTROL);
-			robot.keyPress(KeyEvent.VK_SUBTRACT);
-			robot.keyRelease(KeyEvent.VK_SUBTRACT);
-			robot.keyRelease(KeyEvent.VK_CONTROL);
-			Thread.sleep(1000);
+			Thread.sleep(3000);
+
 			Assert.assertTrue(homePage.groupingTabText.getText().equals("Edit Groups"));
 
 			JavascriptExecutor js = (JavascriptExecutor) Driver.webdriver;
-			js.executeScript("arguments[0].click();", homePage.selectAllchkboxOnGroupingTab);
-			Thread.sleep(1000);
+
 			js.executeScript("arguments[0].click();", homePage.applyBtnOngroupingTab);
 			Thread.sleep(1000);
-
-			Sprint_Eight_And_Tenth_Steps st = new Sprint_Eight_And_Tenth_Steps();
-			st.wait_For_Strands_Text_After_Apply_BtnOn_GroupingTab();
+			 new Sprint_Eight_And_Tenth_Steps().wait_For_Strands_Text_After_Apply_BtnOn_GroupingTab();
 			Thread.sleep(1000);
 			int ran_no = (int) (homePage.studentNamesOnGroupingTable.size() * Math.random());
 			String name = homePage.studentNamesOnGroupingTable.get(ran_no).getText();
@@ -122,7 +108,7 @@ public class Sprint_Eleven_And_Twelve_Steps {
 			Thread.sleep(500);
 			UtilityMethods.scrollPageDown(Driver.webdriver, 6);
 			Thread.sleep(500);
-			UtilityMethods.uncheck_check_All("Teachers");
+			UtilityMethods.uncheck_check_All("Teacher");
 			String selectedTeacher = homePage.teacherslist.get(1).getText();
 			homePage.teacherslist.get(1).click();
 			log.info("Selected Teacher is:" + selectedTeacher);
@@ -153,7 +139,7 @@ public class Sprint_Eleven_And_Twelve_Steps {
 			UtilityMethods.scrollPageDown(Driver.webdriver, 9);
 			Thread.sleep(500);
 
-			Assert.assertTrue(homePage.classORSchoolListPageHeadersList.get(0).getText().contains("Class"));
+			Assert.assertTrue(homePage.classORSchoolListPageHeadersList.get(0).getText().contains("Classes"));
 			Assert.assertTrue(homePage.classORSchoolListPageHeadersList.get(1).getText().equals("No. of Qns"));
 			Assert.assertTrue(homePage.classORSchoolListPageHeadersList.get(2).getText().equals("% Students Complete"));
 			Assert.assertTrue(homePage.classORSchoolListPageHeadersList.get(3).getText().equals("Score"));
@@ -161,7 +147,7 @@ public class Sprint_Eleven_And_Twelve_Steps {
 					.perform();
 			Assert.assertTrue(homePage.classListPageTooltipForClass.getText()
 					.equals("Classes Assessed Online/Classes Rostered."));
-			
+
 			List<String> classList = new ArrayList<String>();
 			for (int i = 0; i < homePage.classORSchoolNamesListInClassListPageHeaders.size(); i++) {
 				classList.add(homePage.classORSchoolNamesListInClassListPageHeaders.get(i).getText());
@@ -199,18 +185,17 @@ public class Sprint_Eleven_And_Twelve_Steps {
 			Assert.assertTrue(homePage.activeSchoolListPage.isDisplayed());
 			UtilityMethods.scrollPageDown(Driver.webdriver, 9);
 			Thread.sleep(500);
-			Assert.assertTrue(homePage.classORSchoolListPageHeadersList.get(0).getText().contains("School"));
+			Assert.assertTrue(homePage.classORSchoolListPageHeadersList.get(0).getText().contains("Schools"));
 			Assert.assertTrue(homePage.classORSchoolListPageHeadersList.get(1).getText().equals("No. of Qns"));
 			Assert.assertTrue(homePage.classORSchoolListPageHeadersList.get(2).getText().equals("% Students Complete"));
 			Assert.assertTrue(homePage.classORSchoolListPageHeadersList.get(3).getText().equals("Score"));
 
 			new Actions(Driver.webdriver).moveToElement(homePage.classORSchoolListPageHeadersList.get(0)).build()
 					.perform();
-			/* TODO remove this comment once developers fix this issue
-			 * Assert.assertTrue(homePage.schoolListPageTooltipForClass.getText()
-			 * .equals("Schools Assessed Online/Schools Rostered."));
-			 */
-			
+
+			Assert.assertTrue(homePage.schoolListPageTooltipForClass.getText()
+					.equals("Schools Assessed Online/Schools Rostered."));
+
 			List<String> schoolList = new ArrayList<String>();
 			for (int i = 0; i < homePage.classORSchoolNamesListInClassListPageHeaders.size(); i++) {
 				schoolList.add(homePage.classORSchoolNamesListInClassListPageHeaders.get(i).getText());
@@ -260,12 +245,12 @@ public class Sprint_Eleven_And_Twelve_Steps {
 			Thread.sleep(500);
 			new Actions(Driver.webdriver).moveToElement(homePage.studentTitleOnSliderMenu).build().perform();
 
-			UtilityMethods.wait_For_Refresh_Icon_onRosterTab(homePage.gradeRefreshIcon, "Grade");
-			UtilityMethods.scrollPageDown(Driver.webdriver, 7);
+			UtilityMethods.wait_For_Refresh_Icon_onRosterTab(homePage.schoolRefreshIcon, "School");
+			UtilityMethods.scrollPageDown(Driver.webdriver, 6);
 			Thread.sleep(500);
 			homePage.gradedropdownbtn.click();
 			Thread.sleep(500);
-			homePage.gradelist.get(1).click();
+			Driver.webdriver.findElement(By.xpath("//li[.='" + grade + "']")).click();
 			Thread.sleep(500);
 			homePage.rosterapplybtn.click();
 			Thread.sleep(3000);
@@ -302,7 +287,8 @@ public class Sprint_Eleven_And_Twelve_Steps {
 	}
 
 	@Then("^verify No data screen for District term as \"([^\"]*)\" which has no test data within the date tab$")
-	public void verify_No_data_screen_for_District_term_as_which_has_no_test_data_within_the_date_tab(String districtTerm) throws Throwable {
+	public void verify_No_data_screen_for_District_term_as_which_has_no_test_data_within_the_date_tab(
+			String districtTerm) throws Throwable {
 		try {
 			UtilityMethods.scrollPageDown(Driver.webdriver, 6);
 			Thread.sleep(500);
@@ -310,7 +296,10 @@ public class Sprint_Eleven_And_Twelve_Steps {
 			Thread.sleep(500);
 			homePage.districttermdropdownbtn.click();
 			Thread.sleep(500);
-			Driver.webdriver.findElement(By.xpath("//div[@class='menu-title' and contains(text(),'District Term')]/following-sibling::div//ul/li[.='"+districtTerm+"']")).click();
+			Driver.webdriver.findElement(By.xpath(
+					"//div[@class='menu-title' and contains(text(),'District Term')]/following-sibling::div//ul/li[.='"
+							+ districtTerm + "']"))
+					.click();
 			Thread.sleep(500);
 			homePage.dateapplybtn.click();
 			Thread.sleep(3000);
@@ -370,17 +359,15 @@ public class Sprint_Eleven_And_Twelve_Steps {
 			Thread.sleep(500);
 			UtilityMethods.scrollPageDown(Driver.webdriver, 5);
 			Thread.sleep(500);
-			int num = (int) (homePage.activeDateRangelistoOnCalender.size() * Math.random());
-			homePage.activeDateRangelistoOnCalender.get(num).click();
+			homePage.activeDateRangelistoOnCalender.get(1).click();
 			Thread.sleep(500);
 			homePage.edate.click();
 			Thread.sleep(500);
 			homePage.monthDropDown.click();
 			Thread.sleep(500);
-			homePage.monthDropDownList.get(1).click();
+			homePage.monthDropDownList.get(0).click();
 			Thread.sleep(500);
-			num = (int) (homePage.activeDateRangelistoOnCalender.size() * Math.random());
-			homePage.activeDateRangelistoOnCalender.get(num).click();
+			homePage.activeDateRangelistoOnCalender.get(2).click();
 			Thread.sleep(500);
 			homePage.dateapplybtn.click();
 			Thread.sleep(3000);
@@ -398,7 +385,6 @@ public class Sprint_Eleven_And_Twelve_Steps {
 		log.info("Scenario BE-990 completed");
 	}
 
-
 	@Then("^verify The Persistence across level and reports of Standard Performance Overview$")
 	public void verify_The_Persistence_across_level_and_reports_of_Standard_Performance_Overview() throws Throwable {
 		try {
@@ -409,7 +395,7 @@ public class Sprint_Eleven_And_Twelve_Steps {
 			int randNo = UtilityMethods.generateRandomNumberBySkippingIndex(homePage.strandnameslist.size(), 0);
 			new Actions(Driver.webdriver).moveToElement(homePage.strandnameslist.get(randNo)).click().build().perform();
 			UtilityMethods.wait_For_Student_List_AND_OR_Class_List_Section_Load();
-			
+
 			List<WebElement> standardList = Driver.webdriver.findElements(By.xpath(
 					"//div[@class='overview-table-body']//div[@class='overview-table-row']//div[@class='overview-table-col']["
 							+ (randNo + 2) + "]//li[not(contains(@class,'StandardsNotAvailable'))]"));
@@ -425,7 +411,7 @@ public class Sprint_Eleven_And_Twelve_Steps {
 			UtilityMethods.scrollPageUp(Driver.webdriver);
 			Thread.sleep(5000);
 			Assert.assertTrue(homePage.activeclassmenu.isDisplayed());
-			
+
 			UtilityMethods.scrollPageDown(Driver.webdriver, 10);
 			Assert.assertTrue(homePage.noofquestionstext.isDisplayed());
 			new Actions(Driver.webdriver).moveToElement(homePage.classORSchoolNamesListInClassListPageHeaders.get(0))
@@ -441,22 +427,16 @@ public class Sprint_Eleven_And_Twelve_Steps {
 		log.info("Scenario BE-1184 completed");
 	}
 
-	
 	@Then("^verify The Persistence across level and reports of Test Scores Overview$")
 	public void verify_The_Persistence_across_level_and_reports_of_Test_Scores_Overview() throws Throwable {
 		try {
-			int count=1;
-			do {
-				IWait.explicit_wait(Driver.webdriver, homePage.studentmenu);
-				Thread.sleep(1000);count++;
-			}
-			while(count<10);
+			Thread.sleep(5000);
 			Assert.assertTrue(homePage.activeschoolmenu.isDisplayed());
 			Assert.assertTrue(homePage.activestandardperformancebtn.isDisplayed());
 			homePage.testscoresbtn.click();
 			Thread.sleep(5000);
 			Assert.assertTrue(homePage.testscoreovertimelinechart.isDisplayed());
-			UtilityMethods.scrollPageDown(Driver.webdriver, 7);
+			UtilityMethods.scrollPageDown(Driver.webdriver, 5);
 			Thread.sleep(500);
 			int randNo = UtilityMethods.generateRandomNumberBySkippingIndex(
 					homePage.testNamesonPerPage_onlinechart.size(), homePage.testNamesonPerPage_onlinechart.size() - 1);
@@ -477,11 +457,11 @@ public class Sprint_Eleven_And_Twelve_Steps {
 			new Actions(Driver.webdriver).moveToElement(homePage.classORSchoolNamesListInClassListPageHeaders.get(0))
 					.click().build().perform();
 			Thread.sleep(5000);
-			
+
 			UtilityMethods.scrollPageUp(Driver.webdriver);
 			Thread.sleep(5000);
 			Assert.assertTrue(homePage.activeclassmenu.isDisplayed());
-			
+
 			UtilityMethods.scrollPageDown(Driver.webdriver, 10);
 			Assert.assertTrue(homePage.datesubmittedtext.isDisplayed());
 			new Actions(Driver.webdriver).moveToElement(homePage.classORSchoolNamesListInClassListPageHeaders.get(0))
@@ -490,7 +470,7 @@ public class Sprint_Eleven_And_Twelve_Steps {
 			UtilityMethods.scrollPageUp(Driver.webdriver);
 			Thread.sleep(500);
 			Assert.assertTrue(homePage.activestudentmenu.isDisplayed());
-			
+
 			CBTConfiguration.score = "pass";
 		} catch (Exception e) {
 			UtilityMethods.processException(e);

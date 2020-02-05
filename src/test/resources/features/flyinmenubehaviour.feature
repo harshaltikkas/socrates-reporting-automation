@@ -1,4 +1,4 @@
-@Feature1
+@Feature
 Feature: Fly In Menu Behaviour
 
   ##story 1b)

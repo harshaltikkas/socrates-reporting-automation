@@ -84,12 +84,12 @@ public class Line_Chart_Test_Scores_vs_Time_Steps {
 			int arg1) throws Throwable {
 		try {
 			UtilityMethods.wait_For_Page_Section_Load();
-			UtilityMethods.scrollPageDown(Driver.webdriver, 7);
+			UtilityMethods.scrollPageDown(Driver.webdriver, 5);
 			Thread.sleep(500);
 			Assert.assertTrue(homePage.testnameslabel_onlinechart_tsot.getText().equals("Test Names"));
-			//checking for paginator
+			// checking for paginator
 			if (PaginationUtility.checkPaginator_on_tsot()) {
-				//this lool will execute for the no. of circle available on paginator
+				// this lool will execute for the no. of circle available on paginator
 				for (int i = PaginationUtility.circleList.size() - 1; i >= 0; i--) {
 					PaginationUtility.clicking_on_indexed_circle_of_paginator(i);
 					Assert.assertTrue(homePage.testNamesonPerPage_onlinechart.size() <= 10);
@@ -97,7 +97,8 @@ public class Line_Chart_Test_Scores_vs_Time_Steps {
 						PaginationUtility.verifyTestNamesAndToolTipText(j);
 					}
 				}
-				//check for left arrow enabled and click on it and click on first circle and validate
+				// check for left arrow enabled and click on it and click on first circle and
+				// validate
 				do {
 					if (PaginationUtility.check_Enabled_Left_Arrow_on_Paginator_on_tsot()) {
 						PaginationUtility.clicking_on_enabled_left_Arrow_of_paginator();
@@ -109,9 +110,9 @@ public class Line_Chart_Test_Scores_vs_Time_Steps {
 					} else {
 						break;
 					}
-				} while (!(PaginationUtility.check_Disabled_Left_Arrow_on_Paginator()));				
+				} while (!(PaginationUtility.check_Disabled_Left_Arrow_on_Paginator()));
 			} else {
-				//when paginator is not found
+				// when paginator is not found
 				Assert.assertTrue(homePage.testNamesonPerPage_onlinechart.size() <= 10);
 				for (int i = homePage.testNamesonPerPage_onlinechart.size() - 1; i >= 0; i--) {
 					PaginationUtility.verifyTestNamesAndToolTipText(i);
@@ -141,47 +142,40 @@ public class Line_Chart_Test_Scores_vs_Time_Steps {
 			} catch (Exception e) {
 				log.info("user clicked on SP under student context");
 			}
-			UtilityMethods.scrollPageDown(Driver.webdriver, 10);
+			UtilityMethods.scrollPageDown(Driver.webdriver, 5);
 			Thread.sleep(500);
-			PaginationUtility.checkPaginator();
-			if (PaginationUtility.paginatorFound) {
-				PaginationUtility.check_Enabled_Left_Arrow_on_Paginator_on_tsot();
-				if (PaginationUtility.enabledLeftArrowFound) {
-					do {
-						PaginationUtility.check_Disabled_Left_Arrow_on_Paginator();
-						if (PaginationUtility.doneWithThreeCircle) {
-							PaginationUtility.clicking_on_first_circle_of_paginator();
-							for (int j = 0; j < homePage.testNamesonPerPage_onlinechart.size(); j++) {
-								UtilityMethods.verifyColorAndScoreOnLineChart(
-										homePage.testScoreCircleClronPerPage_onlinechart.get(j),
-										Integer.parseInt(homePage.testScoresonPerPage_onlinechart.get(j).getText()));
-							}
-						} else {
-							for (int i = PaginationUtility.circleList.size() - 1; i >= 0; i--) {
-
-								PaginationUtility.clicking_on_indexed_circle_of_paginator(i);
-								for (int j = 0; j < homePage.testNamesonPerPage_onlinechart.size(); j++) {
-									UtilityMethods.verifyColorAndScoreOnLineChart(
-											homePage.testScoreCircleClronPerPage_onlinechart.get(j), Integer.parseInt(
-													homePage.testScoresonPerPage_onlinechart.get(j).getText()));
-								}
-							}
-							PaginationUtility.doneWithThreeCircle = true;
-						}
+			// checking for paginator
+			if (PaginationUtility.checkPaginator_on_tsot()) {
+				// this lool will execute for the no. of circle available on paginator
+				for (int i = PaginationUtility.circleList.size() - 1; i >= 0; i--) {
+					PaginationUtility.clicking_on_indexed_circle_of_paginator(i);
+					Assert.assertTrue(homePage.testNamesonPerPage_onlinechart.size() <= 10);
+					for (int j = homePage.testNamesonPerPage_onlinechart.size() - 1; j >= 0; j--) {
+						UtilityMethods.verifyColorAndScoreOnLineChart(
+								homePage.testScoreCircleClronPerPage_onlinechart.get(j),
+								Integer.parseInt(homePage.testScoresonPerPage_onlinechart.get(j).getText()));
+					}
+				}
+				// check for left arrow enabled and click on it and click on first circle and
+				// validate
+				do {
+					if (PaginationUtility.check_Enabled_Left_Arrow_on_Paginator_on_tsot()) {
 						PaginationUtility.clicking_on_enabled_left_Arrow_of_paginator();
-					} while (!PaginationUtility.disableLeftArrowFound);
-				} else {
-					for (int i = PaginationUtility.circleList.size() - 1; i >= 0; i--) {
-
-						PaginationUtility.clicking_on_indexed_circle_of_paginator(i);
-						for (int j = 0; j < homePage.testNamesonPerPage_onlinechart.size(); j++) {
+						PaginationUtility.clicking_on_first_circle_of_paginator();
+						Assert.assertTrue(homePage.testNamesonPerPage_onlinechart.size() <= 10);
+						for (int j = homePage.testNamesonPerPage_onlinechart.size() - 1; j >= 0; j--) {
 							UtilityMethods.verifyColorAndScoreOnLineChart(
 									homePage.testScoreCircleClronPerPage_onlinechart.get(j),
 									Integer.parseInt(homePage.testScoresonPerPage_onlinechart.get(j).getText()));
 						}
+					} else {
+						break;
 					}
-				}
-			} else {
+				} while (!(PaginationUtility.check_Disabled_Left_Arrow_on_Paginator()));
+			}
+
+			else {
+				// when paginator is not found
 				for (int i = 0; i < homePage.testNamesonPerPage_onlinechart.size(); i++) {
 					UtilityMethods.verifyColorAndScoreOnLineChart(
 							homePage.testScoreCircleClronPerPage_onlinechart.get(i),
@@ -206,41 +200,35 @@ public class Line_Chart_Test_Scores_vs_Time_Steps {
 		try {
 			UtilityMethods.scrollPageDown(Driver.webdriver, 6);
 			Thread.sleep(500);
-			PaginationUtility.checkPaginator_on_tsot();
-			if (PaginationUtility.paginatorFound) {
-				PaginationUtility.check_Enabled_Left_Arrow_on_Paginator_on_tsot();
-				if (PaginationUtility.enabledLeftArrowFound) {
-					do {
-						PaginationUtility.check_Disabled_Left_Arrow_on_Paginator();
-						if (PaginationUtility.doneWithThreeCircle) {
-							PaginationUtility.clicking_on_first_circle_of_paginator();
-							for (int j = 0; j < homePage.testScoresonPerPage_onlinechart.size(); j++) {
-								PaginationUtility.verifyTestScorePerAndPerOnToolTip(j);
-							}
-
-						} else {
-							for (int i = PaginationUtility.circleList.size() - 1; i >= 0; i--) {
-								PaginationUtility.clicking_on_indexed_circle_of_paginator(i);
-								for (int j = 0; j < homePage.testScoresonPerPage_onlinechart.size(); j++) {
-									PaginationUtility.verifyTestScorePerAndPerOnToolTip(j);
-								}
-							}
-							PaginationUtility.doneWithThreeCircle = true;
-						}
-						PaginationUtility.clicking_on_enabled_left_Arrow_of_paginator();
-					} while (!PaginationUtility.disableLeftArrowFound);
-				} else {
-					for (int i = PaginationUtility.circleList.size() - 1; i >= 0; i--) {
-						PaginationUtility.clicking_on_indexed_circle_of_paginator(i);
-						for (int j = 0; j < homePage.testScoresonPerPage_onlinechart.size(); j++) {
-							PaginationUtility.verifyTestScorePerAndPerOnToolTip(j);
-						}
+			// checking for paginator
+			if (PaginationUtility.checkPaginator_on_tsot()) {
+				// this lool will execute for the no. of circle available on paginator
+				for (int i = PaginationUtility.circleList.size() - 1; i >= 0; i--) {
+					PaginationUtility.clicking_on_indexed_circle_of_paginator(i);
+					Assert.assertTrue(homePage.testNamesonPerPage_onlinechart.size() <= 10);
+					for (int j = homePage.testNamesonPerPage_onlinechart.size() - 1; j >= 0; j--) {
+						PaginationUtility.verifyTestScorePerAndPerOnToolTip(j);
 					}
 				}
-
+				// check for left arrow enabled and click on it and click on first circle and
+				// validate
+				do {
+					if (PaginationUtility.check_Enabled_Left_Arrow_on_Paginator_on_tsot()) {
+						PaginationUtility.clicking_on_enabled_left_Arrow_of_paginator();
+						PaginationUtility.clicking_on_first_circle_of_paginator();
+						Assert.assertTrue(homePage.testNamesonPerPage_onlinechart.size() <= 10);
+						for (int j = homePage.testNamesonPerPage_onlinechart.size() - 1; j >= 0; j--) {
+							PaginationUtility.verifyTestScorePerAndPerOnToolTip(j);
+						}
+					} else {
+						break;
+					}
+				} while (!(PaginationUtility.check_Disabled_Left_Arrow_on_Paginator()));
 			} else {
-				for (int j = 0; j < homePage.testScoresonPerPage_onlinechart.size(); j++) {
-					PaginationUtility.verifyTestScorePerAndPerOnToolTip(j);
+				// when paginator is not found
+				Assert.assertTrue(homePage.testNamesonPerPage_onlinechart.size() <= 10);
+				for (int i = homePage.testNamesonPerPage_onlinechart.size() - 1; i >= 0; i--) {
+					PaginationUtility.verifyTestScorePerAndPerOnToolTip(i);
 				}
 			}
 			CBTConfiguration.score = "pass";

@@ -27,11 +27,13 @@ package com.bec.reporting.utils;
 
 import java.util.concurrent.TimeUnit;
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.junit.Assert;
 
 public class IWait {
 
@@ -89,6 +91,22 @@ public class IWait {
 	        return By.className(term);
 	    }
 	    return (By) we;
+	}
+	
+	/**
+	 * This method is used to check the absence of element, if element is absent will return true else exception will occur.
+	 * @param time
+	 * @return
+	 */
+	public static boolean check_Absence_of_Element(WebElement el) {
+		try {
+			Assert.assertTrue(el.isDisplayed());
+			System.out.println("Element is still present");
+			UtilityMethods.processException(new Exception());
+		} catch (NoSuchElementException e) {
+	
+		}
+		return true;
 	}
 	
 }
