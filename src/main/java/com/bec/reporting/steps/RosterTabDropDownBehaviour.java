@@ -65,12 +65,12 @@ public class RosterTabDropDownBehaviour {
 			throws Throwable {
 		try {
 			String defaultSelectedSchool, defaultSelectedClass, apiFirstSchool = "", apiFirstClass = "";
-			int scListSize = DatabaseConnection.getAllSchoolNames().size();
-			int schoolId = 0, clListSize = 0;
+			int school_list_size = DatabaseConnection.getAllSchoolNames().size();
+			int schoolId = 0, class_list_size = 0;
 			boolean disabled_classAndstudent = false;
-			if (scListSize > 1) {
+			if (school_list_size > 1) {
 				apiFirstSchool = "All";
-			} else if (scListSize == 1) {
+			} else if (school_list_size == 1) {
 				apiFirstSchool = DatabaseConnection.getFirstAlphaSchoolName();
 				schoolId = DatabaseConnection.getSchoolIDBySchoolName(apiFirstSchool);
 			}
@@ -78,10 +78,10 @@ public class RosterTabDropDownBehaviour {
 			if (apiFirstSchool.equalsIgnoreCase("all")) {
 				disabled_classAndstudent = true;
 			} else {
-				clListSize = DatabaseConnection.getAllClassesNamesBySchoolName(schoolId).size();
-				if (clListSize > 1) {
+				class_list_size = DatabaseConnection.getAllClassesNamesBySchoolName(schoolId).size();
+				if (class_list_size > 1) {
 					apiFirstClass = "All";
-				} else if (clListSize > 1) {
+				} else if (class_list_size > 1) {
 					apiFirstClass = DatabaseConnection.getFirstAlphaClassNameBySchoolName(schoolId);
 				}
 			}
@@ -108,10 +108,10 @@ public class RosterTabDropDownBehaviour {
 				UtilityMethods.scrollPageDown(Driver.webdriver, 2);
 				Thread.sleep(500);
 				schoolId = DatabaseConnection.getSchoolIDBySchoolName(defaultSelectedSchool);
-				clListSize = DatabaseConnection.getAllClassesNamesBySchoolName(schoolId).size();
-				if (clListSize > 1) {
+				class_list_size = DatabaseConnection.getAllClassesNamesBySchoolName(schoolId).size();
+				if (class_list_size > 1) {
 					apiFirstClass = "All";
-				} else if (clListSize > 1) {
+				} else if (class_list_size > 1) {
 					apiFirstClass = DatabaseConnection.getFirstAlphaClassNameBySchoolName(schoolId);
 				}
 				if (homePage.classdropdownbtn.getText().contains("...")) {
@@ -146,9 +146,9 @@ public class RosterTabDropDownBehaviour {
 	public void user_Click_on_Roster_tab_within_the_Universal_Selector_Tab_and_the_School_and_Class_and_students_last_names_should_be_displayed_in_alphabetical_ascending_order_with_selection_of_school_and_class_and_as_student(
 			String sc, String cl, String st) throws Throwable {
 		try {
-			List<String> schoolList = new ArrayList<>();
-			List<String> classList = new ArrayList<>();
-			List<String> studentList = new ArrayList<>();
+			List<String> schoolList = new ArrayList<String>();
+			List<String> classList = new ArrayList<String>();
+			List<String> studentList = new ArrayList<String>();
 			homePage.rostertab.click();
 			IWait.explicit_wait(Driver.webdriver, homePage.studentTitleOnSliderMenu);
 			Verify.verify(homePage.studentTitleOnSliderMenu.isDisplayed());
@@ -183,8 +183,8 @@ public class RosterTabDropDownBehaviour {
 
 			new Actions(Driver.webdriver).moveToElement(homePage.studentTitleOnSliderMenu).build().perform();
 
-			UtilityMethods.wait_For_Refresh_Icon_onRosterTab(homePage.gradeRefreshIcon, "Grade");
-			UtilityMethods.scrollPageDown(Driver.webdriver, 10);
+			UtilityMethods.wait_For_Refresh_Icon_onRosterTab(homePage.schoolRefreshIcon, "School");
+			UtilityMethods.scrollPageDown(Driver.webdriver, 9);Thread.sleep(500);
 
 			// **checking class dropdown in ascending order*//
 			homePage.classdropdownbtn.click();
@@ -203,9 +203,9 @@ public class RosterTabDropDownBehaviour {
 
 			selectedclassText = cl;
 			log.info("Selected Class:" + selectedclassText);
-			Thread.sleep(1000);
+			Thread.sleep(500);
 			homePage.searchbaronclassdropdown.sendKeys(selectedclassText);
-			Thread.sleep(1000);
+			Thread.sleep(500);
 			Driver.webdriver.findElement(By.xpath("//li[.='" + selectedclassText + "']")).click();
 			Thread.sleep(500);
 			new Actions(Driver.webdriver).moveToElement(homePage.searchcancelonclassdropdown).click().build().perform();
@@ -329,7 +329,7 @@ public class RosterTabDropDownBehaviour {
 			homePage.schooldropdownbtn.click();
 			new Actions(Driver.webdriver).moveToElement(homePage.studentTitleOnSliderMenu).build().perform();
 
-			UtilityMethods.wait_For_Refresh_Icon_onRosterTab(homePage.gradeRefreshIcon, "Grade");
+			UtilityMethods.wait_For_Refresh_Icon_onRosterTab(homePage.schoolRefreshIcon, "School");
 			UtilityMethods.scrollPageDown(Driver.webdriver, 8);
 			Thread.sleep(500);
 			homePage.studentdropdownbtn.click();
@@ -354,7 +354,7 @@ public class RosterTabDropDownBehaviour {
 			String sc) throws Throwable {
 
 		try {
-			UtilityMethods.scrollPageDown(Driver.webdriver, 3);
+
 			String selectedClass, selectedStudent;
 			// selecting school from dropdown
 			homePage.schooldropdownbtn.click();
@@ -372,8 +372,8 @@ public class RosterTabDropDownBehaviour {
 			homePage.schooldropdownbtn.click();
 			new Actions(Driver.webdriver).moveToElement(homePage.studentTitleOnSliderMenu).build().perform();
 
-			UtilityMethods.wait_For_Refresh_Icon_onRosterTab(homePage.gradeRefreshIcon, "Grade");
-			UtilityMethods.scrollPageDown(Driver.webdriver, 8);
+			UtilityMethods.wait_For_Refresh_Icon_onRosterTab(homePage.schoolRefreshIcon, "School");
+			UtilityMethods.scrollPageDown(Driver.webdriver, 8);Thread.sleep(500);
 			// selecting class from dropdown
 			homePage.classdropdownbtn.click();
 			Thread.sleep(500);
@@ -381,16 +381,16 @@ public class RosterTabDropDownBehaviour {
 			selectedClass = homePage.classlist.get(0).getText();
 			homePage.classlist.get(0).click();
 			log.info("Selected Class is:" + selectedClass);
-			homePage.classdropdownbtn.click();
-			UtilityMethods.wait_For_Refresh_Icon_onRosterTab(homePage.studentRefreshIcon, "Student");
+			homePage.classdropdownbtn.click();Thread.sleep(500);
+
 			// selecting student from dropdown
 			homePage.studentdropdownbtn.click();
 			Thread.sleep(500);
 			int customSize = 0;
 			// This is to unselect all student from dropdown,as default is all selected
 			UtilityMethods.uncheck_check_All("Student");
-			Thread.sleep(500);
-			UtilityMethods.scrollPageDown(Driver.webdriver, 5);
+
+			UtilityMethods.scrollPageDown(Driver.webdriver, 5);			Thread.sleep(500);
 
 			for (int i = 1; i < homePage.studentlistondropdown.size(); i = i + 2) {
 				if (homePage.studentlistondropdown.get(i).getText().equals("")) {
@@ -437,8 +437,7 @@ public class RosterTabDropDownBehaviour {
 				homePage.studentlistondropdown.get(i).click();
 				Thread.sleep(500);
 			}
-			// Assert.assertTrue(homePage.studentdropdownbtn.getText().equals("Select
-			// Student"));
+			
 
 			CBTConfiguration.score = "pass";
 		} catch (Exception e) {

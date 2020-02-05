@@ -238,7 +238,7 @@ public class SprintSixAndSevenSteps {
 			}
 
 			// checking for paginator
-			if (PaginationUtility.checkPaginator_on_pot()) {
+			if (PaginationUtility.checkPaginator()) {
 				// this lool will execute for the no. of circle available on paginator
 				for (int i = PaginationUtility.circleList.size() - 1; i >= 0; i--) {
 					PaginationUtility.clicking_on_indexed_circle_of_paginator(i);

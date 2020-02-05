@@ -49,7 +49,7 @@ public class PaginationUtility {
 	public static boolean toolTipDisplayAfterClosing = false;
 	public static boolean disableRightArrowFound = false;
 	public static boolean enabledRightArrowFound = false;
-	public static WebElement enabledRightArrow = null;
+	public static WebElement enabledRightArrow = null,disableRightArrow=null;
 	public static WebElement rightArrowEnable = null;
 	public static List<WebElement> elList;
 	public static List<String> testNamesList = new ArrayList<>();
@@ -70,9 +70,9 @@ public class PaginationUtility {
 		return paginatorFound;
 	}
 	
-	public static boolean checkPaginator_on_pot() {
+	public static boolean checkPaginator_on_sta() {
 		try {
-			new Actions(Driver.webdriver).moveToElement(homePage.paginator_onlinechart_pot).build().perform();
+			new Actions(Driver.webdriver).moveToElement(homePage.paginator_onlinechart_sta).build().perform();
 			circleList = homePage.paginationcirclelist_onlinechart;
 			paginatorFound = true;
 		} catch (Exception e) {
@@ -94,7 +94,6 @@ public class PaginationUtility {
 
 	public static boolean check_Enabled_Left_Arrow_on_Paginator_on_tsot() {
 		try {
-		//	circleList = homePage.paginationcirclelist_onlinechart;
 			enabledLeftArrow = homePage.enabledleftarrow_onlinechart;
 			enabledLeftArrow.isDisplayed();
 			enabledLeftArrowFound = true;
@@ -103,6 +102,18 @@ public class PaginationUtility {
 			enabledLeftArrowFound = false;
 		}
 		return enabledLeftArrowFound;
+	}
+	
+	public static boolean check_Enabled_Right_Arrow_on_Paginator_on_sta() {
+		try {
+			enabledRightArrow = homePage.enabledrightarrow_onlinechart;
+		    enabledRightArrow.isDisplayed();
+		    enabledRightArrowFound = true;
+		} catch (Exception e) {
+			log.info("Enabled Right Arrow on Paginator is not found");
+			enabledRightArrowFound = false;
+		}
+		return enabledRightArrowFound;
 	}
 
 	public static boolean check_Disabled_Left_Arrow_on_Paginator() {
@@ -116,6 +127,18 @@ public class PaginationUtility {
 			log.info("Disabled Left Arrow on Paginator is not found");
 		}
 		return disableLeftArrowFound;
+	}
+	
+	public static boolean check_Disabled_Right_Arrow_on_Paginator() {
+		try {
+			disableRightArrow = homePage.disabledleftarrow_onlinechart_on_tsot;
+			disableRightArrow.isDisplayed();
+			disableRightArrowFound = true;
+			Thread.sleep(500);
+		} catch (Exception e) {
+			log.info("Disabled Right Arrow on Paginator is not found");
+		}
+		return disableRightArrowFound;
 	}
 
 	public static void clicking_on_first_circle_of_paginator() {
@@ -152,6 +175,14 @@ public class PaginationUtility {
 			log.error("Enabled Left arrow is not found");			
 		}
 	}
+	
+	public static void clicking_on_enabled_right_Arrow_of_paginator() {
+		try {
+			enabledRightArrow.click();
+		} catch (Exception e) {
+			log.error("Enabled Right arrow is not found");			
+		}
+	}
 
 	public static void verifyTestNamesAndToolTipText(int index) {
 		try {
@@ -160,9 +191,13 @@ public class PaginationUtility {
 					.elipsisRemoval(homePage.testNamesonPerPage_onlinechart.get(index).getText());
 			new Actions(Driver.webdriver).moveToElement(homePage.testNamesonPerPage_onlinechart.get(index)).build()
 					.perform();
-			String tooltiptext = homePage.testNametooltip_onlinechart.getText();
-			Assert.assertTrue(tooltiptext.contains(testName));
+			String tooltiptextOfTSOT = homePage.testNametooltip_onlinechart.getText();
+			Assert.assertTrue(tooltiptextOfTSOT.contains(testName));
 			Thread.sleep(500);
+			new Actions(Driver.webdriver).moveToElement(homePage.testNameOnTestScoreDetail).build()
+			.perform();
+			String tooltipTextoftestNameOnTestScoreDetail=homePage.tooltipOftestNameOnTestScoreDetail.getText();
+			Assert.assertTrue(tooltiptextOfTSOT.contains(tooltipTextoftestNameOnTestScoreDetail));
 			new Actions(Driver.webdriver).moveToElement(homePage.testScoresPercentage).build().perform();
 		} catch (InterruptedException e) {
 			log.error(e.getMessage());

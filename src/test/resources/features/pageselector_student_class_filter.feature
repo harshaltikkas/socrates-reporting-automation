@@ -1,7 +1,6 @@
-@Feature1
+@Feature
 Feature: Page Selector and Class Student Filter
 
-  ##unTested
   ##STUDENT/CLASS FILTER , PAGE SELECTOR , CONTEXT HEADER, FLY-IN-KEY
   @Scenario22 @TC1 @TC3
   Scenario: Verify by default Standards Performance button should be selected with the Class context from the Student/Class Filter.

@@ -716,7 +716,7 @@ public class UtilityMethods {
 			} else {
 				testsName = homePage.testsNameoncontextheader.getText();
 			}
-			new Actions(Driver.webdriver).moveToElement(homePage.overviewtext).click().build().perform();
+			new Actions(Driver.webdriver).moveToElement(homePage.activeAssessementsbtn).click().build().perform();
 			Thread.sleep(500);
 		} catch (Exception e) {
 			processException(e);
@@ -734,7 +734,7 @@ public class UtilityMethods {
 		String teachersName = "";
 		JavascriptExecutor js = (JavascriptExecutor) Driver.webdriver;
 		try {
-			new Actions(Driver.webdriver).moveToElement(homePage.contextheaderdatalist.get(1)).build().perform();
+			new Actions(Driver.webdriver).moveToElement(homePage.contextheader_text_list.get(1)).build().perform();
 			Thread.sleep(1000);
 			if (homePage.teacherNameoncontextheader.getText().contains("...")) {
 				teachersName = homePage.tooltipofteachernameoncontextheader.getText();
@@ -949,11 +949,11 @@ public class UtilityMethods {
 	public static void wait_For_Context_Header_Section() {
 		HomePage homePage = PageFactory.initElements(Driver.webdriver, HomePage.class);
 		String firstData;
-		if (homePage.contextheaderdatalist.get(0).getText().contains("...")) {
-			new Actions(Driver.webdriver).moveToElement(homePage.contextheaderdatalist.get(0)).build().perform();
+		if (homePage.contextheader_text_list.get(0).getText().contains("...")) {
+			new Actions(Driver.webdriver).moveToElement(homePage.contextheader_text_list.get(0)).build().perform();
 			firstData = homePage.contextheadertooltiplist.get(0).getText();
 		} else {
-			firstData = homePage.contextheaderdatalist.get(0).getText();
+			firstData = homePage.contextheader_text_list.get(0).getText();
 		}
 		if (firstData.equals("")) {
 			log.info("Web Elements are still loading...");
