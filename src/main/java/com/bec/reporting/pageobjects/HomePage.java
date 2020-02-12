@@ -969,11 +969,20 @@ public class HomePage {
 	@FindBy(xpath="//div[@class='bec_group_tab_header_block_edit_label']//span[contains(text(),'Edit Groups')]")
 	public WebElement EditGrpTextOnUI;
 	
-	@FindBy(xpath="//i[@class='material-icons' and contains(text(),'print')]")
+	@FindBy(xpath="//span[@class='printIcon']/img")
 	public WebElement printIconforGroupDataOnUI;
 	
 	@FindBy(xpath="//span[@class='bec_group_multi_list_sub_header_avg_score_label' and contains(text(),'Average % Score')]")
 	public WebElement avgperScoreOnGroupingTable;
+	
+	@FindBy(xpath="//div[@class='bec_group_multi_list_Single_group_header']")
+	public List<WebElement> groupHeaderListonGroupingTabPage;
+	
+	@FindBy(xpath="//span[@class='bec_group_multi_list_Single_group_body_row_student_name_Name']")
+	public List<WebElement> studentListonGroupingTabPage;
+	
+	@FindBy(xpath="//div[@class='bec_group_multi_list']//span[@class='bec_group_multi_list_sub_header_label_title']")
+	public WebElement groupAndStudentInfoOnGroupingTabPage;
 	
 	@FindBy(xpath="//div[@class='bec_groups_move_student_popup_title']")
 	public WebElement movingTxtonModelOnGroupingTable;
@@ -990,7 +999,7 @@ public class HomePage {
 	@FindBy(xpath="//span[@class='bec_group_multi_list_Single_group_body_row_student_name_Name' and contains(text(),'Victor')]/ancestor::div[@class='bec_group_multi_list_Single_group_body_row_student_name']//div[@class='bec_groups_tab_tooltip_strand_score_single_line']")
 	public List<WebElement> tooltipListOnGroupingTable;
 	
-	@FindBy(xpath="//div[@class='bec_groups_popup_modal_row_radio_buttons']//span[@class='bec_groups_popup_modal_radio_label']")
+	@FindBy(xpath="//div[@class='bec_groups_popup_modal_main']//div[@class='bec_groups_popup_modal_row']//div[@class='bec_groups_popup_modal_row_radio_buttons']//span[@class='bec_groups_popup_modal_radio_label']")
 	public List<WebElement> groupByListOnGroupingTab;
 	
 	@FindBy(xpath="//div[contains(text(),'Assessed with :')]/ancestor::div[@class='bec_groups_popup_modal_row']//div[@class='bec_groups_popup_dropdown_main']//div[@class='groupingtab_single_dropdown_element']")
