@@ -478,6 +478,8 @@ public class FlyInMenuBehaviourSteps {
 				Thread.sleep(500);
 				homePage.testscheckboxlist.get(0).click();
 				Thread.sleep(500);
+				UtilityMethods.scrollPageDown(Driver.webdriver, 6);
+				Thread.sleep(500);
 				new Actions(Driver.webdriver).moveToElement(homePage.testapplybtn).click().build().perform();
 				Thread.sleep(3000);
 				UtilityMethods.scrollPageUp(Driver.webdriver);

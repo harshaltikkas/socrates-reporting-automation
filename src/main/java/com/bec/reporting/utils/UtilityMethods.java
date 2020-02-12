@@ -242,10 +242,11 @@ public class UtilityMethods {
 	public static boolean checkDateFormat(String submissionDate) {
 		Matcher matcher = null;
 		try {
-			String regex = "^(1[0-2]|0[1-9])/(3[01]|[12][0-9]|0[1-9])/[0-9]{4}$";
+			String regex = "^(1[0-2]|[1-9])/(3[01]|[12][0-9]|[1-9])/[0-9]{4}$";
 			Pattern pattern = Pattern.compile(regex);
 			matcher = pattern.matcher(submissionDate);
 		} catch (Exception e) {
+			log.error("Invalid Date formate");
 			UtilityMethods.processException(e);
 		}
 		return matcher.matches();
@@ -749,6 +750,7 @@ public class UtilityMethods {
 		return teachersName;
 	}
 
+	
 	/**
 	 * This method is used to retrieve AssessedWith value on UI
 	 * 
@@ -1050,7 +1052,6 @@ public class UtilityMethods {
 		return name;
 	}
 
-	@SuppressWarnings("unused")
 	public static String TestNamefromTestTab() {
 		String name = "";
 
@@ -1066,7 +1067,7 @@ public class UtilityMethods {
 							name = checkedTestAndReturnTestName();
 							break;
 						} else {
-							for (int x = 0; x < PaginationUtility.circleList.size(); x++) {
+							for (int x = 0; x < PaginationUtility.circleList.size();) {
 								Thread.sleep(1000);
 								PaginationUtility.circleList.get(x).click();
 								Thread.sleep(1000);
@@ -1078,7 +1079,7 @@ public class UtilityMethods {
 						PaginationUtility.studentListMethodSix();
 					} while (!PaginationUtility.disableRightArrowFound);
 				} else {
-					for (int x = 0; x < PaginationUtility.circleList.size(); x++) {
+					for (int x = 0; x < PaginationUtility.circleList.size();) {
 						Thread.sleep(1000);
 						PaginationUtility.circleList.get(x).click();
 						Thread.sleep(1000);
