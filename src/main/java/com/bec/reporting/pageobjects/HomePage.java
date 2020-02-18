@@ -453,6 +453,9 @@ public class HomePage {
 	@FindBy(xpath="//div[@class='single-filter-text']//span[contains(text(),'School')]")
 	public WebElement schoolmenu;
 	
+	@FindBy(xpath="//div[@class='single-filter-text']//span[contains(text(),'District')]")
+	public WebElement districtmenu;
+	
 	@FindBy(xpath="//li[.='Standards Performance']")
 	public WebElement standardperformancebtn;
 	
@@ -761,6 +764,9 @@ public class HomePage {
 	@FindBy(xpath="//div[@class='widget-base-sub-title text-center']/preceding-sibling::div[2]/span")
 	public WebElement studentlistheader;
 	
+	@FindBy(xpath="//div[@class='widget-base-sub-title text-center']")
+	public WebElement performanceovertimeheader;
+	
 	@FindBy(xpath="//div[@class='widget-base-sub-title text-center']/preceding-sibling::div[1]/span")
 	public WebElement studentlistsubheader;
 	
@@ -869,8 +875,11 @@ public class HomePage {
 	@FindBy(xpath="//div[@class='standard-grid-filter-view']/div[contains(text(),'View :')]/following-sibling::div/button//div[@class='bec_tooltip_content']")
 	public WebElement viewDropDownToolTipText;
 	
-	@FindBy(xpath="//span[@class='print_pdf_icon']//span/img")
+	@FindBy(xpath="//span[@class='printIcon']//img")
 	public WebElement printIcon;
+	
+	@FindBy(xpath="//span[@class='testScorePrint']//img")
+	public WebElement Test_score_detail_printIcon;
 	
 	@FindBy(xpath="//div[@class='standard-grid-filter-view']/div[@class='standard-grid-filter-view-label' and contains(text(),'Test(s) assessed for:')]/following-sibling::div//div//ul/li/div")
 	public List<WebElement> gradeList;
@@ -896,8 +905,11 @@ public class HomePage {
 	@FindBy(xpath="//div[@class='print_pdf_logo']/img")
 	public WebElement pdfLogo;
 	
-	@FindBy(xpath="//div[@class='print_pdf_context_header']//div[@class='print_pdf_header_row']/ul/li")
+	@FindBy(xpath="//div[@class='print_pdf_context_header']//div[@class='print_pdf_header_row']/ul/li/span/b")
 	public List<WebElement> headerRowList;
+	
+	@FindBy(xpath="//div[@class='testScore_printPDF_context_header']//div[contains(@class,'testScore_printPDF_header_row')]/ul/li/span")
+	public List<WebElement> test_score_detail_headerRowList;
 	
 	/**
 	 * Grouping Tab

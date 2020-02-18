@@ -599,8 +599,8 @@ public class UtilityMethods {
 
 			new Actions(Driver.webdriver).moveToElement(homePage.overviewtext).click().build().perform();
 			Thread.sleep(500);
-			Integer schoolId = DatabaseConnection.getSchoolIDBySchoolName(schoolName);
-			Integer classId = DatabaseConnection.getClassIDBySchoolIdAndClassName(schoolId, className);
+			Integer schoolId = API_Connection.getSchoolIDBySchoolName(schoolName);
+			Integer classId = API_Connection.getClassIDBySchoolIdAndClassName(schoolId, className);
 			Ids.put(schoolId, classId);
 		} catch (Exception e) {
 			processException(e);
@@ -750,7 +750,6 @@ public class UtilityMethods {
 		return teachersName;
 	}
 
-	
 	/**
 	 * This method is used to retrieve AssessedWith value on UI
 	 * 
@@ -1054,7 +1053,6 @@ public class UtilityMethods {
 
 	public static String TestNamefromTestTab() {
 		String name = "";
-
 		try {
 			PaginationUtility.studentListMethodOne();
 			if (PaginationUtility.paginatorFound) {

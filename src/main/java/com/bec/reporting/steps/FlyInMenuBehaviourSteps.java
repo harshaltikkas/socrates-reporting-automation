@@ -67,23 +67,31 @@ public class FlyInMenuBehaviourSteps {
 			String password, String usertype) throws Throwable {
 		log.info("User is on portal's login screen");
 		try {
-			uname = username;
-			passwd = password;
-			realm = usertype;
 			prop = FileRead.readProperties();
-			Driver.launch_browser(prop.getProperty("portalUrl"));
+			String env = prop.getProperty("app_env");
+			String url = null;
+			if (env.equalsIgnoreCase("dev")) {
+				url = prop.getProperty("dev_portalUrl");
+			} else if (env.equalsIgnoreCase("uat")) {
+				url = prop.getProperty("uat_portalUrl");
+			} else if (env.equalsIgnoreCase("staging")) {
+				url = prop.getProperty("staging_portalUrl");
+			}
+			uname = prop.getProperty(username);
+			passwd = prop.getProperty(password);
+			realm = prop.getProperty(usertype);
+			Driver.launch_browser(url);
 			Thread.sleep(3000);
 			homePage.username.clear();
-			homePage.username.sendKeys(username);
+			homePage.username.sendKeys(uname);
 			homePage.password.clear();
-			homePage.password.sendKeys(password);
+			homePage.password.sendKeys(passwd);
 			Thread.sleep(500);
 			Select select = new Select(homePage.usertypedropdown);
 			Thread.sleep(500);
-			select.selectByValue(usertype);
+			select.selectByValue(realm);
 			Thread.sleep(1000);
 			homePage.loginbtn.click();
-			Thread.sleep(5000);
 			IWait.explicit_wait(Driver.webdriver, homePage.studentmenu);
 		} catch (Exception e) {
 			log.error("failed to login");
@@ -187,7 +195,7 @@ public class FlyInMenuBehaviourSteps {
 			selectedGrade = grade;
 			Driver.webdriver.findElement(By.xpath("//li[.='" + grade + "']")).click();
 			Thread.sleep(500);
-			
+
 			new Actions(Driver.webdriver).moveToElement(homePage.studentTitleOnSliderMenu).build().perform();
 			UtilityMethods.wait_For_Refresh_Icon_onRosterTab(homePage.teachersRefreshIcon, "Teacher");
 			UtilityMethods.scrollPageDown(Driver.webdriver, 4);
