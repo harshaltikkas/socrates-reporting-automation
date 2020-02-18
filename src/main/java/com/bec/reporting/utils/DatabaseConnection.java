@@ -30,72 +30,23 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Properties;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.stream.Collectors;
-
-import com.bec.reporting.steps.FlyInMenuBehaviourSteps;
-import com.google.common.base.Verify;
-import com.jayway.restassured.RestAssured;
-import com.jayway.restassured.path.json.JsonPath;
-import com.jayway.restassured.response.Response;
-
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class DatabaseConnection {
-	public static Properties prop;
+
 	public static Map<String, Integer> schoolAvgRange = new HashMap<>();
 	public static Map<String, Integer> districtAvgRange = new HashMap<>();
 	public static Connection conn = ConnectionPool.getDBConnection();
-	public static String token = DatabaseConnection.getToken();
-
-	/*
-	 * API Methods Here
-	 */
-
-	/**
-	 * This method is used to get the Token value from API
-	 * 
-	 * @return
-	 */
-	public static String getToken() {
-		log.info("Get Access token");
-		String token = "";
-		try {
-			prop = FileRead.readProperties();
-			String payload = "{\n" + "  \"username\": \"" + FlyInMenuBehaviourSteps.uname + "\",\n"
-					+ "  \"password\": \"" + FlyInMenuBehaviourSteps.passwd + "\",\n" + "  \"realm\": \""
-					+ FlyInMenuBehaviourSteps.realm + "\"\n" + "}";
-			
-			/*  String payload = "{\n" + "  \"username\": \"Failly353175\",\n" +
-			  "  \"password\": \"password\",\n" + "  \"realm\": \"sulphur\"\n" + "}";*/
-			 
-			String apiUrl = prop.getProperty("atlantis_api_url");
-			Response response = RestAssured.given().header("Content-Type", "application/json").body(payload)
-					.post(apiUrl);
-			if (response.getStatusCode() != 200) {
-				log.info("Error occurred. status code : " + response.getStatusCode());
-				return null;
-			} else {
-				token = new JsonPath(response.asString()).getString("token");
-			}
-		} catch (Exception e) {
-			log.error(e.getMessage());
-			UtilityMethods.processException(e);
-		}
-		log.info("Retrived Access Token Successfully");
-		return token;
-	}
 
 	/**
 	 * This method is used to get District ID based on school Id
@@ -158,63 +109,9 @@ public class DatabaseConnection {
 		return compo_Code;
 	}
 
-	/**
-	 * This method is used to get District ID based on default api
-	 * 
-	 * @return
-	 */
-	public static Integer getDistrictId() {
-		Integer districtId = 0;
-		try {
-			prop = FileRead.readProperties();
-			String payload = "{\"termId\":" + "null" + ",\"isDistrictEnabled\":" + true + "}";
-			String apiUrl = prop.getProperty("apiURL") + "/universalselector/default";
-			Response response = RestAssured.given().header("Authorization", "Bearer " + DatabaseConnection.token)
-					.contentType("application/json").body(payload).post(apiUrl);
-			if (response.getStatusCode() != 200) {
-				log.info("Error occurred in getDistrictId. status code : " + response.getStatusCode());
-				return null;
-			} else {
-				districtId = Integer.parseInt(
-						(String) new JsonPath(response.asString()).getList("value.schoolList.districtId").get(0));
-			}
-		} catch (Exception e) {
-			log.error(e.getMessage());
-			UtilityMethods.processException(e);
-		}
-		return districtId;
-	}
-
-	/**
-	 * This method is used to get District ID based on default api
-	 * 
-	 * @return
-	 */
-	public static List<String> getDistrictWiseLatestTermDateRangeUsingAPI(int districtId) {
-		List<String> list = new ArrayList<String>();
-		try {
-			prop = FileRead.readProperties();
-			String apiUrl = prop.getProperty("apiURL") + "/universalselector/datetab";
-			Response response = RestAssured.given().header("Authorization", "Bearer " + DatabaseConnection.token)
-					.get(apiUrl);
-			if (response.getStatusCode() != 200) {
-				log.info("Error occurred. status code : " + response.getStatusCode());
-				return null;
-			} else {
-				list.add(new JsonPath(response.asString()).getList("value.termStartDate").get(0).toString());
-				list.add(new JsonPath(response.asString()).getList("value.termEndDate").get(0).toString());
-				list.add(new JsonPath(response.asString()).getList("value.termName").get(0).toString());
-			}
-		} catch (Exception e) {
-			log.error(e.getMessage());
-			UtilityMethods.processException(e);
-		}
-		return list;
-	}
-
 	public static void main(String args[]) {
-		//getDistrictTestScoreAvgInSTA(conn);
-		getDistrictWiseViewReportInSTA(conn,"Benchmark Advance G1 U1 W1 Assessment");
+		// getDistrictTestScoreAvgInSTA(conn);
+		getDistrictWiseViewReportInSTA(conn, "Benchmark Advance G1 U1 W1 Assessment");
 		/*
 		 * List<Model> lm = getStandardAvgPerListInClassContext(conn, 509446, 1213286,
 		 * "Language"); for (Model model : lm) { System.out.println(model.getAvg_per());
@@ -241,259 +138,8 @@ public class DatabaseConnection {
 		 * System.out.println(getStudentDetailListInSPInClassByStrand(ConnectionPool.
 		 * getDBConnection(), 509446, 1213286, "Language"));
 		 */
-		//System.out.println(getSchoolAvgInTSInClass(DatabaseConnection.conn, 1130544, "Grade 2 Unit 3 Assessment"));
-	}
-
-	/**
-	 * This method is used to get School ID by School Name
-	 * 
-	 * @param schoolName
-	 * @return
-	 */
-	public static Integer getSchoolIDBySchoolName(String schoolName) {
-		Integer schoolID = 0;
-		try {
-			prop = FileRead.readProperties();
-			String apiUrl = prop.getProperty("apiURL") + "/schools?page=0&size=10000&direction=ASC";
-			Response response = RestAssured.given().header("Authorization", "Bearer " + DatabaseConnection.token)
-					.get(apiUrl);
-			if (response.getStatusCode() != 200) {
-				log.info("Error occurred. status code : " + response.getStatusCode());
-				return null;
-			} else {
-				List<Object> schoolnameslist = new JsonPath(response.asString()).getList("value.name");
-				List<Object> schoolidlist = new JsonPath(response.asString()).getList("value.id");
-				Verify.verify(schoolnameslist.contains(schoolName));
-				schoolID = Integer.parseInt(schoolidlist.get(schoolnameslist.indexOf(schoolName)).toString());
-			}
-		} catch (Exception e) {
-			log.error(e.getMessage());
-			UtilityMethods.processException(e);
-		}
-		return schoolID;
-	}
-
-	/**
-	 * This method is used to get All School
-	 * 
-	 * @param schoolName
-	 * @return
-	 */
-	public static Map<String, Integer> getAllSchoolNames() {
-		Map<String, Integer> schoolMap = new TreeMap<String, Integer>();
-		try {
-			prop = FileRead.readProperties();
-			String apiUrl = prop.getProperty("apiURL") + "/schools?page=0&size=10000&direction=ASC";
-			Response response = RestAssured.given().header("Authorization", "Bearer " + DatabaseConnection.token)
-					.get(apiUrl);
-			if (response.getStatusCode() != 200) {
-				log.info("Error occurred. status code : " + response.getStatusCode());
-				return null;
-			} else {
-				List<Object> value = new JsonPath(response.asString()).getList("value.name");
-				for (int i = 0; i < value.size(); i++) {
-					schoolMap.put(String.valueOf(new JsonPath(response.asString()).getList("value.name").get(i)),
-							Integer.parseInt(new JsonPath(response.asString()).getList("value.id").get(i).toString()));
-				}
-			}
-		} catch (Exception e) {
-			log.error(e.getMessage());
-			UtilityMethods.processException(e);
-		}
-		return schoolMap;
-	}
-
-	/**
-	 * This method is used to get All Classes by SchoolName
-	 * 
-	 * @param schoolName
-	 * @return
-	 */
-	public static Map<String, Integer> getAllClassesNamesBySchoolName(Integer schoolId) {
-		Map<String, Integer> classMap = new TreeMap<String, Integer>();
-		try {
-			prop = FileRead.readProperties();
-			String apiUrl = prop.getProperty("apiURL") + "/classes?schoolId=" + schoolId + "&districtId="
-					+ getDistrictIdBySchoolId(DatabaseConnection.conn, schoolId);
-			Response response = RestAssured.given().header("Authorization", "Bearer " + DatabaseConnection.token)
-					.get(apiUrl);
-			if (response.getStatusCode() != 200) {
-				log.info("Error occurred. status code : " + response.getStatusCode());
-				return null;
-			} else {
-				List<Object> value = new JsonPath(response.asString()).getList("value.name");
-				for (int i = 0; i < value.size(); i++) {
-					classMap.put(String.valueOf(new JsonPath(response.asString()).getList("value.name").get(i)),
-							Integer.parseInt(new JsonPath(response.asString()).getList("value.id").get(i).toString()));
-				}
-			}
-		} catch (Exception e) {
-			log.error(e.getMessage());
-			UtilityMethods.processException(e);
-		}
-		return classMap;
-	}
-
-	/**
-	 * This method is used to return first alpha school
-	 * 
-	 * @return
-	 */
-	public static String getFirstAlphaSchoolName() {
-		String schoolName = "";
-		try {
-			schoolName = getAllSchoolNames().keySet().stream().findFirst().get();
-		} catch (Exception e) {
-			log.error(e.getMessage());
-			UtilityMethods.processException(e);
-		}
-		return schoolName;
-	}
-
-	/**
-	 * This method is used to return first alpha class based on first alpha school
-	 * 
-	 * @return
-	 */
-	public static String getFirstAlphaClassNameBySchoolName(Integer schoolId) {
-		String className = "";
-		try {
-			className = getAllClassesNamesBySchoolName(schoolId).keySet().stream().findFirst().get();
-		} catch (Exception e) {
-			log.error(e.getMessage());
-			UtilityMethods.processException(e);
-		}
-		return className;
-	}
-
-	/**
-	 * This method is used to return all the student list based on school name and
-	 * class name
-	 * 
-	 * @param schoolName
-	 * @param className
-	 * @return
-	 */
-	public static Map<String, Integer> getAllStudentsByClassNameAndSchoolName(Integer schoolId, Integer classId) {
-		Map<String, Integer> studentMap = new TreeMap<String, Integer>();
-		try {
-			prop = FileRead.readProperties();
-			String apiUrl = prop.getProperty("apiURL") + "/students?schoolId=" + schoolId + "&districtId="
-					+ getDistrictIdBySchoolId(DatabaseConnection.conn, schoolId) + "&classId=" + classId;
-			Response response = RestAssured.given().header("Authorization", "Bearer " + DatabaseConnection.token)
-					.get(apiUrl);
-			if (response.getStatusCode() != 200) {
-				log.info("Error occurred. status code : " + response.getStatusCode());
-				return null;
-			} else {
-				List<Object> value = new JsonPath(response.asString()).getList("value.name");
-				for (int i = 0; i < value.size(); i++) {
-					studentMap.put(String.valueOf(new JsonPath(response.asString()).getList("value.name").get(i)),
-							Integer.parseInt(new JsonPath(response.asString()).getList("value.id").get(i).toString()));
-				}
-			}
-		} catch (Exception e) {
-			log.error(e.getMessage());
-			UtilityMethods.processException(e);
-		}
-		return studentMap;
-	}
-
-	/**
-	 * This method is used to return class ID based on school name and class name
-	 * 
-	 * @param schoolName
-	 * @param className
-	 * @return
-	 */
-	public static Integer getClassIDBySchoolIdAndClassName(Integer schoolId, String className) {
-		Integer classID = 0;
-		try {
-			prop = FileRead.readProperties();
-			String apiUrl = prop.getProperty("apiURL") + "/classes?schoolId=" + schoolId + "&districtId="
-					+ getDistrictIdBySchoolId(DatabaseConnection.conn, schoolId);
-			Response response = RestAssured.given().header("Authorization", "Bearer " + DatabaseConnection.token)
-					.get(apiUrl);
-			if (response.getStatusCode() != 200) {
-				log.info("Error occurred. status code : " + response.getStatusCode());
-				return null;
-			} else {
-				List<Object> classNamesList = new JsonPath(response.asString()).getList("value.name");
-				List<Object> classIdList = new JsonPath(response.asString()).getList("value.id");
-				Verify.verify(classNamesList.contains(className));
-				classID = Integer.parseInt(classIdList.get(classNamesList.indexOf(className)).toString());
-			}
-		} catch (Exception e) {
-			log.error(e.getMessage());
-			UtilityMethods.processException(e);
-		}
-		return classID;
-	}
-
-	/**
-	 * This method is used to return the first alpha student based on last name
-	 * 
-	 * @return
-	 */
-	public static String getFirstAlphaLastNameStudentByAlphaClassAndSchoolName() {
-		String studentName = "";
-		Map<String, Integer> studentMap = new TreeMap<String, Integer>();
-		try {
-			String schoolName = getAllSchoolNames().keySet().stream().findFirst().get();
-			int schoolId = getSchoolIDBySchoolName(schoolName);
-			String className = getAllClassesNamesBySchoolName(schoolId).keySet().stream().findFirst().get();
-			int classId = getClassIDBySchoolIdAndClassName(schoolId, className);
-			prop = FileRead.readProperties();
-			String apiUrl = prop.getProperty("apiURL") + "/students?schoolId=" + schoolId + "&districtId="
-					+ getDistrictIdBySchoolId(DatabaseConnection.conn, schoolId) + "&classId=" + classId;
-			Response response = RestAssured.given().header("Authorization", "Bearer " + DatabaseConnection.token)
-					.get(apiUrl);
-			if (response.getStatusCode() != 200) {
-				log.info("Error occurred. status code : " + response.getStatusCode());
-				return null;
-			} else {
-				List<Object> value = new JsonPath(response.asString()).getList("value.name");
-				for (int i = 0; i < value.size(); i++) {
-					studentMap.put(String.valueOf(new JsonPath(response.asString()).getList("value.name").get(i)),
-							Integer.parseInt(new JsonPath(response.asString()).getList("value.id").get(i).toString()));
-				}
-				studentName = studentMap.keySet().stream().findFirst().get() + " " + "("
-						+ studentMap.get(studentMap.keySet().toArray()[0]) + " )";
-			}
-		} catch (Exception e) {
-			log.error(e.getMessage());
-			UtilityMethods.processException(e);
-		}
-		return studentName;
-	}
-
-	/**
-	 * This method is used to return the student name based on student id
-	 * 
-	 * @return
-	 */
-	public static String getStudentNameByStudentId(Integer schoolId, Integer classId, Integer studentId) {
-		String studentName = "";
-		try {
-			prop = FileRead.readProperties();
-			String apiUrl = prop.getProperty("apiURL") + "/students?schoolId=" + schoolId + "&districtId="
-					+ getDistrictIdBySchoolId(DatabaseConnection.conn, schoolId) + "&classId=" + classId;
-			Response response = RestAssured.given().header("Authorization", "Bearer " + DatabaseConnection.token)
-					.get(apiUrl);
-			if (response.getStatusCode() != 200) {
-				log.info("Error occurred. status code : " + response.getStatusCode());
-				return null;
-			} else {
-				List<Object> studentNamesList = new JsonPath(response.asString()).getList("value.name");
-				List<Object> studentIdList = new JsonPath(response.asString()).getList("value.id");
-				Verify.verify(studentIdList.contains(String.valueOf(studentId)));
-				studentName = studentNamesList.get(studentIdList.indexOf(String.valueOf(studentId))).toString();
-			}
-		} catch (Exception e) {
-			log.error(e.getMessage());
-			UtilityMethods.processException(e);
-		}
-		return studentName;
+		// System.out.println(getSchoolAvgInTSInClass(DatabaseConnection.conn, 1130544,
+		// "Grade 2 Unit 3 Assessment"));
 	}
 
 	/**************** Db Methods are here **********************/
@@ -687,7 +333,7 @@ public class DatabaseConnection {
 				Model m = new Model();
 				m.setNo_of_questions(rs.getInt(2));
 				m.setStudent_score_avg(rs.getInt(3));
-				m.setStudent_name(getStudentNameByStudentId(schoolId, classId, rs.getInt(1)));
+				m.setStudent_name(API_Connection.getStudentNameByStudentId(schoolId, classId, rs.getInt(1)));
 				list.add(m);
 			}
 			// sorting
@@ -796,7 +442,7 @@ public class DatabaseConnection {
 		Map<String, Integer> studentMap = new HashMap<>();
 		try {
 			boolean rowFound = false;
-			studentMap = getAllStudentsByClassNameAndSchoolName(schoolId, classId);
+			studentMap = API_Connection.getAllStudentsByClassNameAndSchoolName(schoolId, classId);
 			Statement stmt = con.createStatement();
 			ResultSet rs = null;
 			for (Map.Entry<String, Integer> entry : studentMap.entrySet()) {
@@ -822,7 +468,7 @@ public class DatabaseConnection {
 				if (rowFound) {
 					actualSum = (sum_of_ts / ctr);
 					Model m = new Model();
-					m.setStudent_name(getStudentNameByStudentId(schoolId, classId, sid));
+					m.setStudent_name(API_Connection.getStudentNameByStudentId(schoolId, classId, sid));
 					m.setMaxDate(submittedDate);
 					avg = Math.round((actualSum / sum_of_max_score) * 100);
 					m.setStudent_score_avg(avg);
@@ -858,7 +504,7 @@ public class DatabaseConnection {
 		float sum_of_ts = 0, sum_of_max_score = 0, actualSum = 0;
 		Map<String, Integer> studentMap = new HashMap<>();
 		try {
-			studentMap = getAllStudentsByClassNameAndSchoolName(schoolId, classId);
+			studentMap = API_Connection.getAllStudentsByClassNameAndSchoolName(schoolId, classId);
 			Statement stmt = con.createStatement();
 			ResultSet rs = null;
 			for (Map.Entry<String, Integer> entry : studentMap.entrySet()) {
@@ -1196,10 +842,10 @@ public class DatabaseConnection {
 		Integer studentId;
 		float sum_of_ts = 0, sum_of_max_score = 0;
 
-		int distId = getDistrictId();
-		String sdate = DatabaseConnection.getDistrictWiseLatestTermDateRangeUsingAPI(distId).get(0);
-		String edate = DatabaseConnection.getDistrictWiseLatestTermDateRangeUsingAPI(distId).get(1);
-		currentFY = DatabaseConnection.getDistrictWiseLatestTermDateRangeUsingAPI(distId).get(2);
+		int distId = API_Connection.getDistrictId();
+		String sdate = API_Connection.getDistrictWiseLatestTermDateRangeUsingAPI(distId).get(0);
+		String edate = API_Connection.getDistrictWiseLatestTermDateRangeUsingAPI(distId).get(1);
+		currentFY = API_Connection.getDistrictWiseLatestTermDateRangeUsingAPI(distId).get(2);
 		try {
 			Statement stmt = con.createStatement();
 			ResultSet rs = null;
@@ -1236,10 +882,10 @@ public class DatabaseConnection {
 		Integer studentId;
 		float sum_of_ts = 0, sum_of_max_score = 0;
 
-		int distId = getDistrictId();
-		String sdate = DatabaseConnection.getDistrictWiseLatestTermDateRangeUsingAPI(distId).get(0);
-		String edate = DatabaseConnection.getDistrictWiseLatestTermDateRangeUsingAPI(distId).get(1);
-		currentFY = DatabaseConnection.getDistrictWiseLatestTermDateRangeUsingAPI(distId).get(2);
+		int distId = API_Connection.getDistrictId();
+		String sdate = API_Connection.getDistrictWiseLatestTermDateRangeUsingAPI(distId).get(0);
+		String edate = API_Connection.getDistrictWiseLatestTermDateRangeUsingAPI(distId).get(1);
+		currentFY = API_Connection.getDistrictWiseLatestTermDateRangeUsingAPI(distId).get(2);
 		try {
 			Statement stmt = con.createStatement();
 			ResultSet rs = null;
@@ -1275,9 +921,9 @@ public class DatabaseConnection {
 			String testName) {
 		Map<Integer, Integer> map = new HashMap<Integer, Integer>();
 		String ident;
-		int distId = getDistrictId();
-		String sdate = DatabaseConnection.getDistrictWiseLatestTermDateRangeUsingAPI(distId).get(0);
-		String edate = DatabaseConnection.getDistrictWiseLatestTermDateRangeUsingAPI(distId).get(1);
+		int distId = API_Connection.getDistrictId();
+		String sdate = API_Connection.getDistrictWiseLatestTermDateRangeUsingAPI(distId).get(0);
+		String edate = API_Connection.getDistrictWiseLatestTermDateRangeUsingAPI(distId).get(1);
 
 		try {
 			Statement stmt = con.createStatement();
@@ -1303,7 +949,7 @@ public class DatabaseConnection {
 		}
 		return map;
 	}
-	
+
 	public static List<String> getDistrictWiseTestScoreAvgInRawFormatInSTAWithSpecificTestName(Connection con,
 			String testName) {
 		List<String> list = new LinkedList<String>();
@@ -1313,18 +959,19 @@ public class DatabaseConnection {
 		Set<String> identifierSet = new HashSet<>();
 		Integer studentId;
 		float sum_of_ts = 0;
-		int question_count=0,ts_count=0;
-		int distId = getDistrictId();
-		String sdate = DatabaseConnection.getDistrictWiseLatestTermDateRangeUsingAPI(distId).get(0);
-		String edate = DatabaseConnection.getDistrictWiseLatestTermDateRangeUsingAPI(distId).get(1);
+		int question_count = 0, ts_count = 0;
+		int distId = API_Connection.getDistrictId();
+		String sdate = API_Connection.getDistrictWiseLatestTermDateRangeUsingAPI(distId).get(0);
+		String edate = API_Connection.getDistrictWiseLatestTermDateRangeUsingAPI(distId).get(1);
 
 		try {
 			Statement stmt = con.createStatement();
 			ResultSet rs = null;
 			String str = "SELECT * FROM (SELECT bu_district_id,bu_school_id,collective_noun_id,student_id,component_code,bu_assignment_id,component_title,test_score,submitted_at,max_score,identifier,DENSE_RANK() OVER (PARTITION BY student_id,component_code,bu_assignment_id,identifier ORDER BY response_identifier DESC) rnk,DENSE_RANK() OVER (PARTITION BY bu_district_id,bu_school_id,collective_noun_id,student_id,component_code,identifier ORDER BY updated_at DESC) latest_rnk "
 					+ "FROM bec_edw.bu_assessment_reporting_detail Where bu_district_id = " + distId
-					+ " AND component_code = '" + DatabaseConnection.getComponentCode(con, distId, sdate, edate,testName)
-					+ "' " + "AND submitted_at BETWEEN '" + sdate + "' AND '" + edate
+					+ " AND component_code = '"
+					+ DatabaseConnection.getComponentCode(con, distId, sdate, edate, testName) + "' "
+					+ "AND submitted_at BETWEEN '" + sdate + "' AND '" + edate
 					+ "' GROUP BY bu_district_id,  bu_school_id,  collective_noun_id,  student_id,  updated_at,  component_code,  bu_assignment_id,  component_title,  test_score,  submitted_at,  max_score,  identifier,  response_identifier) X "
 					+ "WHERE rnk = 1 AND   latest_rnk = 1 ORDER BY submitted_at, identifier";
 
@@ -1333,12 +980,11 @@ public class DatabaseConnection {
 				ident = rs.getString(11);
 				studentId = rs.getInt(4);
 				if (identifierSet.contains(ident)) {
-				}
-				else {
+				} else {
 					identifierSet.add(ident);
 					question_count++;
 				}
-				
+
 				if (studentSet.contains(studentId)) {
 				} else {
 					studentSet.add(studentId);
@@ -1348,39 +994,43 @@ public class DatabaseConnection {
 			}
 
 			avg = (sum_of_ts / ts_count);
-			
-			list.add(new DecimalFormat("##.##").format(avg)+"/"+question_count);
-			question_count=0;ts_count=0;identifierSet.clear();
-			Map<String,String> temp_Map=new TreeMap<String,String>();
+
+			list.add(new DecimalFormat("##.##").format(avg) + "/" + question_count);
+			question_count = 0;
+			ts_count = 0;
+			identifierSet.clear();
+			Map<String, String> temp_Map = new TreeMap<String, String>();
 			Integer sum_of_score = 0;
 			String str1 = "SELECT standard, bu_school_id,collective_noun_id,student_id,grade,identifier,bu_assignment_id,SUM(score) score,MAX(max_score)max_score FROM"
 					+ " (SELECT SPLIT_PART(standards,',',s.gen_num) AS standard,bu_school_id,collective_noun_id,student_id,grade,identifier,response_identifier,bu_assignment_id,score,max_score FROM (SELECT student_id,collective_noun_id,bu_school_id,identifier,grade,bu_assignment_id,response_identifier,score,max_score,standards,standards_cnt,DENSE_RANK() OVER (PARTITION BY bu_district_id,bu_school_id,collective_noun_id,student_id,component_code,identifier,response_identifier ORDER BY updated_at DESC) rnk "
 					+ " FROM bec_edw.bu_assessment_reporting_detail WHERE bu_district_id = " + distId
-					+ " AND   component_code = '" + DatabaseConnection.getComponentCode(con, distId, sdate, edate,testName)
-					+ "' " + " AND   submitted_at BETWEEN '" + sdate + "' AND '" + edate
+					+ " AND   component_code = '"
+					+ DatabaseConnection.getComponentCode(con, distId, sdate, edate, testName) + "' "
+					+ " AND   submitted_at BETWEEN '" + sdate + "' AND '" + edate
 					+ "' GROUP BY bu_district_id,  bu_school_id,  student_id,  grade,  bu_assignment_id,  collective_noun_id,  component_code,  score,  max_score,  updated_at,  identifier,  response_identifier,  submitted_at,  standards,  standards_cnt) main,    bec_edw.string_splitter s     WHERE main.rnk = 1     AND   s.gen_num <= main.standards_cnt     AND   SPLIT_PART(standards,',',s.gen_num) <> '') "
 					+ " GROUP BY  standard,bu_school_id,collective_noun_id,student_id,grade,identifier,bu_assignment_id";
 
 			rs = stmt.executeQuery(str1);
-			String score="",count="";
+			String score = "", count = "";
 			while (rs.next()) {
 				ident = rs.getString(6);
 				if (temp_Map.containsKey(ident)) {
-					sum_of_score=rs.getInt(8);
-					score=temp_Map.get(ident).substring(0, temp_Map.get(ident).indexOf("_"));
-					count=temp_Map.get(ident).substring(temp_Map.get(ident).indexOf("_")+1);
-					temp_Map.put(ident, (Integer.parseInt(score)+sum_of_score)+"_"+(Integer.parseInt(count)+1));
+					sum_of_score = rs.getInt(8);
+					score = temp_Map.get(ident).substring(0, temp_Map.get(ident).indexOf("_"));
+					count = temp_Map.get(ident).substring(temp_Map.get(ident).indexOf("_") + 1);
+					temp_Map.put(ident, (Integer.parseInt(score) + sum_of_score) + "_" + (Integer.parseInt(count) + 1));
+				} else {
+					sum_of_score = rs.getInt(8);
+					temp_Map.put(ident, sum_of_score + "_" + 1);
 				}
-				else {
-					sum_of_score=rs.getInt(8);
-					temp_Map.put(ident, sum_of_score+"_"+1);
-				}
-				
-				
+
 			}
-			
-			for(Map.Entry<String,String> tm:temp_Map.entrySet()) {
-				list.add(new DecimalFormat("##.##").format(Float.parseFloat(tm.getValue().substring(0,tm.getValue().indexOf("_")))/Float.parseFloat(tm.getValue().substring(tm.getValue().indexOf("_")+1)) )+"/"+1);
+
+			for (Map.Entry<String, String> tm : temp_Map.entrySet()) {
+				list.add(new DecimalFormat("##.##")
+						.format(Float.parseFloat(tm.getValue().substring(0, tm.getValue().indexOf("_")))
+								/ Float.parseFloat(tm.getValue().substring(tm.getValue().indexOf("_") + 1)))
+						+ "/" + 1);
 			}
 
 		} catch (Exception e) {
@@ -1400,9 +1050,9 @@ public class DatabaseConnection {
 	public static Map<Integer, Integer> getDistrictWiseQuestionAndTestScoreAvgInSTA(Connection con) {
 		Map<Integer, Integer> map = new HashMap<Integer, Integer>();
 		String ident;
-		int distId = getDistrictId();
-		String sdate = DatabaseConnection.getDistrictWiseLatestTermDateRangeUsingAPI(distId).get(0);
-		String edate = DatabaseConnection.getDistrictWiseLatestTermDateRangeUsingAPI(distId).get(1);
+		int distId = API_Connection.getDistrictId();
+		String sdate = API_Connection.getDistrictWiseLatestTermDateRangeUsingAPI(distId).get(0);
+		String edate = API_Connection.getDistrictWiseLatestTermDateRangeUsingAPI(distId).get(1);
 
 		try {
 			Statement stmt = con.createStatement();
@@ -1434,124 +1084,74 @@ public class DatabaseConnection {
 	 * @param con
 	 * @return
 	 */
-	public static Map<String,String> getDistrictWiseViewReportInSTA(Connection con,String testName) {
-		Map<String,String> final_map = new TreeMap<String,String>();
-		String standard,identifier;
-		
-		int distId = getDistrictId();
-		String sdate = DatabaseConnection.getDistrictWiseLatestTermDateRangeUsingAPI(distId).get(0);
-		String edate = DatabaseConnection.getDistrictWiseLatestTermDateRangeUsingAPI(distId).get(1);
+	public static Map<String, String> getDistrictWiseViewReportInSTA(Connection con, String testName) {
+		Map<String, String> final_map = new TreeMap<String, String>();
+		String standard, identifier;
 
-		Map<String,String> temp_Map=new TreeMap<String,String>();
-		List<Integer> ident=new ArrayList<Integer>();
-		List<Integer> unique_ident=new ArrayList<Integer>();
+		int distId = API_Connection.getDistrictId();
+		String sdate = API_Connection.getDistrictWiseLatestTermDateRangeUsingAPI(distId).get(0);
+		String edate = API_Connection.getDistrictWiseLatestTermDateRangeUsingAPI(distId).get(1);
+
+		Map<String, String> temp_Map = new TreeMap<String, String>();
+		List<Integer> ident = new ArrayList<Integer>();
+		List<Integer> unique_ident = new ArrayList<Integer>();
 		float sum_of_score = 0, sum_of_max_score = 0;
-	
+
 		try {
 			Statement stmt = con.createStatement();
 			ResultSet rs = null;
-			
+
 			String str = "SELECT standard,bu_school_id,collective_noun_id,student_id,grade,identifier,bu_assignment_id,SUM(score) score,MAX(max_score) max_score "
 					+ "FROM (SELECT SPLIT_PART(standards,',',s.gen_num) AS standard,bu_school_id,collective_noun_id,student_id,grade,identifier,response_identifier,bu_assignment_id,score,max_score "
 					+ "FROM (SELECT student_id,collective_noun_id,bu_school_id,identifier,grade,bu_assignment_id,response_identifier,score,max_score,standards,standards_cnt,DENSE_RANK() OVER (PARTITION BY bu_district_id,bu_school_id,collective_noun_id,student_id,component_code,identifier,response_identifier ORDER BY updated_at DESC) rnk     FROM bec_edw.bu_assessment_reporting_detail     WHERE bu_district_id = "
 					+ distId + " AND   component_code = '"
-					+ DatabaseConnection.getComponentCode(con, distId, sdate, edate,testName) + "' "
+					+ DatabaseConnection.getComponentCode(con, distId, sdate, edate, testName) + "' "
 					+ " AND   submitted_at BETWEEN '" + sdate + "' AND '" + edate
 					+ "' GROUP BY bu_district_id,bu_school_id,student_id,grade,bu_assignment_id,collective_noun_id,component_code,score,max_score,updated_at,identifier,response_identifier,submitted_at,standards,standards_cnt) main,  bec_edw.string_splitter s"
 					+ " WHERE main.rnk = 1 AND   s.gen_num <= main.standards_cnt AND   SPLIT_PART(standards,',',s.gen_num) <> '') GROUP BY standard,bu_school_id,collective_noun_id,student_id,grade,identifier,bu_assignment_id order by standard,identifier";
 
 			rs = stmt.executeQuery(str);
-			
+
 			while (rs.next()) {
 				standard = rs.getString(1);
-				identifier=rs.getString(6);
+				identifier = rs.getString(6);
 				if (temp_Map.containsKey(standard)) {
-					sum_of_score+=rs.getFloat(8);
-					sum_of_max_score+=rs.getFloat(9);
+					sum_of_score += rs.getFloat(8);
+					sum_of_max_score += rs.getFloat(9);
 					ident.add(Integer.parseInt(identifier.substring(identifier.length() - 3)));
-					unique_ident=ident.stream().distinct().collect(Collectors.toList());
-					temp_Map.put(standard, unique_ident+"_"+sum_of_score+"_"+sum_of_max_score);
-				}
-				else {
-					sum_of_score=rs.getFloat(8);
-					sum_of_max_score=rs.getFloat(9);
+					unique_ident = ident.stream().distinct().collect(Collectors.toList());
+					temp_Map.put(standard, unique_ident + "_" + sum_of_score + "_" + sum_of_max_score);
+				} else {
+					sum_of_score = rs.getFloat(8);
+					sum_of_max_score = rs.getFloat(9);
 					ident.clear();
 					ident.add(Integer.parseInt(identifier.substring(identifier.length() - 3)));
-					temp_Map.put(standard, ident+"_"+sum_of_score+"_"+sum_of_max_score);
+					temp_Map.put(standard, ident + "_" + sum_of_score + "_" + sum_of_max_score);
 				}
 			}
-			
+
 			// Get keys and values
 			String ids[] = new String[temp_Map.size()];
-			Float sc[] = new Float[temp_Map.size()],msc[]=new Float[temp_Map.size()];
-			String questions[]=new String[temp_Map.size()];
-			int x=0;
+			Float sc[] = new Float[temp_Map.size()], msc[] = new Float[temp_Map.size()];
+			String questions[] = new String[temp_Map.size()];
+			int x = 0;
 			for (Map.Entry<String, String> entry : temp_Map.entrySet()) {
-				ids[x]=entry.getKey();
-				questions[x]=entry.getValue().substring(0,entry.getValue().indexOf("_"));
-				sc[x]=Float.parseFloat(entry.getValue().substring(entry.getValue().indexOf("_")+1, entry.getValue().lastIndexOf("_")));
-				msc[x]=Float.parseFloat(entry.getValue().substring(entry.getValue().lastIndexOf("_")+1));
+				ids[x] = entry.getKey();
+				questions[x] = entry.getValue().substring(0, entry.getValue().indexOf("_"));
+				sc[x] = Float.parseFloat(entry.getValue().substring(entry.getValue().indexOf("_") + 1,
+						entry.getValue().lastIndexOf("_")));
+				msc[x] = Float.parseFloat(entry.getValue().substring(entry.getValue().lastIndexOf("_") + 1));
 				x++;
 			}
-			
-			final_map=getStandardsInfo_Short_Value_UsingAPI(ids,sc,msc,questions);
-			
+
+			final_map = API_Connection.getStandardsInfo_Short_Value_UsingAPI(ids, sc, msc, questions);
+
 		} catch (Exception e) {
 			log.error(e.getMessage());
 			UtilityMethods.processException(e);
 		}
 
 		return final_map;
-	}
-
-	/**
-	 * This method is used to get Standards Information's short value using api
-	 * 
-	 * @return
-	 */
-	public static Map<String,String> getStandardsInfo_Short_Value_UsingAPI(String ids[],Float score[],Float max_score[],String questions[]) {
-		
-		Map<String,String> bigMap=new LinkedHashMap<String,String>();
-		
-		try {
-			prop = FileRead.readProperties();
-			String stndrd_id="";
-			List<String> temp_list=new ArrayList<String>();
-			
-			for (int i = 0; i < ids.length; i++) {
-				stndrd_id+=	"\""+ids[i]+"\",";			
-			}
-			stndrd_id=stndrd_id.substring(0,stndrd_id.length()-1);
-			String payload = "{\n \"ids\":[ " + stndrd_id + "]}";
-			String apiUrl = prop.getProperty("apollo_api_URL") + "/tags/ids";
-			Response response = RestAssured.given().header("Authorization", "Bearer " + DatabaseConnection.token)
-					.contentType("application/json").body(payload).post(apiUrl);
-			
-			if (response.getStatusCode() != 200) {
-				log.info("Error occurred. status code : " + response.getStatusCode());
-				return null;
-			} else {
-				temp_list=(new JsonPath(response.asString()).get("shortvalue"));
-				
-				if(temp_list.contains("DOK 3") && temp_list.contains("DOK 2")) {
-					Collections.swap(temp_list, temp_list.indexOf("DOK 3"), temp_list.indexOf("DOK 2"));	
-				}
-				
-				if(temp_list.contains("Listen to a Story") && temp_list.contains("Listen to a Classroom Conversation")) {
-					temp_list.remove("Listen to a Classroom Conversation");
-					temp_list.add(temp_list.indexOf("Listen to a Story"), "Listen to a Classroom Conversation");
-				}
-				
-				for (int i = 0; i < temp_list.size(); i++) {
-					questions[i]=questions[i].replace(" ", "\n");
-					bigMap.put(temp_list.get(i)+"_"+Math.round((score[i] / max_score[i]) * 100), questions[i]);
-				}
-			}
-		} catch (Exception e) {
-			log.error(e.getMessage());
-			UtilityMethods.processException(e);
-		}
-		return bigMap;
 	}
 
 }

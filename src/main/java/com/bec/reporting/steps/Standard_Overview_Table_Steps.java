@@ -38,6 +38,7 @@ import org.openqa.selenium.support.PageFactory;
 import com.bec.reporting.pageobjects.HomePage;
 import com.bec.reporting.utils.CBTConfiguration;
 import com.bec.reporting.utils.DatabaseConnection;
+import com.bec.reporting.utils.API_Connection;
 import com.bec.reporting.utils.Driver;
 import com.bec.reporting.utils.Model;
 import com.bec.reporting.utils.PaginationUtility;
@@ -55,7 +56,7 @@ public class Standard_Overview_Table_Steps {
 	 */
 	HomePage homePage = PageFactory.initElements(Driver.webdriver, HomePage.class);
 	public static boolean performanceMenuClicked = false, underClassContext = false, testScoreMenuClicked = false,
-			underStudentContext = false, underSchoolContext = false;
+			underStudentContext = false, underSchoolContext = false,underDistrictContext=false;
 	static String headerOnToolTip, subHeaderOnToolTip;
 	public static JavascriptExecutor jse = (JavascriptExecutor) Driver.webdriver;
 
@@ -65,8 +66,36 @@ public class Standard_Overview_Table_Steps {
 		Standard_Overview_Table_Steps.underSchoolContext = false;
 		Standard_Overview_Table_Steps.testScoreMenuClicked = false;
 		Standard_Overview_Table_Steps.underStudentContext = false;
+		Standard_Overview_Table_Steps.underDistrictContext=false;
 	}
 
+	
+	/**
+	 * This method is used to click on standard performance tab in district context
+	 * 
+	 * @throws Throwable
+	 */
+	@When("^User Click on Standard Performance tab within the District Context$")
+	public void user_Click_on_Standard_Performance_tab_within_the_District_Context() throws Throwable {
+		try {
+			UtilityMethods.wait_For_Context_Header_Section();
+			Assert.assertTrue(homePage.activedistrictmenu.getAttribute("district").contains("active"));
+		} catch (Exception e) {
+			Thread.sleep(500);
+			jse.executeScript("arguments[0].click();", homePage.districtmenu);
+			Thread.sleep(3000);
+		}
+		try {
+			Assert.assertTrue(homePage.activestandardperformancebtn.getAttribute("class").contains("active_tab"));
+		} catch (Exception e) {
+			Thread.sleep(1000);
+			jse.executeScript("arguments[0].click();", homePage.standardperformancebtn);
+			Thread.sleep(3000);
+		}
+		Standard_Overview_Table_Steps.performanceMenuClicked = true;
+		Standard_Overview_Table_Steps.underDistrictContext = true;
+	}
+	
 	/**
 	 * This method is used to click on standard performance tab in class context
 	 * 
@@ -477,7 +506,7 @@ public class Standard_Overview_Table_Steps {
 		} catch (Exception e) {
 			UtilityMethods.processException(e);
 		}
-		DatabaseConnection.conn.close();
+		
 		log.info("Scenario 36_5 completed");
 	}
 
@@ -739,7 +768,7 @@ public class Standard_Overview_Table_Steps {
 			new Actions(Driver.webdriver).moveToElement(homePage.studentnameoncontextheader).build().perform();
 			String studentNameonUI = homePage.studentnameoncontextheadertooltiptext.getText();
 			Assert.assertTrue(
-					DatabaseConnection.getFirstAlphaLastNameStudentByAlphaClassAndSchoolName().equals(studentNameonUI));
+					API_Connection.getFirstAlphaLastNameStudentByAlphaClassAndSchoolName().equals(studentNameonUI));
 			CBTConfiguration.score = "pass";
 		} catch (Exception e) {
 			UtilityMethods.processException(e);

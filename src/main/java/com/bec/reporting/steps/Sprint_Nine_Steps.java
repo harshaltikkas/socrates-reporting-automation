@@ -25,22 +25,18 @@
  */
 package com.bec.reporting.steps;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
+import java.awt.Robot;
+import java.awt.event.KeyEvent;
 import org.junit.Assert;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.PageFactory;
-
 import com.bec.reporting.pageobjects.HomePage;
+import com.bec.reporting.utils.API_Connection;
 import com.bec.reporting.utils.CBTConfiguration;
-import com.bec.reporting.utils.DatabaseConnection;
 import com.bec.reporting.utils.Driver;
 import com.bec.reporting.utils.UtilityMethods;
-
 import cucumber.api.java.en.Then;
 import lombok.extern.slf4j.Slf4j;
 
@@ -57,36 +53,30 @@ public class Sprint_Nine_Steps {
 	public void to_check_the_grading_page_in_new_browser_tab_should_open_by_clicking_on_the_question_number_within_the_test_overlay()
 			throws Throwable {
 		try {
-			Thread.sleep(3000);
 			if (Standard_Overview_Table_Steps.underClassContext
 					&& Standard_Overview_Table_Steps.performanceMenuClicked) {
 				UtilityMethods.wait_For_Performance_Over_Time_Section_Load();
 				new Actions(Driver.webdriver).moveToElement(homePage.performanceovrtimeicon).click().build().perform();
-				Thread.sleep(2000);
+				UtilityMethods.wait_For_Performance_Over_Time_Section_Load();
 			} else {
 				log.info("This will execute with student context");
 			}
-			UtilityMethods.scrollPageDown(Driver.webdriver, 9);
-			Thread.sleep(1000);
-			int randomTestScoreIndex = (int) (Math.random() * homePage.testScoreValueInCircle_onlinechart.size());
-			homePage.testScoreValueInCircle_onlinechart.get(randomTestScoreIndex).click();
-			Thread.sleep(1000);
-			int randomQuestionsIndex = (int) (Math.random() * homePage.questionlistontooltip.size());
-			String question_No = homePage.questionlistontooltip.get(randomQuestionsIndex).getText();
-			new Actions(Driver.webdriver).moveToElement(homePage.questionlistontooltip.get(randomQuestionsIndex))
-					.click().build().perform();
-			Thread.sleep(10000);
-			Set<String> handles = Driver.webdriver.getWindowHandles();
-			String currentHandle = Driver.webdriver.getWindowHandle();
-			for (String handle : handles) {
-				if (!handle.equals(currentHandle)) {
-					Driver.webdriver.switchTo().window(handle);
-				}
-			}
-			homePage = PageFactory.initElements(Driver.webdriver, HomePage.class);
-			String newTabUrl = Driver.webdriver.getCurrentUrl();
-			log.info("newTabUrl" + newTabUrl);
-			Assert.assertTrue(newTabUrl.substring(newTabUrl.lastIndexOf("/") + 1).equals(question_No));
+
+			String percentage = homePage.performanceovertimeheader.getText();
+			percentage = percentage.substring(percentage.indexOf(":") + 2, percentage.indexOf("%"));
+			String no_of_questions = homePage.performanceovertimeheader.getText();
+			no_of_questions = no_of_questions.substring(no_of_questions.indexOf("on") + 2,
+					no_of_questions.lastIndexOf(" "));
+			UtilityMethods.scrollPageDown(Driver.webdriver, 6);
+			Thread.sleep(500);
+			int randomTestScoreIndex = (int) (Math.random() * homePage.testScoreValueInCircle_onlinechart_pot.size());
+			new Actions(Driver.webdriver)
+					.moveToElement(homePage.testScoreValueInCircle_onlinechart_pot.get(randomTestScoreIndex)).click()
+					.build().perform();
+			Thread.sleep(500);
+			Assert.assertTrue(no_of_questions.trim().equals(String.valueOf(homePage.questionlistontooltip.size())));
+			UtilityMethods.scrollPageUp(Driver.webdriver);
+			Thread.sleep(500);
 		} catch (Exception e) {
 			UtilityMethods.processException(e);
 		}
@@ -103,38 +93,12 @@ public class Sprint_Nine_Steps {
 	@Then("^verify the appearance within the standard performance overview$")
 	public void verify_the_appearance_within_the_standard_performance_overview() throws Throwable {
 		String output = "fail";
-		Integer schoolId = 0, classId = 0;
-		//UtilityMethods.wait_for_app_load();
 		try {
-			Map<Integer, Integer> ids = UtilityMethods.getSchoolIdAndClassId();
-			for (Map.Entry<Integer, Integer> entry : ids.entrySet()) {
-				schoolId = entry.getKey();
-				classId = entry.getValue();
-			}
-			System.out.println("SC:"+schoolId+" Class id:"+classId);
-			List<String> DBGradeList = DatabaseConnection.getGradeTexonomy(DatabaseConnection.conn, schoolId, classId);
-			List<String> UIGradeList = new ArrayList<String>();
-
 			if (Standard_Overview_Table_Steps.performanceMenuClicked
-					&& Standard_Overview_Table_Steps.underClassContext) {			
-			
-				if (DBGradeList.size() > 1) {
-					Assert.assertTrue(homePage.gradeDropDown.isDisplayed());
-					homePage.gradeDropDown.click();
-					Thread.sleep(500);
-					try {
-						for (int i = 0; i < homePage.gradeList.size(); i++) {
-							UIGradeList.add(homePage.gradeList.get(i).getText());
-						}
-					} catch (Exception e) {
-						UIGradeList.add(homePage.gradeDropDown.getText());
-					}
-					for (int i = 0; i < homePage.gradeList.size(); i++) {
-						Assert.assertTrue(DBGradeList.get(i).equals(UIGradeList.get(i)));
-					}
-				}
+					&& Standard_Overview_Table_Steps.underDistrictContext) {
+				Assert.assertTrue(homePage.gradeDropDown.isDisplayed());
 				output = "pass";
-			} else if (Standard_Overview_Table_Steps.testScoreMenuClicked) {
+			} else {
 				try {
 					Assert.assertTrue(homePage.gradeDropDown.isDisplayed());
 					UtilityMethods.processException(new Exception());
@@ -155,18 +119,10 @@ public class Sprint_Nine_Steps {
 	public void verify_Standards_Question_Filter_dropdown_label_and_position_within_Standard_Performance_Overview()
 			throws Throwable {
 		String output = "fail";
-		//Integer schoolId = 0, classId = 0;
 		try {
-			
-			/*  Map<Integer, Integer> ids = UtilityMethods.getSchoolIdAndClassId(); for
-			  (Map.Entry<Integer, Integer> entry : ids.entrySet()) { schoolId =
-			  entry.getKey(); classId = entry.getValue(); }
-			 */
 
 			if (Standard_Overview_Table_Steps.performanceMenuClicked) {
 				Assert.assertTrue(homePage.questionDropDown.isDisplayed());
-				//TODO DB validation here
-				
 				output = "pass";
 			} else if (Standard_Overview_Table_Steps.testScoreMenuClicked) {
 				try {
@@ -176,83 +132,160 @@ public class Sprint_Nine_Steps {
 					output = "pass";
 				}
 			}
-
+			CBTConfiguration.score = output;
 		} catch (Exception e) {
 			UtilityMethods.processException(e);
 		}
-		CBTConfiguration.score = output;
-		log.info("Scenario BE-837 completed");
 		Standard_Overview_Table_Steps.resetStatus();
+		log.info("Scenario BE-837 completed");
 	}
 
-	 //TODO Implemented logic for checking web element for pdf print but not finding those.
-	//Untested , because the print list in print page can no trecognizable.
+	public void print_PDF(Robot robot) {
+		try {
+			Thread.sleep(10000);
+			Actions builder = new Actions(Driver.webdriver);
+			for (int i = 0; i < 5; i++) {
+				robot.keyPress(KeyEvent.VK_TAB);
+				robot.keyRelease(KeyEvent.VK_TAB);
+			}
+			Thread.sleep(500);
+			builder.sendKeys(Keys.ARROW_UP).build().perform();
+
+			Thread.sleep(5000);
+			for (int i = 0; i < 6; i++) {
+				robot.keyPress(KeyEvent.VK_TAB);
+				robot.keyRelease(KeyEvent.VK_TAB);
+			}
+
+			robot.keyPress(KeyEvent.VK_ENTER);
+			robot.keyRelease(KeyEvent.VK_ENTER);
+			Thread.sleep(3000);
+			robot.keyPress(KeyEvent.VK_ENTER);
+			robot.keyRelease(KeyEvent.VK_ENTER);
+
+		} catch (Exception e) {
+			log.error("Error in printing pdf file..");
+			UtilityMethods.processException(e);
+		}
+	}
+
 	@Then("^verify Context header content for the Standards Overview context selected shown in all PDF's$")
 	public void verify_Context_header_content_for_the_Standards_Overview_context_selected_shown_in_all_PDF_s()
 			throws Throwable {
 		String output = "";
-		String school, classN, district, tests, dates, assessedWith, testDataAssessedForGrade,teacherN, grade;
-		/*String studentN, ;
-		Integer schoolId = 0, classId = 0, studentId;*/
 		try {
-			/*
-			Map<Integer, Integer> ids = UtilityMethods.getSchoolIdAndClassId();
-			for (Map.Entry<Integer, Integer> entry : ids.entrySet()) {
-				schoolId = entry.getKey();
-				classId = entry.getValue();
-			}
-			 */
-			classN = UtilityMethods.getClassNameonUI();
-			school = UtilityMethods.getSchoolNameonUI();
-			district = UtilityMethods.getDistrictNameonUI();
-			tests = UtilityMethods.getTestsNameonUI();
-			dates = UtilityMethods.getDatesonContextHeaderUI();
-			assessedWith = UtilityMethods.getAssessedWithonUI();
-			//testDataAssessedForGrade = UtilityMethods.getTestDataAssessedForGradeonUI();
-			//		Assert.assertTrue(homePage.headerRowList.get(6).getText().contains(testDataAssessedForGrade));
+			// Robot robot = new Robot();
+
+			String school, classN, district, tests, dates, assessedWith, teacherN, studentName;
+			// String testDataAssessedForGrade, grade;
+
 			if (Standard_Overview_Table_Steps.performanceMenuClicked
 					&& Standard_Overview_Table_Steps.underClassContext) {
-				Assert.assertTrue(homePage.printIcon.isDisplayed());			
+
+				classN = UtilityMethods.getClassNameonUI();
+				school = UtilityMethods.getSchoolNameonUI();
+				district = UtilityMethods.getDistrictNameonUI();
+				tests = UtilityMethods.getTestsNameonUI();
+				dates = UtilityMethods.getDatesonContextHeaderUI();
+				assessedWith = UtilityMethods.getAssessedWithonUI();
+				// testDataAssessedForGrade = UtilityMethods.getTestDataAssessedForGradeonUI();
+				Assert.assertTrue(homePage.printIcon.isDisplayed());
+
+				homePage.printIcon.click();
+				// TODO logic for print pdf then open and verify the headers value in pdf file
+				// with ui
+				// print_PDF(robot);
+
 				Assert.assertTrue(homePage.headerRowList.get(0).getText().contains(classN));
 				Assert.assertTrue(homePage.headerRowList.get(1).getText().contains(school));
 				Assert.assertTrue(homePage.headerRowList.get(2).getText().contains(district));
 				Assert.assertTrue(homePage.headerRowList.get(3).getText().contains(tests));
 				Assert.assertTrue(homePage.headerRowList.get(4).getText().contains(dates));
 				Assert.assertTrue(homePage.headerRowList.get(5).getText().contains(assessedWith));
+				// Assert.assertTrue(homePage.headerRowList.get(6).getText().contains(testDataAssessedForGrade));
+
 				Thread.sleep(500);
-				
+
 				homePage.activePerformanceOverTimePage.click();
 				UtilityMethods.wait_For_Performance_Over_Time_Section_Load();
-				grade=UtilityMethods.getTestDataAssessedForGradeonUI();
-				teacherN=UtilityMethods.getTeacherNameonUI();
+				// grade = UtilityMethods.getTestDataAssessedForGradeonUI();
+				teacherN = UtilityMethods.getTeacherNameonUI();
 
-				Assert.assertTrue(homePage.printIcon.isDisplayed());			
+				Assert.assertTrue(homePage.printIcon.isDisplayed());
 				Assert.assertTrue(homePage.headerRowList.get(0).getText().contains(classN));
 				Assert.assertTrue(homePage.headerRowList.get(1).getText().contains(teacherN));
-				Assert.assertTrue(homePage.headerRowList.get(2).getText().contains(grade));
+				// Assert.assertTrue(homePage.headerRowList.get(2).getText().contains(grade));
 				Assert.assertTrue(homePage.headerRowList.get(3).getText().contains(school));
 				Assert.assertTrue(homePage.headerRowList.get(4).getText().contains(district));
 				Assert.assertTrue(homePage.headerRowList.get(5).getText().contains(tests));
 				Assert.assertTrue(homePage.headerRowList.get(6).getText().contains(dates));
 				Assert.assertTrue(homePage.headerRowList.get(7).getText().contains(assessedWith));
-				Thread.sleep(500);
-				
+
 				output = "pass";
 			} else if (Standard_Overview_Table_Steps.performanceMenuClicked
 					&& Standard_Overview_Table_Steps.underStudentContext) {
+				studentName = UtilityMethods.getStudentNameonUI();
+				teacherN = UtilityMethods.getTeacherNameonUI();
+				classN = UtilityMethods.getClassNameonUI();
+				school = UtilityMethods.getSchoolNameonUI();
+
 				Assert.assertTrue(homePage.printIcon.isDisplayed());
-				// studentId=UtilityMethods.getStudentId();
-				// grade=DatabaseConnection.getGradeTexonomyForStudent(DatabaseConnection.conn,
-				// schoolId, classId,studentId);
+
+				Assert.assertTrue(homePage.headerRowList.get(0).getText().contains(studentName));
+				Assert.assertTrue(homePage.headerRowList.get(1).getText().contains(classN));
+				Assert.assertTrue(homePage.headerRowList.get(2).getText().contains(teacherN));
+				Assert.assertTrue(homePage.headerRowList.get(3).getText().contains(school));
+				output = "pass";
+			} else if (Standard_Overview_Table_Steps.testScoreMenuClicked
+					&& Standard_Overview_Table_Steps.underStudentContext) {
+
+				studentName = UtilityMethods.getStudentNameonUI();
+				teacherN = UtilityMethods.getTeacherNameonUI();
+				classN = UtilityMethods.getClassNameonUI();
+				school = UtilityMethods.getSchoolNameonUI();
+				district = UtilityMethods.getDistrictNameonUI();
+				tests = UtilityMethods.getTestsNameonUI();
+				dates = UtilityMethods.getDatesonContextHeaderUI();
+
+				Assert.assertTrue(homePage.printIcon.isDisplayed());
+				Assert.assertTrue(homePage.headerRowList.get(0).getText().contains(studentName));
+				Assert.assertTrue(homePage.headerRowList.get(1).getText().contains(classN));
+				Assert.assertTrue(homePage.headerRowList.get(2).getText().contains(teacherN));
+				Assert.assertTrue(homePage.headerRowList.get(4).getText().contains(school));
+				Assert.assertTrue(homePage.headerRowList.get(5).getText().contains(district));
+				Assert.assertTrue(homePage.headerRowList.get(6).getText().contains(tests));
+				Assert.assertTrue(homePage.headerRowList.get(7).getText().contains(dates));
 
 				output = "pass";
-			} else if (Standard_Overview_Table_Steps.testScoreMenuClicked) {
-				try {
-					Assert.assertTrue(homePage.printIcon.isDisplayed());
-					UtilityMethods.processException(new Exception());
-				} catch (Exception e) {
-					output = "pass";
-				}
+			}
+
+			else if (Standard_Overview_Table_Steps.testScoreMenuClicked
+					&& Standard_Overview_Table_Steps.underClassContext) {
+				studentName = UtilityMethods.getStudentNameonUI();
+				teacherN = UtilityMethods.getTeacherNameonUI();
+				classN = UtilityMethods.getClassNameonUI();
+				school = UtilityMethods.getSchoolNameonUI();
+				district = UtilityMethods.getDistrictNameonUI();
+				tests = UtilityMethods.getTestsNameonUI();
+				dates = UtilityMethods.getDatesonContextHeaderUI();
+
+				Assert.assertTrue(homePage.printIcon.isDisplayed());
+				Assert.assertTrue(homePage.headerRowList.get(0).getText().contains(classN));
+				Assert.assertTrue(homePage.headerRowList.get(1).getText().contains(teacherN));
+				Assert.assertTrue(homePage.headerRowList.get(3).getText().contains(school));
+				Assert.assertTrue(homePage.headerRowList.get(4).getText().contains(district));
+				Assert.assertTrue(homePage.headerRowList.get(5).getText().contains(tests));
+				Assert.assertTrue(homePage.headerRowList.get(6).getText().contains(dates));
+
+				Assert.assertTrue(homePage.Test_score_detail_printIcon.isDisplayed());
+				Assert.assertTrue(homePage.test_score_detail_headerRowList.get(0).getText().contains(classN));
+				Assert.assertTrue(homePage.test_score_detail_headerRowList.get(1).getText().contains(teacherN));
+				Assert.assertTrue(homePage.test_score_detail_headerRowList.get(3).getText().contains(school));
+				Assert.assertTrue(homePage.test_score_detail_headerRowList.get(4).getText().contains(district));
+				Assert.assertTrue(homePage.test_score_detail_headerRowList.get(5).getText().contains(tests));
+				Assert.assertTrue(homePage.test_score_detail_headerRowList.get(6).getText().contains(dates));
+
+				output = "pass";
 			}
 
 		} catch (Exception e) {
@@ -264,22 +297,14 @@ public class Sprint_Nine_Steps {
 	}
 
 	/**
-	 * This method is used to verify the View Taxonomy on UI from DB as well
+	 * This method is used to verify the View Taxonomy on UI
 	 * 
 	 * @throws Throwable
 	 */
-	//TODO Untested , View Texonomy should be verified from apollo api and UI
 	@Then("^verify View Texonomy on Standard Performance$")
 	public void verify_View_Texonomy_on_Standard_Performance() throws Throwable {
 		String output = "fail", viewDDText = "";
-		Integer schoolId = 0, classId = 0;
 		try {
-			Map<Integer, Integer> ids = UtilityMethods.getSchoolIdAndClassId();
-			for (Map.Entry<Integer, Integer> entry : ids.entrySet()) {
-				schoolId = entry.getKey();
-				classId = entry.getValue();
-			}
-
 			if (Standard_Overview_Table_Steps.performanceMenuClicked) {
 				Assert.assertTrue(homePage.viewDropDown.isDisplayed());
 				if (homePage.viewDropDown.getText().contains("...")) {
@@ -289,9 +314,7 @@ public class Sprint_Nine_Steps {
 				} else {
 					viewDDText = homePage.viewDropDown.getText();
 				}
-				//TODO View Texonomy should be verified from apollo api and UI
-/*				Assert.assertTrue(viewDDText
-						.equals(DatabaseConnection.getViewTexonomy(DatabaseConnection.conn, schoolId, classId)));*/
+				Assert.assertTrue(API_Connection.getViewDetails().containsValue(viewDDText));
 				output = "pass";
 			} else if (Standard_Overview_Table_Steps.testScoreMenuClicked) {
 				try {

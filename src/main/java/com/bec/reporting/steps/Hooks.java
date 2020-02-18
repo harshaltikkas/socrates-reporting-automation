@@ -50,10 +50,6 @@ public class Hooks {
 	@Before
 	public void openBrowser() throws InterruptedException, IOException {
 		try {
-			/**
-			 * Initializing DB details and required Data from DB and API
-			 */
-			/**/
 			log.info(
 					"***********************************************************************************************************");
 			String browser;
@@ -69,7 +65,7 @@ public class Hooks {
 			reportBrowser = browser;
 			Reporter.assignAuthor("BenchMark Universal - Automation Tool");
 		} catch (Exception e) {
-			log.error("initConfig Error", e);
+			log.error("Error in initialization in Hook File...", e);
 		}
 	}
 

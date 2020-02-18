@@ -34,7 +34,7 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.PageFactory;
 import com.bec.reporting.pageobjects.HomePage;
 import com.bec.reporting.utils.CBTConfiguration;
-import com.bec.reporting.utils.DatabaseConnection;
+import com.bec.reporting.utils.API_Connection;
 import com.bec.reporting.utils.Driver;
 import com.bec.reporting.utils.IWait;
 import com.bec.reporting.utils.UtilityMethods;
@@ -65,24 +65,24 @@ public class RosterTabDropDownBehaviour {
 			throws Throwable {
 		try {
 			String defaultSelectedSchool, defaultSelectedClass, apiFirstSchool = "", apiFirstClass = "";
-			int school_list_size = DatabaseConnection.getAllSchoolNames().size();
+			int school_list_size = API_Connection.getAllSchoolNames().size();
 			int schoolId = 0, class_list_size = 0;
 			boolean disabled_classAndstudent = false;
 			if (school_list_size > 1) {
 				apiFirstSchool = "All";
 			} else if (school_list_size == 1) {
-				apiFirstSchool = DatabaseConnection.getFirstAlphaSchoolName();
-				schoolId = DatabaseConnection.getSchoolIDBySchoolName(apiFirstSchool);
+				apiFirstSchool = API_Connection.getFirstAlphaSchoolName();
+				schoolId = API_Connection.getSchoolIDBySchoolName(apiFirstSchool);
 			}
 
 			if (apiFirstSchool.equalsIgnoreCase("all")) {
 				disabled_classAndstudent = true;
 			} else {
-				class_list_size = DatabaseConnection.getAllClassesNamesBySchoolName(schoolId).size();
+				class_list_size = API_Connection.getAllClassesNamesBySchoolName(schoolId).size();
 				if (class_list_size > 1) {
 					apiFirstClass = "All";
 				} else if (class_list_size > 1) {
-					apiFirstClass = DatabaseConnection.getFirstAlphaClassNameBySchoolName(schoolId);
+					apiFirstClass = API_Connection.getFirstAlphaClassNameBySchoolName(schoolId);
 				}
 			}
 			Thread.sleep(500);
@@ -107,12 +107,12 @@ public class RosterTabDropDownBehaviour {
 				new Actions(Driver.webdriver).moveToElement(homePage.studentTitleOnSliderMenu).build().perform();
 				UtilityMethods.scrollPageDown(Driver.webdriver, 2);
 				Thread.sleep(500);
-				schoolId = DatabaseConnection.getSchoolIDBySchoolName(defaultSelectedSchool);
-				class_list_size = DatabaseConnection.getAllClassesNamesBySchoolName(schoolId).size();
+				schoolId = API_Connection.getSchoolIDBySchoolName(defaultSelectedSchool);
+				class_list_size = API_Connection.getAllClassesNamesBySchoolName(schoolId).size();
 				if (class_list_size > 1) {
 					apiFirstClass = "All";
 				} else if (class_list_size > 1) {
-					apiFirstClass = DatabaseConnection.getFirstAlphaClassNameBySchoolName(schoolId);
+					apiFirstClass = API_Connection.getFirstAlphaClassNameBySchoolName(schoolId);
 				}
 				if (homePage.classdropdownbtn.getText().contains("...")) {
 					new Actions(Driver.webdriver).moveToElement(homePage.classdropdownbtn).build().perform();
