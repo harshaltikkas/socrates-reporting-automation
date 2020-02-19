@@ -803,13 +803,13 @@ public class HomePage {
 	@FindBy(xpath="//span[@class='student-list-col-head-name active-student-list-col-head-name' and contains(text(),'Number of Questions')]/following-sibling::span/i[@class='material-icons' and contains(text(),'expand_less')]")
 	public WebElement studentListquestionuparrow;
 	
-	@FindBy(xpath="//div[@class='class_test_overview_table_progress_bar_title' and contains(text(),'School')]")
+	@FindBy(xpath="//div[@class='class_test_overview_table_progress_bar_title' and contains(text(),'School Average Scores:')]")
 	public WebElement schoolAvgScrInClassInTS;
 	
-	@FindBy(xpath="//div[@class='class_test_overview_table_progress_bar_title' and contains(text(),'Class')]")
+	@FindBy(xpath="//div[@class='class_test_overview_table_progress_bar_title' and contains(text(),'Class Average Scores:')]")
 	public WebElement classAvgScrInClassInTS;
-	
-	@FindBy(xpath="//div[@class='class_test_overview_table_progress_bar_title' and contains(text(),'District')]")
+
+	@FindBy(xpath="//div[@class='class_test_overview_table_progress_bar_title' and contains(text(),'District Average Scores:')]")
 	public WebElement districtAvgScrInClassInTS;
 	
 	@FindBy(xpath="//span[@class='student-list-col-head-name' and contains(text(),'Number of Questions')]/following-sibling::span//i[contains(text(),'expand_more')]")

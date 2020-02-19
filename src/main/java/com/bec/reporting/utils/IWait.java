@@ -29,7 +29,6 @@ import java.time.Duration;
 import java.time.Instant;
 import java.util.concurrent.TimeUnit;
 import org.openqa.selenium.By;
-import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -72,7 +71,7 @@ public class IWait {
 			Instant start = Instant.now();
 			log.info("Current Time after clicking on login button: " + java.time.LocalTime.now());
 			
-			new WebDriverWait(driver, 20).ignoring(StaleElementReferenceException.class)
+			new WebDriverWait(driver, 25).ignoring(StaleElementReferenceException.class)
 					.until(ExpectedConditions.visibilityOf(el));
 			
 			Instant end = Instant.now();
@@ -121,9 +120,9 @@ public class IWait {
 	public static boolean check_Absence_of_Element(WebElement el) {
 		try {
 			Assert.assertTrue(el.isDisplayed());
-			System.out.println("Element is still present");
+			log.error(el.getTagName()+" is still present");
 			UtilityMethods.processException(new Exception());
-		} catch (NoSuchElementException e) {
+		} catch (Exception e) {
 
 		}
 		return true;
