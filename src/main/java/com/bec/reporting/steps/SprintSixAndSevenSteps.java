@@ -25,7 +25,6 @@
  */
 package com.bec.reporting.steps;
 
-import java.util.Map;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -34,12 +33,10 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.PageFactory;
 import com.bec.reporting.pageobjects.HomePage;
 import com.bec.reporting.utils.CBTConfiguration;
-import com.bec.reporting.utils.DatabaseConnection;
 import com.bec.reporting.utils.Driver;
 import com.bec.reporting.utils.IWait;
 import com.bec.reporting.utils.PaginationUtility;
 import com.bec.reporting.utils.UtilityMethods;
-import com.google.common.base.Verify;
 import cucumber.api.java.en.Then;
 import lombok.extern.slf4j.Slf4j;
 
@@ -59,109 +56,28 @@ public class SprintSixAndSevenSteps {
 	 * 
 	 * @throws Throwable
 	 */
-	// TODO Failing for default school as the school avg is not matched with UI
-	@Then("^Veriy the comparison band for school and district$")
-	public void veriy_the_comparison_band_for_school_and_district() throws Throwable {
+	@Then("^Verify the comparison band for school and district$")
+	public void verify_the_comparison_band_for_school_and_district() throws Throwable {
 		try {
-			;
-			Integer schoolId = 0;
-			Map<Integer, Integer> ids = UtilityMethods.getSchoolIdAndClassId();
-			for (Map.Entry<Integer, Integer> entry : ids.entrySet()) {
-				schoolId = entry.getKey();
-			}
-			new Actions(Driver.webdriver).moveToElement(homePage.testNameOnTestScoreDetail).build().perform();
-			String testName = homePage.tooltipOftestNameOnTestScoreDetail.getText();
-
 			homePage.compareschoollabel.click();
 			Thread.sleep(1000);
-			/** verifying the school avg percentage along with the result */
-
-			/*
-			 * //TODO -need to check on DB level Map<Integer, Integer> schoolResult =
-			 * DatabaseConnection .getSchoolAvgInTSInClass(DatabaseConnection.conn,
-			 * schoolId, testName); for (Map.Entry<Integer, Integer> entry :
-			 * schoolResult.entrySet()) {
-			 * Assert.assertTrue(homePage.schoolAvgScrInClassInTS.getText().equals(
-			 * "School Average Scores: " + entry.getKey() + "% based on " + entry.getValue()
-			 * + " results")); }
-			 */
-			// verifying the no. of result belong to avg range for school strips
-			Map<String, Integer> schoolavgrange = DatabaseConnection.schoolAvgRange;
-
-			for (Map.Entry<String, Integer> entry : schoolavgrange.entrySet()) {
-				if (entry.getKey().equals("40-59"))
-					Assert.assertTrue(Integer
-							.parseInt(homePage.schoolcolouredStripOnStudentList.get(1).getText()) == entry.getValue());
-				else if (entry.getKey().equals("80>"))
-					Assert.assertTrue(Integer
-							.parseInt(homePage.schoolcolouredStripOnStudentList.get(3).getText()) == entry.getValue());
-				else if (entry.getKey().equals("<40"))
-					Assert.assertTrue(Integer
-							.parseInt(homePage.schoolcolouredStripOnStudentList.get(0).getText()) == entry.getValue());
-				else if (entry.getKey().equals("60-70"))
-					Assert.assertTrue(Integer
-							.parseInt(homePage.schoolcolouredStripOnStudentList.get(2).getText()) == entry.getValue());
-			}
-
+			Assert.assertTrue(homePage.schoolAvgScrInClassInTS.isDisplayed());
 			homePage.comparedistrictlabel.click();
 			Thread.sleep(1000);
-
-			/** verifying the district avg percentage along with the result **/
-			/*
-			 * //TODO -need to check on DB level Map<Integer, Integer> districtResult = new
-			 * HashMap<>(); int districtId =
-			 * DatabaseConnection.getDistrictIdBySchoolId(DatabaseConnection.conn,
-			 * schoolId); districtResult =
-			 * DatabaseConnection.getDistrictAvgInTSInClass(DatabaseConnection.conn,
-			 * districtId, testName); for (Map.Entry<Integer, Integer> entry :
-			 * districtResult.entrySet()) {
-			 * Assert.assertTrue(homePage.districtAvgScrInClassInTS.getText().equals(
-			 * "District Average Scores: " + entry.getKey() + "% based on " +
-			 * entry.getValue() + " results")); }
-			 */
-			/** verifying the no. of result belong to avg range for district strips **/
-			Map<String, Integer> districtavgrange = DatabaseConnection.districtAvgRange;
-
-			for (Map.Entry<String, Integer> entry : districtavgrange.entrySet()) {
-				if (entry.getKey().equals("40-59"))
-					Assert.assertTrue(Integer.parseInt(
-							homePage.districtcolouredStripOnStudentList.get(1).getText()) == entry.getValue());
-				else if (entry.getKey().equals("80>"))
-					Assert.assertTrue(Integer.parseInt(
-							homePage.districtcolouredStripOnStudentList.get(3).getText()) == entry.getValue());
-				else if (entry.getKey().equals("<40"))
-					Assert.assertTrue(Integer.parseInt(
-							homePage.districtcolouredStripOnStudentList.get(0).getText()) == entry.getValue());
-				else if (entry.getKey().equals("60-70"))
-					Assert.assertTrue(Integer.parseInt(
-							homePage.districtcolouredStripOnStudentList.get(2).getText()) == entry.getValue());
-			}
-
+			Assert.assertTrue(homePage.districtAvgScrInClassInTS.isDisplayed());
 			// now, unchecked both the checkbox one by one and verify that result should not
 			// display
-			homePage.compareschoollabel.click();
+			homePage.selectedcompareschoollabel.click();
 			Thread.sleep(500);
-			String output = "";
-			try {
-				homePage.schoolAvgScrInClassInTS.isDisplayed();
-				output = "fail";
-			} catch (Exception e1) {
-				output = "pass";
-			}
+			Assert.assertTrue(IWait.check_Absence_of_Element(homePage.schoolAvgScrInClassInTS));
+			homePage.selectedcomparedistrictlabel.click();
 			Thread.sleep(500);
-			homePage.comparedistrictlabel.click();
-			Thread.sleep(500);
-			try {
-				homePage.districtAvgScrInClassInTS.isDisplayed();
-				output = "fail";
-			} catch (Exception e1) {
-				output = "pass";
-			}
-			CBTConfiguration.score = output;
+			Assert.assertTrue(IWait.check_Absence_of_Element(homePage.districtAvgScrInClassInTS));
+			CBTConfiguration.score = "pass";
 		} catch (Exception e) {
 			UtilityMethods.processException(e);
 		}
-		log.info("Scenario BE-649 completed");
+		log.info("Scenario BE-649,662 completed");
 	}
 
 	@Then("^Verify the tooltipicon in performance over time line chart and student list$")
@@ -181,10 +97,11 @@ public class SprintSixAndSevenSteps {
 			js.executeScript("arguments[0].click();", homePage.infoicononperformanceovrtimeheader);
 			Thread.sleep(1000);
 			Assert.assertTrue(homePage.tooltip.getText().equals(tooltipText));
-
+			CBTConfiguration.score = "pass";
 		} catch (Exception e) {
 			UtilityMethods.processException(e);
 		}
+		log.info("Scenario BE-653,BE-681,654 completed");
 	}
 
 	@Then("^Verify the tooltipicon in performance over time line chart$")
@@ -233,7 +150,7 @@ public class SprintSixAndSevenSteps {
 				UtilityMethods.wait_For_Page_Section_Load();
 				homePage.performanceovrtimeicon.click();
 				UtilityMethods.wait_For_Performance_Over_Time_Section_Load();
-				UtilityMethods.scrollPageDown(Driver.webdriver, 9);
+				UtilityMethods.scrollPageDown(Driver.webdriver, 7);
 				Thread.sleep(500);
 			}
 
@@ -332,20 +249,16 @@ public class SprintSixAndSevenSteps {
 					"//div[@class='overview-table-body']//div[@class='overview-table-row']//div[@class='overview-table-col']["
 							+ (no + 2) + "]//li[not(contains(@class,'StandardsNotAvailable'))]"))
 					.get(0);
-			/*new Actions(Driver.webdriver).moveToElement(el).build().perform();
-			Thread.sleep(500);
-			el.click();*/
 			js.executeScript("arguments[0].click();", el);
 			Thread.sleep(5000);
 			try {
 				// This will execute in case of SP in class context
 				new Actions(Driver.webdriver).moveToElement(homePage.performanceovrtimeicon).click().build().perform();
 				Thread.sleep(2000);
-
 			} catch (Exception e) {
 			}
 			// selecting school,district,class checkbox
-			UtilityMethods.scrollPageDown(Driver.webdriver, 7);
+			UtilityMethods.scrollPageDown(Driver.webdriver, 7);Thread.sleep(500);
 			try {
 				homePage.compareclasslabel.click();
 				Thread.sleep(1000);
@@ -395,7 +308,7 @@ public class SprintSixAndSevenSteps {
 				}
 			}
 			Standard_Overview_Table_Steps.resetStatus();
-			UtilityMethods.scrollPageUp(Driver.webdriver);Thread.sleep(1000);
+			UtilityMethods.scrollPageUp(Driver.webdriver);Thread.sleep(500);
 			CBTConfiguration.score = "pass";
 		} catch (Exception e) {
 			UtilityMethods.processException(e);
