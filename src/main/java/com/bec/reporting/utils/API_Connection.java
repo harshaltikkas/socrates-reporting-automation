@@ -307,17 +307,13 @@ public class API_Connection {
 	 * 
 	 * @return
 	 */
-	public static String getFirstAlphaLastNameStudentByAlphaClassAndSchoolName() {
+	public static String getFirstAlphaLastNameStudentByAlphaClassAndSchoolName(int classId,int schoolId,int getDistrictId) {
 		String studentName = "";
 		Map<String, Integer> studentMap = new TreeMap<String, Integer>();
 		try {
-			String schoolName = getAllSchoolNames().keySet().stream().findFirst().get();
-			int schoolId = getSchoolIDBySchoolName(schoolName);
-			String className = getAllClassesNamesBySchoolName(schoolId).keySet().stream().findFirst().get();
-			int classId = getClassIDBySchoolIdAndClassName(schoolId, className);
 			prop = FileRead.readProperties();
 			String apiUrl = prop.getProperty("apiURL") + "/students?schoolId=" + schoolId + "&districtId="
-					+ getDistrictId() + "&classId=" + classId;
+					+ getDistrictId + "&classId=" + classId;
 			Response response = RestAssured.given().header("Authorization", "Bearer " + API_Connection.token)
 					.get(apiUrl);
 			if (response.getStatusCode() != 200) {

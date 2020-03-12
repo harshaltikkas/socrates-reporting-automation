@@ -480,7 +480,7 @@ public class FlyInMenuBehaviourSteps {
 			randomNumber = (int) (Math.random() * testCheckBoxListSize);
 			switch (testType) {
 			case "single":
-				selectedTestName = homePage.testnameslist.get(randomNumber).getText();
+				selectedTestName = homePage.testnameslist_on_test_tab.get(randomNumber).getText();
 				log.info("Selected Test :" + selectedTestName);
 				homePage.searchbarontesttab.sendKeys(selectedTestName);
 				Thread.sleep(500);
