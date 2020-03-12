@@ -29,7 +29,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -37,15 +36,14 @@ import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.PageFactory;
-
 import com.bec.reporting.pageobjects.HomePage;
 import com.bec.reporting.utils.CBTConfiguration;
 import com.bec.reporting.utils.Driver;
 import com.bec.reporting.utils.IWait;
+import com.bec.reporting.utils.PaginationUtility_for_Universal_Tab;
 import com.bec.reporting.utils.UtilityMethods;
 import com.google.common.base.Verify;
 import com.google.common.collect.Ordering;
-
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import lombok.extern.slf4j.Slf4j;
@@ -69,11 +67,11 @@ public class TestTabDesignAndBehaviourSteps {
 	@When("^User Click on Test tab within the Universal Selector Tab and click on 'All Checkbox'$")
 	public void user_Click_on_Test_tab_within_the_Universal_Selector_Tab_and_click_on_All_Checkbox() throws Throwable {
 		try {
+			// calling method to view the pagination on test tab
+			Standard_Overview_Table_Steps.paginationontesttab();
 			homePage.testtab.click();
 			IWait.explicit_wait(Driver.webdriver, homePage.searchbarontesttab);
 			Verify.verify(homePage.searchbarontesttab.isDisplayed());
-			// TC 44 will implement here, will check whether all checkbox checked or not
-			// bydefault
 			homePage.allcheckbox.click();
 			Thread.sleep(2000);
 			homePage.allcheckbox.click();
@@ -91,72 +89,38 @@ public class TestTabDesignAndBehaviourSteps {
 	@Then("^verify all the tests within that test list must be selected\\.$")
 	public void verify_all_the_tests_within_that_test_list_must_be_selected() throws Throwable {
 		try {
-			UtilityMethods.scrollPageDown(Driver.webdriver, 8);
-			boolean doneWithThreeCircle = false, disableRightArrowFound = false, enabledRightArrowFound = false,
-					paginatorFound = false;
-			WebElement enabledRightArrow = null;
-			List<WebElement> circleList = null;
-			try {
-				homePage.testpaginator.isDisplayed();
-				paginatorFound = true;
-			} catch (Exception e) {
-				log.info("Paginator Not Found");
-			}
-			if (paginatorFound) {
-				try {
-					circleList = homePage.testpaginationcirclelist;
-					enabledRightArrow = homePage.testenabledrightarrow;
-					enabledRightArrow.isDisplayed();
-					enabledRightArrowFound = true;
-				} catch (Exception e) {
-					log.info("Enabled Right Arrow on Paginator is not found");
+			UtilityMethods.scrollPageDown(Driver.webdriver, 10);
+			Thread.sleep(500);
+
+			// checking for paginator
+			if (PaginationUtility_for_Universal_Tab.checkPaginator_on_test_tab()) {
+				// this lool will execute for the no. of circle available on paginator
+				for (int i = 0; i < homePage.testpaginationcirclelist.size(); i++) {
+					PaginationUtility_for_Universal_Tab.click_On_Indexed_Circle_Of_Paginator(i);
+					Assert.assertTrue(homePage.testnameslist_on_test_tab.size() <= 10);
+					for (int j = 0; j < homePage.testnameslist_on_test_tab.size(); j++) {
+						Assert.assertTrue(
+								homePage.testscheckboxlistwithinput.get(j).getAttribute("value").equals("true"));
+					}
 				}
-				if (enabledRightArrowFound) {
-					do {
-						try {
-							homePage.testdisabledrightarrow.isDisplayed();
-							disableRightArrowFound = true;
-						} catch (Exception e) {
-							log.info("Disabled Right Arrow on Paginator is not found");
-						}
-						if (doneWithThreeCircle) {
-							circleList.get(2).click();
-							Thread.sleep(500);
-							for (int j = 0; j < homePage.testscheckboxlist.size(); j++) {
-								Assert.assertTrue(homePage.testscheckboxlistwithinput.get(j).getAttribute("value")
-										.equals("true"));
-							}
-						} else {
-							for (int i = 0; i < circleList.size(); i++) {
-								circleList.get(i).click();
-								Thread.sleep(500);
-								for (int j = 0; j < homePage.testscheckboxlist.size(); j++) {
-									Assert.assertTrue(homePage.testscheckboxlistwithinput.get(j).getAttribute("value")
-											.equals("true"));
-								}
-							}
-							doneWithThreeCircle = true;
-						}
-						try {
-							enabledRightArrow.click();
-						} catch (Exception e) {
-						}
-					} while (!disableRightArrowFound);
-				} else {
-					for (int i = 0; i < circleList.size(); i++) {
-						Thread.sleep(500);
-						circleList.get(i).click();
-						Thread.sleep(500);
-						for (int j = 0; j < homePage.testscheckboxlist.size(); j++) {
+				// check for right arrow enabled and click on it and click on last circle from
+				// left and validate
+				do {
+					if (PaginationUtility_for_Universal_Tab.check_Enabled_Right_Arrow_On_Paginator_On_Test_Tab()) {
+						PaginationUtility_for_Universal_Tab.click_On_Enabled_Right_Arrow_Of_Paginator_On_Test_Tab();
+						PaginationUtility_for_Universal_Tab.click_On_Last_Circle_Of_Paginator();
+						Assert.assertTrue(homePage.testnameslist_on_test_tab.size() <= 10);
+						for (int j = 0; j < homePage.testnameslist_on_test_tab.size(); j++) {
 							Assert.assertTrue(
 									homePage.testscheckboxlistwithinput.get(j).getAttribute("value").equals("true"));
 						}
 					}
-				}
-
+				} while (PaginationUtility_for_Universal_Tab.check_Enabled_Right_Arrow_On_Paginator_On_Test_Tab());
 			} else {
-				for (int i = 0; i < homePage.testscheckboxlist.size(); i++) {
-					Assert.assertTrue(homePage.testscheckboxlistwithinput.get(i).getAttribute("value").equals("true"));
+				// when paginator is not found
+				Assert.assertTrue(homePage.testnameslist_on_test_tab.size() <= 10);
+				for (int j = 0; j < homePage.testnameslist_on_test_tab.size(); j++) {
+					Assert.assertTrue(homePage.testscheckboxlistwithinput.get(j).getAttribute("value").equals("true"));
 				}
 			}
 			CBTConfiguration.score = "pass";
@@ -208,6 +172,7 @@ public class TestTabDesignAndBehaviourSteps {
 			String headerName, String toolTipText) throws Throwable {
 		try {
 			UtilityMethods.scrollPageDown(Driver.webdriver, 5);
+			Thread.sleep(500);
 			WebElement el = Driver.webdriver.findElement(
 					By.xpath("//div[@class='test-results-header']/div//span[contains(text(),'" + headerName + "')]"));
 			new Actions(Driver.webdriver).moveToElement(el).build().perform();
@@ -240,11 +205,11 @@ public class TestTabDesignAndBehaviourSteps {
 			Thread.sleep(500);
 			List<String> listItem = new ArrayList<String>();
 
-			for (int i = 0; i < homePage.testnameslist.size(); i++) {
-				if (homePage.testnameslist.get(i).getText().equals("")) {
-					UtilityMethods.scroll_Div(homePage.testnameslist.get(i), 20);
+			for (int i = 0; i < homePage.testnameslist_on_test_tab.size(); i++) {
+				if (homePage.testnameslist_on_test_tab.get(i).getText().equals("")) {
+					UtilityMethods.scroll_Div(homePage.testnameslist_on_test_tab.get(i), 20);
 				}
-				listItem.add(homePage.testnameslist.get(i).getText());
+				listItem.add(homePage.testnameslist_on_test_tab.get(i).getText());
 			}
 			Assert.assertTrue(Ordering.natural().isOrdered(listItem));
 			listItem.clear();
@@ -256,11 +221,11 @@ public class TestTabDesignAndBehaviourSteps {
 			js.executeScript("arguments[0].click();", homePage.namedownarrow);
 			Thread.sleep(500);
 
-			for (int i = 0; i < homePage.testnameslist.size(); i++) {
-				if (homePage.testnameslist.get(i).getText().equals("")) {
-					UtilityMethods.scroll_Div(homePage.testnameslist.get(i), 20);
+			for (int i = 0; i < homePage.testnameslist_on_test_tab.size(); i++) {
+				if (homePage.testnameslist_on_test_tab.get(i).getText().equals("")) {
+					UtilityMethods.scroll_Div(homePage.testnameslist_on_test_tab.get(i), 20);
 				}
-				listItem.add(homePage.testnameslist.get(i).getText());
+				listItem.add(homePage.testnameslist_on_test_tab.get(i).getText());
 			}
 			Assert.assertTrue(Ordering.natural().reverse().isOrdered(listItem));
 			listItem.clear();
@@ -308,11 +273,10 @@ public class TestTabDesignAndBehaviourSteps {
 				dateItem.add(sdf.parse(homePage.earliestdatelist.get(i).getText()));
 			}
 
-			Assert.assertTrue(UtilityMethods.isDatesSortedInDecendingOrder(dateItem));
+			Assert.assertTrue(UtilityMethods.isDatesSortedInAscendingOrder(dateItem));
 			dateItem.clear();
 
 			// clicking on Earliest Date down arrow
-			Thread.sleep(500);
 			js.executeScript("arguments[0].click();", homePage.earliestdatedownarrow);
 			Thread.sleep(500);
 
@@ -323,7 +287,7 @@ public class TestTabDesignAndBehaviourSteps {
 				dateItem.add(sdf.parse(homePage.earliestdatelist.get(i).getText()));
 			}
 
-			Assert.assertTrue(UtilityMethods.isDatesSortedInAscendingOrder(dateItem));
+			Assert.assertTrue(UtilityMethods.isDatesSortedInDecendingOrder(dateItem));
 			dateItem.clear();
 
 			// clicking on latest result up arrow
@@ -369,12 +333,21 @@ public class TestTabDesignAndBehaviourSteps {
 	@Then("^verify earliest date is dispalying in descending order$")
 	public void verify_earliest_date_is_dispalying_in_descending_order() throws Throwable {
 		try {
-			List<String> listItem = new ArrayList<String>();
+			// Create a SimpleDateFormat object for Date String converting.
+			SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+
+			// Create a Date list.
+			List<Date> dateItem = new ArrayList<Date>();
+
 			for (int i = 0; i < homePage.earliestdatelist.size(); i++) {
-				listItem.add(homePage.earliestdatelist.get(i).getText());
+				if (homePage.earliestdatelist.get(i).getText().equals("")) {
+					UtilityMethods.scroll_Div(homePage.earliestdatelist.get(i), 20);
+				}
+				dateItem.add(sdf.parse(homePage.earliestdatelist.get(i).getText()));
 			}
-			Assert.assertTrue(Ordering.natural().reverse().isOrdered(listItem));
-			listItem.clear();
+
+			Assert.assertTrue(UtilityMethods.isDatesSortedInDecendingOrder(dateItem));
+			dateItem.clear();
 
 			CBTConfiguration.score = "pass";
 		} catch (Exception e) {
@@ -403,12 +376,14 @@ public class TestTabDesignAndBehaviourSteps {
 			try {
 				Verify.verify(homePage.norecordontestsearch.isDisplayed());
 				homePage.searchcancelontestsearchbar.click();
-			} catch (NoSuchElementException ne) {
-				testcount = homePage.testnameslist.size();
-				selectedTest = (int) (Math.random() * testcount);
-				UtilityMethods.scroll_Div(homePage.testnameslist.get(selectedTest), 20);
 				Thread.sleep(500);
-				homePage.testnameslist.get(selectedTest).click();
+			} catch (NoSuchElementException ne) {
+				testcount = homePage.testnameslist_on_test_tab.size();
+				selectedTest = (int) (Math.random() * testcount);
+				UtilityMethods.scroll_Div(homePage.testnameslist_on_test_tab.get(selectedTest), 20);
+				Thread.sleep(500);
+				homePage.testnameslist_on_test_tab.get(selectedTest).click();
+				Thread.sleep(500);
 			}
 			Thread.sleep(500);
 			CBTConfiguration.score = "pass";
@@ -428,7 +403,8 @@ public class TestTabDesignAndBehaviourSteps {
 	public void search_anything_and_get_the_result_the_result_count_will_not_impact_on_no_of_total_tests()
 			throws Throwable {
 		try {
-			UtilityMethods.scrollPageDown(Driver.webdriver, 8);
+			UtilityMethods.scrollPageDown(Driver.webdriver, 6);
+			Thread.sleep(500);
 			homePage.allcheckbox.click();
 			Thread.sleep(500);
 			// Counting the total test
@@ -444,15 +420,7 @@ public class TestTabDesignAndBehaviourSteps {
 
 			Thread.sleep(500);
 			String str = homePage.totaltestcount.getText();
-			try {
-				// for Master
-				Assert.assertTrue(str.substring(0, str.indexOf(" Tests")).equals(String.valueOf(totalTestCount)));
-
-			} catch (Exception e) {
-				// for Dev
-				Assert.assertTrue(str.substring(str.indexOf("/") + 1).equals(String.valueOf(totalTestCount)));
-			}
-
+			Assert.assertTrue(str.substring(str.indexOf("/") + 1).equals(String.valueOf(totalTestCount)));
 			CBTConfiguration.score = "pass";
 		} catch (Exception e) {
 			UtilityMethods.processException(e);
@@ -469,66 +437,29 @@ public class TestTabDesignAndBehaviourSteps {
 	public static int countTotalTest() {
 		HomePage homePage = PageFactory.initElements(Driver.webdriver, HomePage.class);
 		try {
-			boolean doneWithThreeCircle = false, disableRightArrowFound = false, enabledRightArrowFound = false,
-					paginatorFound = false;
-			WebElement enabledRightArrow = null;
-			List<WebElement> circleList = null;
-			try {
-				homePage.testpaginator.isDisplayed();
-				paginatorFound = true;
-			} catch (Exception e) {
-				log.info("Paginator Not Found");
-			}
-			if (paginatorFound) {
-				try {
-					circleList = homePage.testpaginationcirclelist;
-					enabledRightArrow = homePage.testenabledrightarrow;
-					enabledRightArrow.isDisplayed();
-					enabledRightArrowFound = true;
-				} catch (Exception e) {
-					log.info("Enabled Right Arrow on Paginator is not found");
+			// checking for paginator
+			if (PaginationUtility_for_Universal_Tab.checkPaginator_on_test_tab()) {
+				// this lool will execute for the no. of circle available on paginator
+				for (int i = 0; i < homePage.testpaginationcirclelist.size(); i++) {
+					PaginationUtility_for_Universal_Tab.click_On_Indexed_Circle_Of_Paginator(i);
+					totalTestCount += homePage.testscheckboxlist.size();
 				}
-				if (enabledRightArrowFound) {
-					do {
-						try {
-							homePage.testdisabledrightarrow.isDisplayed();
-							disableRightArrowFound = true;
-						} catch (Exception e) {
-							log.info("Disabled Right Arrow on Paginator is not found");
-						}
-						if (doneWithThreeCircle) {
-							circleList.get(2).click();
-							Thread.sleep(500);
-							totalTestCount += homePage.testscheckboxlist.size();
-						} else {
-							for (int i = 0; i < circleList.size(); i++) {
-								circleList.get(i).click();
-								Thread.sleep(500);
-								totalTestCount += homePage.testscheckboxlist.size();
-							}
-							doneWithThreeCircle = true;
-						}
-						try {
-							enabledRightArrow.click();
-						} catch (Exception e) {
-						}
-					} while (!disableRightArrowFound);
-				} else {
-					for (int i = 0; i < circleList.size(); i++) {
-						Thread.sleep(500);
-						circleList.get(i).click();
-						Thread.sleep(500);
+				// check for right arrow enabled and click on it and click on last circle from
+				// left and validate
+				do {
+					if (PaginationUtility_for_Universal_Tab.check_Enabled_Right_Arrow_On_Paginator_On_Test_Tab()) {
+						PaginationUtility_for_Universal_Tab.click_On_Enabled_Right_Arrow_Of_Paginator_On_Test_Tab();
+						PaginationUtility_for_Universal_Tab.click_On_Last_Circle_Of_Paginator();
 						totalTestCount += homePage.testscheckboxlist.size();
 					}
-				}
-
+				} while (PaginationUtility_for_Universal_Tab.check_Enabled_Right_Arrow_On_Paginator_On_Test_Tab());
 			} else {
+				// when paginator is not found
 				totalTestCount += homePage.testscheckboxlist.size();
 			}
 		} catch (Exception e) {
 			UtilityMethods.processException(e);
 		}
 		return totalTestCount;
-
 	}
 }

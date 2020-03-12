@@ -38,7 +38,7 @@ import com.bec.reporting.utils.CBTConfiguration;
 import com.bec.reporting.utils.DatabaseConnection;
 import com.bec.reporting.utils.Driver;
 import com.bec.reporting.utils.IWait;
-import com.bec.reporting.utils.PaginationUtility;
+import com.bec.reporting.utils.PaginationUtility_for_Pages;
 import com.bec.reporting.utils.UtilityMethods;
 import com.google.common.base.Verify;
 import com.google.common.collect.Ordering;
@@ -80,7 +80,7 @@ public class Single_Test_Analysis_Steps {
 			log.info("validation of District Wise Question And Test Score Avg In STA DB and UI successfull");*/
 			homePage.testtab.click();
 			Thread.sleep(1000);
-			Assert.assertTrue(testNameOnCH.equals(homePage.testnameslist.get(0).getText()));
+			Assert.assertTrue(testNameOnCH.equals(homePage.testnameslist_on_test_tab.get(0).getText()));
 			Thread.sleep(500);
 			WebElement el = Driver.webdriver.findElements(By.xpath(
 					"//div[@class='test-results-row-set']//div[@class='test-results-col-full']/preceding-sibling::div/div/input"))
@@ -145,15 +145,15 @@ public class Single_Test_Analysis_Steps {
 
 			homePage.testtab.click();
 			Thread.sleep(1000);
-			Assert.assertTrue(testNameOnCH.equals(homePage.testnameslist.get(0).getText()));
+			Assert.assertTrue(testNameOnCH.equals(homePage.testnameslist_on_test_tab.get(0).getText()));
 			Thread.sleep(500);
 			Assert.assertTrue(homePage.testscheckboxlistwithinput.get(0).getAttribute("value").equals("true"));
 			Thread.sleep(500);
 			UtilityMethods.scrollPageDown(Driver.webdriver, 8);
 			Thread.sleep(500);
-			int testCount = homePage.testnameslist.size();
+			int testCount = homePage.testnameslist_on_test_tab.size();
 
-			homePage.testnameslist.get(UtilityMethods.generateRandomNumberBySkippingIndex(testCount, 0)).click();
+			homePage.testnameslist_on_test_tab.get(UtilityMethods.generateRandomNumberBySkippingIndex(testCount, 0)).click();
 			Thread.sleep(500);
 			Assert.assertTrue(homePage.testscheckboxlistwithinput.get(0).getAttribute("value").equals("false"));
 			Thread.sleep(500);
@@ -227,11 +227,11 @@ public class Single_Test_Analysis_Steps {
 			UtilityMethods.scrollPageDown(Driver.webdriver, 12);
 			Thread.sleep(500);
 			// checking for paginator
-			if (PaginationUtility.checkPaginator_on_sta()) {
+			if (PaginationUtility_for_Pages.checkPaginator_on_sta()) {
 				// this loop will execute for the no. of circle available on paginator
-				for (int i = 0; i < PaginationUtility.circleList.size(); i++) {
-					PaginationUtility.clicking_on_indexed_circle_of_paginator(i);
-
+				for (int i = 0; i < homePage.circle_list_on_paginator_on_sta.size(); i++) {
+					PaginationUtility_for_Pages.clicking_on_indexed_circle_of_paginator(homePage.circle_list_on_paginator_on_sta,i);
+					Assert.assertTrue(homePage.records_on_sta.size()<=10);
 					for (int j = 0; j < homePage.records_on_sta.size(); j++) {
 						ui_short_value_list.add(homePage.short_values_on_sta.get(j).getText());
 						ui_question_list.add(homePage.questions_values_on_sta.get(j).getText());
@@ -241,21 +241,20 @@ public class Single_Test_Analysis_Steps {
 				// check for right arrow enabled and click on it and click on first circle and
 				// validate
 				do {
-					if (PaginationUtility.check_Enabled_Right_Arrow_on_Paginator_on_sta()) {
-						PaginationUtility.clicking_on_enabled_right_Arrow_of_paginator();
-						PaginationUtility.clicking_on_first_circle_of_paginator();
-
+					if (PaginationUtility_for_Pages.check_Enabled_Right_Arrow_on_Paginator_on_sta()) {
+						PaginationUtility_for_Pages.clicking_on_enabled_right_Arrow_of_paginator_on__sta();
+						PaginationUtility_for_Pages.clicking_on_last_circle_of_paginator(homePage.circle_list_on_paginator_on_sta);
+						Assert.assertTrue(homePage.records_on_sta.size()<=10);
 						for (int j = 0; j < homePage.records_on_sta.size(); j++) {
 							ui_short_value_list.add(homePage.short_values_on_sta.get(j).getText());
 							ui_question_list.add(homePage.questions_values_on_sta.get(j).getText());
 							ui_test_score_avg_list.add(homePage.test_score_values_on_sta.get(j).getText());
 						}
-					} else {
-						break;
 					}
-				} while (!(PaginationUtility.check_Disabled_Right_Arrow_on_Paginator()));
+				} while (PaginationUtility_for_Pages.check_Enabled_Right_Arrow_on_Paginator_on_sta());
 			} else {
 				// when paginator is not found
+				Assert.assertTrue(homePage.records_on_sta.size()<=10);
 				for (int i = 0; i < homePage.records_on_sta.size(); i++) {
 					ui_short_value_list.add(homePage.short_values_on_sta.get(i).getText());
 					ui_question_list.add(homePage.questions_values_on_sta.get(i).getText());

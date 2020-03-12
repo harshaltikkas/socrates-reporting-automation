@@ -55,9 +55,9 @@ public class Sprint_Nine_Steps {
 		try {
 			if (Standard_Overview_Table_Steps.underClassContext
 					&& Standard_Overview_Table_Steps.performanceMenuClicked) {
-				UtilityMethods.wait_For_Performance_Over_Time_Section_Load();
-				new Actions(Driver.webdriver).moveToElement(homePage.performanceovrtimeicon).click().build().perform();
-				UtilityMethods.wait_For_Performance_Over_Time_Section_Load();
+				UtilityMethods.wait_For_Performance_Over_Time_Line_Chart_Section_Load();
+				new Actions(Driver.webdriver).moveToElement(homePage.performance_overtime_icon).click().build().perform();
+				UtilityMethods.wait_For_Performance_Over_Time_Line_Chart_Section_Load();
 			} else {
 				log.info("This will execute with student context");
 			}
@@ -207,7 +207,7 @@ public class Sprint_Nine_Steps {
 				Thread.sleep(500);
 
 				homePage.activePerformanceOverTimePage.click();
-				UtilityMethods.wait_For_Performance_Over_Time_Section_Load();
+				UtilityMethods.wait_For_Performance_Over_Time_Line_Chart_Section_Load();
 				// grade = UtilityMethods.getTestDataAssessedForGradeonUI();
 				teacherN = UtilityMethods.getTeacherNameonUI();
 

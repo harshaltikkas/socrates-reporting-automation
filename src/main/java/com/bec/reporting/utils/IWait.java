@@ -71,7 +71,7 @@ public class IWait {
 			Instant start = Instant.now();
 			log.info("Current Time after clicking on login button: " + java.time.LocalTime.now());
 			
-			new WebDriverWait(driver, 25).ignoring(StaleElementReferenceException.class)
+			new WebDriverWait(driver, 90).ignoring(StaleElementReferenceException.class)
 					.until(ExpectedConditions.visibilityOf(el));
 			
 			Instant end = Instant.now();

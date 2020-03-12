@@ -35,6 +35,7 @@ import com.bec.reporting.pageobjects.HomePage;
 import com.bec.reporting.utils.CBTConfiguration;
 import com.bec.reporting.utils.Driver;
 import com.bec.reporting.utils.IWait;
+import com.bec.reporting.utils.PaginationUtility_for_Universal_Tab;
 import com.bec.reporting.utils.UtilityMethods;
 import com.google.common.base.Verify;
 
@@ -63,85 +64,53 @@ public class PaginationOfDropDownListSteps {
 	public void paginator_will_be_displayed_test_list_items_per_page_should_be_and_totalitemlist_more_than_items_arrows_will_appear_in_both_side_of_circle_in_paginator(
 			int listItemPerPage, int itemLimitForPagination) throws Throwable {
 		try {
-			UtilityMethods.scrollPageDown(Driver.webdriver, 8);Thread.sleep(500);
+			UtilityMethods.scrollPageDown(Driver.webdriver, 8);
+			Thread.sleep(500);
 			int pageCount = 0;
-			boolean doneWithThreeCircle = false, disableRightArrowFound = false, enabledRightArrowFound = false,
-					paginatorFound = false;
-			WebElement enabledRightArrow = null, enabledLeftArrow = null;
-			List<WebElement> circleList = null;
-			try {
-				homePage.testpaginator.isDisplayed();
-				paginatorFound = true;
-			} catch (Exception e) {
-				log.info("Paginator Not Found");
-			}
-			if (paginatorFound) {
-				try {
-					circleList = homePage.testpaginationcirclelist;
-					enabledRightArrow = homePage.testenabledrightarrow;
-					enabledRightArrow.isDisplayed();
-					enabledRightArrowFound = true;
-				} catch (Exception e) {
-					log.info("Enabled Right Arrow on Paginator is not found");
-				}
-				if (enabledRightArrowFound) {
-					do {
-						try {
-							homePage.testdisabledrightarrow.isDisplayed();
-							disableRightArrowFound = true;
-						} catch (Exception e) {
-							log.info("Disabled Right Arrow on Paginator is not found");
-						}
-						if (doneWithThreeCircle) {
-							circleList.get(2).click();
-							Thread.sleep(500);
-							pageCount++;
-							countPerPage = homePage.testscheckboxlist.size();
-							totalCount += countPerPage;
-							log.info(" list size on page:" + pageCount + " is " + countPerPage);
-							Assert.assertTrue(countPerPage <= listItemPerPage);
-						} else {
-							for (int i = 0; i < circleList.size(); i++) {
-								circleList.get(i).click();
-								Thread.sleep(500);
-								pageCount++;
-								countPerPage = homePage.testscheckboxlist.size();
-								totalCount += countPerPage;
-								log.info(" list size on page:" + pageCount + " is " + countPerPage);
-								Assert.assertTrue(countPerPage <= listItemPerPage);
-							}
-							doneWithThreeCircle = true;
-						}
-						try {
-							enabledRightArrow.click();
-							Thread.sleep(500);
-							enabledLeftArrow = homePage.testenabledleftarrow;
-							enabledLeftArrow.isDisplayed();
-						} catch (Exception e) {
-						}
-					} while (!disableRightArrowFound);
-				} else {
-					for (int i = 0; i < circleList.size(); i++) {
-						circleList.get(i).click();
-						Thread.sleep(500);
+			// checking for paginator
+			if (PaginationUtility_for_Universal_Tab.checkPaginator_on_test_tab()) {
+				// this lool will execute for the no. of circle available on paginator
+				for (int i = 0; i < homePage.testpaginationcirclelist.size(); i++) {
+					PaginationUtility_for_Universal_Tab.click_On_Indexed_Circle_Of_Paginator(i);
+					Assert.assertTrue(homePage.testnameslist_on_test_tab.size() <= 10);
+					for (int j = 0; j < homePage.testnameslist_on_test_tab.size(); j++) {
 						pageCount++;
 						countPerPage = homePage.testscheckboxlist.size();
 						totalCount += countPerPage;
 						log.info(" list size on page:" + pageCount + " is " + countPerPage);
 						Assert.assertTrue(countPerPage <= listItemPerPage);
-
 					}
 				}
-				paginatorFound = false;
+				// check for right arrow enabled and click on it and click on last circle from
+				// left and validate
+				do {
+					if (PaginationUtility_for_Universal_Tab.check_Enabled_Right_Arrow_On_Paginator_On_Test_Tab()) {
+						PaginationUtility_for_Universal_Tab.click_On_Enabled_Right_Arrow_Of_Paginator_On_Test_Tab();
+						PaginationUtility_for_Universal_Tab.click_On_Last_Circle_Of_Paginator();
+						Assert.assertTrue(homePage.testnameslist_on_test_tab.size() <= 10);
+						for (int j = 0; j < homePage.testnameslist_on_test_tab.size(); j++) {
+							pageCount++;
+							countPerPage = homePage.testscheckboxlist.size();
+							totalCount += countPerPage;
+							log.info(" list size on page:" + pageCount + " is " + countPerPage);
+							Assert.assertTrue(countPerPage <= listItemPerPage);
+						}
+					}
+				} while (PaginationUtility_for_Universal_Tab.check_Enabled_Right_Arrow_On_Paginator_On_Test_Tab());
 			} else {
-				pageCount++;
-				countPerPage = homePage.testscheckboxlist.size();
-				totalCount += countPerPage;
-				log.info(" list size on page:" + pageCount + " is " + countPerPage);
-				Assert.assertTrue(countPerPage <= listItemPerPage);
-
+				// when paginator is not found
+				Assert.assertTrue(homePage.testnameslist_on_test_tab.size() <= 10);
+				for (int j = 0; j < homePage.testnameslist_on_test_tab.size(); j++) {
+					pageCount++;
+					countPerPage = homePage.testscheckboxlist.size();
+					totalCount += countPerPage;
+					log.info(" list size on page:" + pageCount + " is " + countPerPage);
+					Assert.assertTrue(countPerPage <= listItemPerPage);
+				}
 			}
+
 			UtilityMethods.scrollPageUp(Driver.webdriver);
+			Thread.sleep(500);
 			CBTConfiguration.score = "pass";
 		} catch (Exception e) {
 			UtilityMethods.processException(e);
@@ -189,18 +158,22 @@ public class PaginationOfDropDownListSteps {
 			homePage.teachersdropdownbtn.click();
 			Thread.sleep(500);
 			check_paginator_on_Roster("Teacher", 20);
-/*			UtilityMethods.uncheck_check_All("Teacher");
-			homePage.teacherslist.get(1).click();*/
+			/*
+			 * UtilityMethods.uncheck_check_All("Teacher");
+			 * homePage.teacherslist.get(1).click();
+			 */
 			Thread.sleep(500);
 			homePage.teachersdropdownbtn.click();
 			Thread.sleep(500);
-			
-			UtilityMethods.scrollPageDown(Driver.webdriver, 3);Thread.sleep(500);
+
+			UtilityMethods.scrollPageDown(Driver.webdriver, 3);
+			Thread.sleep(500);
 			homePage.classdropdownbtn.click();
 			Thread.sleep(500);
 			check_paginator_on_Roster("Class", 20);
-/*			UtilityMethods.uncheck_check_All("Class");
-			homePage.classlist.get(1).click();*/
+			/*
+			 * UtilityMethods.uncheck_check_All("Class"); homePage.classlist.get(1).click();
+			 */
 			Thread.sleep(500);
 			homePage.classdropdownbtn.click();
 			Thread.sleep(500);
@@ -208,8 +181,10 @@ public class PaginationOfDropDownListSteps {
 			homePage.studentdropdownbtn.click();
 			Thread.sleep(500);
 			check_paginator_on_Roster("Student", 20);
-/*			UtilityMethods.uncheck_check_All("Student");
-			homePage.studentlistondropdown.get(1).click();*/
+			/*
+			 * UtilityMethods.uncheck_check_All("Student");
+			 * homePage.studentlistondropdown.get(1).click();
+			 */
 			Thread.sleep(500);
 			homePage.studentdropdownbtn.click();
 			Thread.sleep(500);
@@ -227,7 +202,7 @@ public class PaginationOfDropDownListSteps {
 				List<WebElement> list = Driver.webdriver
 						.findElements(By.xpath("//div[@class='menu-title' and contains(text(),'" + dropDownHeader
 								+ "')]/following-sibling::div//div[@class='menu-dropdown-list-inr']//ul//div/li"));
-				log.info("List Size for "+dropDownHeader+" is "+list.size());
+				log.info("List Size for " + dropDownHeader + " is " + list.size());
 				Assert.assertTrue(list.size() <= listSize);
 			} catch (Exception e) {
 				log.error("List Size is more than 20 for " + dropDownHeader);

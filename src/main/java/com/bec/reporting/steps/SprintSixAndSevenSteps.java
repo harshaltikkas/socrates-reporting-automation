@@ -35,7 +35,7 @@ import com.bec.reporting.pageobjects.HomePage;
 import com.bec.reporting.utils.CBTConfiguration;
 import com.bec.reporting.utils.Driver;
 import com.bec.reporting.utils.IWait;
-import com.bec.reporting.utils.PaginationUtility;
+import com.bec.reporting.utils.PaginationUtility_for_Pages;
 import com.bec.reporting.utils.UtilityMethods;
 import cucumber.api.java.en.Then;
 import lombok.extern.slf4j.Slf4j;
@@ -47,7 +47,7 @@ public class SprintSixAndSevenSteps {
 	 * This is used to initialize webelement of the webpages
 	 */
 	HomePage homePage = PageFactory.initElements(Driver.webdriver, HomePage.class);
-	static String tooltipText = "Note: Average Score for all standards reports equals (earned points/total points)*100";
+	static String tooltipText_of_avg_score_heading = "Note: Average Score for all standards reports equals (earned points/total points)*100";
 	JavascriptExecutor js = (JavascriptExecutor) Driver.webdriver;
 
 	/**
@@ -84,19 +84,19 @@ public class SprintSixAndSevenSteps {
 	public void verify_the_tooltipicon_in_performance_over_time_line_chart_and_student_list() throws Throwable {
 		try {
 			UtilityMethods.wait_For_Page_Section_Load();
-			js.executeScript("arguments[0].click();", homePage.performanceovrtimeicon);
+			js.executeScript("arguments[0].click();", homePage.performance_overtime_icon);
 			Thread.sleep(1000);
-			Assert.assertTrue(homePage.infoicononperformanceovrtimeheader.isDisplayed());
-			js.executeScript("arguments[0].click();", homePage.infoicononperformanceovrtimeheader);
+			Assert.assertTrue(homePage.info_icon_on_performance_over_time_header.isDisplayed());
+			js.executeScript("arguments[0].click();", homePage.info_icon_on_performance_over_time_header);
 			Thread.sleep(1000);
-			Assert.assertTrue(homePage.tooltip.getText().equals(tooltipText));
+			Assert.assertTrue(homePage.tooltip_of_info_icon.getText().equals(tooltipText_of_avg_score_heading));
 			Thread.sleep(1000);
-			new Actions(Driver.webdriver).moveToElement(homePage.performanceovrtimeicon).click().build().perform();
+			new Actions(Driver.webdriver).moveToElement(homePage.performance_overtime_icon).click().build().perform();
 			Thread.sleep(2000);
-			Assert.assertTrue(homePage.infoicononperformanceovrtimeheader.isDisplayed());
-			js.executeScript("arguments[0].click();", homePage.infoicononperformanceovrtimeheader);
+			Assert.assertTrue(homePage.info_icon_on_performance_over_time_header.isDisplayed());
+			js.executeScript("arguments[0].click();", homePage.info_icon_on_performance_over_time_header);
 			Thread.sleep(1000);
-			Assert.assertTrue(homePage.tooltip.getText().equals(tooltipText));
+			Assert.assertTrue(homePage.tooltip_of_info_icon.getText().equals(tooltipText_of_avg_score_heading));
 			CBTConfiguration.score = "pass";
 		} catch (Exception e) {
 			UtilityMethods.processException(e);
@@ -109,11 +109,11 @@ public class SprintSixAndSevenSteps {
 		try {
 			UtilityMethods.wait_For_Page_Section_Load();
 			Thread.sleep(2000);
-			Assert.assertTrue(homePage.infoicononperformanceovrtimeheader.isDisplayed());
+			Assert.assertTrue(homePage.info_icon_on_performance_over_time_header.isDisplayed());
 			Thread.sleep(1000);
-			js.executeScript("arguments[0].click();", homePage.infoicononperformanceovrtimeheader);
+			js.executeScript("arguments[0].click();", homePage.info_icon_on_performance_over_time_header);
 			Thread.sleep(1000);
-			Assert.assertTrue(homePage.tooltip.getText().equals(tooltipText));
+			Assert.assertTrue(homePage.tooltip_of_info_icon.getText().equals(tooltipText_of_avg_score_heading));
 		} catch (Exception e) {
 			UtilityMethods.processException(e);
 		}
@@ -122,7 +122,7 @@ public class SprintSixAndSevenSteps {
 	@Then("^Verify the tooltipicon is not present$")
 	public void verify_the_tooltipicon_is_not_present() throws Throwable {
 		try {
-			Assert.assertTrue(homePage.infoicononperformanceovrtimeheader.isDisplayed());
+			Assert.assertTrue(homePage.info_icon_on_performance_over_time_header.isDisplayed());
 			CBTConfiguration.score = "fail";
 		} catch (Exception e) {
 			CBTConfiguration.score = "pass";
@@ -148,17 +148,18 @@ public class SprintSixAndSevenSteps {
 			if ((Standard_Overview_Table_Steps.underClassContext || Standard_Overview_Table_Steps.underStudentContext)
 					&& Standard_Overview_Table_Steps.performanceMenuClicked) {
 				UtilityMethods.wait_For_Page_Section_Load();
-				homePage.performanceovrtimeicon.click();
-				UtilityMethods.wait_For_Performance_Over_Time_Section_Load();
+				homePage.performance_overtime_icon.click();
+				UtilityMethods.wait_For_Performance_Over_Time_Line_Chart_Section_Load();
 				UtilityMethods.scrollPageDown(Driver.webdriver, 7);
 				Thread.sleep(500);
 			}
 
 			// checking for paginator
-			if (PaginationUtility.checkPaginator()) {
+			if (PaginationUtility_for_Pages.checkPaginator_on_pot_under_standard_performance()) {
 				// this lool will execute for the no. of circle available on paginator
-				for (int i = PaginationUtility.circleList.size() - 1; i >= 0; i--) {
-					PaginationUtility.clicking_on_indexed_circle_of_paginator(i);
+				for (int i = homePage.circle_list_on_paginator_on_pot_under_sp.size() - 1; i >= 0; i--) {
+					PaginationUtility_for_Pages.clicking_on_indexed_circle_of_paginator(
+							homePage.circle_list_on_paginator_on_pot_under_sp, i);
 					Assert.assertTrue(homePage.testNamesonPerPage_onlinechart.size() <= 10);
 					for (int j = homePage.testNamesonPerPage_onlinechart.size() - 1; j >= 0; j--) {
 						Assert.assertTrue(homePage.diamondshapesymblonPerPage_onlinechart.get(j).isDisplayed());
@@ -180,9 +181,12 @@ public class SprintSixAndSevenSteps {
 				// check for left arrow enabled and click on it and click on first circle and
 				// validate
 				do {
-					if (PaginationUtility.check_Enabled_Left_Arrow_on_Paginator_on_tsot()) {
-						PaginationUtility.clicking_on_enabled_left_Arrow_of_paginator();
-						PaginationUtility.clicking_on_first_circle_of_paginator();
+					if (PaginationUtility_for_Pages
+							.check_Enabled_Left_Arrow_on_Paginator_under_standard_performance()) {
+						PaginationUtility_for_Pages
+								.clicking_on_enabled_left_Arrow_of_paginator_under_standard_performance();
+						PaginationUtility_for_Pages.clicking_on_first_circle_of_paginator(
+								homePage.circle_list_on_paginator_on_pot_under_sp);
 						Assert.assertTrue(homePage.testNamesonPerPage_onlinechart.size() <= 10);
 						for (int j = homePage.testNamesonPerPage_onlinechart.size() - 1; j >= 0; j--) {
 							Assert.assertTrue(homePage.diamondshapesymblonPerPage_onlinechart.get(j).isDisplayed());
@@ -200,10 +204,9 @@ public class SprintSixAndSevenSteps {
 									.build().perform();
 							Thread.sleep(500);
 						}
-					} else {
-						break;
 					}
-				} while (!(PaginationUtility.check_Disabled_Left_Arrow_on_Paginator()));
+				} while (PaginationUtility_for_Pages
+						.check_Enabled_Left_Arrow_on_Paginator_under_standard_performance());
 			} else {
 				// when paginator is not found
 				Assert.assertTrue(homePage.testNamesonPerPage_onlinechart.size() <= 10);
@@ -234,9 +237,11 @@ public class SprintSixAndSevenSteps {
 	}
 
 	@Then("^verify the dotted line and triangle line on line chart based on selection of school and district and class checkbox$")
-	public void verify_the_dotted_line_and_triangle_line_on_line_chart_based_on_selection_of_school_and_district_and_class_checkbox() throws Throwable {
+	public void verify_the_dotted_line_and_triangle_line_on_line_chart_based_on_selection_of_school_and_district_and_class_checkbox()
+			throws Throwable {
 		try {
-			UtilityMethods.scrollPageDown(Driver.webdriver, 2);Thread.sleep(500);
+			UtilityMethods.scrollPageDown(Driver.webdriver, 2);
+			Thread.sleep(500);
 			boolean isClassComparePresence = false;
 			Thread.sleep(3000);
 			new Actions(Driver.webdriver).moveToElement(homePage.overviewtext).build().perform();
@@ -253,12 +258,14 @@ public class SprintSixAndSevenSteps {
 			Thread.sleep(5000);
 			try {
 				// This will execute in case of SP in class context
-				new Actions(Driver.webdriver).moveToElement(homePage.performanceovrtimeicon).click().build().perform();
+				new Actions(Driver.webdriver).moveToElement(homePage.performance_overtime_icon).click().build()
+						.perform();
 				Thread.sleep(2000);
 			} catch (Exception e) {
 			}
 			// selecting school,district,class checkbox
-			UtilityMethods.scrollPageDown(Driver.webdriver, 7);Thread.sleep(500);
+			UtilityMethods.scrollPageDown(Driver.webdriver, 7);
+			Thread.sleep(500);
 			try {
 				homePage.compareclasslabel.click();
 				Thread.sleep(1000);
@@ -308,7 +315,8 @@ public class SprintSixAndSevenSteps {
 				}
 			}
 			Standard_Overview_Table_Steps.resetStatus();
-			UtilityMethods.scrollPageUp(Driver.webdriver);Thread.sleep(500);
+			UtilityMethods.scrollPageUp(Driver.webdriver);
+			Thread.sleep(500);
 			CBTConfiguration.score = "pass";
 		} catch (Exception e) {
 			UtilityMethods.processException(e);
@@ -378,10 +386,11 @@ public class SprintSixAndSevenSteps {
 			}
 
 			// checking for paginator
-			if (PaginationUtility.checkPaginator_on_tsot()) {
+			if (PaginationUtility_for_Pages.checkPaginator_on_tsot()) {
 				// this lool will execute for the no. of circle available on paginator
-				for (int i = PaginationUtility.circleList.size() - 1; i >= 0; i--) {
-					PaginationUtility.clicking_on_indexed_circle_of_paginator(i);
+				for (int i = homePage.circle_list_on_paginator_on_tsot.size() - 1; i >= 0; i--) {
+					PaginationUtility_for_Pages
+							.clicking_on_indexed_circle_of_paginator(homePage.circle_list_on_paginator_on_tsot, i);
 					Assert.assertTrue(homePage.testNamesonPerPage_onlinechart.size() <= 10);
 					for (int j = homePage.testNamesonPerPage_onlinechart.size() - 1; j >= 0; j--) {
 						Assert.assertTrue(homePage.diamondshapesymblonPerPage_onlinechart.get(j).isDisplayed());
@@ -403,9 +412,10 @@ public class SprintSixAndSevenSteps {
 				// check for left arrow enabled and click on it and click on first circle and
 				// validate
 				do {
-					if (PaginationUtility.check_Enabled_Left_Arrow_on_Paginator_on_tsot()) {
-						PaginationUtility.clicking_on_enabled_left_Arrow_of_paginator();
-						PaginationUtility.clicking_on_first_circle_of_paginator();
+					if (PaginationUtility_for_Pages.check_Enabled_Left_Arrow_on_Paginator_on_tsot()) {
+						PaginationUtility_for_Pages.clicking_on_enabled_left_Arrow_of_paginator_on_tsot();
+						PaginationUtility_for_Pages
+								.clicking_on_first_circle_of_paginator(homePage.circle_list_on_paginator_on_tsot);
 						Assert.assertTrue(homePage.testNamesonPerPage_onlinechart.size() <= 10);
 						for (int j = homePage.testNamesonPerPage_onlinechart.size() - 1; j >= 0; j--) {
 							Assert.assertTrue(homePage.diamondshapesymblonPerPage_onlinechart.get(j).isDisplayed());
@@ -423,10 +433,8 @@ public class SprintSixAndSevenSteps {
 									.build().perform();
 							Thread.sleep(500);
 						}
-					} else {
-						break;
 					}
-				} while (!(PaginationUtility.check_Disabled_Left_Arrow_on_Paginator()));
+				} while (PaginationUtility_for_Pages.check_Enabled_Left_Arrow_on_Paginator_on_tsot());
 			} else {
 				// when paginator is not found
 				Assert.assertTrue(homePage.testNamesonPerPage_onlinechart.size() <= 10);
