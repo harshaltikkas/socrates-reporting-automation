@@ -651,7 +651,7 @@ public class Standard_Overview_Table_Steps {
 			Thread.sleep(3000);
 		}
 		try {
-			Assert.assertTrue(homePage.activetestscoresbtn.getAttribute("class").equals("active"));
+			Assert.assertTrue(homePage.activetestscoresbtn.getAttribute("class").equals("active_tab"));
 		} catch (Exception e) {
 			Thread.sleep(500);
 			jse.executeScript("arguments[0].click();", homePage.testscoresbtn);
@@ -820,6 +820,7 @@ public class Standard_Overview_Table_Steps {
 				}
 			}
 			CBTConfiguration.score = "pass";
+			UtilityMethods.scrollPageUp(Driver.webdriver);Thread.sleep(500);
 		} catch (Exception e) {
 			UtilityMethods.processException(e);
 		}
@@ -883,7 +884,6 @@ public class Standard_Overview_Table_Steps {
 		} catch (Exception e) {
 			Thread.sleep(500);
 			jse.executeScript("arguments[0].click();", homePage.studentmenu);
-			UtilityMethods.wait_For_Performance_Over_Time_Line_Chart_Section_Load();
 		}
 		try {
 			Assert.assertTrue(homePage.activetestscoresbtn.getAttribute("class").equals("active_tab"));
@@ -892,7 +892,6 @@ public class Standard_Overview_Table_Steps {
 			jse.executeScript("arguments[0].click();", homePage.testscoresbtn);
 			UtilityMethods.wait_For_Test_Score_Overview_Section_Load();
 		}
-		System.out.println("3");
 		Standard_Overview_Table_Steps.testScoreMenuClicked = true;
 		Standard_Overview_Table_Steps.underStudentContext = true;
 	}
@@ -1020,10 +1019,71 @@ public class Standard_Overview_Table_Steps {
 					PaginationUtility_for_Pages.verifyTestNamesAndToolTipText(i);
 				}
 			}
+			CBTConfiguration.score = "pass";
 		} catch (Exception e) {
 			UtilityMethods.processException(e);
 		}
 		log.info("Scenario 41_2 completed");
+	}
+	
+	@Then("^User click on the circle within the line chart and should able to see the overlay of Tool tip which have following items on performace over time$")
+	public void user_click_on_the_circle_within_the_line_chart_and_should_able_to_see_the_overlay_of_Tool_tip_which_have_following_items_on_performace_over_time()
+			throws Throwable {
+		try {
+			UtilityMethods.scrollPageDown(Driver.webdriver, 8);Thread.sleep(500);
+			if (PaginationUtility_for_Pages.checkPaginator_on_pot_under_standard_performance()) {
+				// this lool will execute for the no. of circle available on paginator
+				for (int i = homePage.circle_list_on_paginator_on_pot_under_sp.size() - 1; i >= 0; i--) {
+					PaginationUtility_for_Pages.clicking_on_indexed_circle_of_paginator(
+							homePage.circle_list_on_paginator_on_pot_under_sp, i);
+					Assert.assertTrue(homePage.testNamesonPerPage_onlinechart.size() <= 10);
+					for (int j = homePage.testNamesonPerPage_onlinechart.size() - 1; j >= 0; j--) {
+						new Actions(Driver.webdriver).moveToElement(homePage.testScoresPercentage).build().perform();
+						PaginationUtility_for_Pages.verify_TestName_ToolTip_Details_on_Test_Score_Overview(j);
+						new Actions(Driver.webdriver).moveToElement(homePage.testScoresPercentage).build().perform();
+						UtilityMethods.verifyColorAndScoreOnLineChart(
+								homePage.testScoreCircleClronPerPage_pot.get(j),
+								Integer.parseInt(homePage.testScoresonPerPage_on_pot.get(j).getText()));
+					}
+				}
+				// check for left arrow enabled and click on it and click on first circle and
+				// validate
+				do {
+					if (PaginationUtility_for_Pages
+							.check_Enabled_Left_Arrow_on_Paginator_under_standard_performance()) {
+						PaginationUtility_for_Pages
+								.clicking_on_enabled_left_Arrow_of_paginator_under_standard_performance();
+						PaginationUtility_for_Pages.clicking_on_first_circle_of_paginator(
+								homePage.circle_list_on_paginator_on_pot_under_sp);
+						Assert.assertTrue(homePage.testNamesonPerPage_onlinechart.size() <= 10);
+						for (int j = homePage.testNamesonPerPage_onlinechart.size() - 1; j >= 0; j--) {
+							new Actions(Driver.webdriver).moveToElement(homePage.testScoresPercentage).build().perform();
+							PaginationUtility_for_Pages.verify_TestName_ToolTip_Details_on_Test_Score_Overview(j);
+							new Actions(Driver.webdriver).moveToElement(homePage.testScoresPercentage).build().perform();
+							UtilityMethods.verifyColorAndScoreOnLineChart(
+									homePage.testScoreCircleClronPerPage_pot.get(j),
+									Integer.parseInt(homePage.testScoresonPerPage_on_pot.get(j).getText()));
+						}
+					}
+				} while (PaginationUtility_for_Pages
+						.check_Enabled_Left_Arrow_on_Paginator_under_standard_performance());
+			} else {
+				// when paginator is not found
+				Assert.assertTrue(homePage.testNamesonPerPage_onlinechart.size() <= 10);
+				for (int j = homePage.testNamesonPerPage_onlinechart.size() - 1; j >= 0; j--) {
+					new Actions(Driver.webdriver).moveToElement(homePage.testScoresPercentage).build().perform();
+					PaginationUtility_for_Pages.verify_TestName_ToolTip_Details_on_Test_Score_Overview(j);
+					new Actions(Driver.webdriver).moveToElement(homePage.testScoresPercentage).build().perform();
+					UtilityMethods.verifyColorAndScoreOnLineChart(
+							homePage.testScoreCircleClronPerPage_pot.get(j),
+							Integer.parseInt(homePage.testScoresonPerPage_on_pot.get(j).getText()));
+				}
+			}
+		CBTConfiguration.score = "pass";
+		} catch (Exception e) {
+			UtilityMethods.processException(e);
+		}
+		log.info("Scenario 41_1 completed");
 	}
 
 	/**

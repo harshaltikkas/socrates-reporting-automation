@@ -576,13 +576,13 @@ public class HomePage {
 	public WebElement enabled_right_arrow_on_paginator_on_tsd;
 
 	// ==========(4)paginator_on_Test Score Over Time_under_Test Score Tab==========
-	@FindBy(xpath = "//span[contains(text(),'Test Scores over Time')]/ancestor::div[@class='class_widget_title test_score_overtime overrightinfostyle']/following-sibling::div//div[@class='selector-pagination']")
+	@FindBy(xpath = "//span[contains(text(),'Test Scores Over Time')]/ancestor::div[@class='class_widget_title test_score_overtime overrightinfostyle']/following-sibling::div//div[@class='selector-pagination']")
 	public WebElement paginator_on_tsot;
 
-	@FindBy(xpath = "//span[contains(text(),'Test Scores over Time')]/ancestor::div[@class='class_widget_title test_score_overtime overrightinfostyle']/following-sibling::div//div[@class='selector-pagination']//ul[@class='page-circle-list']//span")
+	@FindBy(xpath = "//span[contains(text(),'Test Scores Over Time')]/ancestor::div[@class='class_widget_title test_score_overtime overrightinfostyle']/following-sibling::div//div[@class='selector-pagination']//ul[@class='page-circle-list']//span")
 	public List<WebElement> circle_list_on_paginator_on_tsot;
 
-	@FindBy(xpath = "//span[contains(text(),'Test Scores over Time')]/ancestor::div[@class='class_widget_title test_score_overtime overrightinfostyle']/following-sibling::div//div[@class='selector-pagination']//span[@class='scroll-left float-left scroll-active ']/i")
+	@FindBy(xpath = "//span[contains(text(),'Test Scores Over Time')]/ancestor::div[@class='class_widget_title test_score_overtime overrightinfostyle']/following-sibling::div//div[@class='selector-pagination']//span[@class='scroll-left float-left scroll-active ']/i")
 	public WebElement enabled_left_arrow_on_paginator_on_tsot;
 
 	// ?==========(5)paginator_on_tso_under_Test Score Tab_under_student========== Pagination not found till yet for any login
@@ -706,7 +706,7 @@ public class HomePage {
 	@FindBy(xpath = "//div[@class='float-left widget-base-block-title text-center']/span[not(@class)]")
 	public WebElement strand_name_in_pot_line_chart;
 
-	@FindBy(xpath = "//*[contains(text(),'Test Scores over Time')]")
+	@FindBy(xpath = "//*[contains(text(),'Test Scores Over Time')]")
 	public WebElement testscoreovertimelinechart;
 
 	@FindBy(xpath = "//*[contains(text(),'Test Score Detail')]")
@@ -745,12 +745,12 @@ public class HomePage {
 	@FindBy(xpath = "//div[@class='tooltip_row_right']//div")
 	public WebElement studentscorerightcontentontt;
 
-	@FindBy(xpath = "//div[contains(@class,'test_score_overtime overrightinfostyle')]/following-sibling::div//*[name()='circle']/following-sibling::*[name()='text']")
+	@FindBy(xpath = "//div[contains(@class,'class_widget_title test_score_overtime')]/following-sibling::div//*[name()='circle']/following-sibling::*[name()='text']")
 	public List<WebElement> testScoreValueInCircle_onlinechart;
 	
 	@FindBy(xpath = "//span[contains(text(),'Test Score Overview')]/ancestor::div[@class='student_testscores_widget_title_main']/following-sibling::div//*[name()='circle']/following-sibling::*[name()='text']")
 	public List<WebElement> testScoreValueInCircle_onlinechart_tso;
-
+	
 	@FindBy(xpath = "//div[@class='line_chart_graph' and not(@style)]//*[name()='g']//*[name()='circle']/following-sibling::*[name()='text']")
 	public List<WebElement> testScoreValueInCircle_onlinechart_pot;
 

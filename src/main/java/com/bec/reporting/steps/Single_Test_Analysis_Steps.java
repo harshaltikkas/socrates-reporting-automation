@@ -35,7 +35,6 @@ import org.openqa.selenium.support.PageFactory;
 import org.junit.Assert;
 import com.bec.reporting.pageobjects.HomePage;
 import com.bec.reporting.utils.CBTConfiguration;
-import com.bec.reporting.utils.DatabaseConnection;
 import com.bec.reporting.utils.Driver;
 import com.bec.reporting.utils.IWait;
 import com.bec.reporting.utils.PaginationUtility_for_Pages;
@@ -60,24 +59,6 @@ public class Single_Test_Analysis_Steps {
 			Thread.sleep(5000);
 			String testNameOnCH = UtilityMethods.getTestsNameonUI();
 
-			// BE-1553 performing here
-			log.info("validating Test score avg for district with DB and UI");
-			Assert.assertTrue(homePage.test_avg_score_value_in_sta_for_district.getText()
-					.equals(DatabaseConnection.getDistrictTestScoreAvgInSTA(DatabaseConnection.conn).toString()));
-			log.info("validation of Test score avg for district with DB and UI is successfully");
-			String fy = DatabaseConnection.currentFY;
-			log.info("validating District Wise Question And Test Score Avg In STA DB and UI");
-			/*Map<Integer, Integer> map = DatabaseConnection
-					.getDistrictWiseQuestionAndTestScoreAvgInSTA(DatabaseConnection.conn);
-
-			int x = 0;
-			for (Map.Entry<Integer, Integer> entry : map.entrySet()) {
-				Assert.assertTrue(Integer.parseInt(homePage.question_list_on_sta.get(x).getText()) == entry.getKey());
-				Assert.assertTrue(Integer
-						.parseInt(homePage.district_avg_list_for_question_on_sta.get(x).getText()) == entry.getValue());
-				x++;
-			}
-			log.info("validation of District Wise Question And Test Score Avg In STA DB and UI successfull");*/
 			homePage.testtab.click();
 			Thread.sleep(1000);
 			Assert.assertTrue(testNameOnCH.equals(homePage.testnameslist_on_test_tab.get(0).getText()));
@@ -87,12 +68,8 @@ public class Single_Test_Analysis_Steps {
 					.get(0);
 			Assert.assertTrue(el.getAttribute("value").equals("true"));
 			Thread.sleep(500);
-
-			homePage.datetab.click();
+			homePage.testtab.click();
 			Thread.sleep(1000);
-			Assert.assertTrue(homePage.districttermdropdownbtn.getText().equals(fy));
-			homePage.datetab.click();
-			Thread.sleep(500);
 			// BE-1552 performing here
 			js.executeScript("arguments[0].click();", homePage.statab);
 			homePage.reportingkey.click();
@@ -152,8 +129,8 @@ public class Single_Test_Analysis_Steps {
 			UtilityMethods.scrollPageDown(Driver.webdriver, 8);
 			Thread.sleep(500);
 			int testCount = homePage.testnameslist_on_test_tab.size();
-
-			homePage.testnameslist_on_test_tab.get(UtilityMethods.generateRandomNumberBySkippingIndex(testCount, 0)).click();
+			int index=UtilityMethods.generateRandomNumberBySkippingIndex(testCount, 0);
+			homePage.testnameslist_on_test_tab.get(index).click();
 			Thread.sleep(500);
 			Assert.assertTrue(homePage.testscheckboxlistwithinput.get(0).getAttribute("value").equals("false"));
 			Thread.sleep(500);
@@ -164,32 +141,12 @@ public class Single_Test_Analysis_Steps {
 			Thread.sleep(500);
 			testNameOnCH = UtilityMethods.getTestsNameonUI();
 
-			/*log.info("validating Test score avg for district with specific test in DB and UI");
-			Assert.assertTrue(homePage.test_avg_score_value_in_sta_for_district.getText()
-					.equals(DatabaseConnection
-							.getDistrictTestScoreAvgInSTAWithSpecificTestName(DatabaseConnection.conn, testNameOnCH)
-							.toString()));
-			log.info("validation of Test score avg for district with with specific test in DB and UI is successfully");
-			log.info("validating District Wise Question And Test Score Avg In STA with specific test DB and UI");
-			Map<Integer, Integer> map = DatabaseConnection
-					.getDistrictWiseQuestionAndTestScoreAvgInSTAWithSpecificTestName(DatabaseConnection.conn,
-							testNameOnCH);
-
-			int x = 0;
-			for (Map.Entry<Integer, Integer> entry : map.entrySet()) {
-				Assert.assertTrue(Integer.parseInt(homePage.question_list_on_sta.get(x).getText()) == entry.getKey());
-				Assert.assertTrue(Integer
-						.parseInt(homePage.district_avg_list_for_question_on_sta.get(x).getText()) == entry.getValue());
-				x++;
-			}
-			log.info(
-					"validation of District Wise Question And Test Score Avg In STA with specific test DB and UI successfull");*/
-
 			homePage.district_expand_less_in_sta.click();
 			Thread.sleep(500);
-
+			String per="";
 			for (int i = 0; i < homePage.district_avg_list_for_question_on_sta.size(); i++) {
-				list.add(Integer.parseInt(homePage.district_avg_list_for_question_on_sta.get(i).getText()));
+				per=homePage.district_avg_list_for_question_on_sta.get(i).getText();
+				list.add(Integer.parseInt(per.substring(0,per.length()-1)));
 			}
 			Assert.assertTrue(Ordering.natural().isOrdered(list));
 			log.info("Average List in District Column are in ascending order");
@@ -199,7 +156,8 @@ public class Single_Test_Analysis_Steps {
 			Thread.sleep(500);
 
 			for (int i = 0; i < homePage.district_avg_list_for_question_on_sta.size(); i++) {
-				list.add(Integer.parseInt(homePage.district_avg_list_for_question_on_sta.get(i).getText()));
+				per=homePage.district_avg_list_for_question_on_sta.get(i).getText();
+				list.add(Integer.parseInt(per.substring(0,per.length()-1)));
 			}
 			Assert.assertTrue(Ordering.natural().reverse().isOrdered(list));
 			log.info("Average List in District Column are in Descending order");
@@ -230,8 +188,9 @@ public class Single_Test_Analysis_Steps {
 			if (PaginationUtility_for_Pages.checkPaginator_on_sta()) {
 				// this loop will execute for the no. of circle available on paginator
 				for (int i = 0; i < homePage.circle_list_on_paginator_on_sta.size(); i++) {
-					PaginationUtility_for_Pages.clicking_on_indexed_circle_of_paginator(homePage.circle_list_on_paginator_on_sta,i);
-					Assert.assertTrue(homePage.records_on_sta.size()<=10);
+					PaginationUtility_for_Pages
+							.clicking_on_indexed_circle_of_paginator(homePage.circle_list_on_paginator_on_sta, i);
+					
 					for (int j = 0; j < homePage.records_on_sta.size(); j++) {
 						ui_short_value_list.add(homePage.short_values_on_sta.get(j).getText());
 						ui_question_list.add(homePage.questions_values_on_sta.get(j).getText());
@@ -243,8 +202,9 @@ public class Single_Test_Analysis_Steps {
 				do {
 					if (PaginationUtility_for_Pages.check_Enabled_Right_Arrow_on_Paginator_on_sta()) {
 						PaginationUtility_for_Pages.clicking_on_enabled_right_Arrow_of_paginator_on__sta();
-						PaginationUtility_for_Pages.clicking_on_last_circle_of_paginator(homePage.circle_list_on_paginator_on_sta);
-						Assert.assertTrue(homePage.records_on_sta.size()<=10);
+						PaginationUtility_for_Pages
+								.clicking_on_last_circle_of_paginator(homePage.circle_list_on_paginator_on_sta);
+						
 						for (int j = 0; j < homePage.records_on_sta.size(); j++) {
 							ui_short_value_list.add(homePage.short_values_on_sta.get(j).getText());
 							ui_question_list.add(homePage.questions_values_on_sta.get(j).getText());
@@ -254,7 +214,7 @@ public class Single_Test_Analysis_Steps {
 				} while (PaginationUtility_for_Pages.check_Enabled_Right_Arrow_on_Paginator_on_sta());
 			} else {
 				// when paginator is not found
-				Assert.assertTrue(homePage.records_on_sta.size()<=10);
+				
 				for (int i = 0; i < homePage.records_on_sta.size(); i++) {
 					ui_short_value_list.add(homePage.short_values_on_sta.get(i).getText());
 					ui_question_list.add(homePage.questions_values_on_sta.get(i).getText());
@@ -262,30 +222,12 @@ public class Single_Test_Analysis_Steps {
 				}
 			}
 
-			/*log.info("Validating View Section Tabuler data with DB calculation");
-			Map<String, String> viewMap = DatabaseConnection.getDistrictWiseViewReportInSTA(DatabaseConnection.conn,
-					testNameOnCH);
-			String sh, avg, quest;
-			x = 0;
-			for (Map.Entry<String, String> entry : viewMap.entrySet()) {
-				sh = entry.getKey().substring(0, entry.getKey().indexOf("_"));
-				avg = entry.getKey().substring(entry.getKey().indexOf("_") + 1);
-				quest = entry.getValue().substring(1, entry.getValue().length() - 1);
-				Assert.assertTrue(ui_short_value_list.get(x).equals(sh));
-				Assert.assertTrue(ui_test_score_avg_list.get(x).equals(avg));
-				Assert.assertTrue(ui_question_list.get(x).equals(quest));
-				x++;
-			}
-			log.info("Validation of View Section Tabuler data with DB calculation successfull");*/
-			Assert.assertTrue(ui_short_value_list.size()>=1);
-			Assert.assertTrue(ui_test_score_avg_list.size()>=1);
-			Assert.assertTrue(ui_question_list.size()>=1);
-			
+			Assert.assertTrue(ui_short_value_list.size() >= 1);
+			Assert.assertTrue(ui_test_score_avg_list.size() >= 1);
+			Assert.assertTrue(ui_question_list.size() >= 1);
+
 			UtilityMethods.scrollPageUp(Driver.webdriver);
 			Thread.sleep(500);
-
-			/* This logic is to validate the table data in question with Raw with db */
-			//log.info("validating the table data in question with Raw with db");
 
 			homePage.filter_in_sta_for_district.click();
 			Thread.sleep(1000);
@@ -294,13 +236,10 @@ public class Single_Test_Analysis_Steps {
 			homePage.apply_button_on_filter_in_sta.click();
 			Thread.sleep(2000);
 
-			/*List<String> avg_list = DatabaseConnection.getDistrictWiseTestScoreAvgInRawFormatInSTAWithSpecificTestName(
-					DatabaseConnection.conn, testNameOnCH);*/
 			for (int i = 0; i < homePage.district_wise_avg_list_on_sta.size(); i++) {
-				//Assert.assertTrue(homePage.district_wise_avg_list_on_sta.get(i).getText().equals(avg_list.get(i)));
+
 				Assert.assertTrue(homePage.district_wise_avg_list_on_sta.get(i).getText().contains("/"));
 			}
-			//log.info("validation of table data in question with Raw with db is successfully");
 
 			CBTConfiguration.score = "pass";
 		} catch (Exception e) {

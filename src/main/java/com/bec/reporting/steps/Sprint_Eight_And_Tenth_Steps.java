@@ -129,7 +129,7 @@ public class Sprint_Eight_And_Tenth_Steps {
 			homePage.activeDateRangelistoOnCalender.get(num).click();
 			Thread.sleep(500);
 			String dateValue = homePage.activeDate.getText();
-			Assert.assertTrue(UtilityMethods.checkDateFormat(dateValue));
+			UtilityMethods.checkDateFormat(dateValue);
 			Date one = getDate(dateValue);
 			Assert.assertTrue(
 					dateValue.substring(dateValue.indexOf("/") + 1, dateValue.lastIndexOf("/")).equals(sDate));
@@ -140,7 +140,7 @@ public class Sprint_Eight_And_Tenth_Steps {
 			homePage.activeDateRangelistoOnCalender.get(num).click();
 			Thread.sleep(500);
 			dateValue = homePage.activeDate.getText();
-			Assert.assertTrue(UtilityMethods.checkDateFormat(dateValue));
+			UtilityMethods.checkDateFormat(dateValue);
 			Assert.assertTrue(
 					dateValue.substring(dateValue.indexOf("/") + 1, dateValue.lastIndexOf("/")).equals(eDate));
 			Date two = getDate(dateValue);
