@@ -25,7 +25,6 @@
  */
 package com.bec.reporting.utils;
 
-import java.sql.Connection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -33,7 +32,6 @@ import java.util.Map;
 import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -49,7 +47,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class UtilityMethods {
-	static int ctr = 0, pot_ctr = 0;
+	static int ctr = 0, pot_ctr = 0, ch_ctr = 0, tso_ctr = 0, tsd_ctr = 0, sp_table_ctr = 0, list_on_sp_ctr = 0;
 	static HomePage homePage = PageFactory.initElements(Driver.webdriver, HomePage.class);
 
 	/**
@@ -237,17 +235,17 @@ public class UtilityMethods {
 	 * @param submissionDate
 	 * @return
 	 */
-	public static boolean checkDateFormat(String submissionDate) {
+	public static void checkDateFormat(String submissionDate) {
 		Matcher matcher = null;
 		try {
-			String regex = "^(1[0-2]|[1-9])/(3[01]|[12][0-9]|[1-9])/[0-9]{4}$";
+			String regex = "^[0-3][0-9]/[0-3][0-9]/(?:[0-9][0-9])?[0-9][0-9]$";
 			Pattern pattern = Pattern.compile(regex);
 			matcher = pattern.matcher(submissionDate);
+			Assert.assertTrue(matcher.matches());
 		} catch (Exception e) {
 			log.error("Invalid Date formate");
 			UtilityMethods.processException(e);
 		}
-		return matcher.matches();
 	}
 
 	/*
@@ -297,50 +295,7 @@ public class UtilityMethods {
 				return false;
 			}
 		return true;
-	}
-
-	/**
-	 * This is recursive method used to search,on focus & click for the specific
-	 * element till page end,if element found return true
-	 * 
-	 * @param standardName
-	 * @return
-	 */
-	public static boolean searchandClickonELement(WebElement standardName, Model m, int standardIndex, String cat,
-			String subcat, String desc, int strandIndex, Connection conn, String standardId, int schoolId,
-			int classId) {
-		try {
-			new Actions(Driver.webdriver).moveToElement(homePage.overviewtext).build().perform();
-			standardName.click();
-			cat = Driver.webdriver.findElements(By.xpath(
-					"//div[@class='overview-table-body']//div[@class='overview-table-row']//div[@class='overview-table-col']["
-							+ (strandIndex + 2)
-							+ "]//li[not(contains(@class,'StandardsNotAvailable'))]//span[@class='strand_Definition']"))
-					.get(standardIndex).getText();
-			subcat = Driver.webdriver.findElements(By.xpath(
-					"//div[@class='overview-table-body']//div[@class='overview-table-row']//div[@class='overview-table-col']["
-							+ (strandIndex + 2)
-							+ "]//li[not(contains(@class,'StandardsNotAvailable'))]//span[@class='standard_sub_Definition']"))
-					.get(standardIndex).getText();
-			desc = Driver.webdriver.findElements(By.xpath(
-					"//div[@class='overview-table-body']//div[@class='overview-table-row']//div[@class='overview-table-col']["
-							+ (strandIndex + 2)
-							+ "]//li[not(contains(@class,'StandardsNotAvailable'))]//span[@class='strand_Description']"))
-					.get(standardIndex).getText();
-
-			Assert.assertTrue(cat.equals(m.getStandard_category()));
-			Assert.assertTrue(subcat.equals(m.getStandard_subcategory()));
-			Assert.assertTrue(desc.equals(m.getStandard_description()));
-			// code here
-			// Assert.assertTrue(UtilityMethods.VerifyTestScore(conn, standardId, schoolId,
-			// classId));
-		} catch (Exception e) {
-			UtilityMethods.scrollPageDown(Driver.webdriver, 1);
-			searchandClickonELement(standardName, m, standardIndex, cat, subcat, desc, strandIndex, conn, standardId,
-					schoolId, classId);
-		}
-		return true;
-	}
+	}	
 
 	/**
 	 * This method is used to skip the specific index position while generating
@@ -718,16 +673,18 @@ public class UtilityMethods {
 	 */
 	public static void wait_For_Student_List_AND_OR_Class_List_Section_Load() {
 		HomePage homePage = PageFactory.initElements(Driver.webdriver, HomePage.class);
+		boolean isSectionLoad = false;
 		try {
 			Assert.assertTrue(homePage.noofquestionstext.isDisplayed());
-			log.info("Student/Class List Section is now Displaying");
+			log.info("List Section on Standard Performance is now Displaying");
 			wait_For_Context_Header_Section();
 		} catch (Exception e) {
-			log.info("Waiting for Student/Class List Section Loading");
-			try {
-				Thread.sleep(2000);
-			} catch (InterruptedException e1) {
-
+			log.info("Waiting for List Section on Standard Performance Loading");
+			IWait.implicit_wait(2);
+			list_on_sp_ctr++;
+			if (isSectionLoad == false && list_on_sp_ctr > 10) {
+				log.info("List Section on Standard Performance is not loaded in 20 seconds..");
+				processException(new Exception());
 			}
 			wait_For_Student_List_AND_OR_Class_List_Section_Load();
 		}
@@ -739,7 +696,6 @@ public class UtilityMethods {
 	 */
 	public static void wait_For_Performance_Over_Time_Line_Chart_Section_Load() {
 		HomePage homePage = PageFactory.initElements(Driver.webdriver, HomePage.class);
-
 		boolean isSectionLoad = false;
 		try {
 			Assert.assertTrue(homePage.info_icon_on_performance_over_time_header.isDisplayed());
@@ -748,18 +704,14 @@ public class UtilityMethods {
 			isSectionLoad = true;
 		} catch (Exception e) {
 			log.info("Waiting for Performance Over Time Line Chart Loading");
-			try {
-				Thread.sleep(20);
-				pot_ctr++;
-			} catch (InterruptedException e1) {
-			}
+			IWait.implicit_wait(2);
+			pot_ctr++;
 			if (isSectionLoad == false && pot_ctr > 10) {
 				log.info("Perfomance Over Time Line Chart is not loaded in 20 seconds..");
 				processException(new Exception());
 			}
 			wait_For_Performance_Over_Time_Line_Chart_Section_Load();
 		}
-
 	}
 
 	/**
@@ -767,16 +719,19 @@ public class UtilityMethods {
 	 */
 	public static void wait_For_Test_Score_Overview_Section_Load() {
 		HomePage homePage = PageFactory.initElements(Driver.webdriver, HomePage.class);
+		boolean isSectionLoad = false;
 		try {
 			Assert.assertTrue(homePage.testscoreoverviewtext.isDisplayed());
-			log.info("test score overview Saction is now Displaying");
+			log.info("Test Score Overview Section is now Displaying");
 			wait_For_Context_Header_Section();
+			isSectionLoad = true;
 		} catch (Exception e) {
-			log.info("Waiting for test score overview  Saction Loading");
-			try {
-				Thread.sleep(2000);
-			} catch (InterruptedException e1) {
-
+			log.info("Waiting for Test Score Overview Section Loading");
+			IWait.implicit_wait(2);
+			tso_ctr++;
+			if (isSectionLoad == false && tso_ctr > 10) {
+				log.info("Test Score Overview Section is not loaded in 20 seconds..");
+				processException(new Exception());
 			}
 			wait_For_Test_Score_Overview_Section_Load();
 		}
@@ -787,20 +742,19 @@ public class UtilityMethods {
 	 */
 	public static void wait_For_Test_Score_Detail_Section() {
 		HomePage homePage = PageFactory.initElements(Driver.webdriver, HomePage.class);
+		boolean isSectionLoad = false;
 		try {
 			Assert.assertTrue(homePage.datesubmittedtext.isDisplayed());
-			log.info("test score detail Section is now Displaying");
+			log.info("Test Score Detail Section is now Displaying");
 			wait_For_Context_Header_Section();
-			/*
-			 * Standard_Overview_Table_Steps.underClassContext=false;
-			 * Standard_Overview_Table_Steps.testScoreMenuClicked=false;
-			 */
+			isSectionLoad = true;
 		} catch (Exception e) {
-			log.info("Waiting for test score detail Section Loading");
-			try {
-				Thread.sleep(2000);
-			} catch (InterruptedException e1) {
-
+			log.info("Waiting for Test Score Detail Section Loading");
+			IWait.implicit_wait(2);
+			tsd_ctr++;
+			if (isSectionLoad == false && tsd_ctr > 10) {
+				log.info("Test Score Detail Section is not loaded in 20 seconds..");
+				processException(new Exception());
 			}
 			wait_For_Test_Score_Detail_Section();
 		}
@@ -812,17 +766,20 @@ public class UtilityMethods {
 	 */
 	public static void wait_For_Standard_Performance_Table_Section() {
 		HomePage homePage = PageFactory.initElements(Driver.webdriver, HomePage.class);
+		boolean isSectionLoad = false;
 		try {
 			Assert.assertTrue(homePage.standardnameslist.get(0).isDisplayed());
-			log.info("loading of Standard Performance Table Section is now Displaying");
+			log.info("Standard Performance Table Section is now Displaying");
 			wait_For_Context_Header_Section();
+			isSectionLoad = true;
 			Standard_Overview_Table_Steps.resetStatus();
 		} catch (Exception e) {
-			log.info("Waiting for loading of Standard Performance Table  Section Loading");
-			try {
-				Thread.sleep(2000);
-			} catch (InterruptedException e1) {
-
+			log.info("Waiting for Standard Performance Table Section Loading");
+			IWait.implicit_wait(2);
+			sp_table_ctr++;
+			if (isSectionLoad == false && sp_table_ctr > 10) {
+				log.info("Standard Performance Table Section is not loaded in 20 seconds..");
+				processException(new Exception());
 			}
 			wait_For_Standard_Performance_Table_Section();
 		}
@@ -834,38 +791,28 @@ public class UtilityMethods {
 	public static void wait_For_Context_Header_Section() {
 		HomePage homePage = PageFactory.initElements(Driver.webdriver, HomePage.class);
 		String firstData;
-		int tried = 0;
 		boolean isSectionLoad = false;
+
 		if (homePage.contextheader_text_list.get(0).getText().contains("...")) {
 			new Actions(Driver.webdriver).moveToElement(homePage.contextheader_text_list.get(0)).build().perform();
 			firstData = homePage.contextheadertooltiplist.get(0).getText();
 		} else {
 			firstData = homePage.contextheader_text_list.get(0).getText();
 		}
-		do {
-			if (firstData.equals("")) {
-				log.info("Web Elements are still loading...");
-				try {
-					Thread.sleep(2000);
-					tried++;
-					wait_For_Context_Header_Section();
-				} catch (InterruptedException e1) {
-				}
 
-			} else {
-				log.info("Context Header Section is now clickable");
-				new Actions(Driver.webdriver).moveByOffset(200, 200).build().perform();
-				try {
-					Thread.sleep(500);
-				} catch (Exception e) {
-				}
-				isSectionLoad = true;
-				break;
+		if (firstData.equals("")) {
+			log.info("Waiting for Context Header Section loading...");
+			IWait.implicit_wait(2);
+			ch_ctr++;
+			if (isSectionLoad == false && ch_ctr > 10) {
+				log.info("Context Header Section is not loaded in 20 seconds..");
+				processException(new Exception());
 			}
-		} while (tried <= 10);
-		if (isSectionLoad == false) {
-			log.info("Context Header is not loaded in 20 seconds..");
-			processException(new Exception());
+			wait_For_Context_Header_Section();
+		} else {
+			log.info("Context Header Section is now clickable");
+			isSectionLoad = true;
+			new Actions(Driver.webdriver).moveByOffset(200, 200).build().perform();
 		}
 	}
 

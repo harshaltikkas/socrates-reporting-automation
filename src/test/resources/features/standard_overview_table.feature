@@ -60,7 +60,7 @@ Feature: Standard Overview Table and Chart
     When User Click on Standard Performance tab within the District Context
     Then verify x_axis labeled with 'Test Names' and show tooltip on test names and if more than '10' tests are there then paginator should be display on performance over time
 
-  ##STORY 6f) Relationship between Line Chart for Test Scores at the Class Level and Student List module & STORY AND
+ ##STORY 6f) Relationship between Line Chart for Test Scores at the Class Level and Student List module & STORY AND
   ##STORY 7a) Standards and Test Score Detail
   ##STORY 6c) Student and Class level
   @Scenario40 @TC_0029 @TC_0030_DB @TC_0031 @TC_0032 @TC_005 @TC_006
@@ -68,26 +68,35 @@ Feature: Standard Overview Table and Chart
     Given User is on portal's login screen with username as "school_admin_one" and password as "password" and usertype as "realm_one"
     When User click on Class Context and Test Score button
     Then line chart of Test score over time should be displayed to the right of it Student list should display
+    Given User is on portal's login screen with username as "school_admin_one" and password as "password" and usertype as "realm_one"
+    When User click on Class Context and Test Score button
+    And User click on Student Context and Test Score button
+    Then line chart of Test score over time should be displayed of that student but Student list should not be displayed on test score overview
+    ##This is failing because of the persistent issue occuring by moving school/district to student menu
+    Given User is on portal's login screen with username as "school_admin_one" and password as "password" and usertype as "realm_one"
     When User click on Student Context and Test Score button
-    Then line chart of Test score over time should be displayed of that student but Student list should not be displayed
+    Then line chart of Test score over time should be displayed of that student but Student list should not be displayed on test score overview
 
-  ##STORY 6d) Overlays
+
+
+   ##STORY 6d) Overlays
   @Scenario41 @TC_0015 @TC_0016 @TC_0017 @TC_0018
   Scenario: Verify Overlays Performance Over Time
     Given User is on portal's login screen with username as "school_admin_one" and password as "password" and usertype as "realm_one"
-    When User Click on Standard Performance tab within the Student Context
-    Then verify The points on the chart should be circles that are color-coordinated according to achievement level
     When User Click on Standard Performance tab within the Class Context
     And Click on the icon to maximize the Chart
-    Then User click on the circle within the line chart and should able to see the overlay of Tool tip which have following items
+    Then User click on the circle within the line chart and should able to see the overlay of Tool tip which have following items on performace over time
     ##i)Full name of the Test at the top
     ##ii)Date range when the test was submitted
     ##iii)Questions that contain the standard or strand: “Questions:” followed by each question number in a box.
-    ##Note: If a user selects one of these questions, a new browser tab opens the Student View of the Grading page with the appropriate question displayed
-    ##The above note Requirement will complete in next milestone
     ########### Failing because , on UI ,page one,4th score from last is not visible.
+    Given User is on portal's login screen with username as "school_admin_one" and password as "password" and usertype as "realm_one"
     When User Click on Standard Performance tab within the Student Context
     Then User click on the circle within the line chart and should able to see the overlay of Tool tip which have following items
+		########### Failing because page persistence issue as, not going directly from school/district menu to student menu 
+    Given User is on portal's login screen with username as "school_admin_one" and password as "password" and usertype as "realm_one"
+    When User Click on Standard Performance tab within the Student Context
+    Then verify The points on the chart should be circles that are color-coordinated according to achievement level
 
   ##STORY 7b) Achievement Filter and Sorting
   @Scenario42 @TC_0015 @TC_0016 @TC_0017

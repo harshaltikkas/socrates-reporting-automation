@@ -335,7 +335,7 @@ public class PaginationUtility_for_Pages {
 		try {
 			String tooltiptext_on_test_name_on_line_chart, tooltiptext_on_test_name_on_test_score_detail,
 					submittedDateText;
-			homePage.testScoreValueInCircle_onlinechart_tso.get(index).click();
+			homePage.testScoreValueInCircle_onlinechart.get(index).click();
 			UtilityMethods.wait_For_Test_Score_Detail_Section();
 
 			new Actions(Driver.webdriver).moveToElement(homePage.testNamesonPerPage_onlinechart.get(index)).build()
@@ -356,9 +356,8 @@ public class PaginationUtility_for_Pages {
 			new Actions(Driver.webdriver).moveToElement(homePage.districtAvgScrInClassInTS).build().perform();
 			submittedDateText = homePage.submitteddateon_tsd.getText();
 			UtilityMethods.checkDateFormat(submittedDateText.substring(11, 21));
-			try {
+			if(submittedDateText.length()>25) {
 				UtilityMethods.checkDateFormat(submittedDateText.substring(23));
-			} catch (Exception e) {
 			}
 		} catch (Exception e) {
 			UtilityMethods.processException(e);
@@ -380,9 +379,8 @@ public class PaginationUtility_for_Pages {
 			} else {
 				tooltiptext_on_test_name_on_line_chart = homePage.testNamesonPerPage_onlinechart.get(index).getText();
 			}
-
+			try {
 			new Actions(Driver.webdriver).moveToElement(homePage.testScoresPercentageon_tso).build().perform();
-
 			percentage_on_circle = homePage.testScoreValueInCircle_onlinechart_tso.get(index).getText();
 			homePage.testScoreValueInCircle_onlinechart_tso.get(index).click();
 			Thread.sleep(500);
@@ -391,6 +389,19 @@ public class PaginationUtility_for_Pages {
 			String tool_Tip_percentage = homePage.tooltiprowpercent_onlinechart.getText();
 			tool_Tip_percentage = tool_Tip_percentage.substring(0, tool_Tip_percentage.indexOf("%"));
 			Assert.assertTrue(tool_Tip_percentage.equals(percentage_on_circle));
+			}
+			catch(Exception e) {
+				new Actions(Driver.webdriver).moveToElement(homePage.testnameslabel_onlinechart_pot).build().perform();
+				percentage_on_circle = homePage.testScoreValueInCircle_onlinechart_pot.get(index).getText();
+				homePage.testScoreValueInCircle_onlinechart_pot.get(index).click();
+				Thread.sleep(500);
+				test_name_on_tooltip_model = homePage.testnameontooltip.getText();
+				Assert.assertTrue(test_name_on_tooltip_model.equals(tooltiptext_on_test_name_on_line_chart));
+				String tool_Tip_percentage = homePage.tooltiprowpercent_onlinechart.getText();
+				tool_Tip_percentage = tool_Tip_percentage.substring(0, tool_Tip_percentage.indexOf("%"));
+				Assert.assertTrue(tool_Tip_percentage.equals(percentage_on_circle));
+			}
+
 		} catch (Exception e) {
 			UtilityMethods.processException(e);
 		}
