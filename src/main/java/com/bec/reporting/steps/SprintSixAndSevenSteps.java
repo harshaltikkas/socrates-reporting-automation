@@ -60,18 +60,18 @@ public class SprintSixAndSevenSteps {
 	public void verify_the_comparison_band_for_school_and_district() throws Throwable {
 		try {
 			homePage.compareschoollabel.click();
-			Thread.sleep(1000);
+			Thread.sleep(500);
 			Assert.assertTrue(homePage.schoolAvgScrInClassInTS.isDisplayed());
 			homePage.comparedistrictlabel.click();
-			Thread.sleep(1000);
+			Thread.sleep(500);
 			Assert.assertTrue(homePage.districtAvgScrInClassInTS.isDisplayed());
 			// now, unchecked both the checkbox one by one and verify that result should not
 			// display
 			homePage.selectedcompareschoollabel.click();
-			Thread.sleep(500);
+			Thread.sleep(1000);
 			Assert.assertTrue(IWait.check_Absence_of_Element(homePage.schoolAvgScrInClassInTS));
 			homePage.selectedcomparedistrictlabel.click();
-			Thread.sleep(500);
+			Thread.sleep(1000);
 			Assert.assertTrue(IWait.check_Absence_of_Element(homePage.districtAvgScrInClassInTS));
 			CBTConfiguration.score = "pass";
 		} catch (Exception e) {
@@ -374,16 +374,8 @@ public class SprintSixAndSevenSteps {
 	public void verify_the_diamond_shape_stroke_on_the_x_axis_and_Color_changes_within_the_Line_Charts_within_test_score_menu()
 			throws Throwable {
 		try {
-			if (Standard_Overview_Table_Steps.underClassContext && Standard_Overview_Table_Steps.testScoreMenuClicked) {
-				UtilityMethods.scrollPageDown(Driver.webdriver, 5);
-				Thread.sleep(500);
-			}
-
-			else if (Standard_Overview_Table_Steps.underStudentContext
-					&& Standard_Overview_Table_Steps.testScoreMenuClicked) {
-				UtilityMethods.scrollPageDown(Driver.webdriver, 7);
-				Thread.sleep(500);
-			}
+			UtilityMethods.scrollPageDown(Driver.webdriver, 5);
+			Thread.sleep(500);
 
 			// checking for paginator
 			if (PaginationUtility_for_Pages.checkPaginator_on_tsot()) {
@@ -399,14 +391,12 @@ public class SprintSixAndSevenSteps {
 								.moveToElement(homePage.testScoreValueInCircle_onlinechart_pot.get(j)).click().build()
 								.perform();
 						Thread.sleep(1000);
-						try {
-							Assert.assertTrue(homePage.highlightedtestName_onlinechart_on_tsot.isDisplayed());
-						} catch (Exception e) {
-							Assert.assertTrue(homePage.highlightedtestName_onlinechart.isDisplayed());
-						}
+
+						Assert.assertTrue(homePage.highlightedtestName_onlinechart_on_tsot.isDisplayed());
+
 						new Actions(Driver.webdriver).moveToElement(homePage.testNamesLabelOnLineChart).click().build()
 								.perform();
-						Thread.sleep(500);
+
 					}
 				}
 				// check for left arrow enabled and click on it and click on first circle and
@@ -424,14 +414,11 @@ public class SprintSixAndSevenSteps {
 									.moveToElement(homePage.testScoreValueInCircle_onlinechart_pot.get(j)).click()
 									.build().perform();
 							Thread.sleep(1000);
-							try {
-								Assert.assertTrue(homePage.highlightedtestName_onlinechart_on_tsot.isDisplayed());
-							} catch (Exception e) {
-								Assert.assertTrue(homePage.highlightedtestName_onlinechart.isDisplayed());
-							}
+
+							Assert.assertTrue(homePage.highlightedtestName_onlinechart_on_tsot.isDisplayed());
+
 							new Actions(Driver.webdriver).moveToElement(homePage.testNamesLabelOnLineChart).click()
 									.build().perform();
-							Thread.sleep(500);
 						}
 					}
 				} while (PaginationUtility_for_Pages.check_Enabled_Left_Arrow_on_Paginator_on_tsot());
@@ -444,17 +431,11 @@ public class SprintSixAndSevenSteps {
 					new Actions(Driver.webdriver).moveToElement(homePage.testScoreValueInCircle_onlinechart_pot.get(i))
 							.click().build().perform();
 					Thread.sleep(1000);
-					try {
-						Assert.assertTrue(homePage.highlightedtestName_onlinechart_on_tsot.isDisplayed());
-						new Actions(Driver.webdriver).moveToElement(homePage.testScoresPercentageon_tsot).click()
-								.build().perform();
-					} catch (Exception e) {
-						Assert.assertTrue(homePage.highlightedtestName_onlinechart.isDisplayed());
-						new Actions(Driver.webdriver).moveToElement(homePage.testScoresPercentageon_tso).click().build()
-								.perform();
-					}
 
-					Thread.sleep(500);
+					Assert.assertTrue(homePage.highlightedtestName_onlinechart_on_tsot.isDisplayed());
+
+					new Actions(Driver.webdriver).moveToElement(homePage.testNamesLabelOnLineChart).click().build()
+							.perform();
 				}
 			}
 			Standard_Overview_Table_Steps.resetStatus();
@@ -466,6 +447,85 @@ public class SprintSixAndSevenSteps {
 			UtilityMethods.processException(e);
 		}
 		log.info("Scenario  BE-678,689,683,684 completed");
+	}
+
+	@Then("^verify the diamond shape stroke on the x-axis and Color changes within the Line Charts within test score menu for student$")
+	public void verify_the_diamond_shape_stroke_on_the_x_axis_and_Color_changes_within_the_Line_Charts_within_test_score_menu_for_student()
+			throws Throwable {
+		try {
+			UtilityMethods.wait_For_Test_Score_Overview_Section_Load();
+			UtilityMethods.scrollPageDown(Driver.webdriver, 7);
+			Thread.sleep(500);
+
+			// checking for paginator
+			if (PaginationUtility_for_Pages.checkPaginator_on_tso_under_ts_under_student()) {
+				// this lool will execute for the no. of circle available on paginator
+				for (int i = homePage.circle_list_on_paginator_on_tso_under_ts_under_student.size() - 1; i >= 0; i--) {
+					PaginationUtility_for_Pages.clicking_on_indexed_circle_of_paginator(
+							homePage.circle_list_on_paginator_on_tso_under_ts_under_student, i);
+					Assert.assertTrue(homePage.testNamesonPerPage_onlinechart.size() <= 10);
+					for (int j = homePage.testNamesonPerPage_onlinechart.size() - 1; j >= 0; j--) {
+						Assert.assertTrue(homePage.diamondshapesymblonPerPage_onlinechart.get(j).isDisplayed());
+						Thread.sleep(500);
+						new Actions(Driver.webdriver)
+								.moveToElement(homePage.testScoreValueInCircle_onlinechart_tso.get(j)).click().build()
+								.perform();
+						Thread.sleep(1000);
+
+						Assert.assertTrue(homePage.highlightedtestName_onlinechart.isDisplayed());
+						new Actions(Driver.webdriver).moveToElement(homePage.testScoresPercentageon_tso).click().build()
+								.perform();
+					}
+				}
+				// check for left arrow enabled and click on it and click on first circle and
+				// validate
+				do {
+					if (PaginationUtility_for_Pages
+							.check_Enabled_Right_Arrow_on_Paginator_on_tso_under_ts_under_student()) {
+						PaginationUtility_for_Pages
+								.clicking_on_enabled_right_Arrow_of_paginator_on_tso_under_ts_under_student();
+						PaginationUtility_for_Pages.clicking_on_last_circle_of_paginator(
+								homePage.circle_list_on_paginator_on_tso_under_ts_under_student);
+						Assert.assertTrue(homePage.testNamesonPerPage_onlinechart.size() <= 10);
+						for (int j = homePage.testNamesonPerPage_onlinechart.size() - 1; j >= 0; j--) {
+							Assert.assertTrue(homePage.diamondshapesymblonPerPage_onlinechart.get(j).isDisplayed());
+							Thread.sleep(500);
+							new Actions(Driver.webdriver)
+									.moveToElement(homePage.testScoreValueInCircle_onlinechart_tso.get(j)).click()
+									.build().perform();
+							Thread.sleep(1000);
+
+							Assert.assertTrue(homePage.highlightedtestName_onlinechart.isDisplayed());
+							new Actions(Driver.webdriver).moveToElement(homePage.testScoresPercentageon_tso).click()
+									.build().perform();
+						}
+					}
+				} while (PaginationUtility_for_Pages
+						.check_Enabled_Right_Arrow_on_Paginator_on_tso_under_ts_under_student());
+			} else {
+				// when paginator is not found
+				Assert.assertTrue(homePage.testNamesonPerPage_onlinechart.size() <= 10);
+				for (int i = homePage.testNamesonPerPage_onlinechart.size() - 1; i >= 0; i--) {
+					Assert.assertTrue(homePage.diamondshapesymblonPerPage_onlinechart.get(i).isDisplayed());
+					Thread.sleep(500);
+					new Actions(Driver.webdriver).moveToElement(homePage.testScoreValueInCircle_onlinechart_tso.get(i))
+							.click().build().perform();
+					Thread.sleep(500);
+
+					Assert.assertTrue(homePage.highlightedtestName_onlinechart.isDisplayed());
+					new Actions(Driver.webdriver).moveToElement(homePage.testScoresPercentageon_tso).click().build()
+							.perform();
+				}
+			}
+			Standard_Overview_Table_Steps.resetStatus();
+			UtilityMethods.scrollPageUp(Driver.webdriver);
+			Thread.sleep(500);
+
+			CBTConfiguration.score = "pass";
+		} catch (Exception e) {
+			UtilityMethods.processException(e);
+		}
+		log.info("Scenario  684_b completed");
 	}
 
 }

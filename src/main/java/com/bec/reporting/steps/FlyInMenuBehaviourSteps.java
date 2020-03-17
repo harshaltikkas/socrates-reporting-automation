@@ -452,6 +452,7 @@ public class FlyInMenuBehaviourSteps {
 	@When("^User Click on Test tab within the Universal Selector Tab$")
 	public void user_Click_on_Test_tab_within_the_Universal_Selector_Tab() throws Throwable {
 		try {
+			UtilityMethods.wait_For_Context_Header_Section();
 			homePage.testtab.click();
 			IWait.explicit_wait(Driver.webdriver, homePage.searchbarontesttab);
 			Verify.verify(homePage.searchbarontesttab.isDisplayed());
@@ -501,12 +502,12 @@ public class FlyInMenuBehaviourSteps {
 					homePage.testscheckboxlist.get(i).click();
 					Thread.sleep(500);
 					UtilityMethods.scrollPageDown(Driver.webdriver, i);
+					Thread.sleep(500);
 					noOfSelectedTest++;
 				}
-				homePage.testapplybtn.click();
-				Thread.sleep(3000);
+				homePage.testapplybtn.click();				
 				UtilityMethods.scrollPageUp(Driver.webdriver);
-				Thread.sleep(2000);
+				UtilityMethods.wait_For_Context_Header_Section();
 				Assert.assertTrue(
 						homePage.testsNameoncontextheader.getText().equals("Custom (" + noOfSelectedTest + ")"));
 				break;
