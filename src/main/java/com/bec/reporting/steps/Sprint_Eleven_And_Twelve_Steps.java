@@ -430,19 +430,19 @@ public class Sprint_Eleven_And_Twelve_Steps {
 	@Then("^verify The Persistence across level and reports of Test Scores Overview$")
 	public void verify_The_Persistence_across_level_and_reports_of_Test_Scores_Overview() throws Throwable {
 		try {
-			Thread.sleep(5000);
+			//UtilityMethods.wait_For_Context_Header_Section();
 			Assert.assertTrue(homePage.activeschoolmenu.isDisplayed());
 			Assert.assertTrue(homePage.activestandardperformancebtn.isDisplayed());
 			homePage.testscoresbtn.click();
-			Thread.sleep(5000);
-			Assert.assertTrue(homePage.testscoreovertimelinechart.isDisplayed());
+			UtilityMethods.wait_For_Test_Score_Detail_Section();
+			Assert.assertTrue(homePage.testscoreovertimetext_underschool_undertest.isDisplayed());
 			UtilityMethods.scrollPageDown(Driver.webdriver, 5);
 			Thread.sleep(500);
 			int randNo = UtilityMethods.generateRandomNumberBySkippingIndex(
 					homePage.testNamesonPerPage_onlinechart.size(), homePage.testNamesonPerPage_onlinechart.size() - 1);
 			new Actions(Driver.webdriver).moveToElement(homePage.testScoreValueInCircle_onlinechart.get(randNo)).click()
 					.build().perform();
-			Thread.sleep(5000);
+			UtilityMethods.wait_For_Test_Score_Detail_Section();
 			new Actions(Driver.webdriver).moveToElement(homePage.testNamesonPerPage_onlinechart.get(randNo)).build()
 					.perform();
 			Thread.sleep(500);
@@ -456,17 +456,15 @@ public class Sprint_Eleven_And_Twelve_Steps {
 			Assert.assertTrue(testNameOnRightSide.equals(testNameOnleftSide));
 			new Actions(Driver.webdriver).moveToElement(homePage.classORSchoolNamesListInClassListPageHeaders.get(0))
 					.click().build().perform();
-			Thread.sleep(5000);
-
-			UtilityMethods.scrollPageUp(Driver.webdriver);
-			Thread.sleep(5000);
+			UtilityMethods.wait_For_Test_Score_Detail_Section();
+			UtilityMethods.scrollPageUp(Driver.webdriver);			
 			Assert.assertTrue(homePage.activeclassmenu.isDisplayed());
 
-			UtilityMethods.scrollPageDown(Driver.webdriver, 10);
+			UtilityMethods.scrollPageDown(Driver.webdriver, 10);Thread.sleep(500);
 			Assert.assertTrue(homePage.datesubmittedtext.isDisplayed());
 			new Actions(Driver.webdriver).moveToElement(homePage.classORSchoolNamesListInClassListPageHeaders.get(0))
 					.click().build().perform();
-			Thread.sleep(5000);
+			UtilityMethods.wait_For_Test_Score_Overview_Section_Load();
 			UtilityMethods.scrollPageUp(Driver.webdriver);
 			Thread.sleep(500);
 			Assert.assertTrue(homePage.activestudentmenu.isDisplayed());

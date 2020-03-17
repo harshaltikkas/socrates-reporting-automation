@@ -84,33 +84,12 @@ public class Sprint_Eight_And_Tenth_Steps {
 		log.info("Scenario BE-791,792,793,805,806 completed");
 	}
 
-	/*
-	 * private boolean validateDistrictTerm() { int falseFlag = 0; try { String
-	 * yearList = ""; String regex = "[0-9]{4}$"; Pattern pattern =
-	 * Pattern.compile(regex); Matcher matcher;
-	 * 
-	 * homePage.districttermdropdownbtn.click(); Thread.sleep(1000);
-	 * List<WebElement> termList = homePage.districttermlist; for (int i = 0; i <
-	 * termList.size(); i++) { yearList = termList.get(i).getText(); if
-	 * (yearList.contains("-")) { for (int j = 0; j < yearList.length(); j++) { if
-	 * (yearList.charAt(j) == '-') { } else if ((yearList.charAt(j) >= '0') &&
-	 * (yearList.charAt(j) <= '9')) {
-	 * 
-	 * } else { falseFlag++; } } if (!(Integer.parseInt(yearList.substring(0,
-	 * yearList.indexOf("-"))) < Integer
-	 * .parseInt(yearList.substring(yearList.indexOf("-") + 1)))) { falseFlag++; } }
-	 * else { matcher = pattern.matcher((CharSequence) yearList); if
-	 * (!matcher.matches()) { falseFlag++; } } } } catch (Exception e) {
-	 * UtilityMethods.processException(e); } if (falseFlag > 0) { return false; }
-	 * else { return true; } }
-	 */
-
 	@Then("^verify Start date and End Date for the Custom date selector always appears beneath the Date Range dropdown$")
 	public void verify_Start_date_and_End_Date_for_the_Custom_date_selector_always_appears_beneath_the_Date_Range_dropdown()
 			throws Throwable {
 		try {
 			UtilityMethods.scrollPageDown(Driver.webdriver, 2);
-			Thread.sleep(1000);
+			Thread.sleep(500);
 			homePage.datetab.click();
 			Thread.sleep(1000);
 			UtilityMethods.scrollPageDown(Driver.webdriver, 6);
@@ -129,7 +108,7 @@ public class Sprint_Eight_And_Tenth_Steps {
 			homePage.activeDateRangelistoOnCalender.get(num).click();
 			Thread.sleep(500);
 			String dateValue = homePage.activeDate.getText();
-			UtilityMethods.checkDateFormat(dateValue);
+			UtilityMethods.checkDateFormatOnDateTab(dateValue);
 			Date one = getDate(dateValue);
 			Assert.assertTrue(
 					dateValue.substring(dateValue.indexOf("/") + 1, dateValue.lastIndexOf("/")).equals(sDate));
@@ -140,7 +119,7 @@ public class Sprint_Eight_And_Tenth_Steps {
 			homePage.activeDateRangelistoOnCalender.get(num).click();
 			Thread.sleep(500);
 			dateValue = homePage.activeDate.getText();
-			UtilityMethods.checkDateFormat(dateValue);
+			UtilityMethods.checkDateFormatOnDateTab(dateValue);
 			Assert.assertTrue(
 					dateValue.substring(dateValue.indexOf("/") + 1, dateValue.lastIndexOf("/")).equals(eDate));
 			Date two = getDate(dateValue);

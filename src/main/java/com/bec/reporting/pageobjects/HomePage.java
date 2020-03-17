@@ -708,6 +708,9 @@ public class HomePage {
 
 	@FindBy(xpath = "//*[contains(text(),'Test Scores Over Time')]")
 	public WebElement testscoreovertimelinechart;
+	
+	@FindBy(xpath = "//*[contains(text(),'Test Scores over Time')]")
+	public WebElement testscoreovertimetext_underschool_undertest;
 
 	@FindBy(xpath = "//*[contains(text(),'Test Score Detail')]")
 	public WebElement testscoredetail;
@@ -874,7 +877,7 @@ public class HomePage {
 	@FindBy(xpath = "//div[@class='class_test_overview_table_progress_bar_title' and contains(text(),'Class Average Scores:')]")
 	public WebElement classAvgScrInClassInTS;
 
-	@FindBy(xpath = "//div[@class='class_test_overview_table_progress_bar_title']")
+	@FindBy(xpath = "//div[@class='class_test_overview_table_progress_bar_title' and contains(text(),'District Average Scores')]")
 	public WebElement districtAvgScrInClassInTS;
 
 	@FindBy(xpath = "//span[@class='student-list-col-head-name' and contains(text(),'Number of Questions')]/following-sibling::span//i[contains(text(),'expand_more')]")

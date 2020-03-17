@@ -243,16 +243,24 @@ public class UtilityMethods {
 			matcher = pattern.matcher(submissionDate);
 			Assert.assertTrue(matcher.matches());
 		} catch (Exception e) {
-			log.error("Invalid Date formate");
+			log.error("Invalid Date format");
 			UtilityMethods.processException(e);
 		}
 	}
-
-	/*
-	 * public static void printDateTime() { SimpleDateFormat formatter = new
-	 * SimpleDateFormat("dd/MM/yyyy HH:mm:ss"); Date date = new Date();
-	 * log.info(formatter.format(date)); }
-	 */
+	
+	/*This method is used to validate the date format in date tab-custom date as mm can be optional zero if not in 2 digits.*/
+	public static void checkDateFormatOnDateTab(String submissionDate) {
+		Matcher matcher = null;
+		try {
+			String regex = "^[0-3]?[0-9]/[0-3]?[0-9]/(?:[0-9]{2})?[0-9]{2}$";
+			Pattern pattern = Pattern.compile(regex);
+			matcher = pattern.matcher(submissionDate);
+			Assert.assertTrue(matcher.matches());
+		} catch (Exception e) {
+			log.error("Invalid Date format");
+			UtilityMethods.processException(e);
+		}
+	}	
 
 	/**
 	 * This method is used to Veriy the Colour of the Standards records belong to
