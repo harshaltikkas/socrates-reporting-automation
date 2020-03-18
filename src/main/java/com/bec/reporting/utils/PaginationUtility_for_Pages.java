@@ -266,8 +266,7 @@ public class PaginationUtility_for_Pages {
 			UtilityMethods.processException(e);
 		}
 	}
-
-	// =======================================================================================================
+	
 	/**
 	 * This method is used to Verify the Test Name with the correct ToolTip Test
 	 * Name Text
@@ -281,17 +280,7 @@ public class PaginationUtility_for_Pages {
 					.perform();
 			String tooltiptextOfTSOT = homePage.testNametooltip_onlinechart.getText();
 			Assert.assertTrue(tooltiptextOfTSOT.contains(testName));
-			Thread.sleep(500);
-			/*
-			 * new
-			 * Actions(Driver.webdriver).moveToElement(homePage.testNameOnTestScoreDetail).
-			 * build().perform(); String tooltipTextoftestNameOnTestScoreDetail =
-			 * homePage.tooltipOftestNameOnTestScoreDetail.getText();
-			 * Assert.assertTrue(tooltiptextOfTSOT.contains(
-			 * tooltipTextoftestNameOnTestScoreDetail)); new
-			 * Actions(Driver.webdriver).moveToElement(homePage.testScoresPercentage).build(
-			 * ).perform();
-			 */
+			Thread.sleep(500);			
 		} catch (InterruptedException e) {
 			UtilityMethods.processException(e);
 		}
@@ -353,10 +342,10 @@ public class PaginationUtility_for_Pages {
 			}
 			Assert.assertTrue(
 					tooltiptext_on_test_name_on_test_score_detail.equals(tooltiptext_on_test_name_on_line_chart));
-			new Actions(Driver.webdriver).moveToElement(homePage.districtAvgScrInClassInTS).build().perform();
+			new Actions(Driver.webdriver).moveToElement(homePage.classAvgScrInClassInTS).build().perform();
 			submittedDateText = homePage.submitteddateon_tsd.getText();
 			UtilityMethods.checkDateFormat(submittedDateText.substring(11, 21));
-			if(submittedDateText.length()>25) {
+			if (submittedDateText.length() > 25) {
 				UtilityMethods.checkDateFormat(submittedDateText.substring(23));
 			}
 		} catch (Exception e) {
@@ -380,17 +369,17 @@ public class PaginationUtility_for_Pages {
 				tooltiptext_on_test_name_on_line_chart = homePage.testNamesonPerPage_onlinechart.get(index).getText();
 			}
 			try {
-			new Actions(Driver.webdriver).moveToElement(homePage.testScoresPercentageon_tso).build().perform();
-			percentage_on_circle = homePage.testScoreValueInCircle_onlinechart_tso.get(index).getText();
-			homePage.testScoreValueInCircle_onlinechart_tso.get(index).click();
-			Thread.sleep(500);
-			test_name_on_tooltip_model = homePage.testnameontooltip.getText();
-			Assert.assertTrue(test_name_on_tooltip_model.equals(tooltiptext_on_test_name_on_line_chart));
-			String tool_Tip_percentage = homePage.tooltiprowpercent_onlinechart.getText();
-			tool_Tip_percentage = tool_Tip_percentage.substring(0, tool_Tip_percentage.indexOf("%"));
-			Assert.assertTrue(tool_Tip_percentage.equals(percentage_on_circle));
-			}
-			catch(Exception e) {
+				new Actions(Driver.webdriver).moveToElement(homePage.testScoresPercentageon_tso).build().perform();
+				percentage_on_circle = homePage.testScoreValueInCircle_onlinechart_tso.get(index).getText();
+				homePage.testScoreValueInCircle_onlinechart_tso.get(index).click();
+				Thread.sleep(500);
+				test_name_on_tooltip_model = homePage.testnameontooltip.getText();
+				Assert.assertTrue(test_name_on_tooltip_model.equals(tooltiptext_on_test_name_on_line_chart));
+				String tool_Tip_percentage = homePage.tooltiprowpercent_onlinechart.getText();
+				tool_Tip_percentage = tool_Tip_percentage.substring(0, tool_Tip_percentage.indexOf("%"));
+				Assert.assertTrue(tool_Tip_percentage.equals(percentage_on_circle));
+				new Actions(Driver.webdriver).moveToElement(homePage.testScoresPercentageon_tso).build().perform();
+			} catch (Exception e) {
 				new Actions(Driver.webdriver).moveToElement(homePage.testnameslabel_onlinechart_pot).build().perform();
 				percentage_on_circle = homePage.testScoreValueInCircle_onlinechart_pot.get(index).getText();
 				homePage.testScoreValueInCircle_onlinechart_pot.get(index).click();
@@ -400,6 +389,8 @@ public class PaginationUtility_for_Pages {
 				String tool_Tip_percentage = homePage.tooltiprowpercent_onlinechart.getText();
 				tool_Tip_percentage = tool_Tip_percentage.substring(0, tool_Tip_percentage.indexOf("%"));
 				Assert.assertTrue(tool_Tip_percentage.equals(percentage_on_circle));
+				new Actions(Driver.webdriver).moveToElement(homePage.testnameslabel_onlinechart_pot).click().build()
+						.perform();
 			}
 
 		} catch (Exception e) {

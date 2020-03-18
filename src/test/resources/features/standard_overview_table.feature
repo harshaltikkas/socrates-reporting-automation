@@ -1,7 +1,7 @@
-@Harshu
+@Feature
 Feature: Standard Overview Table and Chart
 
-   ##STORY 5a) Standards in Achievement Bands and Y axis / Calculating Cells
+  ##STORY 5a) Standards in Achievement Bands and Y axis / Calculating Cells
   ##STORY 6c) Student and Class level and STORY 7d)
   @Scenario36 @TC_0001 @TC_0002 @TC_0003 @TC_0005 @TC_0006 @TC_0007 @TC_0008 @TC_0009 @TC_00010
   Scenario: Verify The Y-axis UI representation
@@ -15,7 +15,7 @@ Feature: Standard Overview Table and Chart
     ##TC-6
     And user should able to see sort arrows with the red and green colours and when the user clicks on that arrow sorting should happen
 
- ##STORY 5b) Strand Averages and table X axis &
+  ##STORY 5b) Strand Averages and table X axis &
   ##STORY 5c) Cells by Student vs. Class Buttons	&
   ##STORY 5d) Standards Table’s effect on Performance over Time Line Chart and Student List
   @Scenario37 @TC_0012 @TC_0013_DB @TC_0014 @TC_0015 @TC_0016 @TC_0017 @5C-TC-21 @5d-TC-22
@@ -60,7 +60,7 @@ Feature: Standard Overview Table and Chart
     When User Click on Standard Performance tab within the District Context
     Then verify x_axis labeled with 'Test Names' and show tooltip on test names and if more than '10' tests are there then paginator should be display on performance over time
 
- ##STORY 6f) Relationship between Line Chart for Test Scores at the Class Level and Student List module & STORY AND
+  ##STORY 6f) Relationship between Line Chart for Test Scores at the Class Level and Student List module & STORY AND
   ##STORY 7a) Standards and Test Score Detail
   ##STORY 6c) Student and Class level
   @Scenario40 @TC_0029 @TC_0030_DB @TC_0031 @TC_0032 @TC_005 @TC_006
@@ -77,9 +77,7 @@ Feature: Standard Overview Table and Chart
     When User click on Student Context and Test Score button
     Then line chart of Test score over time should be displayed of that student but Student list should not be displayed on test score overview
 
-
-
-   ##STORY 6d) Overlays
+    ##STORY 6d) Overlays
   @Scenario41 @TC_0015 @TC_0016 @TC_0017 @TC_0018
   Scenario: Verify Overlays Performance Over Time
     Given User is on portal's login screen with username as "school_admin_one" and password as "password" and usertype as "realm_one"
@@ -89,14 +87,14 @@ Feature: Standard Overview Table and Chart
     ##i)Full name of the Test at the top
     ##ii)Date range when the test was submitted
     ##iii)Questions that contain the standard or strand: “Questions:” followed by each question number in a box.
-    ########### Failing because , on UI ,page one,4th score from last is not visible.
+    Given User is on portal's login screen with username as "school_admin_one" and password as "password" and usertype as "realm_one"
+   	When User Click on Standard Performance tab within the Class Context
+    And User Click on Standard Performance tab within the Student Context
+    Then User click on the circle within the line chart and should able to see the overlay of Tool tip which have following items on performace over time
+    ########### Failing because , page persistence issue as, not going directly from school/district menu to student menu
     Given User is on portal's login screen with username as "school_admin_one" and password as "password" and usertype as "realm_one"
     When User Click on Standard Performance tab within the Student Context
-    Then User click on the circle within the line chart and should able to see the overlay of Tool tip which have following items
-		########### Failing because page persistence issue as, not going directly from school/district menu to student menu 
-    Given User is on portal's login screen with username as "school_admin_one" and password as "password" and usertype as "realm_one"
-    When User Click on Standard Performance tab within the Student Context
-    Then verify The points on the chart should be circles that are color-coordinated according to achievement level
+    Then User click on the circle within the line chart and should able to see the overlay of Tool tip which have following items on performace over time
 
   ##STORY 7b) Achievement Filter and Sorting
   @Scenario42 @TC_0015 @TC_0016 @TC_0017
@@ -119,9 +117,8 @@ Feature: Standard Overview Table and Chart
     When User Click on Standard Performance tab within the Class Context
     Then user should able to see Student List and the icon next to it can be selected to minimize or maximize the Student List window
     And Verify the left most column header should be 'Student (X)'
-    And Verify the right most column header should be 'Score'
+    And Verify the right most column header should be 'Score'  
     And All the column headers should be sortable with ascending and descending order
-    And select the student within the student list and Student context with information for that individual student should be shown
-    When User Click on Standard Performance tab within the Class Context
+    And select the student within the student list and Student context with information for that individual student should be shown   
     And Click or select strand and standard from the standard table
-    Then The student list related to the selected standard within the perticular strand with the header and the subheader is displayed
+    And The student list related to the selected standard within the perticular strand with the header and the subheader is displayed

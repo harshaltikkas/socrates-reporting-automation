@@ -124,7 +124,7 @@ public class Line_Chart_Test_Scores_vs_Time_Steps {
 	}
 
 	/**
-	 * This method is used to check on class context menu the test score cricle
+	 * This method is used to check on class context menu the test score circle
 	 * value with specified range value with the associated colour
 	 * 
 	 * @throws Throwable
@@ -132,14 +132,7 @@ public class Line_Chart_Test_Scores_vs_Time_Steps {
 	@Then("^verify The points on the chart should be circles that are color-coordinated according to achievement level$")
 	public void verify_The_points_on_the_chart_should_be_circles_that_are_color_coordinated_according_to_achievement_level()
 			throws Throwable {
-		try {
-			try {
-				homePage.performance_overtime_icon.click();
-				Thread.sleep(1000);
-				log.info("user clicked on Standard Performance under class/school/district context");
-			} catch (Exception e) {
-				log.info("user clicked on SP under student context");
-			}
+		try {			
 			UtilityMethods.scrollPageDown(Driver.webdriver, 5);
 			Thread.sleep(500);
 			// checking for paginator
