@@ -18,9 +18,9 @@ Feature: Line Chart Test Scores vs Time
   Scenario: Verify the colours inside the circle within the line chart
     Given User is on portal's login screen with username as "teacher_one" and password as "password" and usertype as "realm_one"
     When User Click on Standard Performance tab within the Class Context
-    Then verify The points on the chart should be circles that are color-coordinated according to achievement level
+    Then User click on the circle within the line chart and should able to see the overlay of Tool tip which have following items on performace over time
     When User Click on Standard Performance tab within the Student Context
-    Then verify The points on the chart should be circles that are color-coordinated according to achievement level
+    Then User click on the circle within the line chart and should able to see the overlay of Tool tip which have following items on performace over time
 
   @Scenario35 @TC_0028
   Scenario: Verify that how the overlay shown on the line chart can be closed

@@ -661,7 +661,7 @@ public class Standard_Overview_Table_Steps {
 		Standard_Overview_Table_Steps.underClassContext = true;
 		UtilityMethods.wait_For_Test_Score_Detail_Section();
 	}
-	
+
 	/**
 	 * This method is used to click on Test Score button in district context
 	 * 
@@ -722,7 +722,8 @@ public class Standard_Overview_Table_Steps {
 		try {
 			Standard_Overview_Table_Steps.paginationontesttab();
 			click_on_the_icon_to_maximize_the_Chart();
-			UtilityMethods.scrollPageDown(Driver.webdriver, 8);Thread.sleep(500);
+			UtilityMethods.scrollPageDown(Driver.webdriver, 8);
+			Thread.sleep(500);
 			Assert.assertTrue(homePage.testnameslabel_onlinechart_pot.getText().equals("Test Names"));
 			// checking for paginator
 			if (PaginationUtility_for_Pages.checkPaginator_on_pot_under_standard_performance()) {
@@ -735,8 +736,7 @@ public class Standard_Overview_Table_Steps {
 						new Actions(Driver.webdriver).moveToElement(homePage.testScoresPercentage).build().perform();
 						PaginationUtility_for_Pages.verifyTestNamesAndToolTipText(j);
 						new Actions(Driver.webdriver).moveToElement(homePage.testScoresPercentage).build().perform();
-						UtilityMethods.verifyColorAndScoreOnLineChart(
-								homePage.testScoreCircleClronPerPage_pot.get(j),
+						UtilityMethods.verifyColorAndScoreOnLineChart(homePage.testScoreCircleClronPerPage_pot.get(j),
 								Integer.parseInt(homePage.testScoresonPerPage_on_pot.get(j).getText()));
 					}
 				}
@@ -751,9 +751,11 @@ public class Standard_Overview_Table_Steps {
 								homePage.circle_list_on_paginator_on_pot_under_sp);
 						Assert.assertTrue(homePage.testNamesonPerPage_onlinechart.size() <= 10);
 						for (int j = homePage.testNamesonPerPage_onlinechart.size() - 1; j >= 0; j--) {
-							new Actions(Driver.webdriver).moveToElement(homePage.testScoresPercentage).build().perform();
+							new Actions(Driver.webdriver).moveToElement(homePage.testScoresPercentage).build()
+									.perform();
 							PaginationUtility_for_Pages.verifyTestNamesAndToolTipText(j);
-							new Actions(Driver.webdriver).moveToElement(homePage.testScoresPercentage).build().perform();
+							new Actions(Driver.webdriver).moveToElement(homePage.testScoresPercentage).build()
+									.perform();
 							UtilityMethods.verifyColorAndScoreOnLineChart(
 									homePage.testScoreCircleClronPerPage_pot.get(j),
 									Integer.parseInt(homePage.testScoresonPerPage_on_pot.get(j).getText()));
@@ -768,8 +770,7 @@ public class Standard_Overview_Table_Steps {
 					new Actions(Driver.webdriver).moveToElement(homePage.testScoresPercentage).build().perform();
 					PaginationUtility_for_Pages.verifyTestNamesAndToolTipText(j);
 					new Actions(Driver.webdriver).moveToElement(homePage.testScoresPercentage).build().perform();
-					UtilityMethods.verifyColorAndScoreOnLineChart(
-							homePage.testScoreCircleClronPerPage_pot.get(j),
+					UtilityMethods.verifyColorAndScoreOnLineChart(homePage.testScoreCircleClronPerPage_pot.get(j),
 							Integer.parseInt(homePage.testScoresonPerPage_on_pot.get(j).getText()));
 				}
 			}
@@ -780,7 +781,6 @@ public class Standard_Overview_Table_Steps {
 		log.info("Scenario39_2 performance over time line chart Completed");
 	}
 
-	
 	@Then("^line chart of Test score over time should be displayed to the right of it Student list should display$")
 	public void line_chart_of_Test_score_over_time_should_be_displayed_to_the_right_of_it_Student_list_should_display()
 			throws Throwable {
@@ -820,15 +820,17 @@ public class Standard_Overview_Table_Steps {
 				}
 			}
 			CBTConfiguration.score = "pass";
-			UtilityMethods.scrollPageUp(Driver.webdriver);Thread.sleep(500);
+			UtilityMethods.scrollPageUp(Driver.webdriver);
+			Thread.sleep(500);
 		} catch (Exception e) {
 			UtilityMethods.processException(e);
 		}
 		log.info("Scenario 40_1 completed");
 	}
-	
+
 	@Then("^line chart of Test score over time should be displayed of that student but Student list should not be displayed on test score overview$")
-	public void line_chart_of_Test_score_over_time_should_be_displayed_of_that_student_but_Student_list_should_not_be_displayed_on_test_score_overview() throws Throwable {
+	public void line_chart_of_Test_score_over_time_should_be_displayed_of_that_student_but_Student_list_should_not_be_displayed_on_test_score_overview()
+			throws Throwable {
 		try {
 			Assert.assertTrue(homePage.testscoreoverviewtext.isDisplayed());
 			UtilityMethods.scrollPageDown(Driver.webdriver, 7);
@@ -837,8 +839,8 @@ public class Standard_Overview_Table_Steps {
 			if (PaginationUtility_for_Pages.checkPaginator_on_tso_under_ts_under_student()) {
 				// this lool will execute for the no. of circle available on paginator
 				for (int i = homePage.circle_list_on_paginator_on_tso_under_ts_under_student.size() - 1; i >= 0; i--) {
-					PaginationUtility_for_Pages
-							.clicking_on_indexed_circle_of_paginator(homePage.circle_list_on_paginator_on_tso_under_ts_under_student, i);
+					PaginationUtility_for_Pages.clicking_on_indexed_circle_of_paginator(
+							homePage.circle_list_on_paginator_on_tso_under_ts_under_student, i);
 					Assert.assertTrue(homePage.testNamesonPerPage_onlinechart.size() <= 10);
 					for (int j = homePage.testNamesonPerPage_onlinechart.size() - 1; j >= 0; j--) {
 						PaginationUtility_for_Pages.verify_TestName_ToolTip_Details_on_Test_Score_Overview(j);
@@ -847,16 +849,19 @@ public class Standard_Overview_Table_Steps {
 				// check for left arrow enabled and click on it and click on first circle and
 				// validate
 				do {
-					if (PaginationUtility_for_Pages.check_Enabled_Right_Arrow_on_Paginator_on_tso_under_ts_under_student()) {
-						PaginationUtility_for_Pages.clicking_on_enabled_right_Arrow_of_paginator_on_tso_under_ts_under_student();
+					if (PaginationUtility_for_Pages
+							.check_Enabled_Right_Arrow_on_Paginator_on_tso_under_ts_under_student()) {
 						PaginationUtility_for_Pages
-								.clicking_on_last_circle_of_paginator(homePage.circle_list_on_paginator_on_tso_under_ts_under_student);
+								.clicking_on_enabled_right_Arrow_of_paginator_on_tso_under_ts_under_student();
+						PaginationUtility_for_Pages.clicking_on_last_circle_of_paginator(
+								homePage.circle_list_on_paginator_on_tso_under_ts_under_student);
 						Assert.assertTrue(homePage.testNamesonPerPage_onlinechart.size() <= 10);
 						for (int j = homePage.testNamesonPerPage_onlinechart.size() - 1; j >= 0; j--) {
 							PaginationUtility_for_Pages.verify_TestName_ToolTip_Details_on_Test_Score_Overview(j);
 						}
 					}
-				} while (PaginationUtility_for_Pages.check_Enabled_Right_Arrow_on_Paginator_on_tso_under_ts_under_student());
+				} while (PaginationUtility_for_Pages
+						.check_Enabled_Right_Arrow_on_Paginator_on_tso_under_ts_under_student());
 			} else {
 				// when paginator is not found
 				Assert.assertTrue(homePage.testNamesonPerPage_onlinechart.size() <= 10);
@@ -978,59 +983,12 @@ public class Standard_Overview_Table_Steps {
 		Standard_Overview_Table_Steps.underStudentContext = true;
 	}
 
-	/**
-	 * This method is used to click on circle and verify the overlay tooltip items
-	 * on performance line chart
-	 * 
-	 * @throws Throwable
-	 */
-	@Then("^User click on the circle within the line chart and should able to see the overlay of Tool tip which have following items$")
-	public void user_click_on_the_circle_within_the_line_chart_and_should_able_to_see_the_overlay_of_Tool_tip_which_have_following_items()
-			throws Throwable {
-		try {
-			// checking for paginator
-			if (PaginationUtility_for_Pages.checkPaginator_on_tsot()) {
-				// this lool will execute for the no. of circle available on paginator
-				for (int i = homePage.circle_list_on_paginator_on_tsot.size() - 1; i >= 0; i--) {
-					PaginationUtility_for_Pages
-							.clicking_on_indexed_circle_of_paginator(homePage.circle_list_on_paginator_on_tsot, i);
-					Assert.assertTrue(homePage.testNamesonPerPage_onlinechart.size() <= 10);
-					for (int j = homePage.testNamesonPerPage_onlinechart.size() - 1; j >= 0; j--) {
-						PaginationUtility_for_Pages.verifyTestNamesAndToolTipText(j);
-					}
-				}
-				// check for left arrow enabled and click on it and click on first circle and
-				// validate
-				do {
-					if (PaginationUtility_for_Pages.check_Enabled_Left_Arrow_on_Paginator_on_tsot()) {
-						PaginationUtility_for_Pages.clicking_on_enabled_left_Arrow_of_paginator_on_tsot();
-						PaginationUtility_for_Pages
-								.clicking_on_first_circle_of_paginator(homePage.circle_list_on_paginator_on_tsot);
-						Assert.assertTrue(homePage.testNamesonPerPage_onlinechart.size() <= 10);
-						for (int j = homePage.testNamesonPerPage_onlinechart.size() - 1; j >= 0; j--) {
-							PaginationUtility_for_Pages.verifyTestNamesAndToolTipText(j);
-						}
-					}
-				} while (PaginationUtility_for_Pages.check_Enabled_Left_Arrow_on_Paginator_on_tsot());
-			} else {
-				// when paginator is not found
-				Assert.assertTrue(homePage.testNamesonPerPage_onlinechart.size() <= 10);
-				for (int i = homePage.testNamesonPerPage_onlinechart.size() - 1; i >= 0; i--) {
-					PaginationUtility_for_Pages.verifyTestNamesAndToolTipText(i);
-				}
-			}
-			CBTConfiguration.score = "pass";
-		} catch (Exception e) {
-			UtilityMethods.processException(e);
-		}
-		log.info("Scenario 41_2 completed");
-	}
-	
 	@Then("^User click on the circle within the line chart and should able to see the overlay of Tool tip which have following items on performace over time$")
 	public void user_click_on_the_circle_within_the_line_chart_and_should_able_to_see_the_overlay_of_Tool_tip_which_have_following_items_on_performace_over_time()
 			throws Throwable {
 		try {
-			UtilityMethods.scrollPageDown(Driver.webdriver, 8);Thread.sleep(500);
+			UtilityMethods.scrollPageDown(Driver.webdriver, 8);
+			Thread.sleep(500);
 			if (PaginationUtility_for_Pages.checkPaginator_on_pot_under_standard_performance()) {
 				// this lool will execute for the no. of circle available on paginator
 				for (int i = homePage.circle_list_on_paginator_on_pot_under_sp.size() - 1; i >= 0; i--) {
@@ -1040,9 +998,8 @@ public class Standard_Overview_Table_Steps {
 					for (int j = homePage.testNamesonPerPage_onlinechart.size() - 1; j >= 0; j--) {
 						new Actions(Driver.webdriver).moveToElement(homePage.testScoresPercentage).build().perform();
 						PaginationUtility_for_Pages.verify_TestName_ToolTip_Details_on_Test_Score_Overview(j);
-						new Actions(Driver.webdriver).moveToElement(homePage.testScoresPercentage).build().perform();
-						UtilityMethods.verifyColorAndScoreOnLineChart(
-								homePage.testScoreCircleClronPerPage_pot.get(j),
+
+						UtilityMethods.verifyColorAndScoreOnLineChart(homePage.testScoreCircleClronPerPage_pot.get(j),
 								Integer.parseInt(homePage.testScoresonPerPage_on_pot.get(j).getText()));
 					}
 				}
@@ -1057,9 +1014,10 @@ public class Standard_Overview_Table_Steps {
 								homePage.circle_list_on_paginator_on_pot_under_sp);
 						Assert.assertTrue(homePage.testNamesonPerPage_onlinechart.size() <= 10);
 						for (int j = homePage.testNamesonPerPage_onlinechart.size() - 1; j >= 0; j--) {
-							new Actions(Driver.webdriver).moveToElement(homePage.testScoresPercentage).build().perform();
+							new Actions(Driver.webdriver).moveToElement(homePage.testScoresPercentage).build()
+									.perform();
 							PaginationUtility_for_Pages.verify_TestName_ToolTip_Details_on_Test_Score_Overview(j);
-							new Actions(Driver.webdriver).moveToElement(homePage.testScoresPercentage).build().perform();
+
 							UtilityMethods.verifyColorAndScoreOnLineChart(
 									homePage.testScoreCircleClronPerPage_pot.get(j),
 									Integer.parseInt(homePage.testScoresonPerPage_on_pot.get(j).getText()));
@@ -1073,13 +1031,12 @@ public class Standard_Overview_Table_Steps {
 				for (int j = homePage.testNamesonPerPage_onlinechart.size() - 1; j >= 0; j--) {
 					new Actions(Driver.webdriver).moveToElement(homePage.testScoresPercentage).build().perform();
 					PaginationUtility_for_Pages.verify_TestName_ToolTip_Details_on_Test_Score_Overview(j);
-					new Actions(Driver.webdriver).moveToElement(homePage.testScoresPercentage).build().perform();
-					UtilityMethods.verifyColorAndScoreOnLineChart(
-							homePage.testScoreCircleClronPerPage_pot.get(j),
+
+					UtilityMethods.verifyColorAndScoreOnLineChart(homePage.testScoreCircleClronPerPage_pot.get(j),
 							Integer.parseInt(homePage.testScoresonPerPage_on_pot.get(j).getText()));
 				}
 			}
-		CBTConfiguration.score = "pass";
+			CBTConfiguration.score = "pass";
 		} catch (Exception e) {
 			UtilityMethods.processException(e);
 		}
@@ -1117,50 +1074,55 @@ public class Standard_Overview_Table_Steps {
 	public void click_on_different_coloured_strips_blue_strip_should_be_display_under_the_clicked_strip_and_the_no_of_student_records_with_that_colour_should_be_display()
 			throws Throwable {
 		try {
-			UtilityMethods.scrollPageDown(Driver.webdriver, 15);
-			Thread.sleep(500);
+
 			int recordsOnClickedStrip = 0, totalCount = 0;
-			for (int x = 0; x < homePage.districtcolouredStripOnStudentList.size(); x++) {
+			for (int x = 0; x < homePage.avg_score_colouredStripOnStudentList.size(); x++) {
 				if (!(homePage.TextInStripOnStudentList.get(x).getText().equals("0"))) {
-					homePage.districtcolouredStripOnStudentList.get(x).click();
+					homePage.avg_score_colouredStripOnStudentList.get(x).click();
 					Thread.sleep(1000);
-					Assert.assertTrue(homePage.districtcolouredStripOnStudentList.get(x).getAttribute("class")
+					Assert.assertTrue(homePage.avg_score_colouredStripOnStudentList.get(x).getAttribute("class")
 							.equals("active_progress"));
-					Thread.sleep(1000);
+
 					recordsOnClickedStrip = Integer.parseInt(homePage.TextInStripOnStudentList.get(x).getText());
 
 					// checking for paginator
-					if (PaginationUtility_for_Pages.checkPaginator_on_tsd()) {
+					if (PaginationUtility_for_Pages.checkPaginator_on_list_under_standard_performance()) {
 						// this lool will execute for the no. of circle available on paginator
-						for (int i = homePage.circle_list_on_paginator_on_tsd.size() - 1; i >= 0; i--) {
+						new Actions(Driver.webdriver)
+								.moveToElement(homePage.circle_list_on_paginator_on_list_under_sp.get(0)).build()
+								.perform();
+						UtilityMethods.scrollPageDown(Driver.webdriver, 2);
+						Thread.sleep(500);
+						for (int i = 0; i <= homePage.circle_list_on_paginator_on_list_under_sp.size() - 1; i++) {
 							PaginationUtility_for_Pages.clicking_on_indexed_circle_of_paginator(
-									homePage.circle_list_on_paginator_on_tsd, i);
-							Assert.assertTrue(homePage.list_on_tsd.size() <= 10);
-							for (int j = homePage.list_on_tsd.size() - 1; j >= 0; j--) {
-								totalCount += homePage.noofstudentsinlist.size();
-							}
+									homePage.circle_list_on_paginator_on_list_under_sp, i);
+							Assert.assertTrue(homePage.student_list_on_list.size() <= 10);
+							totalCount += homePage.noofstudentsinlist.size();
+
 						}
 						// check for left arrow enabled and click on it and click on first circle and
 						// validate
 						do {
-							if (PaginationUtility_for_Pages.check_Enabled_Right_Arrow_on_Paginator_on_tsd()) {
-								PaginationUtility_for_Pages.clicking_on_enabled_right_Arrow_of_paginator_on_tsd();
+							if (PaginationUtility_for_Pages.check_Enabled_Right_Arrow_on_Paginator_on_list_under_sp()) {
 								PaginationUtility_for_Pages
-										.clicking_on_last_circle_of_paginator(homePage.circle_list_on_paginator_on_tsd);
-								Assert.assertTrue(homePage.list_on_tsd.size() <= 10);
-								for (int j = homePage.list_on_tsd.size() - 1; j >= 0; j--) {
-									totalCount += homePage.noofstudentsinlist.size();
-								}
+										.clicking_on_enabled_right_Arrow_of_paginator_on_list_under_sp();
+								PaginationUtility_for_Pages.clicking_on_last_circle_of_paginator(
+										homePage.circle_list_on_paginator_on_list_under_sp);
+								Assert.assertTrue(homePage.student_list_on_list.size() <= 10);
+								totalCount += homePage.noofstudentsinlist.size();
+
 							}
-						} while (PaginationUtility_for_Pages.check_Enabled_Right_Arrow_on_Paginator_on_tsd());
+						} while (PaginationUtility_for_Pages.check_Enabled_Right_Arrow_on_Paginator_on_list_under_sp());
 					} else {
 						// when paginator is not found
-						Assert.assertTrue(homePage.list_on_tsd.size() <= 10);
-						for (int i = homePage.list_on_tsd.size() - 1; i >= 0; i--) {
-							totalCount = homePage.noofstudentsinlist.size();
-						}
+						Assert.assertTrue(homePage.student_list_on_list.size() <= 10);
+						totalCount = homePage.noofstudentsinlist.size();
 					}
+					Thread.sleep(1000);
 					Assert.assertTrue(recordsOnClickedStrip == totalCount);
+					UtilityMethods.scrollPageUp(Driver.webdriver);
+					Thread.sleep(500);
+					totalCount = 0;
 				}
 			}
 			CBTConfiguration.score = "pass";
@@ -1180,23 +1142,26 @@ public class Standard_Overview_Table_Steps {
 	public void user_should_able_to_see_Student_List_and_the_icon_next_to_it_can_be_selected_to_minimize_or_maximize_the_Student_List_window()
 			throws Throwable {
 		try {
-			Assert.assertTrue(homePage.list_on_tsd.get(0).isDisplayed());
+			UtilityMethods.wait_For_Student_List_AND_OR_Class_List_Section_Load();
+			Assert.assertTrue(homePage.student_list_on_list.get(0).isDisplayed());
 			// clicking on icon to minimize the student list
 			homePage.studentlisticon.click();
 			Thread.sleep(500);
 			try {
-				Assert.assertTrue(homePage.list_on_tsd.get(0).isDisplayed());
+				Assert.assertTrue(homePage.student_list_on_list.get(0).isDisplayed());
 				CBTConfiguration.score = "fail";
 				UtilityMethods.processException(new Exception());
 			} catch (Exception e) {
 				CBTConfiguration.score = "pass";
 			}
-			UtilityMethods.scrollPageDown(Driver.webdriver, 15);
+			UtilityMethods.scrollPageDown(Driver.webdriver, 7);
 			Thread.sleep(500);
 			// clicking on icon to maximize the student list
 			homePage.studentlisticon.click();
 			Thread.sleep(500);
-			Assert.assertTrue(homePage.list_on_tsd.get(0).isDisplayed());
+			Assert.assertTrue(homePage.student_list_on_list.get(0).isDisplayed());
+			UtilityMethods.scrollPageUp(Driver.webdriver);
+			Thread.sleep(500);
 		} catch (Exception e) {
 			UtilityMethods.processException(e);
 		}
@@ -1214,15 +1179,18 @@ public class Standard_Overview_Table_Steps {
 			int standardListSize = homePage.standardnameslist.size();
 			int randomNumber = (int) (Math.random() * standardListSize);
 			UtilityMethods.scrollPageDown(Driver.webdriver, 4);
-			Thread.sleep(2000);
+			Thread.sleep(500);
 			new Actions(Driver.webdriver).moveToElement(homePage.standardnameslist.get(randomNumber)).build().perform();
-			Thread.sleep(3000);
+			Thread.sleep(500);
 			headerOnToolTip = homePage.stranddefinitionlist.get(randomNumber).getText();
-			String subcat = homePage.standardsubdefinitionlist.get(randomNumber).getText();
-			subHeaderOnToolTip = subcat.substring(0, subcat.indexOf(" ")) + " "
-					+ homePage.standarddescriptionlist.get(randomNumber).getText();
+			// String subcat =
+			// homePage.standardsubdefinitionlist.get(randomNumber).getText();
+			subHeaderOnToolTip = homePage.standarddescriptionlist.get(randomNumber).getText();
+			subHeaderOnToolTip = subHeaderOnToolTip.substring(0, subHeaderOnToolTip.indexOf(":") - 1)
+					+ subHeaderOnToolTip.substring(subHeaderOnToolTip.indexOf(":"));
 			homePage.standardnameslist.get(randomNumber).click();
-			Thread.sleep(5000);
+			UtilityMethods.wait_For_Performance_Over_Time_Line_Chart_Section_Load();
+			new Actions(Driver.webdriver).moveToElement(homePage.achievmentlevelslabel).build().perform();
 		} catch (Exception e) {
 			UtilityMethods.processException(e);
 		}
@@ -1238,8 +1206,8 @@ public class Standard_Overview_Table_Steps {
 	public void the_student_list_related_to_the_selected_standard_within_the_perticular_strand_with_the_header_and_the_subheader_is_displayed()
 			throws Throwable {
 		try {
-			Assert.assertTrue(homePage.studentlistheader.getText().equals(headerOnToolTip));
-			Assert.assertTrue(homePage.studentlistsubheader.getText().equals(subHeaderOnToolTip));
+			Assert.assertTrue(homePage.pot_header.getText().equals(headerOnToolTip));
+			Assert.assertTrue(homePage.pot_subheader.getText().equals(subHeaderOnToolTip));
 			/**
 			 * Note :student list related to the selected standard within the perticular
 			 * strand with the header and the subheader is displayed & already covered in
@@ -1261,8 +1229,10 @@ public class Standard_Overview_Table_Steps {
 	@Then("^Verify the left most column header should be 'Student \\(X\\)'$")
 	public void verify_the_left_most_column_header_should_be_Student_X() throws Throwable {
 		try {
-			String allRecord = homePage.textingraystripinstudentlist.getText();
-			Assert.assertTrue(homePage.StudentRecordsSize.getText().contains("Students (" + allRecord + ")"));
+			Assert.assertTrue(homePage.StudentRecordsSize.getText()
+					.contains("Students (" + homePage.student_list_on_list.size() + ")"));
+			Assert.assertTrue(homePage.list_header_in_list.get(0).getText()
+					.contains("Students (" + homePage.student_list_on_list.size() + ")"));
 			CBTConfiguration.score = "pass";
 		} catch (Exception e) {
 			UtilityMethods.processException(e);
@@ -1281,15 +1251,8 @@ public class Standard_Overview_Table_Steps {
 	public void select_the_student_within_the_student_list_and_Student_context_with_information_for_that_individual_student_should_be_shown()
 			throws Throwable {
 		try {
-			String schoolName, className;
+			String className;
 			HomePage homePage = PageFactory.initElements(Driver.webdriver, HomePage.class);
-			new Actions(Driver.webdriver).moveToElement(homePage.schoolnameoncontextheader).build().perform();
-			if (homePage.schoolnameoncontextheader.getText().contains("...")) {
-				schoolName = homePage.tooltipofschoolnameontripledot.getText();
-			} else {
-				schoolName = homePage.schoolnameoncontextheader.getText();
-			}
-			new Actions(Driver.webdriver).moveToElement(homePage.overviewtext).build().perform();
 			new Actions(Driver.webdriver).moveToElement(homePage.classnameoncontextheader).build().perform();
 			if (homePage.classnameoncontextheader.getText().contains("...")) {
 				className = homePage.tooltipofclassnameoncontextheader.getText();
@@ -1300,16 +1263,18 @@ public class Standard_Overview_Table_Steps {
 			int studentListSize = homePage.noofstudentsinlist.size();
 			int randomNumber = (int) (Math.random() * studentListSize);
 			String StudentName = homePage.studentnameslistinstudentlist.get(randomNumber).getText();
-			UtilityMethods.scrollPageDown(Driver.webdriver, 4);
+			UtilityMethods.scrollPageDown(Driver.webdriver, 8);
+			Thread.sleep(500);
 			new Actions(Driver.webdriver).moveToElement(homePage.studentnameslistinstudentlist.get(randomNumber))
 					.click().build().perform();
-			Thread.sleep(2000);
+			UtilityMethods.wait_For_Performance_Over_Time_Line_Chart_Section_Load();
 			UtilityMethods.scrollPageUp(Driver.webdriver);
-			String studentNameonContext = homePage.studentnameoncontextheader.getText();
+			Thread.sleep(500);
+			String studentNameonContext = UtilityMethods.getStudentNameonUI();
 			Assert.assertTrue(homePage.activestudentmenu.isDisplayed());
 			Assert.assertTrue(studentNameonContext.contains(StudentName));
-			Assert.assertTrue(homePage.schoolnameoncontextheader.getText().equals(schoolName));
-			Assert.assertTrue(homePage.classnameoncontextheader.getText().equals(className));
+			String clsName = UtilityMethods.getClassNameonUI();
+			Assert.assertTrue(clsName.equals(className));
 			CBTConfiguration.score = "pass";
 		} catch (Exception e) {
 			UtilityMethods.processException(e);
@@ -1325,46 +1290,7 @@ public class Standard_Overview_Table_Steps {
 	@Then("^Verify the right most column header should be 'Score'$")
 	public void verify_the_right_most_column_header_should_be_Score() throws Throwable {
 		try {
-			int score = 0;
-			WebElement scoreElement = null;
-
-			// checking for paginator
-			if (PaginationUtility_for_Pages.checkPaginator_on_tsd()) {
-				// this lool will execute for the no. of circle available on paginator
-				for (int i = homePage.circle_list_on_paginator_on_tsd.size() - 1; i >= 0; i--) {
-					PaginationUtility_for_Pages
-							.clicking_on_indexed_circle_of_paginator(homePage.circle_list_on_paginator_on_tsd, i);
-					Assert.assertTrue(homePage.list_on_tsd.size() <= 10);
-					for (int j = 0; j <= homePage.list_on_tsd.size() - 1; j++) {
-						score = Integer.parseInt(homePage.studentscorelistinstudentlist.get(j).getText());
-						scoreElement = homePage.studentscorelistinstudentlist.get(j);
-						UtilityMethods.verifyColorAndScoreOnStudentList(scoreElement, score);
-					}
-				}
-				// check for left arrow enabled and click on it and click on first circle and
-				// validate
-				do {
-					if (PaginationUtility_for_Pages.check_Enabled_Right_Arrow_on_Paginator_on_tsd()) {
-						PaginationUtility_for_Pages.clicking_on_enabled_right_Arrow_of_paginator_on_tsd();
-						PaginationUtility_for_Pages
-								.clicking_on_last_circle_of_paginator(homePage.circle_list_on_paginator_on_tsd);
-						Assert.assertTrue(homePage.list_on_tsd.size() <= 10);
-						for (int i = 0; i <= homePage.list_on_tsd.size() - 1; i++) {
-							score = Integer.parseInt(homePage.studentscorelistinstudentlist.get(i).getText());
-							scoreElement = homePage.studentscorelistinstudentlist.get(i);
-							UtilityMethods.verifyColorAndScoreOnStudentList(scoreElement, score);
-						}
-					}
-				} while (PaginationUtility_for_Pages.check_Enabled_Right_Arrow_on_Paginator_on_tsd());
-			} else {
-				// when paginator is not found
-				Assert.assertTrue(homePage.list_on_tsd.size() <= 10);
-				for (int i = 0; i <= homePage.list_on_tsd.size() - 1; i++) {
-					score = Integer.parseInt(homePage.studentscorelistinstudentlist.get(i).getText());
-					scoreElement = homePage.studentscorelistinstudentlist.get(i);
-					UtilityMethods.verifyColorAndScoreOnStudentList(scoreElement, score);
-				}
-			}
+			Assert.assertTrue(homePage.list_header_in_list.get(2).getText().equals("Score"));
 			CBTConfiguration.score = "pass";
 		} catch (Exception e) {
 			UtilityMethods.processException(e);
@@ -1375,9 +1301,7 @@ public class Standard_Overview_Table_Steps {
 	@Then("^All the column headers should be sortable with ascending and descending order$")
 	public void all_the_column_headers_should_be_sortable_with_ascending_and_descending_order() throws Throwable {
 		try {
-
 			String name = "";
-			UtilityMethods.scrollPageDown(Driver.webdriver, 10);
 			Actions actions = new Actions(Driver.webdriver);
 			// clicking on name down arrow
 			actions.moveToElement(homePage.studentListnamedownarrow).click().build().perform();
@@ -1424,8 +1348,8 @@ public class Standard_Overview_Table_Steps {
 			// clicking on score down arrow
 			actions.moveToElement(homePage.studentListscoredownarrow).click().build().perform();
 			Thread.sleep(500);
-			for (int i = 0; i < homePage.scorelistinstudentlist.size(); i++) {
-				numericlistItem.add(Integer.parseInt(homePage.scorelistinstudentlist.get(i).getText()));
+			for (int i = 0; i < homePage.studentscorelistinstudentlist.size(); i++) {
+				numericlistItem.add(Integer.parseInt(homePage.studentscorelistinstudentlist.get(i).getText()));
 			}
 			Assert.assertTrue(Ordering.natural().reverse().isOrdered(numericlistItem));
 			numericlistItem.clear();
@@ -1433,8 +1357,8 @@ public class Standard_Overview_Table_Steps {
 			// clicking on score up arrow
 			actions.moveToElement(homePage.studentListscoreuparrow).click().build().perform();
 			Thread.sleep(500);
-			for (int i = 0; i < homePage.scorelistinstudentlist.size(); i++) {
-				numericlistItem.add(Integer.parseInt(homePage.scorelistinstudentlist.get(i).getText()));
+			for (int i = 0; i < homePage.studentscorelistinstudentlist.size(); i++) {
+				numericlistItem.add(Integer.parseInt(homePage.studentscorelistinstudentlist.get(i).getText()));
 			}
 			Assert.assertTrue(Ordering.natural().isOrdered(numericlistItem));
 			numericlistItem.clear();
@@ -1445,7 +1369,55 @@ public class Standard_Overview_Table_Steps {
 		}
 		log.info("Scenario 43_4 completed");
 	}
-	
+
+	public void verifying_method_TSD() {
+		try {
+			int score = 0;
+			WebElement scoreElement = null;
+
+			// checking for paginator
+			if (PaginationUtility_for_Pages.checkPaginator_on_tsd()) {
+				// this lool will execute for the no. of circle available on paginator
+				for (int i = homePage.circle_list_on_paginator_on_tsd.size() - 1; i >= 0; i--) {
+					PaginationUtility_for_Pages
+							.clicking_on_indexed_circle_of_paginator(homePage.circle_list_on_paginator_on_tsd, i);
+					Assert.assertTrue(homePage.student_list_on_list.size() <= 10);
+					for (int j = 0; j <= homePage.student_list_on_list.size() - 1; j++) {
+						score = Integer.parseInt(homePage.studentscorelistinstudentlist.get(j).getText());
+						scoreElement = homePage.studentscorelistinstudentlist.get(j);
+						UtilityMethods.verifyColorAndScoreOnStudentList(scoreElement, score);
+					}
+				}
+				// check for left arrow enabled and click on it and click on first circle and
+				// validate
+				do {
+					if (PaginationUtility_for_Pages.check_Enabled_Right_Arrow_on_Paginator_on_tsd()) {
+						PaginationUtility_for_Pages.clicking_on_enabled_right_Arrow_of_paginator_on_tsd();
+						PaginationUtility_for_Pages
+								.clicking_on_last_circle_of_paginator(homePage.circle_list_on_paginator_on_tsd);
+						Assert.assertTrue(homePage.student_list_on_list.size() <= 10);
+						for (int i = 0; i <= homePage.student_list_on_list.size() - 1; i++) {
+							score = Integer.parseInt(homePage.studentscorelistinstudentlist.get(i).getText());
+							scoreElement = homePage.studentscorelistinstudentlist.get(i);
+							UtilityMethods.verifyColorAndScoreOnStudentList(scoreElement, score);
+						}
+					}
+				} while (PaginationUtility_for_Pages.check_Enabled_Right_Arrow_on_Paginator_on_tsd());
+			} else {
+				// when paginator is not found
+				Assert.assertTrue(homePage.student_list_on_list.size() <= 10);
+				for (int i = 0; i <= homePage.student_list_on_list.size() - 1; i++) {
+					score = Integer.parseInt(homePage.studentscorelistinstudentlist.get(i).getText());
+					scoreElement = homePage.studentscorelistinstudentlist.get(i);
+					UtilityMethods.verifyColorAndScoreOnStudentList(scoreElement, score);
+				}
+			}
+			CBTConfiguration.score = "pass";
+		} catch (Exception e) {
+			UtilityMethods.processException(e);
+		}
+	}
+
 	@When("^paginationOntestTab$")
 	public static void paginationontesttab() throws Throwable {
 		try {

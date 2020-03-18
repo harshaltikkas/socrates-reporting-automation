@@ -195,11 +195,10 @@ public class UtilityMethods {
 			} else {
 				Assert.assertTrue(element.getAttribute("fill").equalsIgnoreCase("#32AC41"));
 			}
-			return true;
 		} catch (Exception e) {
 			UtilityMethods.processException(e);
-			return false;
 		}
+		return true;
 	}
 
 	/**
@@ -247,8 +246,11 @@ public class UtilityMethods {
 			UtilityMethods.processException(e);
 		}
 	}
-	
-	/*This method is used to validate the date format in date tab-custom date as mm can be optional zero if not in 2 digits.*/
+
+	/*
+	 * This method is used to validate the date format in date tab-custom date as mm
+	 * can be optional zero if not in 2 digits.
+	 */
 	public static void checkDateFormatOnDateTab(String submissionDate) {
 		Matcher matcher = null;
 		try {
@@ -260,7 +262,7 @@ public class UtilityMethods {
 			log.error("Invalid Date format");
 			UtilityMethods.processException(e);
 		}
-	}	
+	}
 
 	/**
 	 * This method is used to Veriy the Colour of the Standards records belong to
@@ -303,7 +305,7 @@ public class UtilityMethods {
 				return false;
 			}
 		return true;
-	}	
+	}
 
 	/**
 	 * This method is used to skip the specific index position while generating
@@ -492,12 +494,13 @@ public class UtilityMethods {
 		try {
 			try {
 				new Actions(Driver.webdriver).moveToElement(homePage.schoolnameoncontextheader).build().perform();
-				Thread.sleep(1000);
+				Thread.sleep(500);
 				if (homePage.schoolnameoncontextheader.getText().contains("...")) {
 					schoolName = homePage.tooltipofschoolnameontripledot.getText();
 				} else {
 					schoolName = homePage.schoolnameoncontextheader.getText();
 				}
+				new Actions(Driver.webdriver).moveToElement(homePage.overviewtext).build().perform();
 			} catch (Exception e) {
 				new Actions(Driver.webdriver).moveToElement(homePage.tripledotsoncontextheader).click().build()
 						.perform();
@@ -509,6 +512,7 @@ public class UtilityMethods {
 				} else {
 					schoolName = homePage.schoolnameontripledot.getText();
 				}
+				new Actions(Driver.webdriver).moveToElement(homePage.overviewtext).click().build().perform();
 			}
 		} catch (Exception e) {
 			processException(e);
