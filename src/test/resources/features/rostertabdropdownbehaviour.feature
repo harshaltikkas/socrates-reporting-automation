@@ -1,4 +1,4 @@
-@Feature1
+@Feature
 Feature: Roster Tab Dropdown Behaviour
 
   ##story Loading Icon

@@ -45,6 +45,7 @@ tags = { "@Feature" },
 monochrome = true)
 
 public class TestRunner {
+	
 	public static Properties config;
 	public static Scenario scenario;
 }
