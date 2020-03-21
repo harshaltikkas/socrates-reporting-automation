@@ -34,7 +34,7 @@ Feature: Sprint 6 and Sprint 7 Stories
     When User click on Class Context and Test Score button
     Then verify the diamond shape stroke on the x-axis and Color changes within the Line Charts within test score menu
     When User click on Student Context and Test Score button
-    Then verify the diamond shape stroke on the x-axis and Color changes within the Line Charts within test score menu
+    Then verify the diamond shape stroke on the x-axis and Color changes within the Line Charts within test score menu for student
 
   ## BE-666,685,677,686
   Scenario: Verify Selection and Deselection of the Comparison options within the Line Charts for Particular Strand and standard

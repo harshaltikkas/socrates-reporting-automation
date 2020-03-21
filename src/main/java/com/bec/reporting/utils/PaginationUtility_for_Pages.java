@@ -324,7 +324,7 @@ public class PaginationUtility_for_Pages {
 		try {
 			String tooltiptext_on_test_name_on_line_chart, tooltiptext_on_test_name_on_test_score_detail,
 					submittedDateText;
-			homePage.testScoreValueInCircle_onlinechart.get(index).click();
+			homePage.testScoreValueInCircle_onlinechart_tsot.get(index).click();
 			UtilityMethods.wait_For_Test_Score_Detail_Section();
 
 			new Actions(Driver.webdriver).moveToElement(homePage.testNamesonPerPage_onlinechart.get(index)).build()

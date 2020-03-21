@@ -63,7 +63,7 @@ public class NewLogForEachRunFileAppender extends FileAppender {
 			} else {
 				// the file name has no extension. So, just append the timestamp
 				// at the end.
-				newFileName = fileName + UNDERSCORE + System.currentTimeMillis();
+				newFileName = fileName + UNDERSCORE + dateFormat.format(new Date());
 			}
 			return logFile.getParent() + File.separator + newFileName;
 		}

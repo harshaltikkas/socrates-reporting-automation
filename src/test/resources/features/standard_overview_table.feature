@@ -79,7 +79,7 @@ Feature: Standard Overview Table and Chart
 
     ##STORY 6d) Overlays
   @Scenario41 @TC_0015 @TC_0016 @TC_0017 @TC_0018
-  Scenario: Verify Overlays Performance Over Time
+  Scenario: Verify Overlays Performance Over Time 
     Given User is on portal's login screen with username as "school_admin_one" and password as "password" and usertype as "realm_one"
     When User Click on Standard Performance tab within the Class Context
     And Click on the icon to maximize the Chart

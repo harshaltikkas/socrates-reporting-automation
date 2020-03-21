@@ -145,15 +145,15 @@ public class SprintSixAndSevenSteps {
 			 * this try will execute in class context or student context ,standard
 			 * performance scenario
 			 */
-			if ((Standard_Overview_Table_Steps.underClassContext || Standard_Overview_Table_Steps.underStudentContext)
+			if ((Standard_Overview_Table_Steps.underClassContext )
 					&& Standard_Overview_Table_Steps.performanceMenuClicked) {
-				UtilityMethods.wait_For_Page_Section_Load();
+				//UtilityMethods.wait_For_Page_Section_Load();
 				homePage.performance_overtime_icon.click();
 				UtilityMethods.wait_For_Performance_Over_Time_Line_Chart_Section_Load();
-				UtilityMethods.scrollPageDown(Driver.webdriver, 7);
-				Thread.sleep(500);
+				
 			}
-
+			UtilityMethods.scrollPageDown(Driver.webdriver, 7);
+			Thread.sleep(500);
 			// checking for paginator
 			if (PaginationUtility_for_Pages.checkPaginator_on_pot_under_standard_performance()) {
 				// this lool will execute for the no. of circle available on paginator
@@ -168,11 +168,9 @@ public class SprintSixAndSevenSteps {
 								.moveToElement(homePage.testScoreValueInCircle_onlinechart_pot.get(j)).click().build()
 								.perform();
 						Thread.sleep(1000);
-						try {
-							Assert.assertTrue(homePage.highlightedtestName_onlinechart_on_tsot.isDisplayed());
-						} catch (Exception e) {
-							Assert.assertTrue(homePage.highlightedtestName_onlinechart.isDisplayed());
-						}
+
+						Assert.assertTrue(homePage.highlightedtestName_onlinechart_on_pot.isDisplayed());
+
 						new Actions(Driver.webdriver).moveToElement(homePage.testNamesLabelOnLineChart).click().build()
 								.perform();
 						Thread.sleep(500);
@@ -195,11 +193,7 @@ public class SprintSixAndSevenSteps {
 									.moveToElement(homePage.testScoreValueInCircle_onlinechart_pot.get(j)).click()
 									.build().perform();
 							Thread.sleep(1000);
-							try {
-								Assert.assertTrue(homePage.highlightedtestName_onlinechart_on_tsot.isDisplayed());
-							} catch (Exception e) {
-								Assert.assertTrue(homePage.highlightedtestName_onlinechart.isDisplayed());
-							}
+							Assert.assertTrue(homePage.highlightedtestName_onlinechart_on_pot.isDisplayed());
 							new Actions(Driver.webdriver).moveToElement(homePage.testNamesLabelOnLineChart).click()
 									.build().perform();
 							Thread.sleep(500);
@@ -216,11 +210,7 @@ public class SprintSixAndSevenSteps {
 					new Actions(Driver.webdriver).moveToElement(homePage.testScoreValueInCircle_onlinechart_pot.get(i))
 							.click().build().perform();
 					Thread.sleep(1000);
-					try {
-						Assert.assertTrue(homePage.highlightedtestName_onlinechart_on_tsot.isDisplayed());
-					} catch (Exception e) {
-						Assert.assertTrue(homePage.highlightedtestName_onlinechart.isDisplayed());
-					}
+					Assert.assertTrue(homePage.highlightedtestName_onlinechart_on_pot.isDisplayed());
 					new Actions(Driver.webdriver).moveToElement(homePage.testNamesLabelOnLineChart).click().build()
 							.perform();
 					Thread.sleep(500);
@@ -324,51 +314,7 @@ public class SprintSixAndSevenSteps {
 		log.info("Scenario BE-666,685,677,686 completed");
 	}
 
-	@Then("^Veriy the Selection and Deselection of the Comparison options within the Line Charts for Particular Test$")
-	public void veriy_the_Selection_and_Deselection_of_the_Comparison_options_within_the_Line_Charts_for_Particular_Test()
-			throws Throwable {
-		try {
-			Thread.sleep(2000);
-			UtilityMethods.scrollPageDown(Driver.webdriver, 3);
-			int no = (int) (Math.random() * homePage.testNamesonPerPage_onlinechart.size());
-			new Actions(Driver.webdriver).moveToElement(homePage.testScoreValueInCircle_onlinechart.get(no)).click()
-					.build().perform();
-			Thread.sleep(3000);
-			homePage.compareschoollabel.click();
-			Thread.sleep(1000);
-			Assert.assertTrue(homePage.schoolpath.isDisplayed());
-			Assert.assertTrue(homePage.schoolpath.getAttribute("stroke").equals("#00539b"));
-			homePage.comparedistrictlabel.click();
-			Thread.sleep(1000);
-			Assert.assertTrue(homePage.districtpath.isDisplayed());
-			Assert.assertTrue(homePage.districtpath.getAttribute("stroke").equals("#00539b"));
-
-			// De-selecting school and district and class if there.
-			homePage.selectedcompareschoollabel.click();
-			Thread.sleep(1000);
-			try {
-				Assert.assertTrue(homePage.schoolpath.isDisplayed());
-				log.error("School path is still displaying while de-selecting school checkbox ");
-				UtilityMethods.processException(new Exception());
-			} catch (Exception e) {
-				log.info("School Path is not displaying while de-selecting School checkbox ");
-			}
-
-			homePage.selectedcomparedistrictlabel.click();
-			Thread.sleep(1000);
-			try {
-				Assert.assertTrue(homePage.districtpath.isDisplayed());
-				log.error("District path is still displaying while de-selecting District checkbox ");
-				UtilityMethods.processException(new Exception());
-			} catch (Exception e) {
-				log.info("District Path is not displaying while de-selecting District checkbox ");
-			}
-			CBTConfiguration.score = "pass";
-		} catch (Exception e) {
-			UtilityMethods.processException(e);
-		}
-		log.info("Scenario  BE-678,689 completed");
-	}
+	
 
 	@Then("^verify the diamond shape stroke on the x-axis and Color changes within the Line Charts within test score menu$")
 	public void verify_the_diamond_shape_stroke_on_the_x_axis_and_Color_changes_within_the_Line_Charts_within_test_score_menu()
@@ -388,7 +334,7 @@ public class SprintSixAndSevenSteps {
 						Assert.assertTrue(homePage.diamondshapesymblonPerPage_onlinechart.get(j).isDisplayed());
 						Thread.sleep(500);
 						new Actions(Driver.webdriver)
-								.moveToElement(homePage.testScoreValueInCircle_onlinechart_pot.get(j)).click().build()
+								.moveToElement(homePage.testScoreValueInCircle_onlinechart_tsot.get(j)).click().build()
 								.perform();
 						Thread.sleep(1000);
 
@@ -411,7 +357,7 @@ public class SprintSixAndSevenSteps {
 							Assert.assertTrue(homePage.diamondshapesymblonPerPage_onlinechart.get(j).isDisplayed());
 							Thread.sleep(500);
 							new Actions(Driver.webdriver)
-									.moveToElement(homePage.testScoreValueInCircle_onlinechart_pot.get(j)).click()
+									.moveToElement(homePage.testScoreValueInCircle_onlinechart_tsot.get(j)).click()
 									.build().perform();
 							Thread.sleep(1000);
 
@@ -428,7 +374,7 @@ public class SprintSixAndSevenSteps {
 				for (int i = homePage.testNamesonPerPage_onlinechart.size() - 1; i >= 0; i--) {
 					Assert.assertTrue(homePage.diamondshapesymblonPerPage_onlinechart.get(i).isDisplayed());
 					Thread.sleep(500);
-					new Actions(Driver.webdriver).moveToElement(homePage.testScoreValueInCircle_onlinechart_pot.get(i))
+					new Actions(Driver.webdriver).moveToElement(homePage.testScoreValueInCircle_onlinechart_tsot.get(i))
 							.click().build().perform();
 					Thread.sleep(1000);
 
