@@ -47,7 +47,8 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class UtilityMethods {
-	static int ctr = 0, pot_ctr = 0, ch_ctr = 0, tso_ctr = 0, tsd_ctr = 0, sp_table_ctr = 0, list_on_sp_ctr = 0;
+	static int ctr = 0, pot_ctr = 0, ch_ctr = 0, tso_ctr = 0, tsd_ctr = 0, sp_table_ctr = 0, list_on_sp_ctr = 0,
+			sta_ctr = 0, grouping_table_ctr = 0;
 	static HomePage homePage = PageFactory.initElements(Driver.webdriver, HomePage.class);
 
 	/**
@@ -380,7 +381,6 @@ public class UtilityMethods {
 	 */
 	public static Integer getStudentId() {
 		Integer stuId = 0;
-		HomePage homePage = PageFactory.initElements(Driver.webdriver, HomePage.class);
 		try {
 			String studentTextonCH;
 			new Actions(Driver.webdriver).moveToElement(homePage.studentnameoncontextheader).build().perform();
@@ -467,7 +467,6 @@ public class UtilityMethods {
 	 * @return
 	 */
 	public static String getStudentNameonUI() {
-		HomePage homePage = PageFactory.initElements(Driver.webdriver, HomePage.class);
 		String studentTextonCH = "";
 		try {
 			new Actions(Driver.webdriver).moveToElement(homePage.studentnameoncontextheader).build().perform();
@@ -489,7 +488,6 @@ public class UtilityMethods {
 	 * @return
 	 */
 	public static String getSchoolNameonUI() {
-		HomePage homePage = PageFactory.initElements(Driver.webdriver, HomePage.class);
 		String schoolName = "";
 		try {
 			try {
@@ -526,7 +524,6 @@ public class UtilityMethods {
 	 * @return
 	 */
 	public static String getDistrictNameonUI() {
-		HomePage homePage = PageFactory.initElements(Driver.webdriver, HomePage.class);
 		String districtName = "";
 		try {
 			new Actions(Driver.webdriver).moveToElement(homePage.tripledotsoncontextheader).click().build().perform();
@@ -552,7 +549,6 @@ public class UtilityMethods {
 	 * @return
 	 */
 	public static String getTestsNameonUI() {
-		HomePage homePage = PageFactory.initElements(Driver.webdriver, HomePage.class);
 		String testsName = "";
 		try {
 			new Actions(Driver.webdriver).moveToElement(homePage.testsNameoncontextheader).build().perform();
@@ -576,7 +572,6 @@ public class UtilityMethods {
 	 * @return
 	 */
 	public static String getTeacherNameonUI() {
-		HomePage homePage = PageFactory.initElements(Driver.webdriver, HomePage.class);
 		String teachersName = "";
 		JavascriptExecutor js = (JavascriptExecutor) Driver.webdriver;
 		try {
@@ -601,7 +596,6 @@ public class UtilityMethods {
 	 * @return
 	 */
 	public static String getAssessedWithonUI() {
-		HomePage homePage = PageFactory.initElements(Driver.webdriver, HomePage.class);
 		String assessedWithTxt = "";
 		try {
 			new Actions(Driver.webdriver).moveToElement(homePage.questionDropDown).click().build().perform();
@@ -622,7 +616,6 @@ public class UtilityMethods {
 	 * @return
 	 */
 	public static String getTestDataAssessedForGradeonUI() {
-		HomePage homePage = PageFactory.initElements(Driver.webdriver, HomePage.class);
 		String testDataAssessedForGrade = "";
 		try {
 			new Actions(Driver.webdriver).moveToElement(homePage.gradeDropDown).click().build().perform();
@@ -643,7 +636,6 @@ public class UtilityMethods {
 	 * @return
 	 */
 	public static String getDatesonContextHeaderUI() {
-		HomePage homePage = PageFactory.initElements(Driver.webdriver, HomePage.class);
 		String testsName = "";
 		try {
 			new Actions(Driver.webdriver).moveToElement(homePage.datesoncontextheader).build().perform();
@@ -663,7 +655,6 @@ public class UtilityMethods {
 	 * @return
 	 */
 	public static String getClassNameonUI() {
-		HomePage homePage = PageFactory.initElements(Driver.webdriver, HomePage.class);
 		String className = "";
 		try {
 			new Actions(Driver.webdriver).moveToElement(homePage.classnameoncontextheader).build().perform();
@@ -684,7 +675,6 @@ public class UtilityMethods {
 	 * This method is used to wait till the loading of Student List section
 	 */
 	public static void wait_For_Student_List_AND_OR_Class_List_Section_Load() {
-		HomePage homePage = PageFactory.initElements(Driver.webdriver, HomePage.class);
 		boolean isSectionLoad = false;
 		try {
 			Assert.assertTrue(homePage.noofquestionstext.isDisplayed());
@@ -703,11 +693,53 @@ public class UtilityMethods {
 	}
 
 	/**
+	 * This method is used to wait till the loading of Grouping Table Section
+	 */
+	public static void wait_For_Strands_Text_After_Apply_BtnOn_GroupingTab() {
+		boolean isSectionLoad = false;
+		try {
+			Assert.assertTrue(homePage.strandsTextAfterApplyBtnOnGroupingTab.isDisplayed());
+			log.info("Strands_Text_After_Apply_BtnOn_GroupingTab is now Displaying");
+
+		} catch (Exception e) {
+
+			log.info("wait for strands Text on table header After Apply Btn On Grouping Tab ...");
+			IWait.implicit_wait(2);
+			grouping_table_ctr++;
+			if (isSectionLoad == false && grouping_table_ctr > 10) {
+				log.info("Strands_Text_After_Apply_BtnOn_GroupingTab is not loaded in 20 seconds..");
+				processException(new Exception());
+			}
+			wait_For_Strands_Text_After_Apply_BtnOn_GroupingTab();
+		}
+	}
+
+	/**
+	 * This method is used to wait till the loading of Single Test Analysis section
+	 */
+	public static void wait_For_STA_Section_Load() {
+		boolean isSectionLoad = false;
+		try {
+			Assert.assertTrue(homePage.test_avg_score_value_in_sta_for_district.isDisplayed());
+			log.info("Single Test Analysis Section is now Displaying");
+			wait_For_Context_Header_Section();
+		} catch (Exception e) {
+			log.info("Waiting for Single Test Analysis Section");
+			IWait.implicit_wait(2);
+			sta_ctr++;
+			if (isSectionLoad == false && sta_ctr > 10) {
+				log.info("Single Test Analysis Section is not loaded in 20 seconds..");
+				processException(new Exception());
+			}
+			wait_For_STA_Section_Load();
+		}
+	}
+
+	/**
 	 * This method is used to wait till the loading of Performance Over Time Line
 	 * Chart section
 	 */
 	public static void wait_For_Performance_Over_Time_Line_Chart_Section_Load() {
-		HomePage homePage = PageFactory.initElements(Driver.webdriver, HomePage.class);
 		boolean isSectionLoad = false;
 		try {
 			Assert.assertTrue(homePage.info_icon_on_performance_over_time_header.isDisplayed());
@@ -730,7 +762,6 @@ public class UtilityMethods {
 	 * This method is used to wait till the loading of Test Score OverView section
 	 */
 	public static void wait_For_Test_Score_Overview_Section_Load() {
-		HomePage homePage = PageFactory.initElements(Driver.webdriver, HomePage.class);
 		boolean isSectionLoad = false;
 		try {
 			Assert.assertTrue(homePage.testscoreoverviewtext.isDisplayed());
@@ -753,7 +784,6 @@ public class UtilityMethods {
 	 * This method is used to wait till the loading of Test Score Detail section
 	 */
 	public static void wait_For_Test_Score_Detail_Section() {
-		HomePage homePage = PageFactory.initElements(Driver.webdriver, HomePage.class);
 		boolean isSectionLoad = false;
 		try {
 			Assert.assertTrue(homePage.datesubmittedtext.isDisplayed());
@@ -777,7 +807,6 @@ public class UtilityMethods {
 	 * section
 	 */
 	public static void wait_For_Standard_Performance_Table_Section() {
-		HomePage homePage = PageFactory.initElements(Driver.webdriver, HomePage.class);
 		boolean isSectionLoad = false;
 		try {
 			Assert.assertTrue(homePage.standardnameslist.get(0).isDisplayed());
@@ -801,7 +830,6 @@ public class UtilityMethods {
 	 * This method is used to wait till the loading of context header section
 	 */
 	public static void wait_For_Context_Header_Section() {
-		HomePage homePage = PageFactory.initElements(Driver.webdriver, HomePage.class);
 		String firstData;
 		boolean isSectionLoad = false;
 

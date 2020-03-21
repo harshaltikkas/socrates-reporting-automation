@@ -434,7 +434,7 @@ public class Sprint_Eight_And_Tenth_Steps {
 			Thread.sleep(1000);
 			js.executeScript("arguments[0].click();", homePage.applyBtnOngroupingTab);
 			
-			wait_For_Strands_Text_After_Apply_BtnOn_GroupingTab();
+			UtilityMethods.wait_For_Strands_Text_After_Apply_BtnOn_GroupingTab();
 			Thread.sleep(500);
 			Assert.assertTrue(homePage.GrpByTextOnUI.isDisplayed());
 			Assert.assertTrue(homePage.EditGrpTextOnUI.isDisplayed());
@@ -455,21 +455,7 @@ public class Sprint_Eight_And_Tenth_Steps {
 			wait_For_Assessed_With_on_grouping_tab();
 		} catch (Exception e) {
 		}
-	}
-
-	protected void wait_For_Strands_Text_After_Apply_BtnOn_GroupingTab() {
-		try {
-			Thread.sleep(100);
-			Assert.assertTrue(homePage.strandsTextAfterApplyBtnOnGroupingTab.isDisplayed());
-		} catch (Exception e) {
-			try {
-				log.info("wait for strands Text on table header After Apply Btn On Grouping Tab ...");
-				Thread.sleep(2000);
-				wait_For_Strands_Text_After_Apply_BtnOn_GroupingTab();
-			} catch (InterruptedException e1) {
-			}
-		}
-	}
+	}	
 
 	@Then("^verify To check The Strand and or Standard element of the grouping table within the grouping page$")
 	public void verify_To_check_The_Strand_and_or_Standard_element_of_the_grouping_table_within_the_grouping_page()
@@ -498,7 +484,7 @@ public class Sprint_Eight_And_Tenth_Steps {
 			}
 			Thread.sleep(500);
 			homePage.applyBtnOngroupingTab.click();
-			wait_For_Strands_Text_After_Apply_BtnOn_GroupingTab();
+			UtilityMethods.wait_For_Strands_Text_After_Apply_BtnOn_GroupingTab();
 			Thread.sleep(500);
 			for (int i = 0; i < homePage.groupingTableHeaderList.size(); i++) {
 				Assert.assertTrue(homePage.groupingTableHeaderList.get(i).getText().equals(strandsList.get(i)));

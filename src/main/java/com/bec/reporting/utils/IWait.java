@@ -50,7 +50,7 @@ public class IWait {
 		try {
 			Driver.webdriver.manage().timeouts().implicitlyWait(time, TimeUnit.SECONDS);
 		} catch (Exception e) {
-			System.out.println("failed_in_implicit_wait");
+			log.error("failed_in_implicit_wait");
 			UtilityMethods.processException(e);
 		}
 	}
@@ -76,7 +76,7 @@ public class IWait {
 			
 			Instant end = Instant.now();
 			Duration timeElapsed = Duration.between(start, end);
-			System.out.println("Time taken for page load: "+ timeElapsed.toMillis() +" milliseconds");
+			log.info("Time taken for page load: "+ timeElapsed.toMillis() +" milliseconds");
 			
 		} catch (Exception e) {
 			log.info("failed to page load ...");

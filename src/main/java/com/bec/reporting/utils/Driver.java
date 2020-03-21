@@ -265,7 +265,7 @@ public class Driver {
 			FileUtils.copyFile(file, new File(filePath));
 			return filePath;
 		} catch (WebDriverException somePlatformsDontSupportScreenshots) {
-			System.err.println(somePlatformsDontSupportScreenshots.getMessage());
+			log.error(somePlatformsDontSupportScreenshots.getMessage());
 			return null;
 		}
 	}

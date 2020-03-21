@@ -56,7 +56,7 @@ public class Single_Test_Analysis_Steps {
 	public void verify_the_key_toggle_when_user_click_on_single_test_analysis_tab_and_the_other_tab() throws Throwable {
 		try {
 			js.executeScript("arguments[0].click();", homePage.statab);
-			Thread.sleep(5000);
+			UtilityMethods.wait_For_STA_Section_Load();
 			String testNameOnCH = UtilityMethods.getTestsNameonUI();
 
 			homePage.testtab.click();
@@ -72,6 +72,7 @@ public class Single_Test_Analysis_Steps {
 			Thread.sleep(1000);
 			// BE-1552 performing here
 			js.executeScript("arguments[0].click();", homePage.statab);
+			UtilityMethods.wait_For_STA_Section_Load();
 			homePage.reportingkey.click();
 			Thread.sleep(1500);
 			Assert.assertTrue(homePage.correct_questions_on_reportingkey.isDisplayed());
@@ -106,7 +107,7 @@ public class Single_Test_Analysis_Steps {
 			List<Integer> list = new ArrayList<Integer>();
 			Thread.sleep(5000);
 			js.executeScript("arguments[0].click();", homePage.statab);
-			Thread.sleep(7000);
+			UtilityMethods.wait_For_STA_Section_Load();
 			String testNameOnCH = UtilityMethods.getTestsNameonUI();
 			Assert.assertTrue(homePage.selectedQuestionRB.isDisplayed());
 			Assert.assertTrue(homePage.selectedAllViewCB.isDisplayed());
@@ -252,7 +253,7 @@ public class Single_Test_Analysis_Steps {
 	public void veryfy_Teacher_label_to_Context_Header_for_the_School_Admins_for_teacher(String teacherName)
 			throws Throwable {
 		try {
-			Thread.sleep(8000);
+			UtilityMethods.wait_For_Context_Header_Section();
 			Assert.assertTrue(homePage.contextheader_title_list.get(0).getText().contains("Teacher"));
 
 			homePage.rostertab.click();
@@ -277,23 +278,25 @@ public class Single_Test_Analysis_Steps {
 					"//div[@class='menu-title' and contains(text(),'Teacher')]/following-sibling::div//div[@class='menu-dropdown-list-inr']/ul//li[.='"
 							+ teacherName + "']"))
 					.click();
-			Thread.sleep(500);
-
+			Thread.sleep(1000);
+			homePage.teachersdropdownbtn.click();
+			Thread.sleep(1000);
+			
 			homePage.rosterapplybtn.click();
-			Thread.sleep(3000);
+			UtilityMethods.wait_For_Student_List_AND_OR_Class_List_Section_Load();
 			UtilityMethods.scrollPageUp(Driver.webdriver);
-			Thread.sleep(2000);
+			Thread.sleep(500);
 			Assert.assertTrue(homePage.contextheader_text_list.get(1).getText().equals(teacherName));
 
 			js.executeScript("arguments[0].click();", homePage.statab);
-			Thread.sleep(7000);
+			UtilityMethods.wait_For_STA_Section_Load();
 
 			homePage.studentmenu.click();
-			Thread.sleep(5000);
+			UtilityMethods.wait_For_STA_Section_Load();
 			Assert.assertTrue(homePage.compare_cb_list_on_sta.get(0).getText().equals("Class"));
 			Assert.assertTrue(homePage.compare_cb_list_on_sta.get(1).getText().equals("School"));
 			Assert.assertTrue(homePage.compare_cb_list_on_sta.get(2).getText().equals("District"));
-			Thread.sleep(5000);
+			
 			for (int i = 0; i < homePage.compare_cb_list_on_sta.size(); i++) {
 				homePage.compare_cb_list_on_sta.get(i).click();
 				Thread.sleep(500);
@@ -307,7 +310,7 @@ public class Single_Test_Analysis_Steps {
 			log.info("Comparison checkbox in Student menu with columns order validation successfull...");
 
 			homePage.classmenu.click();
-			Thread.sleep(5000);
+			UtilityMethods.wait_For_STA_Section_Load();
 			Assert.assertTrue(homePage.compare_cb_list_on_sta.get(0).getText().equals("School"));
 			Assert.assertTrue(homePage.compare_cb_list_on_sta.get(1).getText().equals("District"));
 			Thread.sleep(5000);
@@ -323,7 +326,7 @@ public class Single_Test_Analysis_Steps {
 			log.info("Comparison checkbox in Class menu with columns order validation successfull...");
 
 			homePage.schoolmenu.click();
-			Thread.sleep(5000);
+			UtilityMethods.wait_For_STA_Section_Load();
 			Assert.assertTrue(homePage.compare_cb_list_on_sta.get(0).getText().equals("District"));
 			Thread.sleep(5000);
 			homePage.compare_cb_list_on_sta.get(0).click();
@@ -347,7 +350,7 @@ public class Single_Test_Analysis_Steps {
 		try {
 			Thread.sleep(5000);
 			js.executeScript("arguments[0].click();", homePage.statab);
-			Thread.sleep(7000);
+			UtilityMethods.wait_For_STA_Section_Load();
 			homePage.filter_in_sta_for_district.click();
 			Thread.sleep(1000);
 			homePage.view_rb_on_filter_in_sta.click();

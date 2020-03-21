@@ -13,7 +13,7 @@ Feature: Sprint 8 and 10 User Stories
     Then verify Start date and End Date for the Custom date selector always appears beneath the Date Range dropdown
 
   ######## Sprint 10 User Stories ################
-  ##BE-870,871(a),871(b)
+  ##BE-870,871(a),871(b)  
   Scenario: Verify Grouping, The appearance of the Grouping tab
     Given User is on portal's login screen with username as "teacher_three" and password as "password" and usertype as "realm_two"
     When User Click on Standard Performance tab within the Class Context

@@ -619,6 +619,9 @@ public class HomePage {
 	@FindBy(xpath = "//*[name()='text' and @transform]/preceding-sibling::*[name()='polygon' and @fill='#00539B']")
 	public WebElement highlightedtestName_onlinechart_on_tsot;
 
+	@FindBy(xpath = "//*[name()='text' and @transform]/preceding-sibling::*[name()='polygon' and @fill='#00539B']")
+	public WebElement highlightedtestName_onlinechart_on_pot;
+	
 	@FindBy(xpath = "//div[@class='graph_tooltip_content']")
 	public WebElement testNametooltip_onlinechart;
 	
@@ -749,7 +752,7 @@ public class HomePage {
 	public WebElement studentscorerightcontentontt;
 
 	@FindBy(xpath = "//div[contains(@class,'class_widget_title test_score_overtime')]/following-sibling::div//*[name()='circle']/following-sibling::*[name()='text']")
-	public List<WebElement> testScoreValueInCircle_onlinechart;
+	public List<WebElement> testScoreValueInCircle_onlinechart_tsot;
 	
 	@FindBy(xpath = "//span[contains(text(),'Test Score Overview')]/ancestor::div[@class='student_testscores_widget_title_main']/following-sibling::div//*[name()='circle']/following-sibling::*[name()='text']")
 	public List<WebElement> testScoreValueInCircle_onlinechart_tso;

@@ -655,11 +655,11 @@ public class Standard_Overview_Table_Steps {
 		} catch (Exception e) {
 			Thread.sleep(500);
 			jse.executeScript("arguments[0].click();", homePage.testscoresbtn);
-			Thread.sleep(3000);
 		}
+		UtilityMethods.wait_For_Test_Score_Detail_Section();
 		Standard_Overview_Table_Steps.testScoreMenuClicked = true;
 		Standard_Overview_Table_Steps.underClassContext = true;
-		UtilityMethods.wait_For_Test_Score_Detail_Section();
+		
 	}
 
 	/**
@@ -977,8 +977,8 @@ public class Standard_Overview_Table_Steps {
 			Assert.assertTrue(homePage.activestandardperformancebtn.getAttribute("class").equals("active_tab"));
 		} catch (Exception e) {
 			jse.executeScript("arguments[0].click();", homePage.standardperformancebtn);
-			Thread.sleep(3000);
 		}
+		UtilityMethods.wait_For_Performance_Over_Time_Line_Chart_Section_Load();
 		Standard_Overview_Table_Steps.performanceMenuClicked = true;
 		Standard_Overview_Table_Steps.underStudentContext = true;
 	}

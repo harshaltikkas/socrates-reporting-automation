@@ -62,14 +62,17 @@ public class Sprint_Eleven_And_Twelve_Steps {
 			JavascriptExecutor js = (JavascriptExecutor) Driver.webdriver;
 
 			js.executeScript("arguments[0].click();", homePage.applyBtnOngroupingTab);
-			Thread.sleep(1000);
-			 new Sprint_Eight_And_Tenth_Steps().wait_For_Strands_Text_After_Apply_BtnOn_GroupingTab();
-			Thread.sleep(1000);
+			
+			UtilityMethods.wait_For_Strands_Text_After_Apply_BtnOn_GroupingTab();
+			
 			int ran_no = (int) (homePage.studentNamesOnGroupingTable.size() * Math.random());
+			new Actions(Driver.webdriver).moveToElement(homePage.studentNamesOnGroupingTable.get(ran_no)).build()
+			.perform();Thread.sleep(500);
+			UtilityMethods.scrollPageDown(Driver.webdriver, 2); Thread.sleep(500);
 			String name = homePage.studentNamesOnGroupingTable.get(ran_no).getText();
-			System.out.println("Student Name:" + name + " :" + ran_no);
-
-			new Actions(Driver.webdriver).moveToElement(homePage.studentNamesOnGroupingTable.get(ran_no - 1)).build()
+			log.info("Student Name:" + name + " :" + ran_no);
+			
+			new Actions(Driver.webdriver).moveToElement(homePage.studentNamesOnGroupingTable.get(ran_no)).build()
 					.perform();
 			Thread.sleep(500);
 			js.executeScript("arguments[0].click();", homePage.visibleArrowListOnGroupingTable.get(ran_no));
@@ -440,7 +443,7 @@ public class Sprint_Eleven_And_Twelve_Steps {
 			Thread.sleep(500);
 			int randNo = UtilityMethods.generateRandomNumberBySkippingIndex(
 					homePage.testNamesonPerPage_onlinechart.size(), homePage.testNamesonPerPage_onlinechart.size() - 1);
-			new Actions(Driver.webdriver).moveToElement(homePage.testScoreValueInCircle_onlinechart.get(randNo)).click()
+			new Actions(Driver.webdriver).moveToElement(homePage.testScoreValueInCircle_onlinechart_tsot.get(randNo)).click()
 					.build().perform();
 			UtilityMethods.wait_For_Test_Score_Detail_Section();
 			new Actions(Driver.webdriver).moveToElement(homePage.testNamesonPerPage_onlinechart.get(randNo)).build()
