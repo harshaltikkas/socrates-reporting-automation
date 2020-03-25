@@ -25,6 +25,9 @@
  */
 package com.bec.reporting.utils;
 
+import java.awt.Robot;
+import java.awt.event.KeyEvent;
+import java.io.File;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -34,7 +37,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import org.junit.Assert;
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -43,6 +45,8 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.PageFactory;
 import com.bec.reporting.pageobjects.HomePage;
 import com.bec.reporting.steps.Standard_Overview_Table_Steps;
+import com.itextpdf.text.pdf.PdfReader;
+import com.itextpdf.text.pdf.parser.PdfTextExtractor;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -452,16 +456,6 @@ public class UtilityMethods {
 	}
 
 	/**
-	 * To get school id ,class id and student id called the below code Integer
-	 * schoolId=0,classId=0;
-	 * 
-	 * Map<Integer,Integer> ids=UtilityMethods.getSchoolIdAndClassId();
-	 * for(Map.Entry<Integer,Integer> entry:ids.entrySet()) {
-	 * schoolId=entry.getKey(); classId=entry.getValue(); }
-	 * studentId=UtilityMethods.getStudentId();
-	 */
-
-	/**
 	 * This method is used to retrieve Student Name on UI
 	 * 
 	 * @return
@@ -474,6 +468,9 @@ public class UtilityMethods {
 				studentTextonCH = homePage.studentnameoncontextheadertooltiptext.getText();
 			} else {
 				studentTextonCH = homePage.studentnameoncontextheader.getText();
+			}
+			if (studentTextonCH.contains("(")) {
+				studentTextonCH = studentTextonCH.substring(0, studentTextonCH.indexOf("(") - 1);
 			}
 			new Actions(Driver.webdriver).moveToElement(homePage.overviewtext).build().perform();
 		} catch (Exception e) {
@@ -511,6 +508,7 @@ public class UtilityMethods {
 					schoolName = homePage.schoolnameontripledot.getText();
 				}
 				new Actions(Driver.webdriver).moveToElement(homePage.overviewtext).click().build().perform();
+				Thread.sleep(500);
 			}
 		} catch (Exception e) {
 			processException(e);
@@ -542,6 +540,30 @@ public class UtilityMethods {
 		}
 		return districtName;
 	}
+	
+	/**
+	 * This method is used to retrieve Grade value on UI
+	 * 
+	 * @return
+	 */
+	public static String getGradeNameonUI() {
+		String grade = "";
+		try {
+			try {
+				grade = homePage.gradenameoncontextheader.getText();
+			} catch (Exception e) {
+				new Actions(Driver.webdriver).moveToElement(homePage.tripledotsoncontextheader).click().build()
+						.perform();
+				Thread.sleep(1000);
+				grade = homePage.gradenameontripledot.getText();
+			}
+			new Actions(Driver.webdriver).moveToElement(homePage.overviewtext).build().perform();
+			Thread.sleep(1000);
+		} catch (Exception e) {
+			processException(e);
+		}
+		return grade;
+	}
 
 	/**
 	 * This method is used to retrieve Test Name value on UI
@@ -552,13 +574,13 @@ public class UtilityMethods {
 		String testsName = "";
 		try {
 			new Actions(Driver.webdriver).moveToElement(homePage.testsNameoncontextheader).build().perform();
-			Thread.sleep(1000);
+			Thread.sleep(500);
 			if (homePage.testsNameoncontextheader.getText().contains("...")) {
 				testsName = homePage.tooltipoftestnameoncontextheader.getText();
 			} else {
 				testsName = homePage.testsNameoncontextheader.getText();
 			}
-			new Actions(Driver.webdriver).moveToElement(homePage.activeAssessementsbtn).click().build().perform();
+			new Actions(Driver.webdriver).moveToElement(homePage.overviewtext).click().build().perform();
 			Thread.sleep(500);
 		} catch (Exception e) {
 			processException(e);
@@ -573,16 +595,15 @@ public class UtilityMethods {
 	 */
 	public static String getTeacherNameonUI() {
 		String teachersName = "";
-		JavascriptExecutor js = (JavascriptExecutor) Driver.webdriver;
 		try {
 			new Actions(Driver.webdriver).moveToElement(homePage.contextheader_text_list.get(1)).build().perform();
-			Thread.sleep(1000);
+			Thread.sleep(500);
 			if (homePage.teacherNameoncontextheader.getText().contains("...")) {
 				teachersName = homePage.tooltipofteachernameoncontextheader.getText();
 			} else {
 				teachersName = homePage.teacherNameoncontextheader.getText();
 			}
-			js.executeScript("arguments[0].click();", homePage.overviewtext);
+			new Actions(Driver.webdriver).moveToElement(homePage.overviewtext).click().build().perform();
 			Thread.sleep(500);
 		} catch (Exception e) {
 			processException(e);
@@ -598,9 +619,11 @@ public class UtilityMethods {
 	public static String getAssessedWithonUI() {
 		String assessedWithTxt = "";
 		try {
-			new Actions(Driver.webdriver).moveToElement(homePage.questionDropDown).click().build().perform();
-			Thread.sleep(1000);
-
+			/*
+			 * new
+			 * Actions(Driver.webdriver).moveToElement(homePage.questionDropDown).click().
+			 * build().perform(); Thread.sleep(500);
+			 */
 			assessedWithTxt = homePage.questionDropDown.getText();
 			new Actions(Driver.webdriver).moveToElement(homePage.overviewtext).click().build().perform();
 			Thread.sleep(500);
@@ -610,25 +633,7 @@ public class UtilityMethods {
 		return assessedWithTxt;
 	}
 
-	/**
-	 * This method is used to retrieve TestDataAssessedForGrade value on UI
-	 * 
-	 * @return
-	 */
-	public static String getTestDataAssessedForGradeonUI() {
-		String testDataAssessedForGrade = "";
-		try {
-			new Actions(Driver.webdriver).moveToElement(homePage.gradeDropDown).click().build().perform();
-			Thread.sleep(1000);
-
-			testDataAssessedForGrade = homePage.gradeDropDown.getText();
-			new Actions(Driver.webdriver).moveToElement(homePage.overviewtext).click().build().perform();
-			Thread.sleep(500);
-		} catch (Exception e) {
-			processException(e);
-		}
-		return testDataAssessedForGrade;
-	}
+	
 
 	/**
 	 * This method is used to retrieve Dates value on UI
@@ -638,8 +643,11 @@ public class UtilityMethods {
 	public static String getDatesonContextHeaderUI() {
 		String testsName = "";
 		try {
-			new Actions(Driver.webdriver).moveToElement(homePage.datesoncontextheader).build().perform();
-			Thread.sleep(1000);
+			/*
+			 * new
+			 * Actions(Driver.webdriver).moveToElement(homePage.datesoncontextheader).build(
+			 * ).perform(); Thread.sleep(500);
+			 */
 			testsName = homePage.datesoncontextheader.getText();
 			new Actions(Driver.webdriver).moveToElement(homePage.overviewtext).click().build().perform();
 			Thread.sleep(500);
@@ -658,6 +666,7 @@ public class UtilityMethods {
 		String className = "";
 		try {
 			new Actions(Driver.webdriver).moveToElement(homePage.classnameoncontextheader).build().perform();
+			Thread.sleep(500);
 			if (homePage.classnameoncontextheader.getText().contains("...")) {
 				className = homePage.tooltipofclassnameoncontextheader.getText();
 			} else {
@@ -771,6 +780,7 @@ public class UtilityMethods {
 		} catch (Exception e) {
 			log.info("Waiting for Test Score Overview Section Loading");
 			IWait.implicit_wait(2);
+
 			tso_ctr++;
 			if (isSectionLoad == false && tso_ctr > 10) {
 				log.info("Test Score Overview Section is not loaded in 20 seconds..");
@@ -823,6 +833,118 @@ public class UtilityMethods {
 				processException(new Exception());
 			}
 			wait_For_Standard_Performance_Table_Section();
+		}
+	}
+
+	public static void wait_For_CSV_File_Download(String file) throws Exception {
+		log.info("Waiting for CSV file download...");
+		Thread.sleep(2000);
+		File f = new File(file);
+		if (f.exists()) {
+			log.info("csv file downloaded successfully....");
+		} else {
+			wait_For_CSV_File_Download(file);
+		}
+	}
+
+	/**
+	 * This method is used to wait till refresh icon for the roster tab dropdown
+	 **/
+	public static void wait_For_Refresh_Icon(WebElement el, String str) {
+		int count = 1;
+		try {
+			do {
+				log.info("Thread sleep called for " + str + " Loading :" + count + " Times");
+				Thread.sleep(2000);
+				count++;
+				if (count > 10) {
+					log.error("Issue in " + str + " Data Loading");
+					UtilityMethods.processException(new Exception());
+				}
+			} while (el.isDisplayed() && count <= 10);
+		} catch (Exception e) {
+			log.info(str + " Refresh Icon Display off");
+		}
+	}
+
+	/** This method is used to delete the pdf file in download folder **/
+	public static void Delete_PDF() {
+		String user = System.getProperty("user.name");
+		File folder = new File("C:\\Users\\" + user + "\\Downloads");
+		File fileName = new File("Benchmark Universe - Assesment Reporting.pdf");
+		File f = new File(folder + "\\" + fileName);
+		if (f.exists()) {
+			log.info("Deleting the file: " + folder + "\\" + fileName);
+			f.delete();
+		}
+	}
+
+	/**
+	 * This method is used to Open the pdf and read the text from file in download
+	 * folder
+	 * 
+	 * 
+	 **/
+	public static void Open_PDF_And_Read_Text_And_Verify_Details(List<String> details) {
+		String user = System.getProperty("user.name");
+		String pdf_file = "C:\\Users\\" + user + "\\Downloads\\Benchmark Universe - Assesment Reporting.pdf";
+		PdfReader reader;
+		try {
+			Thread.sleep(2000);
+			reader = new PdfReader(pdf_file);
+			// pageNumber = 1
+			String textFromPage = PdfTextExtractor.getTextFromPage(reader, 1);
+			for (int i = 0; i < details.size(); i++) {
+				try {
+					Assert.assertTrue(textFromPage.contains(details.get(i)));
+				} catch (Exception e) {
+					log.error(details.get(i) + " not available in pdf..");
+					processException(e);
+				}
+			}
+			reader.close();
+		} catch (Exception e) {
+			log.error("Error in reading pdf file");
+			processException(e);
+		}
+	}
+
+	static int pdf_ctr = 0;
+
+	/** This method is used to save the pdf file in download folder **/
+	public static void Save_PDF(Robot robot, String prnt_env) {
+		try {
+			// check and delete pdf file if previously created and not deleted
+			Delete_PDF();
+			Thread.sleep(5000);
+			if (prnt_env.equals("local") && pdf_ctr == 0) {
+				for (int i = 0; i < 5; i++) {
+					robot.keyPress(KeyEvent.VK_TAB);
+					robot.keyRelease(KeyEvent.VK_TAB);
+					Thread.sleep(500);
+				}
+				robot.keyPress(KeyEvent.VK_DOWN);
+				robot.keyRelease(KeyEvent.VK_DOWN);
+				Thread.sleep(3000);
+				for (int i = 0; i < 6; i++) {
+					robot.keyPress(KeyEvent.VK_TAB);
+					robot.keyRelease(KeyEvent.VK_TAB);
+				}
+			}
+			pdf_ctr++;
+			// press enter btn on print preview dialog and wait for 3 sec,enter for save the
+			// file
+			Thread.sleep(500);
+			robot.keyPress(KeyEvent.VK_ENTER);
+			robot.keyRelease(KeyEvent.VK_ENTER);
+			Thread.sleep(3000);
+			robot.keyPress(KeyEvent.VK_ENTER);
+			robot.keyRelease(KeyEvent.VK_ENTER);
+			Thread.sleep(500);
+			log.info("Saving Benchmark Universe - Assesment Reporting.pdf ...");
+		} catch (Exception e) {
+			log.error("Error in saving pdf file..");
+			UtilityMethods.processException(e);
 		}
 	}
 
@@ -960,24 +1082,6 @@ public class UtilityMethods {
 			processException(e);
 		}
 		return name;
-	}
-
-	/* This method is used to wait till refresh icon for the roster tab dropdown */
-	public static void wait_For_Refresh_Icon_onRosterTab(WebElement el, String str) {
-		int count = 1;
-		try {
-			do {
-				log.info("Thread sleep called for " + str + " Loading :" + count + " Times");
-				Thread.sleep(2000);
-				count++;
-				if (count > 10) {
-					log.error("Issue in " + str + " Data Loading");
-					UtilityMethods.processException(new Exception());
-				}
-			} while (el.isDisplayed() && count <= 10);
-		} catch (Exception e) {
-			log.info(str + " Refresh Icon Display off");
-		}
 	}
 
 	/* This method is used to deselct all checkbox in universal selector dropdown */

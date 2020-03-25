@@ -194,7 +194,7 @@ public class Driver {
 			ChromeOptions options = new ChromeOptions();
 			options.setExperimentalOption("prefs", prefs);
 			options.addArguments("--disable-extensions");
-			options.addArguments("start-maximized");
+			options.addArguments("start-maximized");			
 			//options.addArguments("--headless");//This is for headless testing,browser will not launch
 			webdriver = new ChromeDriver(options);
 			break;

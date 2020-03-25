@@ -120,7 +120,7 @@ public class IWait {
 	public static boolean check_Absence_of_Element(WebElement el) {
 		try {
 			Assert.assertTrue(el.isDisplayed());
-			log.error(el.getTagName()+" is still present");
+			log.error(el.getText()+" is present");
 			UtilityMethods.processException(new Exception());
 		} catch (Exception e) {
 

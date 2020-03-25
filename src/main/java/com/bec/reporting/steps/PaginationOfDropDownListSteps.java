@@ -145,7 +145,7 @@ public class PaginationOfDropDownListSteps {
 			Thread.sleep(500);
 			new Actions(Driver.webdriver).moveToElement(homePage.studentTitleOnSliderMenu).build().perform();
 
-			UtilityMethods.wait_For_Refresh_Icon_onRosterTab(homePage.schoolRefreshIcon, "School");
+			UtilityMethods.wait_For_Refresh_Icon(homePage.schoolRefreshIcon, "School");
 			UtilityMethods.scrollPageDown(Driver.webdriver, 6);
 			Thread.sleep(500);
 
