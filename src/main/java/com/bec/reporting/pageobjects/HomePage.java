@@ -50,6 +50,12 @@ public class HomePage {
 
 	@FindBy(xpath = "//div[@class='menu-title' and contains(text(),'Student')]/span[@class='data-refresh']//i[@class='material-icons' and contains(text(),'autorenew')]")
 	public WebElement studentRefreshIcon;
+	
+	@FindBy(xpath = "//div[@class='download_csv']/span[@class='csv_download_icon']/i[contains(text(),'autorenew')]")
+	public WebElement csvDownloadRefreshIcon;
+	
+	@FindBy(xpath = "//div[@class='download_csv']/span[@class='csv_download_icon']/img")
+	public WebElement csvDownloadIcon;
 
 	@FindBy(xpath = "//input[@name='username']")
 	public WebElement username;
@@ -957,7 +963,7 @@ public class HomePage {
 
 	@FindBy(xpath = "//span[@class='printIcon']//img")
 	public WebElement printIcon;
-
+	
 	@FindBy(xpath = "//span[@class='testScorePrint']//img")
 	public WebElement Test_score_detail_printIcon;
 
@@ -1196,4 +1202,5 @@ public class HomePage {
 
 	@FindBy(xpath = "//div[@class='bec_singleTest_multi_list_Data_row']//span[@class='bec_singleTest_singleQuestion_Number']")
 	public List<WebElement> single_question_in_question_column_on_table_on_sta;
+	
 }

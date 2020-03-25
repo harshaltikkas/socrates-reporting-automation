@@ -184,7 +184,7 @@ public class FlyInMenuBehaviourSteps {
 			homePage.schooldropdownbtn.click();
 			Thread.sleep(500);
 			new Actions(Driver.webdriver).moveToElement(homePage.studentTitleOnSliderMenu).build().perform();
-			UtilityMethods.wait_For_Refresh_Icon_onRosterTab(homePage.gradeRefreshIcon, "Grade");
+			UtilityMethods.wait_For_Refresh_Icon(homePage.gradeRefreshIcon, "Grade");
 			UtilityMethods.scrollPageDown(Driver.webdriver, 3);
 			Thread.sleep(500);
 
@@ -197,7 +197,7 @@ public class FlyInMenuBehaviourSteps {
 			Thread.sleep(500);
 
 			new Actions(Driver.webdriver).moveToElement(homePage.studentTitleOnSliderMenu).build().perform();
-			UtilityMethods.wait_For_Refresh_Icon_onRosterTab(homePage.teachersRefreshIcon, "Teacher");
+			UtilityMethods.wait_For_Refresh_Icon(homePage.teachersRefreshIcon, "Teacher");
 			UtilityMethods.scrollPageDown(Driver.webdriver, 4);
 			Thread.sleep(500);
 

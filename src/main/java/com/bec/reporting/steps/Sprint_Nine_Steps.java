@@ -26,17 +26,24 @@
 package com.bec.reporting.steps;
 
 import java.awt.Robot;
-import java.awt.event.KeyEvent;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Properties;
+
 import org.junit.Assert;
 import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.PageFactory;
+
 import com.bec.reporting.pageobjects.HomePage;
 import com.bec.reporting.utils.API_Connection;
 import com.bec.reporting.utils.CBTConfiguration;
 import com.bec.reporting.utils.Driver;
+import com.bec.reporting.utils.FileRead;
+import com.bec.reporting.utils.IWait;
 import com.bec.reporting.utils.UtilityMethods;
+
 import cucumber.api.java.en.Then;
 import lombok.extern.slf4j.Slf4j;
 
@@ -56,7 +63,8 @@ public class Sprint_Nine_Steps {
 			if (Standard_Overview_Table_Steps.underClassContext
 					&& Standard_Overview_Table_Steps.performanceMenuClicked) {
 				UtilityMethods.wait_For_Performance_Over_Time_Line_Chart_Section_Load();
-				new Actions(Driver.webdriver).moveToElement(homePage.performance_overtime_icon).click().build().perform();
+				new Actions(Driver.webdriver).moveToElement(homePage.performance_overtime_icon).click().build()
+						.perform();
 				UtilityMethods.wait_For_Performance_Over_Time_Line_Chart_Section_Load();
 			} else {
 				log.info("This will execute with student context");
@@ -140,160 +148,135 @@ public class Sprint_Nine_Steps {
 		log.info("Scenario BE-837 completed");
 	}
 
-	public void print_PDF(Robot robot) {
-		try {
-			Thread.sleep(10000);
-			Actions builder = new Actions(Driver.webdriver);
-			for (int i = 0; i < 5; i++) {
-				robot.keyPress(KeyEvent.VK_TAB);
-				robot.keyRelease(KeyEvent.VK_TAB);
-			}
-			Thread.sleep(500);
-			builder.sendKeys(Keys.ARROW_UP).build().perform();
-
-			Thread.sleep(5000);
-			for (int i = 0; i < 6; i++) {
-				robot.keyPress(KeyEvent.VK_TAB);
-				robot.keyRelease(KeyEvent.VK_TAB);
-			}
-
-			robot.keyPress(KeyEvent.VK_ENTER);
-			robot.keyRelease(KeyEvent.VK_ENTER);
-			Thread.sleep(3000);
-			robot.keyPress(KeyEvent.VK_ENTER);
-			robot.keyRelease(KeyEvent.VK_ENTER);
-
-		} catch (Exception e) {
-			log.error("Error in printing pdf file..");
-			UtilityMethods.processException(e);
-		}
-	}
-
 	@Then("^verify Context header content for the Standards Overview context selected shown in all PDF's$")
 	public void verify_Context_header_content_for_the_Standards_Overview_context_selected_shown_in_all_PDF_s()
 			throws Throwable {
 		String output = "";
 		try {
-			// Robot robot = new Robot();
+			IWait.check_Absence_of_Element(homePage.takemeback);
+			Robot robot = new Robot();
+			Properties p = FileRead.readProperties();
+			String print_env = p.getProperty("print_env");
+			List<String> details = new ArrayList<String>();
+			String school, classN, district, tests, dates, assessedWith, teacherN, studentName, grade;
 
-			String school, classN, district, tests, dates, assessedWith, teacherN, studentName;
 			// String testDataAssessedForGrade, grade;
-
+			school = UtilityMethods.getSchoolNameonUI();
+			district = UtilityMethods.getDistrictNameonUI();
+			grade=UtilityMethods.getGradeNameonUI();
+			teacherN = UtilityMethods.getTeacherNameonUI();
+			classN = UtilityMethods.getClassNameonUI();
+			tests = UtilityMethods.getTestsNameonUI();
+			dates = UtilityMethods.getDatesonContextHeaderUI();
+			
 			if (Standard_Overview_Table_Steps.performanceMenuClicked
 					&& Standard_Overview_Table_Steps.underClassContext) {
 
-				classN = UtilityMethods.getClassNameonUI();
-				school = UtilityMethods.getSchoolNameonUI();
-				district = UtilityMethods.getDistrictNameonUI();
-				tests = UtilityMethods.getTestsNameonUI();
-				dates = UtilityMethods.getDatesonContextHeaderUI();
 				assessedWith = UtilityMethods.getAssessedWithonUI();
-				// testDataAssessedForGrade = UtilityMethods.getTestDataAssessedForGradeonUI();
+				details.add(classN);
+				details.add(school);
+				details.add(district);
+				details.add(dates);
+				details.add(tests);
+				details.add(assessedWith);
+				details.add(grade);
 				Assert.assertTrue(homePage.printIcon.isDisplayed());
-
 				homePage.printIcon.click();
-				// TODO logic for print pdf then open and verify the headers value in pdf file
-				// with ui
-				// print_PDF(robot);
-
-				Assert.assertTrue(homePage.headerRowList.get(0).getText().contains(classN));
-				Assert.assertTrue(homePage.headerRowList.get(1).getText().contains(school));
-				Assert.assertTrue(homePage.headerRowList.get(2).getText().contains(district));
-				Assert.assertTrue(homePage.headerRowList.get(3).getText().contains(tests));
-				Assert.assertTrue(homePage.headerRowList.get(4).getText().contains(dates));
-				Assert.assertTrue(homePage.headerRowList.get(5).getText().contains(assessedWith));
-				// Assert.assertTrue(homePage.headerRowList.get(6).getText().contains(testDataAssessedForGrade));
+				Thread.sleep(500);
+				UtilityMethods.Save_PDF(robot, print_env);
+				UtilityMethods.Open_PDF_And_Read_Text_And_Verify_Details(details);
+				UtilityMethods.Delete_PDF();
 
 				Thread.sleep(500);
-
 				homePage.activePerformanceOverTimePage.click();
 				UtilityMethods.wait_For_Performance_Over_Time_Line_Chart_Section_Load();
-				// grade = UtilityMethods.getTestDataAssessedForGradeonUI();
+
 				teacherN = UtilityMethods.getTeacherNameonUI();
-
+				details.add(teacherN);
 				Assert.assertTrue(homePage.printIcon.isDisplayed());
-				Assert.assertTrue(homePage.headerRowList.get(0).getText().contains(classN));
-				Assert.assertTrue(homePage.headerRowList.get(1).getText().contains(teacherN));
-				// Assert.assertTrue(homePage.headerRowList.get(2).getText().contains(grade));
-				Assert.assertTrue(homePage.headerRowList.get(3).getText().contains(school));
-				Assert.assertTrue(homePage.headerRowList.get(4).getText().contains(district));
-				Assert.assertTrue(homePage.headerRowList.get(5).getText().contains(tests));
-				Assert.assertTrue(homePage.headerRowList.get(6).getText().contains(dates));
-				Assert.assertTrue(homePage.headerRowList.get(7).getText().contains(assessedWith));
-
+				homePage.printIcon.click();
+				Thread.sleep(500);
+				UtilityMethods.Save_PDF(robot, print_env);
+				UtilityMethods.Open_PDF_And_Read_Text_And_Verify_Details(details);
+				UtilityMethods.Delete_PDF();
+				details.clear();
 				output = "pass";
 			} else if (Standard_Overview_Table_Steps.performanceMenuClicked
 					&& Standard_Overview_Table_Steps.underStudentContext) {
 				studentName = UtilityMethods.getStudentNameonUI();
-				teacherN = UtilityMethods.getTeacherNameonUI();
-				classN = UtilityMethods.getClassNameonUI();
-				school = UtilityMethods.getSchoolNameonUI();
-
-				Assert.assertTrue(homePage.printIcon.isDisplayed());
-
-				Assert.assertTrue(homePage.headerRowList.get(0).getText().contains(studentName));
-				Assert.assertTrue(homePage.headerRowList.get(1).getText().contains(classN));
-				Assert.assertTrue(homePage.headerRowList.get(2).getText().contains(teacherN));
-				Assert.assertTrue(homePage.headerRowList.get(3).getText().contains(school));
+				assessedWith = UtilityMethods.getAssessedWithonUI();
+				details.add(studentName);
+				details.add(classN);
+				details.add(teacherN);
+				details.add(school);
+				details.add(district);
+				details.add(tests);
+				details.add(dates);
+				details.add(assessedWith);
+				details.add(grade);
+				Assert.assertTrue(homePage.printIcon.isDisplayed());			
+				homePage.printIcon.click();
+				Thread.sleep(500);
+				UtilityMethods.Save_PDF(robot, print_env);
+				UtilityMethods.Open_PDF_And_Read_Text_And_Verify_Details(details);
+				UtilityMethods.Delete_PDF();
+				details.clear();
 				output = "pass";
 			} else if (Standard_Overview_Table_Steps.testScoreMenuClicked
 					&& Standard_Overview_Table_Steps.underStudentContext) {
 
 				studentName = UtilityMethods.getStudentNameonUI();
-				teacherN = UtilityMethods.getTeacherNameonUI();
-				classN = UtilityMethods.getClassNameonUI();
-				school = UtilityMethods.getSchoolNameonUI();
-				district = UtilityMethods.getDistrictNameonUI();
-				tests = UtilityMethods.getTestsNameonUI();
-				dates = UtilityMethods.getDatesonContextHeaderUI();
-
+				details.add(studentName);
+				details.add(classN);
+				details.add(teacherN);
+				details.add(school);
+				details.add(district);
+				details.add(tests);
+				details.add(dates);
+				details.add(grade);
 				Assert.assertTrue(homePage.printIcon.isDisplayed());
-				Assert.assertTrue(homePage.headerRowList.get(0).getText().contains(studentName));
-				Assert.assertTrue(homePage.headerRowList.get(1).getText().contains(classN));
-				Assert.assertTrue(homePage.headerRowList.get(2).getText().contains(teacherN));
-				Assert.assertTrue(homePage.headerRowList.get(4).getText().contains(school));
-				Assert.assertTrue(homePage.headerRowList.get(5).getText().contains(district));
-				Assert.assertTrue(homePage.headerRowList.get(6).getText().contains(tests));
-				Assert.assertTrue(homePage.headerRowList.get(7).getText().contains(dates));
-
+				homePage.printIcon.click();
+				Thread.sleep(500);
+				UtilityMethods.Save_PDF(robot, print_env);
+				UtilityMethods.Open_PDF_And_Read_Text_And_Verify_Details(details);
+				UtilityMethods.Delete_PDF();
+				details.clear();
 				output = "pass";
 			}
 
 			else if (Standard_Overview_Table_Steps.testScoreMenuClicked
 					&& Standard_Overview_Table_Steps.underClassContext) {
-				studentName = UtilityMethods.getStudentNameonUI();
-				teacherN = UtilityMethods.getTeacherNameonUI();
-				classN = UtilityMethods.getClassNameonUI();
-				school = UtilityMethods.getSchoolNameonUI();
-				district = UtilityMethods.getDistrictNameonUI();
-				tests = UtilityMethods.getTestsNameonUI();
-				dates = UtilityMethods.getDatesonContextHeaderUI();
 
+				details.add(teacherN);
+				details.add(classN);
+				details.add(school);
+				details.add(district);
+				details.add(tests);
+				details.add(dates);
+				details.add(grade);
+				// this is clicking for test score over time print btn
 				Assert.assertTrue(homePage.printIcon.isDisplayed());
-				Assert.assertTrue(homePage.headerRowList.get(0).getText().contains(classN));
-				Assert.assertTrue(homePage.headerRowList.get(1).getText().contains(teacherN));
-				Assert.assertTrue(homePage.headerRowList.get(3).getText().contains(school));
-				Assert.assertTrue(homePage.headerRowList.get(4).getText().contains(district));
-				Assert.assertTrue(homePage.headerRowList.get(5).getText().contains(tests));
-				Assert.assertTrue(homePage.headerRowList.get(6).getText().contains(dates));
-
 				Assert.assertTrue(homePage.Test_score_detail_printIcon.isDisplayed());
-				Assert.assertTrue(homePage.test_score_detail_headerRowList.get(0).getText().contains(classN));
-				Assert.assertTrue(homePage.test_score_detail_headerRowList.get(1).getText().contains(teacherN));
-				Assert.assertTrue(homePage.test_score_detail_headerRowList.get(3).getText().contains(school));
-				Assert.assertTrue(homePage.test_score_detail_headerRowList.get(4).getText().contains(district));
-				Assert.assertTrue(homePage.test_score_detail_headerRowList.get(5).getText().contains(tests));
-				Assert.assertTrue(homePage.test_score_detail_headerRowList.get(6).getText().contains(dates));
+				homePage.printIcon.click();
+				Thread.sleep(500);
+				UtilityMethods.Save_PDF(robot, print_env);
+				UtilityMethods.Open_PDF_And_Read_Text_And_Verify_Details(details);
+				UtilityMethods.Delete_PDF();
 
+				homePage.Test_score_detail_printIcon.click();
+				Thread.sleep(500);
+				UtilityMethods.Save_PDF(robot, print_env);
+				UtilityMethods.Open_PDF_And_Read_Text_And_Verify_Details(details);
+				UtilityMethods.Delete_PDF();
+				details.clear();
 				output = "pass";
 			}
-
+			CBTConfiguration.score = output;
+			Standard_Overview_Table_Steps.resetStatus();
 		} catch (Exception e) {
 			UtilityMethods.processException(e);
 		}
-		CBTConfiguration.score = output;
 		log.info("Scenario BE-845 completed");
-		Standard_Overview_Table_Steps.resetStatus();
 	}
 
 	/**
@@ -330,6 +313,39 @@ public class Sprint_Nine_Steps {
 		}
 		CBTConfiguration.score = output;
 		log.info("Scenario View Texonomy display and validation completed");
+		Standard_Overview_Table_Steps.resetStatus();
+	}
+
+	@Then("^verify csv download functionality$")
+	public void verify_csv_download_functionality() throws Throwable {
+		try {
+			IWait.check_Absence_of_Element(homePage.takemeback);
+			String user = System.getProperty("user.name");
+			IWait.explicit_wait(Driver.webdriver, homePage.csvDownloadIcon);
+			homePage.csvDownloadIcon.click();
+			Thread.sleep(500);
+			File folder = new File("C:\\Users\\" + user + "\\Downloads");
+			File fileName = null;
+			if (Standard_Overview_Table_Steps.performanceMenuClicked) {
+				fileName = new File("standard_performance.csv");
+				UtilityMethods.wait_For_CSV_File_Download(folder + "\\" + fileName);
+			} else if (Standard_Overview_Table_Steps.testScoreMenuClicked) {
+				fileName = new File("test_scores.csv");
+				UtilityMethods.wait_For_CSV_File_Download(folder + "\\" + fileName);
+			}
+			log.info("After Downloading, deleting the file :" + folder + "\\" + fileName);
+			File f = new File(folder + "\\" + fileName);
+			if (f.exists()) {
+				f.delete();
+			} else {
+				log.info(f + " does not exists..");
+			}
+
+		} catch (Exception e) {
+			UtilityMethods.processException(e);
+		}
+		CBTConfiguration.score = "pass";
+		log.info("Scenario verify csv download functionality" + " completed");
 		Standard_Overview_Table_Steps.resetStatus();
 	}
 

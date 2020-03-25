@@ -183,7 +183,7 @@ public class RosterTabDropDownBehaviour {
 
 			new Actions(Driver.webdriver).moveToElement(homePage.studentTitleOnSliderMenu).build().perform();
 
-			UtilityMethods.wait_For_Refresh_Icon_onRosterTab(homePage.schoolRefreshIcon, "School");
+			UtilityMethods.wait_For_Refresh_Icon(homePage.schoolRefreshIcon, "School");
 			UtilityMethods.scrollPageDown(Driver.webdriver, 9);Thread.sleep(500);
 
 			// **checking class dropdown in ascending order*//
@@ -214,7 +214,7 @@ public class RosterTabDropDownBehaviour {
 			Thread.sleep(500);
 			new Actions(Driver.webdriver).moveToElement(homePage.studentTitleOnSliderMenu).build().perform();
 
-			UtilityMethods.wait_For_Refresh_Icon_onRosterTab(homePage.studentRefreshIcon, "Student");
+			UtilityMethods.wait_For_Refresh_Icon(homePage.studentRefreshIcon, "Student");
 
 			// **checking student dropdown in ascending order*//
 			homePage.studentdropdownbtn.click();
@@ -329,7 +329,7 @@ public class RosterTabDropDownBehaviour {
 			homePage.schooldropdownbtn.click();
 			new Actions(Driver.webdriver).moveToElement(homePage.studentTitleOnSliderMenu).build().perform();
 
-			UtilityMethods.wait_For_Refresh_Icon_onRosterTab(homePage.schoolRefreshIcon, "School");
+			UtilityMethods.wait_For_Refresh_Icon(homePage.schoolRefreshIcon, "School");
 			UtilityMethods.scrollPageDown(Driver.webdriver, 8);
 			Thread.sleep(500);
 			homePage.studentdropdownbtn.click();
@@ -372,7 +372,7 @@ public class RosterTabDropDownBehaviour {
 			homePage.schooldropdownbtn.click();
 			new Actions(Driver.webdriver).moveToElement(homePage.studentTitleOnSliderMenu).build().perform();
 
-			UtilityMethods.wait_For_Refresh_Icon_onRosterTab(homePage.schoolRefreshIcon, "School");
+			UtilityMethods.wait_For_Refresh_Icon(homePage.schoolRefreshIcon, "School");
 			UtilityMethods.scrollPageDown(Driver.webdriver, 8);Thread.sleep(500);
 			// selecting class from dropdown
 			homePage.classdropdownbtn.click();

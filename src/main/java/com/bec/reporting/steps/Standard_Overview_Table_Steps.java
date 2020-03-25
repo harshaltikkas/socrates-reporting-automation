@@ -102,17 +102,15 @@ public class Standard_Overview_Table_Steps {
 			UtilityMethods.wait_For_Context_Header_Section();
 			Assert.assertTrue(homePage.activeclassmenu.getAttribute("class").contains("active"));
 		} catch (Exception e) {
-			Thread.sleep(500);
 			jse.executeScript("arguments[0].click();", homePage.classmenu);
 			Thread.sleep(3000);
 		}
 		try {
 			Assert.assertTrue(homePage.activestandardperformancebtn.getAttribute("class").contains("active_tab"));
 		} catch (Exception e) {
-			Thread.sleep(1000);
 			jse.executeScript("arguments[0].click();", homePage.standardperformancebtn);
-			Thread.sleep(3000);
 		}
+		UtilityMethods.wait_For_Student_List_AND_OR_Class_List_Section_Load();
 		Standard_Overview_Table_Steps.performanceMenuClicked = true;
 		Standard_Overview_Table_Steps.underClassContext = true;
 	}
@@ -887,16 +885,15 @@ public class Standard_Overview_Table_Steps {
 			UtilityMethods.wait_For_Context_Header_Section();
 			Assert.assertTrue(homePage.activestudentmenu.getAttribute("class").contains("active"));
 		} catch (Exception e) {
-			Thread.sleep(500);
 			jse.executeScript("arguments[0].click();", homePage.studentmenu);
+			Thread.sleep(3000);
 		}
 		try {
 			Assert.assertTrue(homePage.activetestscoresbtn.getAttribute("class").equals("active_tab"));
 		} catch (Exception e) {
-			Thread.sleep(500);
 			jse.executeScript("arguments[0].click();", homePage.testscoresbtn);
-			UtilityMethods.wait_For_Test_Score_Overview_Section_Load();
 		}
+		UtilityMethods.wait_For_Test_Score_Overview_Section_Load();
 		Standard_Overview_Table_Steps.testScoreMenuClicked = true;
 		Standard_Overview_Table_Steps.underStudentContext = true;
 	}
@@ -968,8 +965,7 @@ public class Standard_Overview_Table_Steps {
 		try {
 			UtilityMethods.wait_For_Context_Header_Section();
 			Assert.assertTrue(homePage.activestudentmenu.getAttribute("class").contains("active"));
-		} catch (Exception e) {
-			Thread.sleep(500);
+		} catch (Exception e) {			
 			jse.executeScript("arguments[0].click();", homePage.studentmenu);
 			Thread.sleep(3000);
 		}
