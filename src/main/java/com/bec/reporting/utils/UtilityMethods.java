@@ -472,7 +472,7 @@ public class UtilityMethods {
 			if (studentTextonCH.contains("(")) {
 				studentTextonCH = studentTextonCH.substring(0, studentTextonCH.indexOf("(") - 1);
 			}
-			new Actions(Driver.webdriver).moveToElement(homePage.overviewtext).build().perform();
+			new Actions(Driver.webdriver).moveByOffset(200, 200).build().perform();
 		} catch (Exception e) {
 			processException(e);
 		}
@@ -557,7 +557,7 @@ public class UtilityMethods {
 				Thread.sleep(1000);
 				grade = homePage.gradenameontripledot.getText();
 			}
-			new Actions(Driver.webdriver).moveToElement(homePage.overviewtext).build().perform();
+			new Actions(Driver.webdriver).moveByOffset(200, 200).build().perform();
 			Thread.sleep(1000);
 		} catch (Exception e) {
 			processException(e);
@@ -580,7 +580,7 @@ public class UtilityMethods {
 			} else {
 				testsName = homePage.testsNameoncontextheader.getText();
 			}
-			new Actions(Driver.webdriver).moveToElement(homePage.overviewtext).click().build().perform();
+			new Actions(Driver.webdriver).moveByOffset(200, 200).build().perform();
 			Thread.sleep(500);
 		} catch (Exception e) {
 			processException(e);
@@ -603,7 +603,7 @@ public class UtilityMethods {
 			} else {
 				teachersName = homePage.teacherNameoncontextheader.getText();
 			}
-			new Actions(Driver.webdriver).moveToElement(homePage.overviewtext).click().build().perform();
+			new Actions(Driver.webdriver).moveByOffset(200, 200).build().perform();
 			Thread.sleep(500);
 		} catch (Exception e) {
 			processException(e);
@@ -649,7 +649,7 @@ public class UtilityMethods {
 			 * ).perform(); Thread.sleep(500);
 			 */
 			testsName = homePage.datesoncontextheader.getText();
-			new Actions(Driver.webdriver).moveToElement(homePage.overviewtext).click().build().perform();
+			new Actions(Driver.webdriver).moveByOffset(200, 200).build().perform();
 			Thread.sleep(500);
 		} catch (Exception e) {
 			processException(e);
@@ -672,7 +672,7 @@ public class UtilityMethods {
 			} else {
 				className = homePage.classnameoncontextheader.getText();
 			}
-			new Actions(Driver.webdriver).moveToElement(homePage.overviewtext).click().build().perform();
+			new Actions(Driver.webdriver).moveByOffset(200, 200).build().perform();
 			Thread.sleep(500);
 		} catch (Exception e) {
 			processException(e);
