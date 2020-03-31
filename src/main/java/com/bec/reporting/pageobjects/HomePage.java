@@ -50,10 +50,10 @@ public class HomePage {
 
 	@FindBy(xpath = "//div[@class='menu-title' and contains(text(),'Student')]/span[@class='data-refresh']//i[@class='material-icons' and contains(text(),'autorenew')]")
 	public WebElement studentRefreshIcon;
-	
+
 	@FindBy(xpath = "//div[@class='download_csv']/span[@class='csv_download_icon']/i[contains(text(),'autorenew')]")
 	public WebElement csvDownloadRefreshIcon;
-	
+
 	@FindBy(xpath = "//div[@class='download_csv']/span[@class='csv_download_icon']/img")
 	public WebElement csvDownloadIcon;
 
@@ -381,6 +381,9 @@ public class HomePage {
 	@FindBy(xpath = "//div[@class='context-header-main']//span[contains(text(),'School:')]/following-sibling::span//div[@class='bec_tooltip_content']")
 	public WebElement tooltipofschoolnameoncontextheader;
 
+	@FindBy(xpath = "//div[@class='context-header-main']//span[contains(text(),'District:')]/following-sibling::span//div[@class='bec_tooltip_content']")
+	public WebElement tooltipofdistrictnameoncontextheader;
+
 	@FindBy(xpath = "//div[contains(text(),'District:')]/ancestor::div[@class='title_and_attribute']//span//div[@class='bec_tooltip_content']")
 	public WebElement tooltipofdistrictnameontripledot;
 
@@ -419,6 +422,9 @@ public class HomePage {
 
 	@FindBy(xpath = "//li[@class='active_tab' and contains(text(),'Standards Performance')]")
 	public WebElement activestandardperformancebtn;
+
+	@FindBy(xpath = "//li[@class='active_tab' and contains(text(),'Test Status')]")
+	public WebElement active_test_status_btn;
 
 	@FindBy(xpath = "//li[@class='active' and contains(text(),'Assessments')]")
 	public WebElement activeAssessementsbtn;
@@ -467,6 +473,9 @@ public class HomePage {
 
 	@FindBy(xpath = "//li[.='Standards Performance']")
 	public WebElement standardperformancebtn;
+
+	@FindBy(xpath = "//li[.='Test Status']")
+	public WebElement test_status_btn;
 
 	@FindBy(xpath = "//li[.='Single Test Analysis']")
 	public WebElement statab;
@@ -547,7 +556,7 @@ public class HomePage {
 
 	@FindBy(xpath = "//div[@class='class_widget_title test_score_overtime']/following-sibling::div/div/div[@class='Test_names_label']")
 	public WebElement testnameslabel_onlinechart_tsot;
-	
+
 	@FindBy(xpath = "//span[contains(text(),'Performance Over Time')]/ancestor::div[contains(@class,'sidewidget-header')]/following-sibling::div//div[contains(text(),'Test Names')]")
 	public WebElement testnameslabel_onlinechart_pot;
 
@@ -570,7 +579,7 @@ public class HomePage {
 
 	@FindBy(xpath = "//span[contains(text(),'Performance Over Time')]/ancestor::div[contains(@class,'sidewidget-header')]/following-sibling::div//div[@class='selector-pagination']//span[contains(@class,'scroll-left float-left scroll-active')]/i")
 	public WebElement enabled_left_arrow_on_paginator_on_pot_under_sp;
-	
+
 	// ==========(3)paginator_on_Test Score Detail_under_Test Score Tab==========
 	@FindBy(xpath = "//span[contains(text(),'Test Score Detail')]/ancestor::div[@class='class_widget_title ']/following-sibling::div//div[@class='selector-pagination']")
 	public WebElement paginator_on_tsd;
@@ -591,7 +600,8 @@ public class HomePage {
 	@FindBy(xpath = "//span[contains(text(),'Test Scores Over Time')]/ancestor::div[@class='class_widget_title test_score_overtime overrightinfostyle']/following-sibling::div//div[@class='selector-pagination']//span[@class='scroll-left float-left scroll-active ']/i")
 	public WebElement enabled_left_arrow_on_paginator_on_tsot;
 
-	// ?==========(5)paginator_on_tso_under_Test Score Tab_under_student========== Pagination not found till yet for any login
+	// ?==========(5)paginator_on_tso_under_Test Score Tab_under_student==========
+	// Pagination not found till yet for any login
 	@FindBy(xpath = "//span[contains(text(),'Test Score Overview')]/ancestor::div[contains(@class,'student_testscores_widget_title_main')]/following-sibling::div//div[@class='selector-pagination']")
 	public WebElement paginator_on_tso_under_ts_under_student;
 
@@ -612,7 +622,7 @@ public class HomePage {
 	public WebElement enabled_right_arrow_on_paginator_on_sta;
 
 	// =================================================================================
-	
+
 	@FindBy(xpath = "//*[name()='text' and @transform='rotate(-45)']")
 	public List<WebElement> testNamesonPerPage_onlinechart;
 
@@ -627,22 +637,22 @@ public class HomePage {
 
 	@FindBy(xpath = "//*[name()='text' and @transform]/preceding-sibling::*[name()='polygon' and @fill='#00539B']")
 	public WebElement highlightedtestName_onlinechart_on_pot;
-	
+
 	@FindBy(xpath = "//div[@class='graph_tooltip_content']")
 	public WebElement testNametooltip_onlinechart;
-	
+
 	@FindBy(xpath = "//div[@class='class_test_overview_table_header_left']//div[@class='bec_tooltip_content']")
 	public WebElement tooltip_text_of_test_name_on_tsd;
 
 	@FindBy(xpath = "//div[@class='comparison-block text-center']/following-sibling::div//*[name()='circle' and @fill]/following-sibling::*[name()='text']")
 	public List<WebElement> testScoresonPerPage_onlinechart;
-	
+
 	@FindBy(xpath = "//span[contains(text(),'Performance Over Time')]/ancestor::div[contains(@class,'sidewidget-header')]/following-sibling::div/div/div[@style]//*[name()='circle' and @fill]/following-sibling::*[name()='text']")
 	public List<WebElement> testScoresonPerPage_on_pot;
 
 	@FindBy(xpath = "//div[@class='comparison-block text-center']/following-sibling::div//*[name()='circle' and @fill]")
 	public List<WebElement> testScoreCircleClronPerPage_onlinechart;
-	
+
 	@FindBy(xpath = "//span[contains(text(),'Performance Over Time')]/ancestor::div[contains(@class,'sidewidget-header')]/following-sibling::div/div/div[@style]//*[name()='circle' and @fill]")
 	public List<WebElement> testScoreCircleClronPerPage_pot;
 
@@ -717,7 +727,7 @@ public class HomePage {
 
 	@FindBy(xpath = "//*[contains(text(),'Test Scores Over Time')]")
 	public WebElement testscoreovertimelinechart;
-	
+
 	@FindBy(xpath = "//*[contains(text(),'Test Scores over Time')]")
 	public WebElement testscoreovertimetext_underschool_undertest;
 
@@ -759,10 +769,10 @@ public class HomePage {
 
 	@FindBy(xpath = "//div[contains(@class,'class_widget_title test_score_overtime')]/following-sibling::div//*[name()='circle']/following-sibling::*[name()='text']")
 	public List<WebElement> testScoreValueInCircle_onlinechart_tsot;
-	
+
 	@FindBy(xpath = "//span[contains(text(),'Test Score Overview')]/ancestor::div[@class='student_testscores_widget_title_main']/following-sibling::div//*[name()='circle']/following-sibling::*[name()='text']")
 	public List<WebElement> testScoreValueInCircle_onlinechart_tso;
-	
+
 	@FindBy(xpath = "//div[@class='line_chart_graph' and not(@style)]//*[name()='g']//*[name()='circle']/following-sibling::*[name()='text']")
 	public List<WebElement> testScoreValueInCircle_onlinechart_pot;
 
@@ -804,7 +814,7 @@ public class HomePage {
 
 	@FindBy(xpath = "//div[contains(text(),'Class Average Scores: ')]/following-sibling::div[@class='class_test_overview_table_progress_bar_list']/ul/li/span[1]")
 	public List<WebElement> classcolouredStripOnStudentList;
-	
+
 	@FindBy(xpath = "//span[contains(text(),'Average Score:')]/ancestor::div[@class='standard-widget active-widget']//div[@class='class_test_overview_table_progress_bar_list']/ul/li")
 	public List<WebElement> avg_score_colouredStripOnStudentList;
 
@@ -843,7 +853,7 @@ public class HomePage {
 
 	@FindBy(xpath = "//div[@class='widget-base-sub-title text-center']/preceding-sibling::div[2]/span[not(@class)]")
 	public WebElement studentlistheader;
-	
+
 	@FindBy(xpath = "//div[@class='widget-base-sub-title text-center']/preceding-sibling::div[2]/span[not(@style)]")
 	public WebElement pot_header;
 
@@ -852,7 +862,7 @@ public class HomePage {
 
 	@FindBy(xpath = "//div[@class='widget-base-sub-title text-center']/preceding-sibling::div[1]/span[contains(@style,'text-align')]")
 	public WebElement studentlistsubheader;
-	
+
 	@FindBy(xpath = "//div[@class='widget-base-sub-title text-center']/preceding-sibling::div[1]/span[contains(@style,'text-align')]")
 	public WebElement pot_subheader;
 
@@ -870,12 +880,12 @@ public class HomePage {
 
 	@FindBy(xpath = "//div[@class='student-list-header']//div[@class='student-list-col']/span[@class='student-list-col-head-name']")
 	public List<WebElement> list_header_in_list;
-	
+
 	@FindBy(xpath = "//div[@class='student-list-body']/div[@class='student-list-row']/div[@class='student-list-col'][1]")
 	public List<WebElement> studentnameslistinstudentlist;
 
 	@FindBy(xpath = "//div[@class='student-list-body']/div[@class='student-list-row']/div[@class='student-list-col'][2]")
-	public List<WebElement> noofquestionsorsubmitdatelistinstudentlist;	
+	public List<WebElement> noofquestionsorsubmitdatelistinstudentlist;
 
 	@FindBy(xpath = "//div[@class='student-list-body']/div[@class='student-list-row']//span[contains(@class,'student-list')]")
 	public List<WebElement> studentscorelistinstudentlist;
@@ -963,7 +973,7 @@ public class HomePage {
 
 	@FindBy(xpath = "//span[@class='printIcon']//img")
 	public WebElement printIcon;
-	
+
 	@FindBy(xpath = "//span[@class='testScorePrint']//img")
 	public WebElement Test_score_detail_printIcon;
 
@@ -1202,5 +1212,104 @@ public class HomePage {
 
 	@FindBy(xpath = "//div[@class='bec_singleTest_multi_list_Data_row']//span[@class='bec_singleTest_singleQuestion_Number']")
 	public List<WebElement> single_question_in_question_column_on_table_on_sta;
+
+	/**TODO xpaths for Test Status **/
+	@FindBy(xpath = "//div[@class='testStatus_detail_body']")
+	public WebElement table_body_in_detail_in_ts;
 	
+	@FindBy(xpath = "//span[@class='infoIconBlock']")
+	public WebElement info_icon_in_ts;
+	
+	@FindBy(xpath = "//div[@class='infoIconTooltipBlockInr_TestStatus']")
+	public WebElement tool_tip_on_info_icon_in_ts;
+	
+	@FindBy(xpath = "//span[contains(@class,'testStatus_numberFontSize') and not(.='0')]")
+	public List<WebElement> test_status_number_in_summary_in_ts;
+	
+	@FindBy(xpath = "//span[contains(@class,'testStatus_summmaryBlock_table_header_col_name')]")
+	public List<WebElement> columns_header_in_summary_in_ts;
+	
+	@FindBy(xpath = "//div[@class='testStatus_summmaryBlock_table_body_col']//div")
+	public List<WebElement> test_names_in_Test_Name_Column;
+	
+	@FindBy(xpath = "//div[contains(@class,'testStatus_not_started')]//span")
+	public List<WebElement> not_started_numbers_in_not_started_column;
+	
+	@FindBy(xpath = "//div[contains(@class,'testStatus_in_progress')]//span")
+	public List<WebElement> in_progress_numbers_in_in_progress_column;
+	
+	@FindBy(xpath = "//div[contains(@class,'testStatus_need_graded')]//span")
+	public List<WebElement> needs_to_be_graded_numbers_in_needs_to_be_graded_column;
+	
+	@FindBy(xpath = "//div[contains(@class,'testStatus_complete')]//span")
+	public List<WebElement> complete_numbers_in_complete_column;
+	
+	@FindBy(xpath = "//span[contains(@class,'testStatus_numberFontSize testStatus_summmaryBlock_table_body_col_inr_grd_inr_span selectedTestStatus')]/ancestor::div[@class='testStatus_summmaryBlock_table_body']/preceding-sibling::div[@class='testStatus_summmaryBlock_table_header']//div[@class='testStatus_summmaryBlock_table_header_col_inr_grd testStatusActive']/span")
+	public WebElement column_header_in_summary_in_ts;
+	
+	@FindBy(xpath = "//span[contains(@class,'testStatus_numberFontSize testStatus_summmaryBlock_table_body_col_inr_grd_inr_span selectedTestStatus')]/ancestor::div[@class='testStatus_summmaryBlock_table_body_col_guard']/div[@class='testStatus_summmaryBlock_table_body_col']//div")
+	public WebElement selected_numbers_test_name_in_summary_in_ts;
+	
+	@FindBy(xpath = "//span[@class='testStatus_detail_status_title']/span[not(@class)]")
+	public WebElement detail_title_status_in_ts;
+	
+	@FindBy(xpath = "//span[@class='testStatus_detail_status_title']/span[@class]")
+	public WebElement detail_title_in_ts;
+	
+	@FindBy(xpath = "//span[contains(text(),'Test Name')]/following-sibling::div/span[contains(@class,'top')]")
+	public WebElement test_name_up_arrow;
+	
+	@FindBy(xpath = "//span[contains(text(),'Test Name')]/following-sibling::div/span[contains(@class,'bottom')]")
+	public WebElement test_name_down_arrow;
+	
+	@FindBy(xpath = "//span[contains(text(),'Not Started')]/following-sibling::div/span[contains(@class,'top')]")
+	public WebElement not_started_up_arrow;
+	
+	@FindBy(xpath = "//span[contains(text(),'Not Started')]/following-sibling::div/span[contains(@class,'bottom')]")
+	public WebElement not_started_down_arrow;
+	
+	@FindBy(xpath = "//span[contains(text(),'In Progress')]/following-sibling::div/span[contains(@class,'top')]")
+	public WebElement in_progress_up_arrow;
+	
+	@FindBy(xpath = "//span[contains(text(),'In Progress')]/following-sibling::div/span[contains(@class,'bottom')]")
+	public WebElement in_progress_down_arrow;
+	
+	@FindBy(xpath = "//span[contains(text(),'Needs to')]/following-sibling::div/span[contains(@class,'top')]")
+	public WebElement needs_tbg_up_arrow;
+	
+	@FindBy(xpath = "//span[contains(text(),'Needs to')]/following-sibling::div/span[contains(@class,'bottom')]")
+	public WebElement needs_tbg_down_arrow;
+	
+	@FindBy(xpath = "//span[contains(text(),'Complete')]/following-sibling::div/span[contains(@class,'top')]")
+	public WebElement complete_up_arrow;
+	
+	@FindBy(xpath = "//span[contains(text(),'Complete')]/following-sibling::div/span[contains(@class,'bottom')]")
+	public WebElement complete_down_arrow;
+	
+	@FindBy(xpath = "//div[@class='testStatus_detail_body_content_col' and contains(@style,'cursor')]")
+	public List<WebElement> school_names_in_school_Column;
+	
+	@FindBy(xpath = "//div[@class='testStatus_detail_body_content_col' and contains(@style,'text-align')]/following-sibling::div[1]")
+	public List<WebElement> start_dates_in_start_date_Column;
+	
+	@FindBy(xpath = "//div[@class='testStatus_detail_body_content_col' and contains(@style,'text-align')]/following-sibling::div[2]")
+	public List<WebElement> due_dates_in_due_date_Column;
+	
+	@FindBy(xpath = "//span[contains(@class,'testStatus_detail_head_col') and text()='School']/ancestor::span/following-sibling::span//span[contains(@class,'top')]")
+	public WebElement school_up_arrow;
+	
+	@FindBy(xpath = "//span[contains(@class,'testStatus_detail_head_col') and text()='School']/ancestor::span/following-sibling::span//span[contains(@class,'bottom')]")
+	public WebElement school_down_arrow;
+	
+	@FindBy(xpath = "//span[contains(@class,'testStatus_detail_head_col') and text()='Start Date']/ancestor::span/following-sibling::span//span[contains(@class,'top')]")
+	public WebElement start_date_up_arrow;
+	
+	@FindBy(xpath = "//span[contains(@class,'testStatus_detail_head_col') and text()='Start Date']/ancestor::span/following-sibling::span//span[contains(@class,'bottom')]")
+	public WebElement start_date_down_arrow;
+	
+	@FindBy(xpath = "//span[contains(@class,'testStatus_detail_head_col') and text()='Due Date']/ancestor::span/following-sibling::span//span[contains(@class,'top')]")
+	public WebElement due_date_up_arrow;
+	
+	@FindBy(xpath = "//span[contains(@class,'testStatus_detail_head_col') and text()='Due Date']/ancestor::span/following-sibling::span//span[contains(@class,'bottom')]")
+	public WebElement due_date_down_arrow;
 }
