@@ -52,7 +52,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class UtilityMethods {
 	static int ctr = 0, pot_ctr = 0, ch_ctr = 0, tso_ctr = 0, tsd_ctr = 0, sp_table_ctr = 0, list_on_sp_ctr = 0,
-			sta_ctr = 0, grouping_table_ctr = 0;
+			sta_ctr = 0, test_stts_ctr = 0, grouping_table_ctr = 0;
 	static HomePage homePage = PageFactory.initElements(Driver.webdriver, HomePage.class);
 
 	/**
@@ -424,12 +424,12 @@ public class UtilityMethods {
 			new Actions(Driver.webdriver).moveToElement(homePage.overviewtext).click().build().perform();
 			Thread.sleep(500);
 			try {
-				new Actions(Driver.webdriver).moveToElement(homePage.schoolnameoncontextheader).build().perform();
+				new Actions(Driver.webdriver).moveToElement(homePage.districtnameoncontextheader).build().perform();
 				Thread.sleep(1000);
-				if (homePage.schoolnameoncontextheader.getText().contains("...")) {
+				if (homePage.districtnameoncontextheader.getText().contains("...")) {
 					schoolName = homePage.tooltipofschoolnameontripledot.getText();
 				} else {
-					schoolName = homePage.schoolnameoncontextheader.getText();
+					schoolName = homePage.districtnameoncontextheader.getText();
 				}
 			} catch (Exception e) {
 				new Actions(Driver.webdriver).moveToElement(homePage.tripledotsoncontextheader).click().build()
@@ -491,7 +491,7 @@ public class UtilityMethods {
 				new Actions(Driver.webdriver).moveToElement(homePage.schoolnameoncontextheader).build().perform();
 				Thread.sleep(500);
 				if (homePage.schoolnameoncontextheader.getText().contains("...")) {
-					schoolName = homePage.tooltipofschoolnameontripledot.getText();
+					schoolName = homePage.tooltipofschoolnameoncontextheader.getText();
 				} else {
 					schoolName = homePage.schoolnameoncontextheader.getText();
 				}
@@ -524,23 +524,34 @@ public class UtilityMethods {
 	public static String getDistrictNameonUI() {
 		String districtName = "";
 		try {
-			new Actions(Driver.webdriver).moveToElement(homePage.tripledotsoncontextheader).click().build().perform();
-			Thread.sleep(1000);
-			new Actions(Driver.webdriver).moveToElement(homePage.districtnameontripledot).build().perform();
-			Thread.sleep(1000);
-			if (homePage.districtnameontripledot.getText().contains("...")) {
-				districtName = homePage.tooltipofdistrictnameontripledot.getText();
-			} else {
-				districtName = homePage.districtnameontripledot.getText();
+			try {
+				new Actions(Driver.webdriver).moveToElement(homePage.districtnameoncontextheader).build().perform();
+				Thread.sleep(500);
+				if (homePage.districtnameoncontextheader.getText().contains("...")) {
+					districtName = homePage.tooltipofdistrictnameoncontextheader.getText();
+				} else {
+					districtName = homePage.districtnameoncontextheader.getText();
+				}
+			} catch (Exception e) {
+				new Actions(Driver.webdriver).moveToElement(homePage.tripledotsoncontextheader).click().build()
+						.perform();
+				Thread.sleep(1000);
+				new Actions(Driver.webdriver).moveToElement(homePage.districtnameontripledot).build().perform();
+				Thread.sleep(500);
+				if (homePage.districtnameontripledot.getText().contains("...")) {
+					districtName = homePage.tooltipofdistrictnameontripledot.getText();
+				} else {
+					districtName = homePage.districtnameontripledot.getText();
+				}
 			}
-			new Actions(Driver.webdriver).moveToElement(homePage.overviewtext).click().build().perform();
+			new Actions(Driver.webdriver).moveByOffset(200, 200).build().perform();
 			Thread.sleep(500);
 		} catch (Exception e) {
 			processException(e);
 		}
 		return districtName;
 	}
-	
+
 	/**
 	 * This method is used to retrieve Grade value on UI
 	 * 
@@ -632,8 +643,6 @@ public class UtilityMethods {
 		}
 		return assessedWithTxt;
 	}
-
-	
 
 	/**
 	 * This method is used to retrieve Dates value on UI
@@ -741,6 +750,27 @@ public class UtilityMethods {
 				processException(new Exception());
 			}
 			wait_For_STA_Section_Load();
+		}
+	}
+
+	/**
+	 * This method is used to wait till the loading of detail section on test status
+	 */
+	public static void wait_For_Test_Status_Section_Load() {
+		boolean isSectionLoad = false;
+		try {
+			Assert.assertTrue(homePage.table_body_in_detail_in_ts.isDisplayed());
+			log.info("Test Status Section is now Displaying");
+			wait_For_Context_Header_Section();
+		} catch (Exception e) {
+			log.info("Waiting for Test Status Section");
+			IWait.implicit_wait(2);
+			test_stts_ctr++;
+			if (isSectionLoad == false && test_stts_ctr > 10) {
+				log.info("Test Status Section is not loaded in 20 seconds..");
+				processException(new Exception());
+			}
+			wait_For_Test_Status_Section_Load();
 		}
 	}
 
@@ -916,7 +946,7 @@ public class UtilityMethods {
 		try {
 			// check and delete pdf file if previously created and not deleted
 			Delete_PDF();
-			Thread.sleep(5000);
+			Thread.sleep(20000);
 			if (prnt_env.equals("local") && pdf_ctr == 0) {
 				for (int i = 0; i < 5; i++) {
 					robot.keyPress(KeyEvent.VK_TAB);
@@ -937,7 +967,7 @@ public class UtilityMethods {
 			Thread.sleep(500);
 			robot.keyPress(KeyEvent.VK_ENTER);
 			robot.keyRelease(KeyEvent.VK_ENTER);
-			Thread.sleep(3000);
+			Thread.sleep(10000);
 			robot.keyPress(KeyEvent.VK_ENTER);
 			robot.keyRelease(KeyEvent.VK_ENTER);
 			Thread.sleep(500);
@@ -1016,12 +1046,15 @@ public class UtilityMethods {
 	 * @return
 	 */
 	public static boolean isDatesSortedInDecendingOrder(List<Date> a) {
-		for (int i = 0; i < a.size() - 1; i++) {
-			if (a.get(i).getTime() >= a.get(i + 1).getTime()) {
-				return true;
+		if (a.size() == 1) {
+			return true;
+		} else {
+			for (int i = 0; i < a.size() - 1; i++) {
+				if (a.get(i).getTime() >= a.get(i + 1).getTime()) {
+					return true;
+				}
 			}
 		}
-
 		return false;
 	}
 
@@ -1032,9 +1065,13 @@ public class UtilityMethods {
 	 * @return
 	 */
 	public static boolean isDatesSortedInAscendingOrder(List<Date> a) {
-		for (int i = 0; i < a.size() - 1; i++) {
-			if (a.get(i).getTime() <= a.get(i + 1).getTime()) {
-				return true;
+		if (a.size() == 1) {
+			return true;
+		} else {
+			for (int i = 0; i < a.size() - 1; i++) {
+				if (a.get(i).getTime() <= a.get(i + 1).getTime()) {
+					return true;
+				}
 			}
 		}
 		return false;
