@@ -78,7 +78,13 @@ public class Driver {
 					Runtime.getRuntime().exec("kill chromedriver");
 				}
 				else {
-					Runtime.getRuntime().exec("taskkill /F /IM chromedriver.exe /T");					
+					Runtime.getRuntime().exec("taskkill /F /IM chromedriver.exe /T");
+					try {
+						Runtime.getRuntime().exec("taskkill /F /IM GoogleUpdate.exe /T");
+					}
+					catch(Exception e) {
+						
+					}
 				}
 			} catch (NullPointerException e) {
 				log.error("Browser already shut down.");
