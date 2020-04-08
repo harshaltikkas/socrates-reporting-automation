@@ -159,7 +159,7 @@ public class Sprint_Nine_Steps {
 			String print_env = p.getProperty("print_env");
 			List<String> details = new ArrayList<String>();
 			String school, classN, district, tests, dates, assessedWith, teacherN, studentName, grade;
-
+			new Actions(Driver.webdriver).moveToElement(homePage.overviewtext).click().build().perform();Thread.sleep(500);
 			// String testDataAssessedForGrade, grade;
 			school = UtilityMethods.getSchoolNameonUI();
 			district = UtilityMethods.getDistrictNameonUI();

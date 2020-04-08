@@ -702,8 +702,8 @@ public class UtilityMethods {
 			log.info("Waiting for List Section on Standard Performance Loading");
 			IWait.implicit_wait(2);
 			list_on_sp_ctr++;
-			if (isSectionLoad == false && list_on_sp_ctr > 10) {
-				log.info("List Section on Standard Performance is not loaded in 20 seconds..");
+			if (isSectionLoad == false && list_on_sp_ctr > 15) {
+				log.info("List Section on Standard Performance is not loaded in 30 seconds..");
 				processException(new Exception());
 			}
 			wait_For_Student_List_AND_OR_Class_List_Section_Load();
@@ -724,8 +724,8 @@ public class UtilityMethods {
 			log.info("wait for strands Text on table header After Apply Btn On Grouping Tab ...");
 			IWait.implicit_wait(2);
 			grouping_table_ctr++;
-			if (isSectionLoad == false && grouping_table_ctr > 10) {
-				log.info("Strands_Text_After_Apply_BtnOn_GroupingTab is not loaded in 20 seconds..");
+			if (isSectionLoad == false && grouping_table_ctr > 15) {
+				log.info("Strands_Text_After_Apply_BtnOn_GroupingTab is not loaded in 30 seconds..");
 				processException(new Exception());
 			}
 			wait_For_Strands_Text_After_Apply_BtnOn_GroupingTab();
@@ -745,8 +745,8 @@ public class UtilityMethods {
 			log.info("Waiting for Single Test Analysis Section");
 			IWait.implicit_wait(2);
 			sta_ctr++;
-			if (isSectionLoad == false && sta_ctr > 10) {
-				log.info("Single Test Analysis Section is not loaded in 20 seconds..");
+			if (isSectionLoad == false && sta_ctr > 15) {
+				log.info("Single Test Analysis Section is not loaded in 30 seconds..");
 				processException(new Exception());
 			}
 			wait_For_STA_Section_Load();
@@ -766,8 +766,8 @@ public class UtilityMethods {
 			log.info("Waiting for Test Status Section");
 			IWait.implicit_wait(2);
 			test_stts_ctr++;
-			if (isSectionLoad == false && test_stts_ctr > 10) {
-				log.info("Test Status Section is not loaded in 20 seconds..");
+			if (isSectionLoad == false && test_stts_ctr > 15) {
+				log.info("Test Status Section is not loaded in 30 seconds..");
 				processException(new Exception());
 			}
 			wait_For_Test_Status_Section_Load();
@@ -789,8 +789,8 @@ public class UtilityMethods {
 			log.info("Waiting for Performance Over Time Line Chart Loading");
 			IWait.implicit_wait(2);
 			pot_ctr++;
-			if (isSectionLoad == false && pot_ctr > 10) {
-				log.info("Perfomance Over Time Line Chart is not loaded in 20 seconds..");
+			if (isSectionLoad == false && pot_ctr > 15) {
+				log.info("Perfomance Over Time Line Chart is not loaded in 30 seconds..");
 				processException(new Exception());
 			}
 			wait_For_Performance_Over_Time_Line_Chart_Section_Load();
@@ -812,11 +812,39 @@ public class UtilityMethods {
 			IWait.implicit_wait(2);
 
 			tso_ctr++;
-			if (isSectionLoad == false && tso_ctr > 10) {
-				log.info("Test Score Overview Section is not loaded in 20 seconds..");
+			if (isSectionLoad == false && tso_ctr > 15) {
+				log.info("Test Score Overview Section is not loaded in 30 seconds..");
 				processException(new Exception());
 			}
 			wait_For_Test_Score_Overview_Section_Load();
+		}
+	}
+
+	/**
+	 * This method is used to wait till the loading of Test Score OverView section
+	 */
+	static int smmry_ctr = 0;
+
+	public static void wait_For_Summary_Tab_Section_Load() {
+		boolean isSectionLoad = false;
+		try {
+			Assert.assertTrue(homePage.summary_tab_standars_text.isDisplayed());
+			log.info("Summary Tab Section is now Displaying");
+			// wait_For_Context_Header_Section();
+			isSectionLoad = true;
+		} catch (Exception e) {
+			log.info("Waiting for Summary Tab Section Loading");
+			// IWait.implicit_wait(2);
+			try {
+				Thread.sleep(2000);
+			} catch (InterruptedException e1) {
+			}
+			smmry_ctr++;
+			if (isSectionLoad == false && smmry_ctr > 15) {
+				log.info("Summary Tab Section is not loaded in 30 seconds..");
+				processException(new Exception());
+			}
+			wait_For_Summary_Tab_Section_Load();
 		}
 	}
 
@@ -834,8 +862,8 @@ public class UtilityMethods {
 			log.info("Waiting for Test Score Detail Section Loading");
 			IWait.implicit_wait(2);
 			tsd_ctr++;
-			if (isSectionLoad == false && tsd_ctr > 10) {
-				log.info("Test Score Detail Section is not loaded in 20 seconds..");
+			if (isSectionLoad == false && tsd_ctr > 15) {
+				log.info("Test Score Detail Section is not loaded in 30 seconds..");
 				processException(new Exception());
 			}
 			wait_For_Test_Score_Detail_Section();
@@ -858,8 +886,8 @@ public class UtilityMethods {
 			log.info("Waiting for Standard Performance Table Section Loading");
 			IWait.implicit_wait(2);
 			sp_table_ctr++;
-			if (isSectionLoad == false && sp_table_ctr > 10) {
-				log.info("Standard Performance Table Section is not loaded in 20 seconds..");
+			if (isSectionLoad == false && sp_table_ctr > 15) {
+				log.info("Standard Performance Table Section is not loaded in 30 seconds..");
 				processException(new Exception());
 			}
 			wait_For_Standard_Performance_Table_Section();
@@ -947,7 +975,7 @@ public class UtilityMethods {
 			// check and delete pdf file if previously created and not deleted
 			Delete_PDF();
 			Thread.sleep(20000);
-			if (prnt_env.equals("local") && pdf_ctr == 0) {
+			if (pdf_ctr == 0) {
 				for (int i = 0; i < 5; i++) {
 					robot.keyPress(KeyEvent.VK_TAB);
 					robot.keyRelease(KeyEvent.VK_TAB);
@@ -959,15 +987,16 @@ public class UtilityMethods {
 				for (int i = 0; i < 6; i++) {
 					robot.keyPress(KeyEvent.VK_TAB);
 					robot.keyRelease(KeyEvent.VK_TAB);
+					Thread.sleep(500);
 				}
 			}
 			pdf_ctr++;
-			// press enter btn on print preview dialog and wait for 3 sec,enter for save the
+			// press enter btn on print preview dialog and wait for 5 sec,enter for save the
 			// file
 			Thread.sleep(500);
 			robot.keyPress(KeyEvent.VK_ENTER);
 			robot.keyRelease(KeyEvent.VK_ENTER);
-			Thread.sleep(10000);
+			Thread.sleep(5000);
 			robot.keyPress(KeyEvent.VK_ENTER);
 			robot.keyRelease(KeyEvent.VK_ENTER);
 			Thread.sleep(500);
@@ -996,8 +1025,8 @@ public class UtilityMethods {
 			log.info("Waiting for Context Header Section loading...");
 			IWait.implicit_wait(2);
 			ch_ctr++;
-			if (isSectionLoad == false && ch_ctr > 10) {
-				log.info("Context Header Section is not loaded in 20 seconds..");
+			if (isSectionLoad == false && ch_ctr > 15) {
+				log.info("Context Header Section is not loaded in 30 seconds..");
 				processException(new Exception());
 			}
 			wait_For_Context_Header_Section();
