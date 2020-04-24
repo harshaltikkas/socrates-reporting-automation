@@ -32,7 +32,7 @@ Feature: Fly In Menu Behaviour
     When User Click on Roster tab within the Universal Selector Tab
     Then User should be able to click on cancel button to close the Roster Tab
 
-  @Scenario4 @TC5
+  @Scenario4 @TC5 
   Scenario Outline: Test Tab shows the list of all tests and allows an individual test and or multiple tests
     Given User is on portal's login screen with username as "district_admin_one" and password as "password" and usertype as "realm_one"
     When User Click on Test tab within the Universal Selector Tab

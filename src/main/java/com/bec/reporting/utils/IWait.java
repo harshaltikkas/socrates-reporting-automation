@@ -25,8 +25,6 @@
  */
 package com.bec.reporting.utils;
 
-import java.time.Duration;
-import java.time.Instant;
 import java.util.concurrent.TimeUnit;
 import org.openqa.selenium.By;
 import org.openqa.selenium.StaleElementReferenceException;
@@ -64,20 +62,8 @@ public class IWait {
 	 */
 	public static void explicit_wait(WebDriver driver, WebElement el) {
 		try {
-			/*
-			 * new WebDriverWait(driver, 16).ignoring(StaleElementReferenceException.class)
-			 * .until(ExpectedConditions.visibilityOfElementLocated(toByVal(el)));
-			 */
-			Instant start = Instant.now();
-			log.info("Current Time after clicking on login button: " + java.time.LocalTime.now());
-			
 			new WebDriverWait(driver, 90).ignoring(StaleElementReferenceException.class)
 					.until(ExpectedConditions.visibilityOf(el));
-			
-			Instant end = Instant.now();
-			Duration timeElapsed = Duration.between(start, end);
-			log.info("Time taken for page load: "+ timeElapsed.toMillis() +" milliseconds");
-			
 		} catch (Exception e) {
 			log.info("failed to page load ...");
 			UtilityMethods.processException(e);
@@ -120,7 +106,7 @@ public class IWait {
 	public static boolean check_Absence_of_Element(WebElement el) {
 		try {
 			Assert.assertTrue(el.isDisplayed());
-			log.error(el.getText()+" is present");
+			log.error(el.getText() + " is present");
 			UtilityMethods.processException(new Exception());
 		} catch (Exception e) {
 

@@ -159,16 +159,17 @@ public class Sprint_Nine_Steps {
 			String print_env = p.getProperty("print_env");
 			List<String> details = new ArrayList<String>();
 			String school, classN, district, tests, dates, assessedWith, teacherN, studentName, grade;
-			new Actions(Driver.webdriver).moveToElement(homePage.overviewtext).click().build().perform();Thread.sleep(500);
+			new Actions(Driver.webdriver).moveToElement(homePage.overviewtext).click().build().perform();
+			Thread.sleep(500);
 			// String testDataAssessedForGrade, grade;
 			school = UtilityMethods.getSchoolNameonUI();
 			district = UtilityMethods.getDistrictNameonUI();
-			grade=UtilityMethods.getGradeNameonUI();
+			grade = UtilityMethods.getGradeNameonUI();
 			teacherN = UtilityMethods.getTeacherNameonUI();
 			classN = UtilityMethods.getClassNameonUI();
 			tests = UtilityMethods.getTestsNameonUI();
 			dates = UtilityMethods.getDatesonContextHeaderUI();
-			
+
 			if (Standard_Overview_Table_Steps.performanceMenuClicked
 					&& Standard_Overview_Table_Steps.underClassContext) {
 
@@ -214,7 +215,7 @@ public class Sprint_Nine_Steps {
 				details.add(dates);
 				details.add(assessedWith);
 				details.add(grade);
-				Assert.assertTrue(homePage.printIcon.isDisplayed());			
+				Assert.assertTrue(homePage.printIcon.isDisplayed());
 				homePage.printIcon.click();
 				Thread.sleep(500);
 				UtilityMethods.Save_PDF(robot, print_env);
@@ -318,34 +319,61 @@ public class Sprint_Nine_Steps {
 
 	@Then("^verify csv download functionality$")
 	public void verify_csv_download_functionality() throws Throwable {
+		File file = null;
 		try {
-			IWait.check_Absence_of_Element(homePage.takemeback);
 			String user = System.getProperty("user.name");
+			String folder = "C:\\Users\\" + user + "\\Downloads";
+			String fileName = null;
+			
+			String sp_list[] = new String[] { "District Name", "School Name", "Grade", "Teacher Name", "Class Name",
+					"Student Name", "Student ID(SIS)", "Test Type", "Test Name", "Test Submitted", "Test Graded",
+					"Question Numbers", "Points Earned", "Total Points", "Strand", "Standard", "DOK",
+					"Claims & Targets", "Topics", "Skills" };
+			String test_status[] = new String[] { "District Name", "School Name", "Grade", "Teacher Name", "Class Name",
+					"Student Name", "Student ID(SIS)", "Test Type", "Test Name", "Assignment Name", "Test Status",
+					"Start Date", "Due Date", "Submit Date" };
+			String test_scores[] = new String[] { "District Name", "School Name", "Grade", "Teacher Name", "Class Name",
+					"Student Name", "Student ID(SIS)", "Test Type", "Test Name", "Test Submitted", "Test Graded",
+					"Percent Score" };
+
+			//IWait.check_Absence_of_Element(homePage.takemeback);
+			
 			IWait.explicit_wait(Driver.webdriver, homePage.csvDownloadIcon);
 			homePage.csvDownloadIcon.click();
 			Thread.sleep(500);
-			File folder = new File("C:\\Users\\" + user + "\\Downloads");
-			File fileName = null;
+			IWait.explicit_wait(Driver.webdriver, homePage.csv_download_text_on_model);
+			Assert.assertTrue(homePage.csv_download_btn_on_model.isDisplayed());
+			Assert.assertTrue(homePage.csv_download_cancel_btn_on_model.isDisplayed());
+			homePage.csv_download_btn_on_model.click();
+			Thread.sleep(300);			
+			
 			if (Standard_Overview_Table_Steps.performanceMenuClicked) {
-				fileName = new File("standard_performance.csv");
-				UtilityMethods.wait_For_CSV_File_Download(folder + "\\" + fileName);
-			} else if (Standard_Overview_Table_Steps.testScoreMenuClicked) {
-				fileName = new File("test_scores.csv");
-				UtilityMethods.wait_For_CSV_File_Download(folder + "\\" + fileName);
+				fileName = "standard_performance.csv";
+				file = new File(folder + "\\" + fileName);
+				UtilityMethods.wait_For_CSV_File_Download(file);
+				UtilityMethods.Verify_Columns_Header_of_CSV(sp_list, file);
+			} 
+			else if (Standard_Overview_Table_Steps.testScoreMenuClicked) {
+				fileName = "test_scores.csv";
+				file = new File(folder + "\\" + fileName);
+				UtilityMethods.wait_For_CSV_File_Download(file);
+				UtilityMethods.Verify_Columns_Header_of_CSV(test_scores, file);
+			} 
+			else if (Standard_Overview_Table_Steps.test_status_Menu_Clicked) {
+				fileName = "test_status.csv";
+				file = new File(folder + "\\" + fileName);			
+				UtilityMethods.wait_For_CSV_File_Download(file);				
+				UtilityMethods.Verify_Columns_Header_of_CSV(test_status, file);
+				
 			}
-			log.info("After Downloading, deleting the file :" + folder + "\\" + fileName);
-			File f = new File(folder + "\\" + fileName);
-			if (f.exists()) {
-				f.delete();
-			} else {
-				log.info(f + " does not exists..");
-			}
+			log.info("After Downloading, deleting the file :" + file.getAbsoluteFile().getName());
+			UtilityMethods.Delete_CSV(file);
 
 		} catch (Exception e) {
 			UtilityMethods.processException(e);
 		}
 		CBTConfiguration.score = "pass";
-		log.info("Scenario verify csv download functionality" + " completed");
+		log.info("Scenario verify csv download functionality for "+file.getAbsoluteFile().getName()+" completed");
 		Standard_Overview_Table_Steps.resetStatus();
 	}
 

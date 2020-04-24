@@ -140,11 +140,6 @@ public class SprintSixAndSevenSteps {
 	public void verify_the_diamond_shape_stroke_on_the_x_axis_and_Color_changes_within_the_Line_Charts()
 			throws Throwable {
 		try {
-
-			/**
-			 * this try will execute in class context or student context ,standard
-			 * performance scenario
-			 */
 			if ((Standard_Overview_Table_Steps.underClassContext )
 					&& Standard_Overview_Table_Steps.performanceMenuClicked) {
 				//UtilityMethods.wait_For_Page_Section_Load();

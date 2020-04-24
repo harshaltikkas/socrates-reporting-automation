@@ -41,7 +41,7 @@ plugin = { "pretty",
 		   "json:target/cucumber-reports/json_report/Cucumber.json",
 		   "junit:target/cucumber-reports/junit_xml_report/Cucumber.xml"
 		   },
-tags = { "@Feature" }, 
+tags = { "@MyTest" }, 
 monochrome = true)
 
 public class TestRunner {

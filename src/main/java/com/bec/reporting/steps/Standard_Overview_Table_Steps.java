@@ -52,7 +52,8 @@ public class Standard_Overview_Table_Steps {
 	 */
 	static HomePage homePage = PageFactory.initElements(Driver.webdriver, HomePage.class);
 	public static boolean performanceMenuClicked = false, underClassContext = false, testScoreMenuClicked = false,
-			underStudentContext = false, underSchoolContext = false, underDistrictContext = false;
+			underStudentContext = false, underSchoolContext = false, underDistrictContext = false,
+			test_status_Menu_Clicked = false;
 	static String headerOnToolTip, subHeaderOnToolTip;
 	public static JavascriptExecutor jse = (JavascriptExecutor) Driver.webdriver;
 
@@ -63,6 +64,7 @@ public class Standard_Overview_Table_Steps {
 		Standard_Overview_Table_Steps.testScoreMenuClicked = false;
 		Standard_Overview_Table_Steps.underStudentContext = false;
 		Standard_Overview_Table_Steps.underDistrictContext = false;
+		Standard_Overview_Table_Steps.test_status_Menu_Clicked=false;
 	}
 
 	/**
@@ -657,7 +659,7 @@ public class Standard_Overview_Table_Steps {
 		UtilityMethods.wait_For_Test_Score_Detail_Section();
 		Standard_Overview_Table_Steps.testScoreMenuClicked = true;
 		Standard_Overview_Table_Steps.underClassContext = true;
-		
+
 	}
 
 	/**
@@ -965,7 +967,7 @@ public class Standard_Overview_Table_Steps {
 		try {
 			UtilityMethods.wait_For_Context_Header_Section();
 			Assert.assertTrue(homePage.activestudentmenu.getAttribute("class").contains("active"));
-		} catch (Exception e) {			
+		} catch (Exception e) {
 			jse.executeScript("arguments[0].click();", homePage.studentmenu);
 			Thread.sleep(3000);
 		}

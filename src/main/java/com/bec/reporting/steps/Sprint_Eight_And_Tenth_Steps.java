@@ -249,9 +249,9 @@ public class Sprint_Eight_And_Tenth_Steps {
 			.perform();
 			Thread.sleep(1000);
 			Assert.assertTrue(homePage.testtypedropdown.getText().equals("Custom (" + (testTypeListSize - 2) + ")"));
-			String TestResultCount = homePage.totaltestcount.getText();
-			String noOfTestSelected = TestResultCount.substring(TestResultCount.lastIndexOf(" ") + 1,
-					TestResultCount.indexOf("/"));
+			String testResultCount = homePage.totaltestcount.getText();
+			String noOfTestSelected = testResultCount.substring(testResultCount.lastIndexOf(" ") + 1,
+					testResultCount.indexOf("/"));
 			UtilityMethods.scrollPageDown(Driver.webdriver, 5);Thread.sleep(500);
 			homePage.testapplybtn.click();
 			Thread.sleep(3000);
@@ -282,9 +282,9 @@ public class Sprint_Eight_And_Tenth_Steps {
 			.perform();
 			Thread.sleep(1000);
 			Assert.assertTrue(homePage.testtypedropdown.getText().equals(testTypeName));
-			TestResultCount = homePage.totaltestcount.getText();
-			noOfTestSelected = TestResultCount.substring(TestResultCount.lastIndexOf(" ") + 1,
-					TestResultCount.indexOf("/"));
+			testResultCount = homePage.totaltestcount.getText();
+			noOfTestSelected = testResultCount.substring(testResultCount.lastIndexOf(" ") + 1,
+					testResultCount.indexOf("/"));
 
 			// called logic for single or multiple test
 			String testName = "";

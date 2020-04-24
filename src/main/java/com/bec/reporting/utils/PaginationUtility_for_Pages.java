@@ -41,8 +41,9 @@ public class PaginationUtility_for_Pages {
 
 	/* Paginator under List Under Standard Performance */
 	public static boolean checkPaginator_on_list_under_standard_performance() {
-		try {// scroll down 18 times
+		try {
 			new Actions(Driver.webdriver).moveToElement(homePage.paginator_on_list_under_sp).build().perform();
+			log.info("Paginator Found in List under Standard Performance");
 			return true;
 		} catch (Exception e) {
 			log.info("Paginator Not Found in List under Standard Performance");
@@ -74,8 +75,9 @@ public class PaginationUtility_for_Pages {
 
 	/* POT Paginator under class Under Standard Performance */
 	public static boolean checkPaginator_on_pot_under_standard_performance() {
-		try {// scroll 7 times down
+		try {
 			new Actions(Driver.webdriver).moveToElement(homePage.paginator_on_pot_under_sp).build().perform();
+			log.info("Paginator Found in Performance Over Time under Standard Performance");
 			return true;
 		} catch (Exception e) {
 			log.info("Paginator Not Found in POT under Standard Performance");
@@ -107,8 +109,9 @@ public class PaginationUtility_for_Pages {
 
 	/* Paginator on Test Score Detail Under Test Score */
 	public static boolean checkPaginator_on_tsd() {
-		try {// scroll down 17 times
+		try {
 			new Actions(Driver.webdriver).moveToElement(homePage.paginator_on_list_under_sp).build().perform();
+			log.info("Paginator Found in Test Score Detail");
 			return true;
 		} catch (Exception e) {
 			log.info("Paginator Not Found in Test Score Detail");
@@ -139,8 +142,9 @@ public class PaginationUtility_for_Pages {
 	// =======================================================================================================
 	/* TSOT Paginator under Test Score Under Class */
 	public static boolean checkPaginator_on_tsot() {
-		try {// scroll 5 times down
+		try {
 			new Actions(Driver.webdriver).moveToElement(homePage.paginator_on_tsot).build().perform();
+			log.info("Paginator Found on Test Score Over Time");
 			return true;
 		} catch (Exception e) {
 			log.info("Paginator Not Found on Test Score Over Time");
@@ -171,9 +175,10 @@ public class PaginationUtility_for_Pages {
 	// =======================================================================================================
 	/* Paginator on Test Score Overview under_Test Score Tab_under_student */
 	public static boolean checkPaginator_on_tso_under_ts_under_student() {
-		try {// scroll down 8 times
+		try {
 			new Actions(Driver.webdriver).moveToElement(homePage.paginator_on_tso_under_ts_under_student).build()
 					.perform();
+			log.info("Paginator Found on Test Score Overview ");
 			return true;
 		} catch (Exception e) {
 			log.info("Paginator Not Found on Test Score Overview ");
@@ -204,8 +209,9 @@ public class PaginationUtility_for_Pages {
 	// =======================================================================================================
 	/* Paginator on Single Test Analysis */
 	public static boolean checkPaginator_on_sta() {
-		try {// scroll down 8 times
+		try {
 			new Actions(Driver.webdriver).moveToElement(homePage.paginator_on_sta).build().perform();
+			log.info("Paginator Found on Single Test Analysis");
 			return true;
 		} catch (Exception e) {
 			log.info("Paginator Not Found on Single Test Analysis");
@@ -233,6 +239,40 @@ public class PaginationUtility_for_Pages {
 		}
 	}
 
+	// =======================================================================================================
+		/** Paginator on Summary on Test Status**/
+		public static boolean checkPaginator_on_summary_in_Test_Status() {
+			try {
+				new Actions(Driver.webdriver).moveToElement(homePage.paginator_on_summary_in_ts).build().perform();
+				log.info("Paginator Found on Summary in Test Status");
+				return true;
+			} catch (Exception e) {
+				log.info("Paginator Not Found on Summary in Test Status");
+				return false;
+			}
+		}
+
+		public static boolean check_Enabled_Right_Arrow_on_Paginator_on_summary_in_Test_Status() {
+			try {
+				homePage.enabled_right_arrow_on_paginator_on_summary_in_ts.isDisplayed();
+				return true;
+			} catch (Exception e) {
+				log.info("Enabled Right Arrow on Paginator is not found in Summary in Test Status");
+				return false;
+			}
+		}
+
+		public static void clicking_on_enabled_right_Arrow_of_paginator_on_summary_in_Test_Status() {
+			try {
+				homePage.enabled_right_arrow_on_paginator_on_summary_in_ts.click();
+				Thread.sleep(500);
+			} catch (Exception e) {
+				log.error("Erron in clicking on Right Arrow of Paginator in Summary in Test Status");
+				UtilityMethods.processException(e);
+			}
+		}
+
+	
 	// =======================================================================================================
 	/** This method is used to click on first circle of paginator */
 	public static void clicking_on_first_circle_of_paginator(List<WebElement> list_of_circles) {
