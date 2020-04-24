@@ -25,6 +25,8 @@
  */
 package com.bec.reporting.steps;
 
+import java.time.Duration;
+import java.time.Instant;
 import java.util.Properties;
 import org.junit.Assert;
 import org.openqa.selenium.By;
@@ -33,6 +35,7 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.Select;
 import com.bec.reporting.pageobjects.HomePage;
+import com.bec.reporting.utils.API_Connection;
 import com.bec.reporting.utils.CBTConfiguration;
 import com.bec.reporting.utils.Driver;
 import com.bec.reporting.utils.FileRead;
@@ -55,6 +58,7 @@ public class FlyInMenuBehaviourSteps {
 	public static String toolTipText = "";
 	public static String classNameonCH, schoolNameonCH, teacherNameonCH, gradeNameonCH, studentTextonCH;
 	public static String uname, passwd, realm;
+	public static String token;
 
 	/**
 	 * method used to launch the browser with the url and provide the
@@ -92,7 +96,13 @@ public class FlyInMenuBehaviourSteps {
 			select.selectByValue(realm);
 			Thread.sleep(1000);
 			homePage.loginbtn.click();
+			Instant start = Instant.now();
+			log.info("Current Time after clicking on login button: " + java.time.LocalTime.now());
 			IWait.explicit_wait(Driver.webdriver, homePage.studentmenu);
+			Instant end = Instant.now();
+			Duration timeElapsed = Duration.between(start, end);
+			log.info("Time taken for page load: " + timeElapsed.toMillis()/1000 + " seconds");
+			token=API_Connection.getToken();
 		} catch (Exception e) {
 			log.error("failed to login");
 			UtilityMethods.processException(e);
@@ -490,9 +500,9 @@ public class FlyInMenuBehaviourSteps {
 				UtilityMethods.scrollPageDown(Driver.webdriver, 6);
 				Thread.sleep(500);
 				new Actions(Driver.webdriver).moveToElement(homePage.testapplybtn).click().build().perform();
-				Thread.sleep(3000);
+				UtilityMethods.wait_For_Student_List_AND_OR_Class_List_Section_Load();
 				UtilityMethods.scrollPageUp(Driver.webdriver);
-				Thread.sleep(2000);
+				Thread.sleep(500);
 				new Actions(Driver.webdriver).moveToElement(homePage.testsNameoncontextheader).build().perform();
 				Assert.assertTrue(selectedTestName.equals(homePage.tooltipoftestnameoncontextheader.getText()));
 				break;
@@ -505,7 +515,7 @@ public class FlyInMenuBehaviourSteps {
 					Thread.sleep(500);
 					noOfSelectedTest++;
 				}
-				homePage.testapplybtn.click();				
+				homePage.testapplybtn.click();
 				UtilityMethods.scrollPageUp(Driver.webdriver);
 				UtilityMethods.wait_For_Context_Header_Section();
 				Assert.assertTrue(

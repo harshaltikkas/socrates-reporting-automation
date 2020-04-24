@@ -28,8 +28,12 @@ package com.bec.reporting.utils;
 import java.awt.Robot;
 import java.awt.event.KeyEvent;
 import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -47,6 +51,7 @@ import com.bec.reporting.pageobjects.HomePage;
 import com.bec.reporting.steps.Standard_Overview_Table_Steps;
 import com.itextpdf.text.pdf.PdfReader;
 import com.itextpdf.text.pdf.parser.PdfTextExtractor;
+import com.opencsv.CSVReader;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -774,6 +779,30 @@ public class UtilityMethods {
 		}
 	}
 
+	static int test_stts_ctr_sc = 0;
+
+	/**
+	 * This method is used to wait till the loading of detail section on test status
+	 * under student context
+	 */
+	public static void wait_For_Test_Status_Section_Load_under_student_context() {
+		boolean isSectionLoad = false;
+		try {
+			Assert.assertTrue(homePage.table_body_in_ts_under_student_context.isDisplayed());
+			log.info("Test Status Section under student context is now Displaying");
+			wait_For_Context_Header_Section();
+		} catch (Exception e) {
+			log.info("Waiting for Test Status Section under student context");
+			IWait.implicit_wait(2);
+			test_stts_ctr_sc++;
+			if (isSectionLoad == false && test_stts_ctr_sc > 15) {
+				log.info("Test Status Section under student context is not loaded in 30 seconds..");
+				processException(new Exception());
+			}
+			wait_For_Test_Status_Section_Load_under_student_context();
+		}
+	}
+
 	/**
 	 * This method is used to wait till the loading of Performance Over Time Line
 	 * Chart section
@@ -821,7 +850,7 @@ public class UtilityMethods {
 	}
 
 	/**
-	 * This method is used to wait till the loading of Test Score OverView section
+	 * This method is used to wait till the Summary section
 	 */
 	static int smmry_ctr = 0;
 
@@ -830,11 +859,9 @@ public class UtilityMethods {
 		try {
 			Assert.assertTrue(homePage.summary_tab_standars_text.isDisplayed());
 			log.info("Summary Tab Section is now Displaying");
-			// wait_For_Context_Header_Section();
 			isSectionLoad = true;
 		} catch (Exception e) {
 			log.info("Waiting for Summary Tab Section Loading");
-			// IWait.implicit_wait(2);
 			try {
 				Thread.sleep(2000);
 			} catch (InterruptedException e1) {
@@ -845,6 +872,32 @@ public class UtilityMethods {
 				processException(new Exception());
 			}
 			wait_For_Summary_Tab_Section_Load();
+		}
+	}
+
+	/**
+	 * This method is used to wait till the loading of comparison section
+	 */
+	static int cmprson_ctr = 0;
+
+	public static void wait_For_Comparison_Tab_Section_Load() {
+		boolean isSectionLoad = false;
+		try {
+			Assert.assertTrue(homePage.comparison_tab_tests_text.isDisplayed());
+			log.info("Comparison Tab Section is now Displaying");
+			isSectionLoad = true;
+		} catch (Exception e) {
+			log.info("Waiting for Comparison Tab Section Loading");
+			try {
+				Thread.sleep(2000);
+			} catch (InterruptedException e1) {
+			}
+			cmprson_ctr++;
+			if (isSectionLoad == false && cmprson_ctr > 15) {
+				log.info("Comparison Tab Section is not loaded in 30 seconds..");
+				processException(new Exception());
+			}
+			wait_For_Comparison_Tab_Section_Load();
 		}
 	}
 
@@ -894,12 +947,19 @@ public class UtilityMethods {
 		}
 	}
 
-	public static void wait_For_CSV_File_Download(String file) throws Exception {
-		log.info("Waiting for CSV file download...");
+	public static void wait_For_CSV_File_Download(File file) throws Exception {
+		/*
+		 * Robot robot=new Robot(); try { do {
+		 * log.info("Waiting for CSV File Save Dialog..."); Thread.sleep(2000); } while
+		 * (homePage.csvDownloadRefreshIcon.isDisplayed()); } catch (Exception e) {
+		 * log.info("CSV file save dialog box is showing"); } Thread.sleep(2000);
+		 * robot.keyPress(KeyEvent.VK_ENTER); Thread.sleep(500);
+		 * robot.keyRelease(KeyEvent.VK_ENTER); Thread.sleep(2000);
+		 */
+		log.info("Waiting for CSV file to be saved...");
 		Thread.sleep(2000);
-		File f = new File(file);
-		if (f.exists()) {
-			log.info("csv file downloaded successfully....");
+		if (file.exists()) {
+			log.info(file.getAbsoluteFile().getName() + " is saved successfully..");
 		} else {
 			wait_For_CSV_File_Download(file);
 		}
@@ -922,6 +982,68 @@ public class UtilityMethods {
 			} while (el.isDisplayed() && count <= 10);
 		} catch (Exception e) {
 			log.info(str + " Refresh Icon Display off");
+		}
+	}
+
+	// Utility which converts CSV to ArrayList using Split Operation
+	public static ArrayList<String> crunchifyCSVtoArrayList(String crunchifyCSV) {
+		ArrayList<String> crunchifyResult = new ArrayList<String>();
+
+		if (crunchifyCSV != null) {
+			String[] splitData = crunchifyCSV.split("\\s*,\\s*");
+			for (int i = 0; i < splitData.length; i++) {
+				if (!(splitData[i] == null) || !(splitData[i].length() == 0)) {
+					crunchifyResult.add(splitData[i].trim());
+				}
+			}
+		}
+
+		return crunchifyResult;
+	}
+	/*
+	 * This method is used to verify the columns Header with the existing header
+	 * list
+	 */
+
+	public static void Verify_Columns_Header_of_CSV(String[] details, File csv_File_Name) {
+		CSVReader csvReader = null;
+		try {
+			// Create an object of filereader
+			// class with CSV file as a parameter.
+			FileReader filereader = new FileReader(csv_File_Name);
+			// create csvReader object passing
+			// file reader as a parameter
+			csvReader = new CSVReader(filereader);
+			String[] nextRecord;
+
+			// we are going to read data line by line
+
+			while ((nextRecord = csvReader.readNext()) != null) {
+				for (int i = 1; i < nextRecord.length; i++) {
+					Assert.assertTrue(details[i].equals(nextRecord[i].trim()));
+				}
+				log.info("Headers matched with the csv file...");
+				break;
+			}
+		} catch (Exception e) {
+			log.error("Headers not matched with the list...");
+			processException(e);
+		} finally {
+			try {
+				if (csvReader != null)
+					csvReader.close();
+			} catch (IOException e) {
+				log.error("Error in reading csv file");
+				processException(e);
+			}
+		}
+	}
+
+	/** This method is used to delete the csv file in download folder **/
+	public static void Delete_CSV(File f) {
+		if (f.exists()) {
+			log.info("Deleting the file: " + f.getAbsoluteFile().getName());
+			f.delete();
 		}
 	}
 
@@ -1159,5 +1281,61 @@ public class UtilityMethods {
 		} catch (Exception e) {
 			processException(e);
 		}
+	}
+
+	public static void select_Grade_Four_From_Roster() {
+		try {
+			homePage.rostertab.click();
+			Thread.sleep(500);
+			Thread.sleep(500);
+			homePage.gradedropdownbtn.click();
+			Thread.sleep(500);
+			Driver.webdriver.findElement(By.xpath("//li[.='Grade 4']")).click();
+			Thread.sleep(500);
+			homePage.rosterapplybtn.click();
+			UtilityMethods.wait_For_Student_List_AND_OR_Class_List_Section_Load();
+		} catch (Exception e) {
+			processException(e);
+		}
+	}
+
+	/** This method is used to get all the test names of test tab **/
+	public static LinkedList<String> getAllTestNamesOfTestTab() {
+		LinkedList<String> testNames = new LinkedList<String>();
+		try {
+			// checking for paginator
+			if (PaginationUtility_for_Universal_Tab.checkPaginator_on_test_tab()) {
+				// this lool will execute for the no. of circle available on paginator
+				for (int i = 0; i < homePage.testpaginationcirclelist.size(); i++) {
+					PaginationUtility_for_Universal_Tab.click_On_Indexed_Circle_Of_Paginator(i);
+					Assert.assertTrue(homePage.testnameslist_on_test_tab.size() <= 10);
+					for (int j = 0; j < homePage.testnameslist_on_test_tab.size(); j++) {
+						testNames.add(homePage.testnameslist_on_test_tab.get(j).getText());
+					}
+				}
+				// check for right arrow enabled and click on it and click on last circle from
+				// left and validate
+				do {
+					if (PaginationUtility_for_Universal_Tab.check_Enabled_Right_Arrow_On_Paginator_On_Test_Tab()) {
+						PaginationUtility_for_Universal_Tab.click_On_Enabled_Right_Arrow_Of_Paginator_On_Test_Tab();
+						PaginationUtility_for_Universal_Tab.click_On_Last_Circle_Of_Paginator();
+						Assert.assertTrue(homePage.testnameslist_on_test_tab.size() <= 10);
+						for (int j = 0; j < homePage.testnameslist_on_test_tab.size(); j++) {
+							testNames.add(homePage.testnameslist_on_test_tab.get(j).getText());
+						}
+					}
+				} while (PaginationUtility_for_Universal_Tab.check_Enabled_Right_Arrow_On_Paginator_On_Test_Tab());
+			} else {
+				// when paginator is not found
+				Assert.assertTrue(homePage.testnameslist_on_test_tab.size() <= 10);
+				for (int j = 0; j < homePage.testnameslist_on_test_tab.size(); j++) {
+					testNames.add(homePage.testnameslist_on_test_tab.get(j).getText());
+				}
+			}
+		} catch (Exception e) {
+			log.error("Error in retreive Test Names on Test Tab");
+			processException(e);
+		}
+		return testNames;
 	}
 }

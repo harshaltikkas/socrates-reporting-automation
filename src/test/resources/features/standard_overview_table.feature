@@ -3,7 +3,7 @@ Feature: Standard Overview Table and Chart
 
   ##STORY 5a) Standards in Achievement Bands and Y axis / Calculating Cells
   ##STORY 6c) Student and Class level and STORY 7d)
-  @Scenario36 @TC_0001 @TC_0002 @TC_0003 @TC_0005 @TC_0006 @TC_0007 @TC_0008 @TC_0009 @TC_00010
+  @Scenario36 @TC_0001 @TC_0002 @TC_0003 @TC_0005 @TC_0006 @TC_0007 @TC_0008 @TC_0009 @TC_00010 
   Scenario: Verify The Y-axis UI representation
     Given User is on portal's login screen with username as "school_admin_one" and password as "password" and usertype as "realm_one"
     When User Click on Standard Performance tab within the Class Context
@@ -39,13 +39,13 @@ Feature: Standard Overview Table and Chart
   @Scenario38 @TC_0001 @TC_0002 @TC_0003
   Scenario: Verify Standard table related data on Performance over time chart
     Given User is on portal's login screen with username as "school_admin_one" and password as "password" and usertype as "realm_one"
-    #When User Click on Standard Performance tab within the Class Context
-    #And Click on the icon to maximize the Chart
+    When User Click on Standard Performance tab within the Class Context
+    And Click on the icon to maximize the Chart
     ##TC-1 failing as info icon removed from UI on performance over time button
-    #Then The user should be able to see the Chart header and the icon next to it can be selected and click on same icon to minimize the Chart
+    Then The user should be able to see the Chart header and the icon next to it can be selected and click on same icon to minimize the Chart
     ##TC-2
     When User Click on Standard Performance tab within the Class Context
-    #And Verify that the chart header should be the first alphabetical strand by defaultly
+    And Verify that the chart header should be the first alphabetical strand by defaultly
     ##TC-3
     And Select the Strand within the Strand header from the Standard table and selected strand becomes the header of the Line Chart
 

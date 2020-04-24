@@ -20,7 +20,6 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class API_Connection {
 	public static Properties prop;
-	public static String token = API_Connection.getToken();
 
 	/*
 	 * API Methods Here
@@ -44,7 +43,7 @@ public class API_Connection {
 
 			/*String payload = "{\n" + "  \"username\": \"Failly353175\",\n" + "  \"password\": \"password\",\n"
 					+ "  \"realm\": \"sulphur\"\n" + "}";*/
-
+		
 			String apiUrl = prop.getProperty("atlantis_api_url");
 			Response response = RestAssured.given().header("Content-Type", "application/json").body(payload)
 					.post(apiUrl);
@@ -58,8 +57,34 @@ public class API_Connection {
 			log.error(e.getMessage());
 			UtilityMethods.processException(e);
 		}
-		log.info("Retrived Access Token Successfully");
+		log.info("Retrived Access Token Successfully");	
 		return token;
+	}
+	
+	/**
+	 * This method is used to get District ID based on default api
+	 * 
+	 * @return
+	 */
+	public static String getUserRole() {
+		String user_role="";
+		try {
+			prop = FileRead.readProperties();		
+			String apiUrl = prop.getProperty("apiURL") + "/user/skus?values=X58691,X69071,X70225";
+			Response response = RestAssured.given().header("Authorization", "Bearer " + FlyInMenuBehaviourSteps.token)
+					.contentType("application/json").get(apiUrl);
+			 
+			if (response.getStatusCode() != 200) {
+				log.info("Error occurred in getting User Role. status code : " + response.getStatusCode());
+				return null;
+			} else {
+				user_role =	(String) new JsonPath(response.asString()).get("role");
+			}
+		} catch (Exception e) {
+			log.error("Unable to get logged in user role...");
+			UtilityMethods.processException(e);
+		}
+		return user_role;
 	}
 
 	/**
@@ -73,7 +98,7 @@ public class API_Connection {
 			prop = FileRead.readProperties();
 			String payload = "{\"termId\":" + "null" + ",\"isDistrictEnabled\":" + true + "}";
 			String apiUrl = prop.getProperty("apiURL") + "/universalselector/default";
-			Response response = RestAssured.given().header("Authorization", "Bearer " + API_Connection.token)
+			Response response = RestAssured.given().header("Authorization", "Bearer " + FlyInMenuBehaviourSteps.token)
 					.contentType("application/json").body(payload).post(apiUrl);
 			if (response.getStatusCode() != 200) {
 				log.info("Error occurred in getDistrictId. status code : " + response.getStatusCode());
@@ -99,7 +124,7 @@ public class API_Connection {
 		try {
 			prop = FileRead.readProperties();
 			String apiUrl = prop.getProperty("apiURL") + "/universalselector/datetab";
-			Response response = RestAssured.given().header("Authorization", "Bearer " + API_Connection.token)
+			Response response = RestAssured.given().header("Authorization", "Bearer " + FlyInMenuBehaviourSteps.token)
 					.get(apiUrl);
 			if (response.getStatusCode() != 200) {
 				log.info("Error occurred. status code : " + response.getStatusCode());
@@ -127,7 +152,7 @@ public class API_Connection {
 		try {
 			prop = FileRead.readProperties();
 			String apiUrl = prop.getProperty("apiURL") + "/schools?page=0&size=10000&direction=ASC";
-			Response response = RestAssured.given().header("Authorization", "Bearer " + API_Connection.token)
+			Response response = RestAssured.given().header("Authorization", "Bearer " + FlyInMenuBehaviourSteps.token)
 					.get(apiUrl);
 			if (response.getStatusCode() != 200) {
 				log.info("Error occurred. status code : " + response.getStatusCode());
@@ -156,7 +181,7 @@ public class API_Connection {
 		try {
 			prop = FileRead.readProperties();
 			String apiUrl = prop.getProperty("apiURL") + "/schools?page=0&size=10000&direction=ASC";
-			Response response = RestAssured.given().header("Authorization", "Bearer " + API_Connection.token)
+			Response response = RestAssured.given().header("Authorization", "Bearer " + FlyInMenuBehaviourSteps.token)
 					.get(apiUrl);
 			if (response.getStatusCode() != 200) {
 				log.info("Error occurred. status code : " + response.getStatusCode());
@@ -187,7 +212,7 @@ public class API_Connection {
 			prop = FileRead.readProperties();
 			String apiUrl = prop.getProperty("apiURL") + "/classes?schoolId=" + schoolId + "&districtId="
 					+ getDistrictId();
-			Response response = RestAssured.given().header("Authorization", "Bearer " + API_Connection.token)
+			Response response = RestAssured.given().header("Authorization", "Bearer " + FlyInMenuBehaviourSteps.token)
 					.get(apiUrl);
 			if (response.getStatusCode() != 200) {
 				log.info("Error occurred. status code : " + response.getStatusCode());
@@ -252,7 +277,7 @@ public class API_Connection {
 			prop = FileRead.readProperties();
 			String apiUrl = prop.getProperty("apiURL") + "/students?schoolId=" + schoolId + "&districtId="
 					+ getDistrictId() + "&classId=" + classId;
-			Response response = RestAssured.given().header("Authorization", "Bearer " + API_Connection.token)
+			Response response = RestAssured.given().header("Authorization", "Bearer " + FlyInMenuBehaviourSteps.token)
 					.get(apiUrl);
 			if (response.getStatusCode() != 200) {
 				log.info("Error occurred. status code : " + response.getStatusCode());
@@ -284,7 +309,7 @@ public class API_Connection {
 			prop = FileRead.readProperties();
 			String apiUrl = prop.getProperty("apiURL") + "/classes?schoolId=" + schoolId + "&districtId="
 					+ getDistrictId();
-			Response response = RestAssured.given().header("Authorization", "Bearer " + API_Connection.token)
+			Response response = RestAssured.given().header("Authorization", "Bearer " + FlyInMenuBehaviourSteps.token)
 					.get(apiUrl);
 			if (response.getStatusCode() != 200) {
 				log.info("Error occurred. status code : " + response.getStatusCode());
@@ -314,7 +339,7 @@ public class API_Connection {
 			prop = FileRead.readProperties();
 			String apiUrl = prop.getProperty("apiURL") + "/students?schoolId=" + schoolId + "&districtId="
 					+ getDistrictId + "&classId=" + classId;
-			Response response = RestAssured.given().header("Authorization", "Bearer " + API_Connection.token)
+			Response response = RestAssured.given().header("Authorization", "Bearer " + FlyInMenuBehaviourSteps.token)
 					.get(apiUrl);
 			if (response.getStatusCode() != 200) {
 				log.info("Error occurred. status code : " + response.getStatusCode());
@@ -346,7 +371,7 @@ public class API_Connection {
 			prop = FileRead.readProperties();
 			String apiUrl = prop.getProperty("apiURL") + "/students?schoolId=" + schoolId + "&districtId="
 					+ getDistrictId() + "&classId=" + classId;
-			Response response = RestAssured.given().header("Authorization", "Bearer " + API_Connection.token)
+			Response response = RestAssured.given().header("Authorization", "Bearer " + FlyInMenuBehaviourSteps.token)
 					.get(apiUrl);
 			if (response.getStatusCode() != 200) {
 				log.info("Error occurred. status code : " + response.getStatusCode());
@@ -385,7 +410,7 @@ public class API_Connection {
 			stndrd_id = stndrd_id.substring(0, stndrd_id.length() - 1);
 			String payload = "{\n \"ids\":[ " + stndrd_id + "]}";
 			String apiUrl = prop.getProperty("apollo_api_URL") + "/tags/ids";
-			Response response = RestAssured.given().header("Authorization", "Bearer " + API_Connection.token)
+			Response response = RestAssured.given().header("Authorization", "Bearer " + FlyInMenuBehaviourSteps.token)
 					.contentType("application/json").body(payload).post(apiUrl);
 
 			if (response.getStatusCode() != 200) {
@@ -426,7 +451,7 @@ public class API_Connection {
 		try {
 			prop = FileRead.readProperties();
 			String apiUrl = prop.getProperty("apollo_api_URL") + "/standards/metadata";
-			Response response = RestAssured.given().header("Authorization", "Bearer " + API_Connection.token)
+			Response response = RestAssured.given().header("Authorization", "Bearer " + FlyInMenuBehaviourSteps.token)
 					.get(apiUrl);
 			if (response.getStatusCode() != 200) {
 				log.info("Error occurred. status code : " + response.getStatusCode());

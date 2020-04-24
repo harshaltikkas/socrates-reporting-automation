@@ -32,7 +32,7 @@ Feature: Sprint 11 & Sprint 12 & Sprint 13 & Sprint 14 & Sprint 15 User Stories
     Given User is on portal's login screen with username as "district_admin_one" and password as "password" and usertype as "realm_one"
     Then verify Showing No data screen for Date range which has no test data within the date tab
 
-  ##BE-988
+  ##BE-988 
   Scenario: Verify No data screen for District term which has no test data within the date tab
     Given User is on portal's login screen with username as "district_admin_one" and password as "password" and usertype as "realm_one"
     Then verify No data screen for District term as "New District Term" which has no test data within the date tab
