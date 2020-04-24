@@ -61,7 +61,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class Driver {
 
-  public static RemoteWebDriver webdriver = null;
+	public static RemoteWebDriver webdriver = null;
 	public static DesiredCapabilities caps;
 	public static boolean crossbrwr = false;
 
@@ -74,16 +74,14 @@ public class Driver {
 			try {
 				Driver.webdriver.quit();
 				String os = System.getProperty("os.name");
-				if(os.equalsIgnoreCase("linux")) {
+				if (os.equalsIgnoreCase("linux")) {
 					Runtime.getRuntime().exec("kill chromedriver");
-				}
-				else {
+				} else {
 					Runtime.getRuntime().exec("taskkill /F /IM chromedriver.exe /T");
 					try {
 						Runtime.getRuntime().exec("taskkill /F /IM GoogleUpdate.exe /T");
-					}
-					catch(Exception e) {
-						
+					} catch (Exception e) {
+
 					}
 				}
 			} catch (NullPointerException e) {
@@ -200,8 +198,9 @@ public class Driver {
 			ChromeOptions options = new ChromeOptions();
 			options.setExperimentalOption("prefs", prefs);
 			options.addArguments("--disable-extensions");
-			options.addArguments("start-maximized");			
-			//options.addArguments("--headless");//This is for headless testing,browser will not launch
+			options.addArguments("start-maximized");
+			// options.addArguments("--headless");//This is for headless testing,browser
+			// will not launch
 			webdriver = new ChromeDriver(options);
 			break;
 		case "ie":
@@ -279,30 +278,25 @@ public class Driver {
 	/**
 	 * This is used to embed screenshot while running scenario
 	 */
+	static int ss_count = 0;
+
 	public static void embedScreenshot(Scenario scenario) {
 		log.info("embedScreenshot");
-		String screenshotName = scenario.getName().replaceAll(" ", "_");
+		// String screenshotName = scenario.getName().replaceAll(" ", "_");
 		String os = System.getProperty("os.name");
 		try {
 			TakesScreenshot ts = (TakesScreenshot) Driver.webdriver;
 			File sourcePath = ts.getScreenshotAs(OutputType.FILE);
 			File destinationPath;
-			/*if(os.equalsIgnoreCase("linux")) {
-				destinationPath= new File(System.getProperty("user.dir") + "/target/cucumber-reports/extent_report/screenshots/"
-						+ screenshotName + "_" + ExtentCucumberFormatter.exeDateTime + ".png");
+
+			if (os.equalsIgnoreCase("linux")) {
+				destinationPath = new File(System.getProperty("user.dir")
+						+ "/target/cucumber-reports/extent_report/screenshots/" + (ss_count++) + ".png");
+			} else {
+				destinationPath = new File(System.getProperty("user.dir")
+						+ "\\target\\cucumber-reports\\extent_report\\screenshots\\" + (ss_count++) + ".png");
 			}
-			else {
-				destinationPath= new File(System.getProperty("user.dir") + "\\target\\cucumber-reports\\extent_report\\screenshots\\"
-						+ screenshotName + "_" + ExtentCucumberFormatter.exeDateTime + ".png");
-			}*/
-			if(os.equalsIgnoreCase("linux")) {
-				destinationPath= new File(System.getProperty("user.dir") + "/target/cucumber-reports/extent_report/screenshots/"
-						+ screenshotName +  ".png");
-			}
-			else {
-				destinationPath= new File(System.getProperty("user.dir") + "\\target\\cucumber-reports\\extent_report\\screenshots\\"
-						+ screenshotName + ".png");
-			}
+
 			FileUtils.copyFile(sourcePath, destinationPath);
 			Reporter.addScreenCaptureFromPath(destinationPath.toString());
 		} catch (Exception e) {
@@ -318,7 +312,9 @@ public class Driver {
 	}
 
 	/**
-	 * This method is used to set CrossBrowser Parameters and Extent Report Generation information
+	 * This method is used to set CrossBrowser Parameters and Extent Report
+	 * Generation information
+	 * 
 	 * @throws FileNotFoundException
 	 * @throws IOException
 	 */

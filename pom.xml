@@ -234,7 +234,7 @@
 			<artifactId>poi-ooxml</artifactId>
 			<version>3.17</version>
 		</dependency>
-		
+
 	</dependencies>
 	<build>
 		<pluginManagement>
@@ -333,7 +333,7 @@
 					<source>1.8</source>
 					<target>1.8</target>
 					<fork>true</fork>
-					<executable>${jdk.compiler.path}</executable>
+					<executable>${jdk.compiler.path}</executable>				
 				</configuration>
 			</plugin>
 			<plugin>
