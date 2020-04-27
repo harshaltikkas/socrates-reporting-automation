@@ -875,8 +875,7 @@ public class Test_Status_Steps {
 		try {
 		
 			// getting all the handles currently available
-			 Set<String> handles = Driver.webdriver.getWindowHandles();
-			 System.out.println("handles.size():"+handles.size());
+			 Set<String> handles = Driver.webdriver.getWindowHandles();			
 			 Assert.assertTrue(handles.size()>= 2);
 			ArrayList<String> tabs = new ArrayList<String>(Driver.webdriver.getWindowHandles());
 
