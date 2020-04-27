@@ -8,7 +8,7 @@ Feature: Line Chart Test Scores vs Time
     When User click on Class Context and Test Score button
     Then verify y-axis labeled with as Test Scores(%) and also verify 12 horizontal lines, one for x axis line and rest label with 0 throught 100
 
-  @Scenario32 @TC_0020
+   @Scenario32 @TC_0020
   Scenario: Verify the X-axis label
     Given User is on portal's login screen with username as "district_admin_one" and password as "password" and usertype as "realm_one"
     When User click on Class Context and Test Score button

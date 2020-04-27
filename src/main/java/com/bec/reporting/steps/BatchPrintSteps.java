@@ -82,6 +82,7 @@ public class BatchPrintSteps {
 						.equals("Individual Reports for All Students in the Class"));
 				is_STA_Clicekd = false;
 			} else {
+				
 				Assert.assertTrue(homePage.selection_texts_on_model.get(0).getText()
 						.contains(studentName + " (Current Selection)"));
 				Assert.assertTrue(homePage.selection_texts_on_model.get(1).getText()

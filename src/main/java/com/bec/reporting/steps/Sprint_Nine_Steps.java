@@ -82,6 +82,7 @@ public class Sprint_Nine_Steps {
 					.moveToElement(homePage.testScoreValueInCircle_onlinechart_pot.get(randomTestScoreIndex)).click()
 					.build().perform();
 			Thread.sleep(500);
+			log.info("verifying the total no. of questions on tooltip");
 			Assert.assertTrue(no_of_questions.trim().equals(String.valueOf(homePage.questionlistontooltip.size())));
 			UtilityMethods.scrollPageUp(Driver.webdriver);
 			Thread.sleep(500);
@@ -324,7 +325,7 @@ public class Sprint_Nine_Steps {
 			String user = System.getProperty("user.name");
 			String folder = "C:\\Users\\" + user + "\\Downloads";
 			String fileName = null;
-			
+
 			String sp_list[] = new String[] { "District Name", "School Name", "Grade", "Teacher Name", "Class Name",
 					"Student Name", "Student ID(SIS)", "Test Type", "Test Name", "Test Submitted", "Test Graded",
 					"Question Numbers", "Points Earned", "Total Points", "Strand", "Standard", "DOK",
@@ -336,35 +337,37 @@ public class Sprint_Nine_Steps {
 					"Student Name", "Student ID(SIS)", "Test Type", "Test Name", "Test Submitted", "Test Graded",
 					"Percent Score" };
 
-			//IWait.check_Absence_of_Element(homePage.takemeback);
-			
+			// IWait.check_Absence_of_Element(homePage.takemeback);
+
 			IWait.explicit_wait(Driver.webdriver, homePage.csvDownloadIcon);
 			homePage.csvDownloadIcon.click();
-			Thread.sleep(500);
-			IWait.explicit_wait(Driver.webdriver, homePage.csv_download_text_on_model);
-			Assert.assertTrue(homePage.csv_download_btn_on_model.isDisplayed());
-			Assert.assertTrue(homePage.csv_download_cancel_btn_on_model.isDisplayed());
-			homePage.csv_download_btn_on_model.click();
-			Thread.sleep(300);			
+			Thread.sleep(1000);
+			
+			if (API_Connection.getUserRole().equalsIgnoreCase("SCHOOL_ADMIN")
+					|| API_Connection.getUserRole().equalsIgnoreCase("DISTRICT_ADMIN")) {
+				IWait.explicit_wait(Driver.webdriver, homePage.csv_download_text_on_model);
+				Assert.assertTrue(homePage.csv_download_btn_on_model.isDisplayed());
+				Assert.assertTrue(homePage.csv_download_cancel_btn_on_model.isDisplayed());
+				homePage.csv_download_btn_on_model.click();
+				Thread.sleep(1000);
+			}
 			
 			if (Standard_Overview_Table_Steps.performanceMenuClicked) {
 				fileName = "standard_performance.csv";
 				file = new File(folder + "\\" + fileName);
 				UtilityMethods.wait_For_CSV_File_Download(file);
 				UtilityMethods.Verify_Columns_Header_of_CSV(sp_list, file);
-			} 
-			else if (Standard_Overview_Table_Steps.testScoreMenuClicked) {
+			} else if (Standard_Overview_Table_Steps.testScoreMenuClicked) {
 				fileName = "test_scores.csv";
 				file = new File(folder + "\\" + fileName);
 				UtilityMethods.wait_For_CSV_File_Download(file);
 				UtilityMethods.Verify_Columns_Header_of_CSV(test_scores, file);
-			} 
-			else if (Standard_Overview_Table_Steps.test_status_Menu_Clicked) {
+			} else if (Standard_Overview_Table_Steps.test_status_Menu_Clicked) {
 				fileName = "test_status.csv";
-				file = new File(folder + "\\" + fileName);			
-				UtilityMethods.wait_For_CSV_File_Download(file);				
+				file = new File(folder + "\\" + fileName);
+				UtilityMethods.wait_For_CSV_File_Download(file);
 				UtilityMethods.Verify_Columns_Header_of_CSV(test_status, file);
-				
+
 			}
 			log.info("After Downloading, deleting the file :" + file.getAbsoluteFile().getName());
 			UtilityMethods.Delete_CSV(file);
@@ -373,7 +376,7 @@ public class Sprint_Nine_Steps {
 			UtilityMethods.processException(e);
 		}
 		CBTConfiguration.score = "pass";
-		log.info("Scenario verify csv download functionality for "+file.getAbsoluteFile().getName()+" completed");
+		log.info("Scenario verify csv download functionality for " + file.getAbsoluteFile().getName() + " completed");
 		Standard_Overview_Table_Steps.resetStatus();
 	}
 

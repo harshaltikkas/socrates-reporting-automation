@@ -50,7 +50,7 @@ Feature: Standard Overview Table and Chart
     And Select the Strand within the Strand header from the Standard table and selected strand becomes the header of the Line Chart
 
  ##STORY 6b) Axes on the Standards Line Chart And calculating Points
-  @Scenario39 @TC_0006 @TC_0007 @TC_0008 @TC_0005_DB @TC_0009_DB
+   @Scenario39 @TC_0006 @TC_0007 @TC_0008 @TC_0005_DB @TC_0009_DB
   Scenario: Verify The X-axis and Y--axis of the Performance over time
     Given User is on portal's login screen with username as "school_admin_one" and password as "password" and usertype as "realm_one"
     When User Click on Standard Performance tab within the Class Context
@@ -78,7 +78,7 @@ Feature: Standard Overview Table and Chart
     #Then line chart of Test score over time should be displayed of that student but Student list should not be displayed on test score overview
 
     ##STORY 6d) Overlays
-  @Scenario41 @TC_0015 @TC_0016 @TC_0017 @TC_0018
+   @Scenario41 @TC_0015 @TC_0016 @TC_0017 @TC_0018
   Scenario: Verify Overlays Performance Over Time 
     Given User is on portal's login screen with username as "school_admin_one" and password as "password" and usertype as "realm_one"
     When User Click on Standard Performance tab within the Class Context

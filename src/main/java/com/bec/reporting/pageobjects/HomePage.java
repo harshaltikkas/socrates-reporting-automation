@@ -795,7 +795,7 @@ public class HomePage {
 	@FindBy(xpath = "//div[@class='class_test_overview_table_header_right']//span")
 	public WebElement submitteddateon_tsd;
 
-	@FindBy(xpath = "//div[@class='tooltip_main']//div[@class='tooltip_questions_right']/span")
+	@FindBy(xpath = "//div[@class='tooltip_questions']//span/a")
 	public List<WebElement> questionlistontooltip;
 
 	@FindBy(xpath = "//div[@class='tooltip_main']//div[@class='tooltip_questions_right']")
@@ -1409,7 +1409,7 @@ public class HomePage {
 	@FindBy(xpath = "//div[@class='testStatusPopup_inr_title' and contains(text(),'Test Status')]/ancestor::div[@class='testStatusPopup_rightInr']/div/ul/li/span[contains(@class,'testStatusPopup_checkbox')]")
 	public List<WebElement> checkbox_list_under_test_status;
 
-	@FindBy(xpath = "//div[@class='testStatusPopup_inr_title' and contains(text(),'Test Status')]/ancestor::div[@class='testStatusPopup_rightInr']/div/ul/li/span[contains(@class,'testStatusPopup_checkbox')]")
+	@FindBy(xpath = "//span[@class='batchPrintTitle']")
 	public List<WebElement> selection_texts_on_model;
 
 	@FindBy(xpath = "//li[@class='inactive_tab']/span[contains(text(), 'Summary')]")

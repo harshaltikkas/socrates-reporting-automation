@@ -1,7 +1,7 @@
 @Feature
 Feature: Spint 9 User Stories
 
-  ##BE-832,833,834
+  ##BE-832,833,834 
   Scenario: Verify Showing grading page in new browser tab when clicked on the question number within the test overlay
     Given User is on portal's login screen with username as "district_admin_one" and password as "password" and usertype as "realm_one"
     When User Click on Standard Performance tab within the Class Context
@@ -60,14 +60,14 @@ Feature: Spint 9 User Stories
     When User Click on Standard Performance tab within the Student Context
     Then verify View Texonomy on Standard Performance
     
-     ## Verifying csv download for sp and test score
-    #Scenario: Verify CSV download for Standard Performance Report details and Test Scores Report details
-    #Given User is on portal's login screen with username as "teacher_one" and password as "password" and usertype as "realm_one"
-    #When User Click on Standard Performance tab within the Class Context
-    #Then verify csv download functionality
-    #When User click on Class Context and Test Score button
-    #Then verify csv download functionality
-    #When User click on Student Context and Test Score button
-    #Then verify csv download functionality
-    #When User Click on Standard Performance tab within the Student Context
-    #Then verify csv download functionality
+     ## Verifying csv download for sp and test score   
+    Scenario: Verify CSV download for Standard Performance Report details and Test Scores Report details
+    Given User is on portal's login screen with username as "teacher_one" and password as "password" and usertype as "realm_one"
+    When User Click on Standard Performance tab within the Class Context
+    Then verify csv download functionality
+    When User click on Class Context and Test Score button
+    Then verify csv download functionality
+    When User click on Student Context and Test Score button
+    Then verify csv download functionality
+    When User Click on Standard Performance tab within the Student Context
+    Then verify csv download functionality

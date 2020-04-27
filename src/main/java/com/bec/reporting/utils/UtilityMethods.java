@@ -30,7 +30,6 @@ import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -723,7 +722,6 @@ public class UtilityMethods {
 		try {
 			Assert.assertTrue(homePage.strandsTextAfterApplyBtnOnGroupingTab.isDisplayed());
 			log.info("Strands_Text_After_Apply_BtnOn_GroupingTab is now Displaying");
-
 		} catch (Exception e) {
 
 			log.info("wait for strands Text on table header After Apply Btn On Grouping Tab ...");
@@ -947,7 +945,8 @@ public class UtilityMethods {
 		}
 	}
 
-	public static void wait_For_CSV_File_Download(File file) throws Exception {
+	
+	public static void wait_For_CSV_File_Download(File file) throws InterruptedException {
 		/*
 		 * Robot robot=new Robot(); try { do {
 		 * log.info("Waiting for CSV File Save Dialog..."); Thread.sleep(2000); } while
@@ -955,13 +954,32 @@ public class UtilityMethods {
 		 * log.info("CSV file save dialog box is showing"); } Thread.sleep(2000);
 		 * robot.keyPress(KeyEvent.VK_ENTER); Thread.sleep(500);
 		 * robot.keyRelease(KeyEvent.VK_ENTER); Thread.sleep(2000);
-		 */
-		log.info("Waiting for CSV file to be saved...");
-		Thread.sleep(2000);
-		if (file.exists()) {
-			log.info(file.getAbsoluteFile().getName() + " is saved successfully..");
-		} else {
-			wait_For_CSV_File_Download(file);
+		 * ==============================================
+		 * log.info("Waiting for CSV file to be saved...");
+			Thread.sleep(2000);
+			if (file.exists()) {
+				log.info(file.getAbsoluteFile().getName() + " is saved successfully..");
+			} else {
+				wait_For_CSV_File_Download(file);
+			}
+		 */			
+		boolean isFileSaved=false;
+		int wait_for_csv=0;
+		do {
+			log.info("Waiting for CSV file to be saved...");
+			Thread.sleep(2000);
+			if (file.exists()) {
+				log.info(file.getAbsoluteFile().getName() + " is saved successfully..");
+				isFileSaved=true;
+				break;
+			} 
+			wait_for_csv++;
+		}
+		while(wait_for_csv<=10);
+		
+		if (isFileSaved == false && wait_for_csv > 10) {
+			log.error(" csv file not saved in 20 seconds...");
+			processException(new Exception());
 		}
 	}
 
@@ -984,22 +1002,7 @@ public class UtilityMethods {
 			log.info(str + " Refresh Icon Display off");
 		}
 	}
-
-	// Utility which converts CSV to ArrayList using Split Operation
-	public static ArrayList<String> crunchifyCSVtoArrayList(String crunchifyCSV) {
-		ArrayList<String> crunchifyResult = new ArrayList<String>();
-
-		if (crunchifyCSV != null) {
-			String[] splitData = crunchifyCSV.split("\\s*,\\s*");
-			for (int i = 0; i < splitData.length; i++) {
-				if (!(splitData[i] == null) || !(splitData[i].length() == 0)) {
-					crunchifyResult.add(splitData[i].trim());
-				}
-			}
-		}
-
-		return crunchifyResult;
-	}
+	
 	/*
 	 * This method is used to verify the columns Header with the existing header
 	 * list
