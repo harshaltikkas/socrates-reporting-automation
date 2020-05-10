@@ -6,6 +6,7 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.PageFactory;
 
 import com.bec.reporting.pageobjects.HomePage;
+import com.bec.reporting.utils.API_Connection;
 import com.bec.reporting.utils.CBTConfiguration;
 import com.bec.reporting.utils.Driver;
 import com.bec.reporting.utils.IWait;
@@ -23,7 +24,7 @@ public class BatchPrintSteps {
 	 */
 	HomePage homePage = PageFactory.initElements(Driver.webdriver, HomePage.class);
 	static JavascriptExecutor js = (JavascriptExecutor) Driver.webdriver;
-	
+
 	@When("^click the Class menu and verify student list$")
 	public void click_the_Class_menu_and_verify_student_list() throws Throwable {
 		try {
@@ -50,6 +51,9 @@ public class BatchPrintSteps {
 	public void user_Click_on_Summary_tab_within_the_Student_Context() throws Throwable {
 		try {
 			UtilityMethods.wait_For_Context_Header_Section();
+			if (!API_Connection.getUserRole().equalsIgnoreCase("TEACHER")) {
+				UtilityMethods.jump_to_class_context_from_school_or_district_context();
+			}
 			Assert.assertTrue(homePage.activestudentmenu.getAttribute("class").contains("active"));
 		} catch (Exception e) {
 			js.executeScript("arguments[0].click();", homePage.studentmenu);
@@ -82,7 +86,7 @@ public class BatchPrintSteps {
 						.equals("Individual Reports for All Students in the Class"));
 				is_STA_Clicekd = false;
 			} else {
-				
+
 				Assert.assertTrue(homePage.selection_texts_on_model.get(0).getText()
 						.contains(studentName + " (Current Selection)"));
 				Assert.assertTrue(homePage.selection_texts_on_model.get(1).getText()
@@ -125,11 +129,15 @@ public class BatchPrintSteps {
 	public void user_Click_on_Summary_tab_within_the_Class_Context() throws Throwable {
 		try {
 			UtilityMethods.wait_For_Context_Header_Section();
+			if (!API_Connection.getUserRole().equalsIgnoreCase("TEACHER")) {
+				UtilityMethods.jump_to_class_context_from_school_or_district_context();
+			}
 			Assert.assertTrue(homePage.activeclassmenu.getAttribute("class").contains("active"));
 		} catch (Exception e) {
 			js.executeScript("arguments[0].click();", homePage.classmenu);
 			Thread.sleep(3000);
 		}
+		UtilityMethods.wait_For_Student_List_AND_OR_Class_List_Section_Load();
 		try {
 			Assert.assertTrue(homePage.active_summary_tab.getAttribute("class").equals("active_tab"));
 		} catch (Exception e) {
@@ -192,16 +200,19 @@ public class BatchPrintSteps {
 		UtilityMethods.wait_For_STA_Section_Load();
 		is_STA_Clicekd = true;
 	}
-	
+
 	@When("^click and select view from dropdown$")
 	public void click_and_select_view_from_dropdown() throws Throwable {
 		try {
-			new Actions(Driver.webdriver).moveToElement(homePage.viewDropDown_on_summary).click().build().perform();Thread.sleep(1000);
-			int x=UtilityMethods.generateRandomNumberBySkippingIndex(homePage.viewDropDownList_on_summary.size(), 0);
-			new Actions(Driver.webdriver).moveToElement(homePage.viewDropDownList_on_summary.get(x)).click().build().perform();Thread.sleep(1000);
-			
-	} catch (Exception e) {
-		UtilityMethods.processException(e);
-	}
+			new Actions(Driver.webdriver).moveToElement(homePage.viewDropDown_on_summary).click().build().perform();
+			Thread.sleep(1000);
+			int x = UtilityMethods.generateRandomNumberBySkippingIndex(homePage.viewDropDownList_on_summary.size(), 0);
+			new Actions(Driver.webdriver).moveToElement(homePage.viewDropDownList_on_summary.get(x)).click().build()
+					.perform();
+			Thread.sleep(1000);
+
+		} catch (Exception e) {
+			UtilityMethods.processException(e);
+		}
 	}
 }

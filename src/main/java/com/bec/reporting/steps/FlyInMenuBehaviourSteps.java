@@ -40,6 +40,7 @@ import com.bec.reporting.utils.CBTConfiguration;
 import com.bec.reporting.utils.Driver;
 import com.bec.reporting.utils.FileRead;
 import com.bec.reporting.utils.IWait;
+import com.bec.reporting.utils.RosterTabUtilityMethods;
 import com.bec.reporting.utils.UtilityMethods;
 import com.google.common.base.Verify;
 import cucumber.api.java.en.Given;
@@ -179,42 +180,20 @@ public class FlyInMenuBehaviourSteps {
 					selectedTeacher = "";
 			int customSize = 0, randomIndex = 0;
 			// selecting school from dropdown
-			homePage.schooldropdownbtn.click();
-			Thread.sleep(500);
-			UtilityMethods.uncheck_check_All("School");
-			log.info("Selected School:" + sc);
-			selectedSchool = sc;
-			homePage.searchbaronschooldropdown.sendKeys(sc);
-			Thread.sleep(500);
-			Driver.webdriver.findElement(By.xpath("//li[.='" + sc + "']")).click();
-			Thread.sleep(500);
-			new Actions(Driver.webdriver).moveToElement(homePage.searchcancelonschooldropdown).click().build()
-					.perform();
-			Thread.sleep(500);
-			homePage.schooldropdownbtn.click();
-			Thread.sleep(500);
-			new Actions(Driver.webdriver).moveToElement(homePage.studentTitleOnSliderMenu).build().perform();
-			UtilityMethods.wait_For_Refresh_Icon(homePage.gradeRefreshIcon, "Grade");
+			selectedSchool = sc;selectedGrade = grade;
+			RosterTabUtilityMethods.select_School_In_School_DropDown(sc);
 			UtilityMethods.scrollPageDown(Driver.webdriver, 3);
 			Thread.sleep(500);
 
 			// selecting Grade from dropdown
-			homePage.gradedropdownbtn.click();
-			Thread.sleep(500);
-			log.info("Selected Grade:" + grade);
-			selectedGrade = grade;
-			Driver.webdriver.findElement(By.xpath("//li[.='" + grade + "']")).click();
-			Thread.sleep(500);
-
-			new Actions(Driver.webdriver).moveToElement(homePage.studentTitleOnSliderMenu).build().perform();
-			UtilityMethods.wait_For_Refresh_Icon(homePage.teachersRefreshIcon, "Teacher");
+			RosterTabUtilityMethods.select_Grade_In_Grades_DropDown(grade);
 			UtilityMethods.scrollPageDown(Driver.webdriver, 4);
 			Thread.sleep(500);
 
 			homePage.teachersdropdownbtn.click();
 			Thread.sleep(500);
 			// de-selecting first time"all" teachers
-			UtilityMethods.uncheck_check_All("Teacher");
+			RosterTabUtilityMethods.uncheck_check_All("Teacher");
 			switch (selectiontype) {
 			case "single":
 				// selecting Teacher from dropdown
@@ -230,7 +209,7 @@ public class FlyInMenuBehaviourSteps {
 				homePage.classdropdownbtn.click();
 				Thread.sleep(500);
 				// de-selecting first time"all" classes
-				UtilityMethods.uncheck_check_All("Class");
+				RosterTabUtilityMethods.uncheck_check_All("Class");
 				selectedClass = homePage.classlist.get(1).getText();
 				homePage.classlist.get(1).click();
 				log.info("Selected Class is:" + selectedClass);
@@ -241,7 +220,7 @@ public class FlyInMenuBehaviourSteps {
 				Thread.sleep(500);
 				// de-selecting first time"all" students
 				// This is to unselect all student from dropdown,as default is all selected
-				UtilityMethods.uncheck_check_All("Student");
+				RosterTabUtilityMethods.uncheck_check_All("Student");
 				randomIndex = UtilityMethods.generateRandomNumberBySkippingIndex(homePage.studentlistwithall.size(), 0);
 				UtilityMethods.scroll_Div(homePage.studentlistwithall.get(randomIndex), 20);
 				Thread.sleep(500);
@@ -267,7 +246,7 @@ public class FlyInMenuBehaviourSteps {
 				homePage.classdropdownbtn.click();
 				Thread.sleep(500);
 				// de-selecting first time"all" classes
-				UtilityMethods.uncheck_check_All("Class");
+				RosterTabUtilityMethods.uncheck_check_All("Class");
 				selectedClass = homePage.classlist.get(1).getText();
 				homePage.classlist.get(1).click();
 				Thread.sleep(500);
@@ -279,7 +258,7 @@ public class FlyInMenuBehaviourSteps {
 				Thread.sleep(500);
 				// de-selecting first time"all" students
 				// This is to unselect all student from dropdown,as default is all selected
-				UtilityMethods.uncheck_check_All("Student");
+				RosterTabUtilityMethods.uncheck_check_All("Student");
 				// selecting custom Teacher from dropdown
 				for (int i = 1; i < homePage.studentlistondropdown.size(); i = i + 2) {
 					if (homePage.studentlistondropdown.get(i).getText().equals("")) {
@@ -384,48 +363,22 @@ public class FlyInMenuBehaviourSteps {
 			Actions actions = new Actions(Driver.webdriver);
 			actions.moveByOffset(200, 200).build().perform();
 			Thread.sleep(500);
-			if (homePage.classnameoncontextheader.getText().contains("...")) {
-				actions.moveToElement(homePage.classnameoncontextheader).build().perform();
-				classNameonCH = homePage.tooltipofclassnameoncontextheader.getText();
-				actions.moveToElement(homePage.overviewtext).build().perform();
-			} else {
-				classNameonCH = homePage.classnameoncontextheader.getText();
-			}
+			classNameonCH=UtilityMethods.getClassNameonUI();
 			log.info("class name on CH:" + classNameonCH);
 			Assert.assertTrue(selectedClass.equals(classNameonCH));
 			actions.moveToElement(homePage.overviewtext).click().perform();
 			// verifying teacher name on context header
-			if (homePage.teachernameoncontextheader.getText().contains("...")) {
-				new Actions(Driver.webdriver).moveToElement(homePage.teachernameoncontextheader).build().perform();
-				teacherNameonCH = homePage.tooltipofteachernameoncontextheader.getText();
-				new Actions(Driver.webdriver).moveToElement(homePage.overviewtext).build().perform();
-			} else {
-				teacherNameonCH = homePage.teachernameoncontextheader.getText();
-			}
+			teacherNameonCH=UtilityMethods.getTeacherNameonUI();
 			log.info("Teacher name on CH:" + teacherNameonCH);
 			Assert.assertTrue(selectedTeacher.equals(teacherNameonCH));
-
-			homePage.tripledotsoncontextheader.click();
-			Thread.sleep(1000);
+			
 			// verifying Grade name context header
-			if (homePage.gradenameontripledot.getText().contains("...")) {
-				new Actions(Driver.webdriver).moveToElement(homePage.gradenameontripledot).build().perform();
-				gradeNameonCH = homePage.tooltipofgradenameontripledot.getText();
-				new Actions(Driver.webdriver).moveToElement(homePage.overviewtext).build().perform();
-			} else {
-				gradeNameonCH = homePage.gradenameontripledot.getText();
-			}
+			gradeNameonCH=UtilityMethods.getGradeNameonUI();
 			log.info("Grade name on CH:" + gradeNameonCH);
 			selectedGrade = selectedGrade.substring(selectedGrade.indexOf(" ") + 1);
 			Assert.assertTrue(selectedGrade.equals(gradeNameonCH));
 			// verifying school name context header
-			if (homePage.schoolnameontripledot.getText().contains("...")) {
-				new Actions(Driver.webdriver).moveToElement(homePage.schoolnameontripledot).build().perform();
-				schoolNameonCH = homePage.tooltipofschoolnameontripledot.getText();
-				new Actions(Driver.webdriver).moveToElement(homePage.overviewtext).build().perform();
-			} else {
-				schoolNameonCH = homePage.schoolnameontripledot.getText();
-			}
+			schoolNameonCH=UtilityMethods.getSchoolNameonUI();
 			log.info("School name on CH:" + schoolNameonCH);
 			Assert.assertTrue(selectedSchool.equals(schoolNameonCH));
 			actions.moveToElement(homePage.overviewtext).click().perform();

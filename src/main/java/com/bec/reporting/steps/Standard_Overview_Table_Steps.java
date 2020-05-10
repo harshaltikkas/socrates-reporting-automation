@@ -27,19 +27,23 @@ package com.bec.reporting.steps;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.PageFactory;
+
 import com.bec.reporting.pageobjects.HomePage;
+import com.bec.reporting.utils.API_Connection;
 import com.bec.reporting.utils.CBTConfiguration;
 import com.bec.reporting.utils.Driver;
 import com.bec.reporting.utils.IWait;
 import com.bec.reporting.utils.PaginationUtility_for_Pages;
 import com.bec.reporting.utils.UtilityMethods;
 import com.google.common.collect.Ordering;
+
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import lombok.extern.slf4j.Slf4j;
@@ -64,7 +68,7 @@ public class Standard_Overview_Table_Steps {
 		Standard_Overview_Table_Steps.testScoreMenuClicked = false;
 		Standard_Overview_Table_Steps.underStudentContext = false;
 		Standard_Overview_Table_Steps.underDistrictContext = false;
-		Standard_Overview_Table_Steps.test_status_Menu_Clicked=false;
+		Standard_Overview_Table_Steps.test_status_Menu_Clicked = false;
 	}
 
 	/**
@@ -73,7 +77,7 @@ public class Standard_Overview_Table_Steps {
 	 * @throws Throwable
 	 */
 	@When("^User Click on Standard Performance tab within the District Context$")
-	public void user_Click_on_Standard_Performance_tab_within_the_District_Context() throws Throwable {
+	public static void user_Click_on_Standard_Performance_tab_within_the_District_Context() throws Throwable {
 		try {
 			UtilityMethods.wait_For_Context_Header_Section();
 			Assert.assertTrue(homePage.activedistrictmenu.getAttribute("district").contains("active"));
@@ -94,12 +98,38 @@ public class Standard_Overview_Table_Steps {
 	}
 
 	/**
+	 * This method is used to click on standard performance tab in school context
+	 * 
+	 * @throws Throwable
+	 */
+	@When("^User Click on Standard Performance tab within the School Context$")
+	public static void user_Click_on_Standard_Performance_tab_within_the_School_Context() throws Throwable {
+		try {
+			UtilityMethods.wait_For_Context_Header_Section();
+			Assert.assertTrue(homePage.activeschoolmenu.getAttribute("class").contains("active"));
+		} catch (Exception e) {
+			Thread.sleep(500);
+			jse.executeScript("arguments[0].click();", homePage.schoolmenu);
+			Thread.sleep(3000);
+		}
+		try {
+			Assert.assertTrue(homePage.activestandardperformancebtn.getAttribute("class").contains("active_tab"));
+		} catch (Exception e) {
+			Thread.sleep(1000);
+			jse.executeScript("arguments[0].click();", homePage.standardperformancebtn);
+		}
+		UtilityMethods.wait_For_Student_List_AND_OR_Class_List_Section_Load();
+		Standard_Overview_Table_Steps.performanceMenuClicked = true;
+		Standard_Overview_Table_Steps.underSchoolContext = true;
+	}
+
+	/**
 	 * This method is used to click on standard performance tab in class context
 	 * 
 	 * @throws Throwable
 	 */
 	@When("^User Click on Standard Performance tab within the Class Context$")
-	public void user_Click_on_Standard_Performance_tab_within_the_Class_Context() throws Throwable {
+	public static void user_Click_on_Standard_Performance_tab_within_the_Class_Context() throws Throwable {
 		try {
 			UtilityMethods.wait_For_Context_Header_Section();
 			Assert.assertTrue(homePage.activeclassmenu.getAttribute("class").contains("active"));
@@ -643,13 +673,16 @@ public class Standard_Overview_Table_Steps {
 	@When("^User click on Class Context and Test Score button$")
 	public void user_click_on_Class_Context_and_Test_Score_button() throws Throwable {
 		try {
-			UtilityMethods.wait_For_Context_Header_Section();
+			if (!API_Connection.getUserRole().equalsIgnoreCase("TEACHER")) {
+				UtilityMethods.jump_to_class_context_from_school_or_district_context();
+			}
 			Assert.assertTrue(homePage.activeclassmenu.getAttribute("class").contains("active"));
 		} catch (Exception e) {
 			Thread.sleep(500);
 			jse.executeScript("arguments[0].click();", homePage.classmenu);
 			Thread.sleep(3000);
 		}
+		UtilityMethods.wait_For_Student_List_AND_OR_Class_List_Section_Load();
 		try {
 			Assert.assertTrue(homePage.activetestscoresbtn.getAttribute("class").equals("active_tab"));
 		} catch (Exception e) {
@@ -660,6 +693,18 @@ public class Standard_Overview_Table_Steps {
 		Standard_Overview_Table_Steps.testScoreMenuClicked = true;
 		Standard_Overview_Table_Steps.underClassContext = true;
 
+	}
+
+	@When("^User click on Test Score button$")
+	public void user_click_on_Test_Score_button() throws Throwable {
+		try {
+			Assert.assertTrue(homePage.activetestscoresbtn.getAttribute("class").equals("active_tab"));
+		} catch (Exception e) {
+			Thread.sleep(500);
+			jse.executeScript("arguments[0].click();", homePage.testscoresbtn);
+		}
+		UtilityMethods.wait_For_Test_Score_Detail_Section();
+		Standard_Overview_Table_Steps.testScoreMenuClicked = true;
 	}
 
 	/**
@@ -722,7 +767,7 @@ public class Standard_Overview_Table_Steps {
 		try {
 			Standard_Overview_Table_Steps.paginationontesttab();
 			click_on_the_icon_to_maximize_the_Chart();
-			UtilityMethods.scrollPageDown(Driver.webdriver, 8);
+			UtilityMethods.scrollPageDown(Driver.webdriver, 7);
 			Thread.sleep(500);
 			Assert.assertTrue(homePage.testnameslabel_onlinechart_pot.getText().equals("Test Names"));
 			// checking for paginator

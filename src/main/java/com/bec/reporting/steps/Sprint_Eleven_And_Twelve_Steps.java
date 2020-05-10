@@ -37,6 +37,7 @@ import com.bec.reporting.pageobjects.HomePage;
 import com.bec.reporting.utils.CBTConfiguration;
 import com.bec.reporting.utils.Driver;
 import com.bec.reporting.utils.Driver.BrowserCleanup;
+import com.bec.reporting.utils.RosterTabUtilityMethods;
 import com.bec.reporting.utils.UtilityMethods;
 import com.google.common.collect.Ordering;
 import cucumber.api.java.en.Then;
@@ -111,7 +112,7 @@ public class Sprint_Eleven_And_Twelve_Steps {
 			Thread.sleep(500);
 			UtilityMethods.scrollPageDown(Driver.webdriver, 6);
 			Thread.sleep(500);
-			UtilityMethods.uncheck_check_All("Teacher");
+			RosterTabUtilityMethods.uncheck_check_All("Teacher");
 			String selectedTeacher = homePage.teacherslist.get(1).getText();
 			homePage.teacherslist.get(1).click();
 			log.info("Selected Teacher is:" + selectedTeacher);
@@ -232,29 +233,10 @@ public class Sprint_Eleven_And_Twelve_Steps {
 		try {
 			homePage.rostertab.click();
 			Thread.sleep(500);
-			homePage.schooldropdownbtn.click();
-			Thread.sleep(500);
-			UtilityMethods.uncheck_check_All("School");
-			log.info("Selected School:" + sc);
-
-			homePage.searchbaronschooldropdown.sendKeys(sc);
-			Thread.sleep(500);
-			Driver.webdriver.findElement(By.xpath("//li[.='" + sc + "']")).click();
-			Thread.sleep(500);
-			new Actions(Driver.webdriver).moveToElement(homePage.searchcancelonschooldropdown).click().build()
-					.perform();
-			Thread.sleep(500);
-			homePage.schooldropdownbtn.click();
-			Thread.sleep(500);
-			new Actions(Driver.webdriver).moveToElement(homePage.studentTitleOnSliderMenu).build().perform();
-
-			UtilityMethods.wait_For_Refresh_Icon(homePage.schoolRefreshIcon, "School");
+			RosterTabUtilityMethods.select_School_In_School_DropDown(sc);
 			UtilityMethods.scrollPageDown(Driver.webdriver, 6);
 			Thread.sleep(500);
-			homePage.gradedropdownbtn.click();
-			Thread.sleep(500);
-			Driver.webdriver.findElement(By.xpath("//li[.='" + grade + "']")).click();
-			Thread.sleep(500);
+			RosterTabUtilityMethods.select_Grade_In_Grades_DropDown(grade);
 			homePage.rosterapplybtn.click();
 			Thread.sleep(3000);
 			UtilityMethods.scrollPageDown(Driver.webdriver, 3);

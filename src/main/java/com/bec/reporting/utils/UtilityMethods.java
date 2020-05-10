@@ -32,7 +32,6 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -55,8 +54,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class UtilityMethods {
-	static int ctr = 0, pot_ctr = 0, ch_ctr = 0, tso_ctr = 0, tsd_ctr = 0, sp_table_ctr = 0, list_on_sp_ctr = 0,
-			sta_ctr = 0, test_stts_ctr = 0, grouping_table_ctr = 0;
+	static int ctr = 0, ch_ctr = 0;
 	static HomePage homePage = PageFactory.initElements(Driver.webdriver, HomePage.class);
 
 	/**
@@ -634,11 +632,6 @@ public class UtilityMethods {
 	public static String getAssessedWithonUI() {
 		String assessedWithTxt = "";
 		try {
-			/*
-			 * new
-			 * Actions(Driver.webdriver).moveToElement(homePage.questionDropDown).click().
-			 * build().perform(); Thread.sleep(500);
-			 */
 			assessedWithTxt = homePage.questionDropDown.getText();
 			new Actions(Driver.webdriver).moveToElement(homePage.overviewtext).click().build().perform();
 			Thread.sleep(500);
@@ -656,11 +649,6 @@ public class UtilityMethods {
 	public static String getDatesonContextHeaderUI() {
 		String testsName = "";
 		try {
-			/*
-			 * new
-			 * Actions(Driver.webdriver).moveToElement(homePage.datesoncontextheader).build(
-			 * ).perform(); Thread.sleep(500);
-			 */
 			testsName = homePage.datesoncontextheader.getText();
 			new Actions(Driver.webdriver).moveByOffset(200, 200).build().perform();
 			Thread.sleep(500);
@@ -698,19 +686,25 @@ public class UtilityMethods {
 	 */
 	public static void wait_For_Student_List_AND_OR_Class_List_Section_Load() {
 		boolean isSectionLoad = false;
-		try {
-			Assert.assertTrue(homePage.noofquestionstext.isDisplayed());
-			log.info("List Section on Standard Performance is now Displaying");
-			wait_For_Context_Header_Section();
-		} catch (Exception e) {
-			log.info("Waiting for List Section on Standard Performance Loading");
-			IWait.implicit_wait(2);
-			list_on_sp_ctr++;
-			if (isSectionLoad == false && list_on_sp_ctr > 15) {
-				log.info("List Section on Standard Performance is not loaded in 30 seconds..");
-				processException(new Exception());
+		int list_on_sp_ctr = 0;
+		do {
+			try {
+				Assert.assertTrue(homePage.noofquestionstext.isDisplayed());
+				log.info("List Section on Standard Performance is now Displaying");
+				isSectionLoad = true;
+			} catch (Exception e1) {
+				log.info("Waiting for List Section on Standard Performance Loading");
+				try {
+					Thread.sleep(2000);
+					list_on_sp_ctr++;
+				} catch (InterruptedException e) {
+				}
 			}
-			wait_For_Student_List_AND_OR_Class_List_Section_Load();
+		} while (isSectionLoad == false && list_on_sp_ctr <= 15);
+
+		if (isSectionLoad == false && list_on_sp_ctr > 15) {
+			log.info("List Section on Standard Performance is not loaded in 30 seconds..");
+			processException(new Exception());
 		}
 	}
 
@@ -719,19 +713,25 @@ public class UtilityMethods {
 	 */
 	public static void wait_For_Strands_Text_After_Apply_BtnOn_GroupingTab() {
 		boolean isSectionLoad = false;
-		try {
-			Assert.assertTrue(homePage.strandsTextAfterApplyBtnOnGroupingTab.isDisplayed());
-			log.info("Strands_Text_After_Apply_BtnOn_GroupingTab is now Displaying");
-		} catch (Exception e) {
-
-			log.info("wait for strands Text on table header After Apply Btn On Grouping Tab ...");
-			IWait.implicit_wait(2);
-			grouping_table_ctr++;
-			if (isSectionLoad == false && grouping_table_ctr > 15) {
-				log.info("Strands_Text_After_Apply_BtnOn_GroupingTab is not loaded in 30 seconds..");
-				processException(new Exception());
+		int grouping_table_ctr = 0;
+		do {
+			try {
+				Assert.assertTrue(homePage.strandsTextAfterApplyBtnOnGroupingTab.isDisplayed());
+				log.info("Strands_Text_After_Apply_BtnOn_GroupingTab is now Displaying");
+				isSectionLoad = true;
+			} catch (Exception e1) {
+				log.info("wait for strands Text on table header After Apply Btn On Grouping Tab ...");
+				try {
+					Thread.sleep(2000);
+					grouping_table_ctr++;
+				} catch (InterruptedException e) {
+				}
 			}
-			wait_For_Strands_Text_After_Apply_BtnOn_GroupingTab();
+		} while (isSectionLoad == false && grouping_table_ctr <= 15);
+
+		if (isSectionLoad == false && grouping_table_ctr > 15) {
+			log.info("Strands_Text_After_Apply_BtnOn_GroupingTab is not loaded in 30 seconds..");
+			processException(new Exception());
 		}
 	}
 
@@ -740,19 +740,25 @@ public class UtilityMethods {
 	 */
 	public static void wait_For_STA_Section_Load() {
 		boolean isSectionLoad = false;
-		try {
-			Assert.assertTrue(homePage.test_avg_score_value_in_sta_for_district.isDisplayed());
-			log.info("Single Test Analysis Section is now Displaying");
-			wait_For_Context_Header_Section();
-		} catch (Exception e) {
-			log.info("Waiting for Single Test Analysis Section");
-			IWait.implicit_wait(2);
-			sta_ctr++;
-			if (isSectionLoad == false && sta_ctr > 15) {
-				log.info("Single Test Analysis Section is not loaded in 30 seconds..");
-				processException(new Exception());
+		int sta_ctr = 0;
+		do {
+			try {
+				Assert.assertTrue(homePage.test_avg_score_value_in_sta_for_district.isDisplayed());
+				log.info("Single Test Analysis Section is now Displaying");
+				isSectionLoad = true;
+			} catch (Exception e1) {
+				log.info("Waiting for Single Test Analysis Section");
+				try {
+					Thread.sleep(2000);
+					sta_ctr++;
+				} catch (InterruptedException e) {
+				}
 			}
-			wait_For_STA_Section_Load();
+		} while (isSectionLoad == false && sta_ctr <= 15);
+
+		if (isSectionLoad == false && sta_ctr > 15) {
+			log.info("Single Test Analysis Section is not loaded in 30 seconds..");
+			processException(new Exception());
 		}
 	}
 
@@ -761,23 +767,27 @@ public class UtilityMethods {
 	 */
 	public static void wait_For_Test_Status_Section_Load() {
 		boolean isSectionLoad = false;
-		try {
-			Assert.assertTrue(homePage.table_body_in_detail_in_ts.isDisplayed());
-			log.info("Test Status Section is now Displaying");
-			wait_For_Context_Header_Section();
-		} catch (Exception e) {
-			log.info("Waiting for Test Status Section");
-			IWait.implicit_wait(2);
-			test_stts_ctr++;
-			if (isSectionLoad == false && test_stts_ctr > 15) {
-				log.info("Test Status Section is not loaded in 30 seconds..");
-				processException(new Exception());
+		int test_stts_ctr = 0;
+		do {
+			try {
+				Assert.assertTrue(homePage.table_body_in_detail_in_ts.isDisplayed());
+				log.info("Test Status Section is now Displaying");
+				isSectionLoad = true;
+			} catch (Exception e1) {
+				log.info("Waiting for Test Status Section");
+				try {
+					Thread.sleep(2000);
+					test_stts_ctr++;
+				} catch (InterruptedException e) {
+				}
 			}
-			wait_For_Test_Status_Section_Load();
+		} while (isSectionLoad == false && test_stts_ctr <= 15);
+
+		if (isSectionLoad == false && test_stts_ctr > 15) {
+			log.info("Test Status Section is not loaded in 30 seconds..");
+			processException(new Exception());
 		}
 	}
-
-	static int test_stts_ctr_sc = 0;
 
 	/**
 	 * This method is used to wait till the loading of detail section on test status
@@ -785,19 +795,25 @@ public class UtilityMethods {
 	 */
 	public static void wait_For_Test_Status_Section_Load_under_student_context() {
 		boolean isSectionLoad = false;
-		try {
-			Assert.assertTrue(homePage.table_body_in_ts_under_student_context.isDisplayed());
-			log.info("Test Status Section under student context is now Displaying");
-			wait_For_Context_Header_Section();
-		} catch (Exception e) {
-			log.info("Waiting for Test Status Section under student context");
-			IWait.implicit_wait(2);
-			test_stts_ctr_sc++;
-			if (isSectionLoad == false && test_stts_ctr_sc > 15) {
-				log.info("Test Status Section under student context is not loaded in 30 seconds..");
-				processException(new Exception());
+		int test_stts_ctr_sc = 0;
+		do {
+			try {
+				Assert.assertTrue(homePage.table_body_in_ts_under_student_context.isDisplayed());
+				log.info("Test Status Section under student context is now Displaying");
+				isSectionLoad = true;
+			} catch (Exception e1) {
+				log.info("Waiting for Test Status Section under student context");
+				try {
+					Thread.sleep(2000);
+					test_stts_ctr_sc++;
+				} catch (InterruptedException e) {
+				}
 			}
-			wait_For_Test_Status_Section_Load_under_student_context();
+		} while (isSectionLoad == false && test_stts_ctr_sc <= 15);
+
+		if (isSectionLoad == false && test_stts_ctr_sc > 15) {
+			log.info("Test Status Section under student context is not loaded in 30 seconds..");
+			processException(new Exception());
 		}
 	}
 
@@ -807,20 +823,25 @@ public class UtilityMethods {
 	 */
 	public static void wait_For_Performance_Over_Time_Line_Chart_Section_Load() {
 		boolean isSectionLoad = false;
-		try {
-			Assert.assertTrue(homePage.info_icon_on_performance_over_time_header.isDisplayed());
-			log.info("Perfomance Over Time Line Chart is now Displaying");
-			wait_For_Context_Header_Section();
-			isSectionLoad = true;
-		} catch (Exception e) {
-			log.info("Waiting for Performance Over Time Line Chart Loading");
-			IWait.implicit_wait(2);
-			pot_ctr++;
-			if (isSectionLoad == false && pot_ctr > 15) {
-				log.info("Perfomance Over Time Line Chart is not loaded in 30 seconds..");
-				processException(new Exception());
+		int pot_ctr = 0;
+		do {
+			try {
+				Assert.assertTrue(homePage.info_icon_on_performance_over_time_header.isDisplayed());
+				log.info("Perfomance Over Time Line Chart is now Displaying");
+				isSectionLoad = true;
+			} catch (Exception e1) {
+				log.info("Waiting for Performance Over Time Line Chart Loading");
+				try {
+					Thread.sleep(2000);
+					pot_ctr++;
+				} catch (InterruptedException e) {
+				}
 			}
-			wait_For_Performance_Over_Time_Line_Chart_Section_Load();
+		} while (isSectionLoad == false && pot_ctr <= 15);
+
+		if (isSectionLoad == false && pot_ctr > 15) {
+			log.info("Perfomance Over Time Line Chart is not loaded in 30 seconds..");
+			processException(new Exception());
 		}
 	}
 
@@ -829,73 +850,79 @@ public class UtilityMethods {
 	 */
 	public static void wait_For_Test_Score_Overview_Section_Load() {
 		boolean isSectionLoad = false;
-		try {
-			Assert.assertTrue(homePage.testscoreoverviewtext.isDisplayed());
-			log.info("Test Score Overview Section is now Displaying");
-			wait_For_Context_Header_Section();
-			isSectionLoad = true;
-		} catch (Exception e) {
-			log.info("Waiting for Test Score Overview Section Loading");
-			IWait.implicit_wait(2);
-
-			tso_ctr++;
-			if (isSectionLoad == false && tso_ctr > 15) {
-				log.info("Test Score Overview Section is not loaded in 30 seconds..");
-				processException(new Exception());
+		int tso_ctr = 0;
+		do {
+			try {
+				Assert.assertTrue(homePage.testscoreoverviewtext.isDisplayed());
+				log.info("Test Score Overview Section is now Displaying");
+				isSectionLoad = true;
+			} catch (Exception e1) {
+				log.info("Waiting for Test Score Overview Section Loading");
+				try {
+					Thread.sleep(2000);
+					tso_ctr++;
+				} catch (InterruptedException e) {
+				}
 			}
-			wait_For_Test_Score_Overview_Section_Load();
+		} while (isSectionLoad == false && tso_ctr <= 15);
+
+		if (isSectionLoad == false && tso_ctr > 15) {
+			log.info("Test Score Overview Section is not loaded in 30 seconds..");
+			processException(new Exception());
 		}
 	}
 
 	/**
 	 * This method is used to wait till the Summary section
 	 */
-	static int smmry_ctr = 0;
-
 	public static void wait_For_Summary_Tab_Section_Load() {
 		boolean isSectionLoad = false;
-		try {
-			Assert.assertTrue(homePage.summary_tab_standars_text.isDisplayed());
-			log.info("Summary Tab Section is now Displaying");
-			isSectionLoad = true;
-		} catch (Exception e) {
-			log.info("Waiting for Summary Tab Section Loading");
+		int smmry_ctr = 0;
+		do {
 			try {
-				Thread.sleep(2000);
-			} catch (InterruptedException e1) {
+				Assert.assertTrue(homePage.summary_tab_standars_text.isDisplayed());
+				log.info("Summary Tab Section is now Displaying");
+				isSectionLoad = true;
+			} catch (Exception e1) {
+				log.info("Waiting for Summary Tab Section Loading...");
+				try {
+					Thread.sleep(2000);
+					smmry_ctr++;
+				} catch (InterruptedException e) {
+				}
 			}
-			smmry_ctr++;
-			if (isSectionLoad == false && smmry_ctr > 15) {
-				log.info("Summary Tab Section is not loaded in 30 seconds..");
-				processException(new Exception());
-			}
-			wait_For_Summary_Tab_Section_Load();
+		} while (isSectionLoad == false && smmry_ctr <= 15);
+
+		if (isSectionLoad == false && smmry_ctr > 15) {
+			log.info("Summary Tab Section is not loaded in 30 seconds..");
+			processException(new Exception());
 		}
 	}
 
 	/**
 	 * This method is used to wait till the loading of comparison section
 	 */
-	static int cmprson_ctr = 0;
-
 	public static void wait_For_Comparison_Tab_Section_Load() {
 		boolean isSectionLoad = false;
-		try {
-			Assert.assertTrue(homePage.comparison_tab_tests_text.isDisplayed());
-			log.info("Comparison Tab Section is now Displaying");
-			isSectionLoad = true;
-		} catch (Exception e) {
-			log.info("Waiting for Comparison Tab Section Loading");
+		int cmprson_ctr = 0;
+		do {
 			try {
-				Thread.sleep(2000);
-			} catch (InterruptedException e1) {
+				Assert.assertTrue(homePage.comparison_tab_tests_text.isDisplayed());
+				log.info("Comparison Tab Section is now Displaying");
+				isSectionLoad = true;
+			} catch (Exception e1) {
+				log.info("Waiting for Comparison Tab Section Loading");
+				try {
+					Thread.sleep(2000);
+					cmprson_ctr++;
+				} catch (InterruptedException e) {
+				}
 			}
-			cmprson_ctr++;
-			if (isSectionLoad == false && cmprson_ctr > 15) {
-				log.info("Comparison Tab Section is not loaded in 30 seconds..");
-				processException(new Exception());
-			}
-			wait_For_Comparison_Tab_Section_Load();
+		} while (isSectionLoad == false && cmprson_ctr <= 15);
+
+		if (isSectionLoad == false && cmprson_ctr > 15) {
+			log.info("Comparison Tab Section is not loaded in 30 seconds..");
+			processException(new Exception());
 		}
 	}
 
@@ -904,20 +931,25 @@ public class UtilityMethods {
 	 */
 	public static void wait_For_Test_Score_Detail_Section() {
 		boolean isSectionLoad = false;
-		try {
-			Assert.assertTrue(homePage.datesubmittedtext.isDisplayed());
-			log.info("Test Score Detail Section is now Displaying");
-			wait_For_Context_Header_Section();
-			isSectionLoad = true;
-		} catch (Exception e) {
-			log.info("Waiting for Test Score Detail Section Loading");
-			IWait.implicit_wait(2);
-			tsd_ctr++;
-			if (isSectionLoad == false && tsd_ctr > 15) {
-				log.info("Test Score Detail Section is not loaded in 30 seconds..");
-				processException(new Exception());
+		int tsd_ctr = 0;
+		do {
+			try {
+				Assert.assertTrue(homePage.datesubmittedtext.isDisplayed());
+				log.info("Test Score Detail Section is now Displaying");
+				isSectionLoad = true;
+			} catch (Exception e1) {
+				log.info("Waiting for Test Score Detail Section Loading");
+				try {
+					Thread.sleep(2000);
+					tsd_ctr++;
+				} catch (InterruptedException e) {
+				}
 			}
-			wait_For_Test_Score_Detail_Section();
+		} while (isSectionLoad == false && tsd_ctr <= 15);
+
+		if (isSectionLoad == false && tsd_ctr > 15) {
+			log.info("Test Score Detail Section is not loaded in 30 seconds..");
+			processException(new Exception());
 		}
 	}
 
@@ -927,25 +959,48 @@ public class UtilityMethods {
 	 */
 	public static void wait_For_Standard_Performance_Table_Section() {
 		boolean isSectionLoad = false;
-		try {
-			Assert.assertTrue(homePage.standardnameslist.get(0).isDisplayed());
-			log.info("Standard Performance Table Section is now Displaying");
-			wait_For_Context_Header_Section();
-			isSectionLoad = true;
-			Standard_Overview_Table_Steps.resetStatus();
-		} catch (Exception e) {
-			log.info("Waiting for Standard Performance Table Section Loading");
-			IWait.implicit_wait(2);
-			sp_table_ctr++;
-			if (isSectionLoad == false && sp_table_ctr > 15) {
-				log.info("Standard Performance Table Section is not loaded in 30 seconds..");
-				processException(new Exception());
+		int sp_table_ctr = 0;
+		do {
+			try {
+				Assert.assertTrue(homePage.standardnameslist.get(0).isDisplayed());
+				log.info("Standard Performance Table Section is now Displaying");
+				isSectionLoad = true;
+			} catch (Exception e1) {
+				log.info("Waiting for Standard Performance Table Section Loading");
+				try {
+					Thread.sleep(2000);
+					sp_table_ctr++;
+				} catch (InterruptedException e) {
+				}
 			}
-			wait_For_Standard_Performance_Table_Section();
+		} while (isSectionLoad == false && sp_table_ctr <= 15);
+
+		if (isSectionLoad == false && sp_table_ctr > 15) {
+			log.info("Standard Performance Table Section is not loaded in 30 seconds..");
+			processException(new Exception());
 		}
 	}
 
-	
+	/*
+	 * This method is used to call whenever user login with SA or DA and need to
+	 * moved in class context
+	 */
+	public static void jump_to_class_context_from_school_or_district_context() throws Throwable {
+		try {
+			if (API_Connection.getUserRole().equalsIgnoreCase("SCHOOL_ADMIN")) {
+				Standard_Overview_Table_Steps.user_Click_on_Standard_Performance_tab_within_the_School_Context();
+				Standard_Overview_Table_Steps.user_Click_on_Standard_Performance_tab_within_the_Class_Context();
+			} else if (API_Connection.getUserRole().equalsIgnoreCase("DISTRICT_ADMIN")) {
+				Standard_Overview_Table_Steps.user_Click_on_Standard_Performance_tab_within_the_District_Context();
+				Standard_Overview_Table_Steps.user_Click_on_Standard_Performance_tab_within_the_School_Context();
+				Standard_Overview_Table_Steps.user_Click_on_Standard_Performance_tab_within_the_Class_Context();
+			}
+		} catch (Exception e) {
+			log.error("Error in moving from school/district context to class context...");
+			processException(e);
+		}
+	}
+
 	public static void wait_For_CSV_File_Download(File file) throws InterruptedException {
 		/*
 		 * Robot robot=new Robot(); try { do {
@@ -955,54 +1010,50 @@ public class UtilityMethods {
 		 * robot.keyPress(KeyEvent.VK_ENTER); Thread.sleep(500);
 		 * robot.keyRelease(KeyEvent.VK_ENTER); Thread.sleep(2000);
 		 * ==============================================
-		 * log.info("Waiting for CSV file to be saved...");
-			Thread.sleep(2000);
-			if (file.exists()) {
-				log.info(file.getAbsoluteFile().getName() + " is saved successfully..");
-			} else {
-				wait_For_CSV_File_Download(file);
-			}
-		 */			
-		boolean isFileSaved=false;
-		int wait_for_csv=0;
+		 * log.info("Waiting for CSV file to be saved..."); Thread.sleep(2000); if
+		 * (file.exists()) { log.info(file.getAbsoluteFile().getName() +
+		 * " is saved successfully.."); } else { wait_For_CSV_File_Download(file); }
+		 */
+		boolean isFileSaved = false;
+		int wait_for_csv = 0;
 		do {
 			log.info("Waiting for CSV file to be saved...");
 			Thread.sleep(2000);
 			if (file.exists()) {
 				log.info(file.getAbsoluteFile().getName() + " is saved successfully..");
-				isFileSaved=true;
+				isFileSaved = true;
 				break;
-			} 
+			}
 			wait_for_csv++;
-		}
-		while(wait_for_csv<=10);
-		
+		} while (wait_for_csv <= 10);
+
 		if (isFileSaved == false && wait_for_csv > 10) {
 			log.error(" csv file not saved in 20 seconds...");
 			processException(new Exception());
 		}
 	}
 
-	/**
-	 * This method is used to wait till refresh icon for the roster tab dropdown
-	 **/
-	public static void wait_For_Refresh_Icon(WebElement el, String str) {
-		int count = 1;
+	/* This is method to select Golden oak school and grade 4 */
+	public static void select_Grade_Four_From_Roster() {
 		try {
-			do {
-				log.info("Thread sleep called for " + str + " Loading :" + count + " Times");
-				Thread.sleep(2000);
-				count++;
-				if (count > 10) {
-					log.error("Issue in " + str + " Data Loading");
-					UtilityMethods.processException(new Exception());
-				}
-			} while (el.isDisplayed() && count <= 10);
+			homePage.rostertab.click();
+			Thread.sleep(500);
+			homePage.schooldropdownbtn.click();
+			Thread.sleep(500);
+			new Actions(Driver.webdriver).moveToElement(homePage.studentTitleOnSliderMenu).build().perform();
+			Driver.webdriver.findElement(By.xpath("//li[.='Golden Oak Community School']")).click();
+			RosterTabUtilityMethods.wait_For_Refresh_Icon(homePage.gradeRefreshIcon, "Grades");
+			homePage.gradedropdownbtn.click();
+			Thread.sleep(500);
+			Driver.webdriver.findElement(By.xpath("//li[.='Grade 4']")).click();
+			Thread.sleep(500);
+			homePage.rosterapplybtn.click();
+			UtilityMethods.wait_For_Student_List_AND_OR_Class_List_Section_Load();
 		} catch (Exception e) {
-			log.info(str + " Refresh Icon Display off");
+			UtilityMethods.processException(e);
 		}
 	}
-	
+
 	/*
 	 * This method is used to verify the columns Header with the existing header
 	 * list
@@ -1231,6 +1282,20 @@ public class UtilityMethods {
 		return false;
 	}
 
+	/** This method is used to validate the tag contains attribute or not **/
+	public static boolean isAttribtuePresent(WebElement element, String attribute) {
+		Boolean result = false;
+		try {
+			String value = element.getAttribute(attribute);
+			if (value != null) {
+				result = true;
+			}
+		} catch (Exception e) {
+		}
+
+		return result;
+	}
+
 	public static String TestNamefromTestTab() {
 		String name = "";
 		try {
@@ -1275,70 +1340,4 @@ public class UtilityMethods {
 		return name;
 	}
 
-	/* This method is used to deselct all checkbox in universal selector dropdown */
-	public static void uncheck_check_All(String roster_field) {
-		try {
-			Driver.webdriver.findElement(By.xpath("//div[@class='menu-title' and contains(text(),'" + roster_field
-					+ "')]/following-sibling::div//div[@class='menu-dropdown-list-inr']/ul/li")).click();
-			Thread.sleep(500);
-		} catch (Exception e) {
-			processException(e);
-		}
-	}
-
-	public static void select_Grade_Four_From_Roster() {
-		try {
-			homePage.rostertab.click();
-			Thread.sleep(500);
-			Thread.sleep(500);
-			homePage.gradedropdownbtn.click();
-			Thread.sleep(500);
-			Driver.webdriver.findElement(By.xpath("//li[.='Grade 4']")).click();
-			Thread.sleep(500);
-			homePage.rosterapplybtn.click();
-			UtilityMethods.wait_For_Student_List_AND_OR_Class_List_Section_Load();
-		} catch (Exception e) {
-			processException(e);
-		}
-	}
-
-	/** This method is used to get all the test names of test tab **/
-	public static LinkedList<String> getAllTestNamesOfTestTab() {
-		LinkedList<String> testNames = new LinkedList<String>();
-		try {
-			// checking for paginator
-			if (PaginationUtility_for_Universal_Tab.checkPaginator_on_test_tab()) {
-				// this lool will execute for the no. of circle available on paginator
-				for (int i = 0; i < homePage.testpaginationcirclelist.size(); i++) {
-					PaginationUtility_for_Universal_Tab.click_On_Indexed_Circle_Of_Paginator(i);
-					Assert.assertTrue(homePage.testnameslist_on_test_tab.size() <= 10);
-					for (int j = 0; j < homePage.testnameslist_on_test_tab.size(); j++) {
-						testNames.add(homePage.testnameslist_on_test_tab.get(j).getText());
-					}
-				}
-				// check for right arrow enabled and click on it and click on last circle from
-				// left and validate
-				do {
-					if (PaginationUtility_for_Universal_Tab.check_Enabled_Right_Arrow_On_Paginator_On_Test_Tab()) {
-						PaginationUtility_for_Universal_Tab.click_On_Enabled_Right_Arrow_Of_Paginator_On_Test_Tab();
-						PaginationUtility_for_Universal_Tab.click_On_Last_Circle_Of_Paginator();
-						Assert.assertTrue(homePage.testnameslist_on_test_tab.size() <= 10);
-						for (int j = 0; j < homePage.testnameslist_on_test_tab.size(); j++) {
-							testNames.add(homePage.testnameslist_on_test_tab.get(j).getText());
-						}
-					}
-				} while (PaginationUtility_for_Universal_Tab.check_Enabled_Right_Arrow_On_Paginator_On_Test_Tab());
-			} else {
-				// when paginator is not found
-				Assert.assertTrue(homePage.testnameslist_on_test_tab.size() <= 10);
-				for (int j = 0; j < homePage.testnameslist_on_test_tab.size(); j++) {
-					testNames.add(homePage.testnameslist_on_test_tab.get(j).getText());
-				}
-			}
-		} catch (Exception e) {
-			log.error("Error in retreive Test Names on Test Tab");
-			processException(e);
-		}
-		return testNames;
-	}
 }

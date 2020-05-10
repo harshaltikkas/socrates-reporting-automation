@@ -83,20 +83,22 @@ public class SprintSixAndSevenSteps {
 	@Then("^Verify the tooltipicon in performance over time line chart and student list$")
 	public void verify_the_tooltipicon_in_performance_over_time_line_chart_and_student_list() throws Throwable {
 		try {
-			UtilityMethods.wait_For_Page_Section_Load();
 			js.executeScript("arguments[0].click();", homePage.performance_overtime_icon);
 			Thread.sleep(1000);
 			Assert.assertTrue(homePage.info_icon_on_performance_over_time_header.isDisplayed());
 			js.executeScript("arguments[0].click();", homePage.info_icon_on_performance_over_time_header);
 			Thread.sleep(1000);
 			Assert.assertTrue(homePage.tooltip_of_info_icon.getText().equals(tooltipText_of_avg_score_heading));
-			Thread.sleep(1000);
+			homePage.yaxis_text_label_on_pot_line_chart.click();
+			Thread.sleep(500);
 			new Actions(Driver.webdriver).moveToElement(homePage.performance_overtime_icon).click().build().perform();
 			Thread.sleep(2000);
 			Assert.assertTrue(homePage.info_icon_on_performance_over_time_header.isDisplayed());
 			js.executeScript("arguments[0].click();", homePage.info_icon_on_performance_over_time_header);
 			Thread.sleep(1000);
 			Assert.assertTrue(homePage.tooltip_of_info_icon.getText().equals(tooltipText_of_avg_score_heading));
+			homePage.overviewtext.click();
+			Thread.sleep(500);
 			CBTConfiguration.score = "pass";
 		} catch (Exception e) {
 			UtilityMethods.processException(e);
@@ -107,13 +109,14 @@ public class SprintSixAndSevenSteps {
 	@Then("^Verify the tooltipicon in performance over time line chart$")
 	public void verify_the_tooltipicon_in_performance_over_time_line_chart() throws Throwable {
 		try {
-			UtilityMethods.wait_For_Page_Section_Load();
 			Thread.sleep(2000);
 			Assert.assertTrue(homePage.info_icon_on_performance_over_time_header.isDisplayed());
 			Thread.sleep(1000);
 			js.executeScript("arguments[0].click();", homePage.info_icon_on_performance_over_time_header);
 			Thread.sleep(1000);
 			Assert.assertTrue(homePage.tooltip_of_info_icon.getText().equals(tooltipText_of_avg_score_heading));
+			homePage.overviewtext.click();
+			Thread.sleep(500);
 		} catch (Exception e) {
 			UtilityMethods.processException(e);
 		}
@@ -121,9 +124,10 @@ public class SprintSixAndSevenSteps {
 
 	@Then("^Verify the tooltipicon is not present$")
 	public void verify_the_tooltipicon_is_not_present() throws Throwable {
-		try {
-			Assert.assertTrue(homePage.info_icon_on_performance_over_time_header.isDisplayed());
+		try {			
+			Assert.assertTrue(homePage.tooltip_of_info_icon.getText().equals(tooltipText_of_avg_score_heading));
 			CBTConfiguration.score = "fail";
+			UtilityMethods.processException(new Exception());
 		} catch (Exception e) {
 			CBTConfiguration.score = "pass";
 		}

@@ -342,16 +342,19 @@ public class Sprint_Nine_Steps {
 			IWait.explicit_wait(Driver.webdriver, homePage.csvDownloadIcon);
 			homePage.csvDownloadIcon.click();
 			Thread.sleep(1000);
-			
-			if (API_Connection.getUserRole().equalsIgnoreCase("SCHOOL_ADMIN")
-					|| API_Connection.getUserRole().equalsIgnoreCase("DISTRICT_ADMIN")) {
+			if (API_Connection.getUserRole().equalsIgnoreCase("DISTRICT_ADMIN")) {
+				test_status = new String[] { "School Name", "Grade", "Teacher Name", "Class Name", "Test Type",
+						"Test Name", "Assignment Name", "Total Students", "Not Started", "In Progress",
+						"Needs to Be Graded", "Complete" };
+			}
+			if (API_Connection.getUserRole().equalsIgnoreCase("SCHOOL_ADMIN")) {
 				IWait.explicit_wait(Driver.webdriver, homePage.csv_download_text_on_model);
 				Assert.assertTrue(homePage.csv_download_btn_on_model.isDisplayed());
 				Assert.assertTrue(homePage.csv_download_cancel_btn_on_model.isDisplayed());
 				homePage.csv_download_btn_on_model.click();
 				Thread.sleep(1000);
 			}
-			
+
 			if (Standard_Overview_Table_Steps.performanceMenuClicked) {
 				fileName = "standard_performance.csv";
 				file = new File(folder + "\\" + fileName);

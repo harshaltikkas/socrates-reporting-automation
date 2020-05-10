@@ -36,6 +36,7 @@ import com.bec.reporting.utils.CBTConfiguration;
 import com.bec.reporting.utils.Driver;
 import com.bec.reporting.utils.IWait;
 import com.bec.reporting.utils.PaginationUtility_for_Universal_Tab;
+import com.bec.reporting.utils.RosterTabUtilityMethods;
 import com.bec.reporting.utils.UtilityMethods;
 import com.google.common.base.Verify;
 
@@ -122,7 +123,6 @@ public class PaginationOfDropDownListSteps {
 	public void user_clicks_on_Roster_tab_and_check_dropdown_list_size_and_paginator_features_of_Roster_tab_for_school_as(
 			String sc) throws Throwable {
 		try {
-
 			IWait.explicit_wait(Driver.webdriver, homePage.rostertab);
 			homePage.rostertab.click();
 			IWait.explicit_wait(Driver.webdriver, homePage.studentTitleOnSliderMenu);
@@ -131,7 +131,7 @@ public class PaginationOfDropDownListSteps {
 			homePage.schooldropdownbtn.click();
 			Thread.sleep(500);
 			check_paginator_on_Roster("School", 20);
-			UtilityMethods.uncheck_check_All("School");
+			RosterTabUtilityMethods.uncheck_check_All("School");
 			log.info("Selected School:" + sc);
 
 			homePage.searchbaronschooldropdown.sendKeys(sc);
@@ -145,7 +145,7 @@ public class PaginationOfDropDownListSteps {
 			Thread.sleep(500);
 			new Actions(Driver.webdriver).moveToElement(homePage.studentTitleOnSliderMenu).build().perform();
 
-			UtilityMethods.wait_For_Refresh_Icon(homePage.schoolRefreshIcon, "School");
+			RosterTabUtilityMethods.wait_For_Refresh_Icon(homePage.schoolRefreshIcon, "School");
 			UtilityMethods.scrollPageDown(Driver.webdriver, 6);
 			Thread.sleep(500);
 
