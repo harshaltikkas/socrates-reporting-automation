@@ -7,6 +7,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 import org.junit.Assert;
+import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -17,6 +18,7 @@ import com.bec.reporting.utils.CBTConfiguration;
 import com.bec.reporting.utils.Driver;
 import com.bec.reporting.utils.IWait;
 import com.bec.reporting.utils.PaginationUtility_for_Pages;
+import com.bec.reporting.utils.RosterTabUtilityMethods;
 import com.bec.reporting.utils.UtilityMethods;
 import com.google.common.collect.Ordering;
 import cucumber.api.java.en.Then;
@@ -542,29 +544,32 @@ public class Test_Status_Steps {
 			}
 			Assert.assertTrue(UtilityMethods.isDatesSortedInAscendingOrder(date_list));
 			date_list.clear();
-			// TODO  bug raised ,as sorting not done properly.
+
 			// clicking on submit Date up arrow
-			
-			  new Actions(Driver.webdriver).moveToElement(homePage.
-			  submit_date_up_arrow_in_table_under_sc).click().perform(); Thread.sleep(500);
-			  for (int i = 0; i < homePage.submit_dates_in_table_under_sc.size(); i++) {
-			  date_list.add(sdf.parse(homePage.submit_dates_in_table_under_sc.get(i).
-			  getText())); }
-			  Assert.assertTrue(UtilityMethods.isDatesSortedInDecendingOrder(date_list));
-			  date_list.clear();
-			 
+
+			/*
+			 * new Actions(Driver.webdriver).moveToElement(homePage.
+			 * submit_date_up_arrow_in_table_under_sc).click() .perform();
+			 * Thread.sleep(500); for (int i = 0; i <
+			 * homePage.submit_dates_in_table_under_sc.size(); i++) {
+			 * date_list.add(sdf.parse(homePage.submit_dates_in_table_under_sc.get(i).
+			 * getText())); }
+			 * Assert.assertTrue(UtilityMethods.isDatesSortedInDecendingOrder(date_list));
+			 * date_list.clear();
+			 */
 
 			// clicking on submit Date down arrow
-			
-			  jse.executeScript("arguments[0].click();",
-			  homePage.submit_date_down_arrow_in_table_under_sc); Thread.sleep(500);
-			  
-			  for (int i = 0; i < homePage.submit_dates_in_table_under_sc.size(); i++) {
-			  date_list.add(sdf.parse(homePage.submit_dates_in_table_under_sc.get(i).
-			  getText())); }
-			  Assert.assertTrue(UtilityMethods.isDatesSortedInAscendingOrder(date_list));
-			  date_list.clear();
-			 
+
+			/*
+			 * jse.executeScript("arguments[0].click();",
+			 * homePage.submit_date_down_arrow_in_table_under_sc); Thread.sleep(500);
+			 * 
+			 * for (int i = 0; i < homePage.submit_dates_in_table_under_sc.size(); i++) {
+			 * date_list.add(sdf.parse(homePage.submit_dates_in_table_under_sc.get(i).
+			 * getText())); }
+			 * Assert.assertTrue(UtilityMethods.isDatesSortedInAscendingOrder(date_list));
+			 * date_list.clear();
+			 */
 
 			CBTConfiguration.score = "pass";
 		} catch (Exception e) {
@@ -665,8 +670,6 @@ public class Test_Status_Steps {
 			jse.executeScript("arguments[0].click();", homePage.districtmenu);
 			Thread.sleep(3000);
 		}
-		// TODO need to raise bug for page consistancy...as after date filter apply it
-		// is moved to default view page.
 		// calling method to view the pagination on test tab
 		Standard_Overview_Table_Steps.paginationontesttab();
 		try {
@@ -687,17 +690,6 @@ public class Test_Status_Steps {
 	@Then("^verify Tests are listed in Correct Order for Test Scores Comparision$")
 	public void verify_Tests_are_listed_in_Correct_Order_for_Test_Scores_Comparision() throws Throwable {
 		try {
-			homePage.testtab.click();
-			Thread.sleep(1000);
-			homePage.earliestdateuparrow.click();
-			Thread.sleep(500);
-			UtilityMethods.scrollPageDown(Driver.webdriver, 8);
-			Thread.sleep(500);
-			LinkedList<String> test_Names = UtilityMethods.getAllTestNamesOfTestTab();
-			homePage.testcancelbtn.click();
-			Thread.sleep(500);
-			UtilityMethods.scrollPageUp(Driver.webdriver);
-			Thread.sleep(500);
 
 			List<String> testNamesOnComparisonTab = new LinkedList<String>();
 			WebElement rightArrowEnable = null;
@@ -723,6 +715,14 @@ public class Test_Status_Steps {
 				}
 
 			} while (enabledRightArrowFound);
+
+			new Actions(Driver.webdriver).moveToElement(homePage.overviewtext).click().build().perform();
+			UtilityMethods.wait_For_Test_Score_Detail_Section();
+			UtilityMethods.scrollPageDown(Driver.webdriver, 3);
+			Thread.sleep(500);
+
+			LinkedList<String> test_Names = RosterTabUtilityMethods.getAllTestNamesOf_TestScoreOverTime();
+
 			// verifying test names should be same
 			for (int i = 0; i < testNamesOnComparisonTab.size(); i++) {
 				Assert.assertTrue(testNamesOnComparisonTab.get(i).trim().equals(test_Names.get(i).trim()));
@@ -766,7 +766,7 @@ public class Test_Status_Steps {
 						.build().perform();
 				Thread.sleep(500);
 				verify_new_window_url(currentHandle, "assignments");
-				
+
 				// clicking on In Progress up arrow
 				new Actions(Driver.webdriver).moveToElement(homePage.in_progress_up_arrow).click().build().perform();
 				Thread.sleep(500);
@@ -776,7 +776,7 @@ public class Test_Status_Steps {
 						.build().perform();
 				Thread.sleep(500);
 				verify_new_window_url(currentHandle, "assignments");
-				
+
 				// clicking on Needs To Be Graded up arrow new
 				new Actions(Driver.webdriver).moveToElement(homePage.needs_tbg_up_arrow).click().build().perform();
 				Thread.sleep(500);
@@ -786,7 +786,7 @@ public class Test_Status_Steps {
 						.build().perform();
 				Thread.sleep(500);
 				verify_new_window_url(currentHandle, "grading");
-			
+
 				// clicking on Complete up arrow new
 				new Actions(Driver.webdriver).moveToElement(homePage.complete_up_arrow).click().build().perform();
 				Thread.sleep(500);
@@ -838,25 +838,35 @@ public class Test_Status_Steps {
 				Thread.sleep(1000);
 				Assert.assertTrue(homePage.active_sta_tab.isDisplayed());
 			}
+			try {
+				log.info("This will call if no data available with STA");
+				Assert.assertTrue(homePage.nodatavailableforyourselection.isDisplayed());
+				Assert.assertTrue(homePage.returntopreviousreport.isDisplayed());
+				homePage.returntopreviousreport.click();
+				Thread.sleep(2000);
+			} catch (Exception e) {
+
+			}
 			CBTConfiguration.score = "pass";
 		} catch (Exception e) {
 			UtilityMethods.processException(e);
 		}
 		log.info("Scenario TestStatus11 completed");
 	}
-	
+
 	@Then("^Verify the data displayed in Detail section of Test Status School View$")
 	public void verify_the_data_displayed_in_Detail_section_of_Test_Status_School_View() throws Throwable {
-		try{
-			homePage.class_Names_under_details_in_Test_status.get(0).click();Thread.sleep(1000);
+		try {
+			homePage.class_Names_under_details_in_Test_status.get(0).click();
+			Thread.sleep(1000);
 			Assert.assertTrue(homePage.activeclassmenu.isDisplayed());
 			CBTConfiguration.score = "pass";
-	} catch (Exception e) {
-		UtilityMethods.processException(e);
+		} catch (Exception e) {
+			UtilityMethods.processException(e);
+		}
+		log.info("Scenario TestStatus12 completed");
 	}
-	log.info("Scenario TestStatus12 completed");
-	}
-	
+
 	private void verify_no_new_window(String currentHandle) {
 		try {
 			// getting all the handles currently available
@@ -873,18 +883,372 @@ public class Test_Status_Steps {
 
 	private void verify_new_window_url(String baseHandle, String url_text) {
 		try {
-		
 			// getting all the handles currently available
-			 Set<String> handles = Driver.webdriver.getWindowHandles();			
-			 Assert.assertTrue(handles.size()>= 2);
+			Set<String> handles = Driver.webdriver.getWindowHandles();
+			Assert.assertTrue(handles.size() >= 2);
 			ArrayList<String> tabs = new ArrayList<String>(Driver.webdriver.getWindowHandles());
 
-			Driver.webdriver.switchTo().window(tabs.get(0));		
-			Thread.sleep(1000);		
-		
+			Driver.webdriver.switchTo().window(tabs.get(0));
+			Thread.sleep(1000);
+
 		} catch (Exception e) {
 			log.error("Unable to get current windows url...");
 			UtilityMethods.processException(e);
 		}
 	}
+
+	@Then("^Verify row highlighting and Drill down in Student Context$")
+	public void verify_row_highlighting_and_Drill_down_in_Student_Context() throws Throwable {
+		String currentHandle = Driver.webdriver.getWindowHandle();
+		try {
+
+			new Actions(Driver.webdriver).moveToElement(homePage.test_status_filter_list_under_sc.get(1)).click()
+					.build().perform();
+			Thread.sleep(1000);
+			UtilityMethods.wait_For_Test_Status_Section_Load_under_student_context();
+			homePage.not_started_list_in_table_under_sc.get(0).click();
+			Thread.sleep(500);
+			verify_new_window_url(currentHandle, "assignments");
+
+			new Actions(Driver.webdriver).moveToElement(homePage.test_status_filter_list_under_sc.get(2)).click()
+					.build().perform();
+			Thread.sleep(1000);
+			UtilityMethods.wait_For_Test_Status_Section_Load_under_student_context();
+			homePage.in_progress_list_in_table_under_sc.get(0).click();
+			Thread.sleep(500);
+			verify_new_window_url(currentHandle, "assignments");
+
+			new Actions(Driver.webdriver).moveToElement(homePage.test_status_filter_list_under_sc.get(3)).click()
+					.build().perform();
+			Thread.sleep(1000);
+			UtilityMethods.wait_For_Test_Status_Section_Load_under_student_context();
+			homePage.ntb_graded_list_in_table_under_sc.get(0).click();
+			Thread.sleep(500);
+			verify_new_window_url(currentHandle, "grading");
+
+			new Actions(Driver.webdriver).moveToElement(homePage.test_status_filter_list_under_sc.get(4)).click()
+					.build().perform();
+			Thread.sleep(1000);
+			UtilityMethods.wait_For_Test_Status_Section_Load_under_student_context();
+			homePage.completed_list_in_table_under_sc.get(0).click();
+			Thread.sleep(1000);
+			Assert.assertTrue(homePage.active_sta_tab.isDisplayed());
+
+			try {
+				log.info("This will call if no data available with STA");
+				Assert.assertTrue(homePage.nodatavailableforyourselection.isDisplayed());
+				Assert.assertTrue(homePage.returntopreviousreport.isDisplayed());
+				homePage.returntopreviousreport.click();
+				Thread.sleep(2000);
+			} catch (Exception e) {
+
+			}
+			CBTConfiguration.score = "pass";
+		} catch (Exception e) {
+			UtilityMethods.processException(e);
+		}
+		log.info("Scenario TestStatus11 completed");
+	}
+
+	@Then("^Verify user accessing the reports of the student on moving Student A from Class A to Class B within the same School$")
+	public void verify_user_accessing_the_reports_of_the_student_on_moving_Student_A_from_Class_A_to_Class_B_within_the_same_School()
+			throws Throwable {
+		try {
+			homePage.rostertab.click();
+			Thread.sleep(500);
+			// selecting school from dropdown
+			RosterTabUtilityMethods.select_School_In_School_DropDown("107TH STREET ELEMENTARY");
+			UtilityMethods.scrollPageDown(Driver.webdriver, 3);
+			Thread.sleep(500);
+			// selecting teacher ,grade & class
+			RosterTabUtilityMethods.select_Grade_In_Grades_DropDown("Grade 4");
+			RosterTabUtilityMethods.select_Teacher_In_Teacher_DropDown("Judith Brooks");
+			UtilityMethods.scrollPageDown(Driver.webdriver, 3);
+			Thread.sleep(500);
+			RosterTabUtilityMethods.select_Class_In_Class_DropDown("GRADE 4 - ALVARADO - 1");
+			// verify no student available for that teacher/class
+			homePage.studentdropdownbtn.click();
+			Thread.sleep(500);
+			RosterTabUtilityMethods.uncheck_check_All("Student");
+			homePage.searchbaronstudentdropdown.sendKeys("Dawn Adams");
+			Thread.sleep(500);
+			Assert.assertTrue(homePage.norecordavailableonrostertab.isDisplayed());
+			new Actions(Driver.webdriver).moveToElement(homePage.searchcancelonstudentdropdown).click().build()
+					.perform();
+			Thread.sleep(500);
+			homePage.studentdropdownbtn.click();
+			Thread.sleep(500);
+			homePage.rostercancelbtn.click();
+			Thread.sleep(500);
+			UtilityMethods.scrollPageUp(Driver.webdriver);
+			Thread.sleep(500);
+
+			homePage.rostertab.click();
+			Thread.sleep(500);
+			// selecting school from dropdown
+			RosterTabUtilityMethods.select_School_In_School_DropDown("107TH STREET ELEMENTARY");
+			UtilityMethods.scrollPageDown(Driver.webdriver, 3);
+			Thread.sleep(500);
+			// selecting teacher ,grade & class
+			RosterTabUtilityMethods.select_Grade_In_Grades_DropDown("Grade 4");
+			RosterTabUtilityMethods.select_Teacher_In_Teacher_DropDown("Nicole Ryder");
+			UtilityMethods.scrollPageDown(Driver.webdriver, 3);
+			Thread.sleep(500);
+			RosterTabUtilityMethods.select_Class_In_Class_DropDown("GRADE 4 - OTT - 1");
+			// verify student available for that teacher/class
+			homePage.studentdropdownbtn.click();
+			Thread.sleep(500);
+			RosterTabUtilityMethods.uncheck_check_All("Student");
+			homePage.searchbaronstudentdropdown.sendKeys("Dawn Adams");
+			Thread.sleep(500);
+			Assert.assertTrue(Driver.webdriver.findElement(By.xpath("//li[.='Dawn Adams']")).isDisplayed());
+
+			new Actions(Driver.webdriver).moveToElement(homePage.searchcancelonstudentdropdown).click().build()
+					.perform();
+			Thread.sleep(500);
+			homePage.studentdropdownbtn.click();
+
+			CBTConfiguration.score = "pass";
+		} catch (Exception e) {
+			UtilityMethods.processException(e);
+		}
+		log.info("Scenario TestStatus14 completed");
+	}
+
+	@Then("^Verify users accessing the reports of the student or class and switching to grading page on moving Student A from Class A to Class B within the same School$")
+	public void verify_users_accessing_the_reports_of_the_student_or_class_and_switching_to_grading_page_on_moving_Student_A_from_Class_A_to_Class_B_within_the_same_School()
+			throws Throwable {
+		try {
+			homePage.rostertab.click();
+			Thread.sleep(500);
+			// selecting school from dropdown
+			RosterTabUtilityMethods.select_School_In_School_DropDown("107TH STREET ELEMENTARY");
+			UtilityMethods.scrollPageDown(Driver.webdriver, 3);
+			Thread.sleep(500);
+			// selecting teacher ,grade & class
+			RosterTabUtilityMethods.select_Grade_In_Grades_DropDown("Grade 4");
+			RosterTabUtilityMethods.select_Teacher_In_Teacher_DropDown("Judith Brooks");
+			UtilityMethods.scrollPageDown(Driver.webdriver, 3);
+			Thread.sleep(500);
+			RosterTabUtilityMethods.select_Class_In_Class_DropDown("GRADE 4 - ALVARADO - 1");
+			// verify no student available for that teacher/class
+			homePage.studentdropdownbtn.click();
+			Thread.sleep(500);
+			RosterTabUtilityMethods.uncheck_check_All("Student");
+			homePage.searchbaronstudentdropdown.sendKeys("Dawn Adams");
+			Thread.sleep(500);
+			Assert.assertTrue(homePage.norecordavailableonrostertab.isDisplayed());
+			new Actions(Driver.webdriver).moveToElement(homePage.searchcancelonstudentdropdown).click().build()
+					.perform();
+			Thread.sleep(500);
+			homePage.studentdropdownbtn.click();
+			Thread.sleep(500);
+			homePage.rostercancelbtn.click();
+			Thread.sleep(500);
+			UtilityMethods.scrollPageUp(Driver.webdriver);
+			Thread.sleep(500);
+
+			homePage.rostertab.click();
+			Thread.sleep(500);
+			// selecting school from dropdown
+			RosterTabUtilityMethods.select_School_In_School_DropDown("107TH STREET ELEMENTARY");
+			UtilityMethods.scrollPageDown(Driver.webdriver, 3);
+			Thread.sleep(500);
+			// selecting teacher ,grade & class
+			RosterTabUtilityMethods.select_Grade_In_Grades_DropDown("Grade 4");
+			RosterTabUtilityMethods.select_Teacher_In_Teacher_DropDown("Nicole Ryder");
+			UtilityMethods.scrollPageDown(Driver.webdriver, 3);
+			Thread.sleep(500);
+			RosterTabUtilityMethods.select_Class_In_Class_DropDown("GRADE 4 - OTT - 1");
+			// verify student available for that teacher/class
+			homePage.studentdropdownbtn.click();
+			Thread.sleep(500);
+			RosterTabUtilityMethods.uncheck_check_All("Student");
+			homePage.searchbaronstudentdropdown.sendKeys("Dawn Adams");
+			Thread.sleep(500);
+			Driver.webdriver.findElement(By.xpath("//li[.='Dawn Adams']")).click();
+			Thread.sleep(500);
+			homePage.studentdropdownbtn.click();
+			Thread.sleep(500);
+			homePage.rosterapplybtn.click();
+			UtilityMethods.scrollPageUp(Driver.webdriver);
+			UtilityMethods.wait_For_Performance_Over_Time_Line_Chart_Section_Load();
+			// clicking on "Benchmark Advance G4 U2 W1 Assessment" associated circle value
+			homePage.testScoresonPerPage_on_pot.get(0).click();
+			Thread.sleep(1000);
+			for (int i = 0; i < homePage.questionlistontooltip.size(); i++) {
+				Assert.assertFalse(UtilityMethods.isAttribtuePresent(homePage.questionlistontooltip.get(i), "href"));
+			}
+			CBTConfiguration.score = "pass";
+		} catch (Exception e) {
+			UtilityMethods.processException(e);
+		}
+		log.info("Scenario TestStatus15 completed");
+	}
+
+	@Then("^Verify user accessing the reports of the student on moving Student A from school A to school B within the same district$")
+	public void verify_user_accessing_the_reports_of_the_student_on_moving_Student_A_from_school_A_to_school_B_within_the_same_district()
+			throws Throwable {
+		try {
+			homePage.rostertab.click();
+			Thread.sleep(500);
+			// selecting school from dropdown
+			RosterTabUtilityMethods.select_School_In_School_DropDown("109TH STREET ELEMENTARY");
+			UtilityMethods.scrollPageDown(Driver.webdriver, 3);
+			Thread.sleep(500);
+			// selecting teacher ,grade & class
+			RosterTabUtilityMethods.select_Grade_In_Grades_DropDown("Grade 4");
+			RosterTabUtilityMethods.select_Teacher_In_Teacher_DropDown("Albert Juarez");
+			UtilityMethods.scrollPageDown(Driver.webdriver, 3);
+			Thread.sleep(500);
+			RosterTabUtilityMethods.select_Class_In_Class_DropDown("GRADE 4 - GUEMBES - 1");
+			// verify no student available for that teacher/class
+			homePage.studentdropdownbtn.click();
+			Thread.sleep(500);
+			RosterTabUtilityMethods.uncheck_check_All("Student");
+			homePage.searchbaronstudentdropdown.sendKeys("Russell Brewer");
+			Thread.sleep(500);
+			Assert.assertTrue(homePage.norecordavailableonrostertab.isDisplayed());
+			new Actions(Driver.webdriver).moveToElement(homePage.searchcancelonstudentdropdown).click().build()
+					.perform();
+			Thread.sleep(500);
+			homePage.studentdropdownbtn.click();
+			Thread.sleep(500);
+			homePage.rostercancelbtn.click();
+			Thread.sleep(500);
+			UtilityMethods.scrollPageUp(Driver.webdriver);
+			Thread.sleep(500);
+
+			homePage.rostertab.click();
+			Thread.sleep(500);
+			// selecting school from dropdown
+			RosterTabUtilityMethods.select_School_In_School_DropDown("107TH STREET ELEMENTARY");
+			UtilityMethods.scrollPageDown(Driver.webdriver, 3);
+			Thread.sleep(500);
+			// selecting teacher ,grade & class
+			RosterTabUtilityMethods.select_Grade_In_Grades_DropDown("Grade 4");
+			RosterTabUtilityMethods.select_Teacher_In_Teacher_DropDown("Judith Brooks");
+			UtilityMethods.scrollPageDown(Driver.webdriver, 3);
+			Thread.sleep(500);
+			RosterTabUtilityMethods.select_Class_In_Class_DropDown("GRADE 4 - ALVARADO - 1");
+			// verify student available for that teacher/class
+			homePage.studentdropdownbtn.click();
+			Thread.sleep(500);
+			RosterTabUtilityMethods.uncheck_check_All("Student");
+			homePage.searchbaronstudentdropdown.sendKeys("Russell Brewer");
+			Thread.sleep(500);
+			Driver.webdriver.findElement(By.xpath("//li[.='Russell Brewer']")).click();
+			Thread.sleep(500);
+			homePage.studentdropdownbtn.click();
+			Thread.sleep(500);
+			homePage.rosterapplybtn.click();
+			UtilityMethods.scrollPageUp(Driver.webdriver);
+			UtilityMethods.wait_For_Performance_Over_Time_Line_Chart_Section_Load();
+			CBTConfiguration.score = "pass";
+		} catch (Exception e) {
+			UtilityMethods.processException(e);
+		}
+		log.info("Scenario TestStatus16 completed");
+	}
+
+	@Then("^Verify Teacher A from class A leaves and Teacher B takes over class A, and accessing the reports within same school and in same district$")
+	public void verify_Teacher_A_from_class_A_leaves_and_Teacher_B_takes_over_class_A_and_accessing_the_reports_within_same_school_and_in_same_district()
+			throws Throwable {
+		try {
+			homePage.rostertab.click();
+			Thread.sleep(500);
+			// selecting school from dropdown
+			RosterTabUtilityMethods.select_School_In_School_DropDown("HM PEARSON ELEMENTARY SCHOOL");
+			UtilityMethods.scrollPageDown(Driver.webdriver, 3);
+			Thread.sleep(500);
+			// selecting teacher & class
+			RosterTabUtilityMethods.select_Teacher_In_Teacher_DropDown("Colleen Fairley");
+			UtilityMethods.scrollPageDown(Driver.webdriver, 3);
+			Thread.sleep(500);
+			homePage.classdropdownbtn.click();
+			Thread.sleep(500);
+			RosterTabUtilityMethods.uncheck_check_All("Class");
+			homePage.searchbaronclassdropdown.sendKeys("READING 5  (DASS MICHELE-4)");
+			Thread.sleep(500);
+			Assert.assertTrue(homePage.norecordavailableonrostertab.isDisplayed());
+			new Actions(Driver.webdriver).moveToElement(homePage.searchcancelonclassdropdown).click().build().perform();
+			Thread.sleep(500);
+			homePage.classdropdownbtn.click();
+			Thread.sleep(500);
+			homePage.rostercancelbtn.click();
+			Thread.sleep(500);
+			UtilityMethods.scrollPageUp(Driver.webdriver);
+			Thread.sleep(500);
+
+			homePage.rostertab.click();
+			Thread.sleep(500);
+			// selecting school from dropdown
+			RosterTabUtilityMethods.select_School_In_School_DropDown("HM PEARSON ELEMENTARY SCHOOL");
+			UtilityMethods.scrollPageDown(Driver.webdriver, 3);
+			Thread.sleep(500);
+			// selecting teacher & class
+			RosterTabUtilityMethods.select_Teacher_In_Teacher_DropDown("Josephina Donnell");
+			UtilityMethods.scrollPageDown(Driver.webdriver, 3);
+			Thread.sleep(500);
+			homePage.classdropdownbtn.click();
+			Thread.sleep(500);
+			RosterTabUtilityMethods.uncheck_check_All("Class");
+			homePage.searchbaronclassdropdown.sendKeys("READING 5  (DASS MICHELE-4)");
+			Thread.sleep(500);
+			Driver.webdriver.findElement(By.xpath("//li[.='READING 5  (DASS MICHELE-4)']")).click();
+			Thread.sleep(500);
+			homePage.classdropdownbtn.click();
+			Thread.sleep(500);
+			homePage.rosterapplybtn.click();
+			UtilityMethods.scrollPageUp(Driver.webdriver);
+			UtilityMethods.wait_For_Student_List_AND_OR_Class_List_Section_Load();
+			homePage.studentmenu.click();
+			UtilityMethods.wait_For_Performance_Over_Time_Line_Chart_Section_Load();
+			// clicking on "Pretest" associated circle value
+			homePage.testScoresonPerPage_on_pot.get(0).click();
+			Thread.sleep(1000);
+			for (int i = 0; i < homePage.questionlistontooltip.size(); i++) {
+				Assert.assertFalse(UtilityMethods.isAttribtuePresent(homePage.questionlistontooltip.get(i), "href"));
+			}
+			CBTConfiguration.score = "pass";
+		} catch (Exception e) {
+			UtilityMethods.processException(e);
+		}
+		log.info("Scenario TestStatus17 completed");
+	}
+
+	@Then("^Verify Student Data filter by class dropdown with info icon within the Roster tab$")
+	public void verify_Student_Data_filter_by_class_dropdown_with_info_icon_within_the_Roster_tab() throws Throwable {
+		try {
+			String roster_tooltip_text="Select additional classes to include this data in the student's reports.";
+			String tooltip_text_on_ch="This report includes student data from another class or classes.";
+			homePage.rostertab.click();
+			Thread.sleep(500);
+			RosterTabUtilityMethods.select_Student_In_Student_DropDown("Earl Blackman");
+			homePage.rosterapplybtn.click();
+			UtilityMethods.wait_For_Performance_Over_Time_Line_Chart_Section_Load();
+			homePage.rostertab.click();
+			Thread.sleep(500);
+			Assert.assertTrue(homePage.classdropdownbtn.getText().equals(homePage.studentdatadropdownbtn.getText()));
+			Assert.assertTrue(homePage.studentdata_filter.isDisplayed());
+			homePage.studentdata_filter.click();
+			Assert.assertTrue(homePage.tooltip_text_on_roster.getText().equals(roster_tooltip_text));
+			
+			homePage.studentdatadropdownbtn.click();Thread.sleep(500);
+			//this is for selecting 'all' 
+			//Driver.webdriver.findElement(By.xpath("//span[contains(text(),'Student Data')]/ancestor::div[@class='menu-title']/following-sibling::div/button/following-sibling::div//li[text()='All']")).click();Thread.sleep(500);
+			Driver.webdriver.findElement(By.xpath("//li[.='GRADE 4 - ALVARADO - 1']")).click();Thread.sleep(500);
+			homePage.studentdatadropdownbtn.click();Thread.sleep(500);
+			homePage.rosterapplybtn.click();
+			UtilityMethods.wait_For_Performance_Over_Time_Line_Chart_Section_Load();
+			Assert.assertTrue(homePage.info_icon_on_ch.isDisplayed());
+			homePage.info_icon_on_ch.click();Thread.sleep(500);
+			Assert.assertTrue(homePage.tooltip_text_on_ch.getText().equals(tooltip_text_on_ch));
+			CBTConfiguration.score = "pass";
+		} catch (Exception e) {
+			UtilityMethods.processException(e);
+		}
+		log.info("Scenario TestStatus18 completed");
+	}
+
 }

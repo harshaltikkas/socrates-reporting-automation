@@ -1,10 +1,11 @@
 @Feature
 Feature: Spint 9 User Stories
 
-  ##BE-832,833,834 
+  ##BE-832,833,834
   Scenario: Verify Showing grading page in new browser tab when clicked on the question number within the test overlay
     Given User is on portal's login screen with username as "district_admin_one" and password as "password" and usertype as "realm_one"
-    When User Click on Standard Performance tab within the Class Context
+    When User Click on Standard Performance tab within the School Context
+    And User Click on Standard Performance tab within the Class Context
     Then To check the grading page in new browser tab should open by clicking on the question number within the test overlay
     When User Click on Standard Performance tab within the Student Context
     Then To check the grading page in new browser tab should open by clicking on the question number within the test overlay
@@ -14,9 +15,10 @@ Feature: Spint 9 User Stories
     Given User is on portal's login screen with username as "district_admin_one" and password as "password" and usertype as "realm_one"
     When User Click on Standard Performance tab within the District Context
     Then verify the appearance within the standard performance overview
-    When User Click on Standard Performance tab within the Class Context
+    When User Click on Standard Performance tab within the School Context
+    And User Click on Standard Performance tab within the Class Context
     Then verify the appearance within the standard performance overview
-    When User click on Class Context and Test Score button
+    When User click on Test Score button
     Then verify the appearance within the standard performance overview
     When User click on Student Context and Test Score button
     Then verify the appearance within the standard performance overview

@@ -53,7 +53,7 @@ import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.safari.SafariDriver;
 
 import com.bec.reporting.steps.Hooks;
-import com.bec.reporting.tests.TestRunner;
+import com.bec.reporting.tests.TestRunnerIT;
 
 import cucumber.api.Scenario;
 import lombok.extern.slf4j.Slf4j;
@@ -308,7 +308,7 @@ public class Driver {
 	 * This is used to text Scenario while report generation
 	 */
 	public static void writeToReport(String string) {
-		TestRunner.scenario.write(string);
+		TestRunnerIT.scenario.write(string);
 	}
 
 	/**

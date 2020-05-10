@@ -351,7 +351,7 @@
 							<forkCount>${acceptance.test.parallel.count}</forkCount>
 							<reuseForks>true</reuseForks>
 							<includes>
-								<include>**/*IT.class</include>
+								<include>**/*IT.class</include>							
 							</includes>
 						</configuration>
 					</execution>
@@ -368,10 +368,8 @@
 						<goals>
 							<goal>copy-resources</goal>
 						</goals>
-						<configuration>
-							<!-- <outputDirectory>${basedir}/${target.dir}/extra-resources</outputDirectory> -->
-							<outputDirectory>${basedir}/target/extra-resources</outputDirectory>
-							<!-- <outputDirectory>target/test-classes/com/yourcompany/cucumberjvm</outputDirectory> -->
+						<configuration>					
+							<outputDirectory>${basedir}/target/extra-resources</outputDirectory>						
 							<resources>
 								<resource>
 									<directory>src/test/resources</directory>

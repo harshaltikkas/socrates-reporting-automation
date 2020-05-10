@@ -57,7 +57,7 @@ public class Line_Chart_Test_Scores_vs_Time_Steps {
 			int arg1, int arg2, int arg3) throws Throwable {
 		try {
 			int range = 0;
-			UtilityMethods.scrollPageDown(Driver.webdriver, 6);
+			UtilityMethods.scrollPageDown(Driver.webdriver, 2);
 			Thread.sleep(500);
 			Assert.assertTrue(homePage.yaxistexton_linechart_tsot.getText().equals("Test Scores (%)"));
 			Assert.assertTrue(homePage.horizontalline_onlinechart_tsot.size() == 11);
@@ -83,7 +83,7 @@ public class Line_Chart_Test_Scores_vs_Time_Steps {
 	public void verify_x_axis_labeled_with_Test_Names_and_show_tooltip_if_elipsis_in_test_names_and_if_more_than_tests_are_there_then_paginator_should_be_display(
 			int arg1) throws Throwable {
 		try {
-			UtilityMethods.wait_For_Page_Section_Load();
+			
 			UtilityMethods.scrollPageDown(Driver.webdriver, 5);
 			Thread.sleep(500);
 			Assert.assertTrue(homePage.testnameslabel_onlinechart_tsot.getText().equals("Test Names"));
