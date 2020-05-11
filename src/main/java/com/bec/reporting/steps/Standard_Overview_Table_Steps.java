@@ -1030,8 +1030,19 @@ public class Standard_Overview_Table_Steps {
 	public void user_click_on_the_circle_within_the_line_chart_and_should_able_to_see_the_overlay_of_Tool_tip_which_have_following_items_on_performace_over_time()
 			throws Throwable {
 		try {
-			UtilityMethods.scrollPageDown(Driver.webdriver, 8);
-			Thread.sleep(500);
+			if(Standard_Overview_Table_Steps.performanceMenuClicked && Standard_Overview_Table_Steps.underClassContext) {
+				homePage.performance_overtime_icon.click();Thread.sleep(500);
+				UtilityMethods.wait_For_Performance_Over_Time_Line_Chart_Section_Load();
+				UtilityMethods.scrollPageDown(Driver.webdriver, 4);
+				Thread.sleep(500);
+			}
+			if(Standard_Overview_Table_Steps.performanceMenuClicked && Standard_Overview_Table_Steps.underClassContext) {
+				UtilityMethods.scrollPageDown(Driver.webdriver, 4);
+				Thread.sleep(500);
+			}
+			/*
+			 * UtilityMethods.scrollPageDown(Driver.webdriver, 8); Thread.sleep(500);
+			 */
 			if (PaginationUtility_for_Pages.checkPaginator_on_pot_under_standard_performance()) {
 				// this lool will execute for the no. of circle available on paginator
 				for (int i = homePage.circle_list_on_paginator_on_pot_under_sp.size() - 1; i >= 0; i--) {
@@ -1079,6 +1090,7 @@ public class Standard_Overview_Table_Steps {
 							Integer.parseInt(homePage.testScoresonPerPage_on_pot.get(j).getText()));
 				}
 			}
+			UtilityMethods.scrollPageUp(Driver.webdriver);Thread.sleep(500);
 			CBTConfiguration.score = "pass";
 		} catch (Exception e) {
 			UtilityMethods.processException(e);

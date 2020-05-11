@@ -183,7 +183,7 @@ public class Single_Test_Analysis_Steps {
 			List<String> ui_short_value_list = new ArrayList<String>();
 			List<String> ui_question_list = new ArrayList<String>();
 			List<String> ui_test_score_avg_list = new ArrayList<String>();
-			UtilityMethods.scrollPageDown(Driver.webdriver, 14);
+			UtilityMethods.scrollPageDown(Driver.webdriver, 33);
 			Thread.sleep(500);
 			// checking for paginator
 			if (PaginationUtility_for_Pages.checkPaginator_on_sta()) {
@@ -191,7 +191,7 @@ public class Single_Test_Analysis_Steps {
 				for (int i = 0; i < homePage.circle_list_on_paginator_on_sta.size(); i++) {
 					new Actions(Driver.webdriver).moveToElement(homePage.circle_list_on_paginator_on_sta.get(i)).build().perform();
 					Thread.sleep(500);
-					UtilityMethods.scrollPageUp(Driver.webdriver, 2);Thread.sleep(500);
+					
 					PaginationUtility_for_Pages
 							.clicking_on_indexed_circle_of_paginator(homePage.circle_list_on_paginator_on_sta, i);
 					
@@ -226,7 +226,7 @@ public class Single_Test_Analysis_Steps {
 					ui_test_score_avg_list.add(homePage.test_score_values_on_sta.get(i).getText());
 				}
 			}
-
+		
 			Assert.assertTrue(ui_short_value_list.size() >= 1);
 			Assert.assertTrue(ui_test_score_avg_list.size() >= 1);
 			Assert.assertTrue(ui_question_list.size() >= 1);
@@ -317,11 +317,7 @@ public class Single_Test_Analysis_Steps {
 			UtilityMethods.wait_For_STA_Section_Load();
 			Assert.assertTrue(homePage.compare_cb_list_on_sta.get(0).getText().equals("School"));
 			Assert.assertTrue(homePage.compare_cb_list_on_sta.get(1).getText().equals("District"));
-			Thread.sleep(5000);
-			for (int i = 0; i < homePage.compare_cb_list_on_sta.size(); i++) {
-				homePage.compare_cb_list_on_sta.get(i).click();
-				Thread.sleep(500);
-			}
+			
 
 			Assert.assertTrue(homePage.compared_columns_list_on_table_on_sta.get(0).getText().equals("Class"));
 			Assert.assertTrue(homePage.compared_columns_list_on_table_on_sta.get(1).getText().equals("School"));
@@ -331,11 +327,8 @@ public class Single_Test_Analysis_Steps {
 
 			homePage.schoolmenu.click();
 			UtilityMethods.wait_For_STA_Section_Load();
-			Assert.assertTrue(homePage.compare_cb_list_on_sta.get(0).getText().equals("District"));
-			Thread.sleep(5000);
-			homePage.compare_cb_list_on_sta.get(0).click();
-			Thread.sleep(500);
-
+			Assert.assertTrue(homePage.compare_cb_list_on_sta.get(0).getText().equals("District"));			
+			
 			Assert.assertTrue(homePage.compared_columns_list_on_table_on_sta.get(0).getText().equals("School"));
 			Assert.assertTrue(homePage.compared_columns_list_on_table_on_sta.get(1).getText().equals("District"));
 
