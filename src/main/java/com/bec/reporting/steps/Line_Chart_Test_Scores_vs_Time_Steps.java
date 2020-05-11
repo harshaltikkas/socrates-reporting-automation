@@ -57,11 +57,19 @@ public class Line_Chart_Test_Scores_vs_Time_Steps {
 			int arg1, int arg2, int arg3) throws Throwable {
 		try {
 			int range = 0;
+			List<WebElement> list;
 			UtilityMethods.scrollPageDown(Driver.webdriver, 2);
 			Thread.sleep(500);
+			try {
 			Assert.assertTrue(homePage.yaxistexton_linechart_tsot.getText().equals("Test Scores (%)"));
 			Assert.assertTrue(homePage.horizontalline_onlinechart_tsot.size() == 11);
-			List<WebElement> list = homePage.yaxislabelsonhorizontalline_onlinechart;
+			list = homePage.yaxislabelsonhorizontalline_onlinechart;
+			}
+			catch(Exception e) {
+				Assert.assertTrue(homePage.yaxistexton_linechart_tsot_withsmallo.getText().equals("Test Scores (%)"));
+				Assert.assertTrue(homePage.horizontalline_onlinechart_tsot_withsmallo.size() == 11);
+				list = homePage.yaxislabelsonhorizontalline_onlinechart_withsmallo;
+			}
 			for (int i = 0; i < list.size(); i++) {
 				Assert.assertTrue(Integer.parseInt(list.get(i).getText()) == range);
 				range += 10;

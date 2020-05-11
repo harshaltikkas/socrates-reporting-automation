@@ -584,20 +584,30 @@ public class HomePage {
 	 * Xpath list for Line_Chart_Test_Scores_vs_Time
 	 */
 
-	@FindBy(xpath = "//span[text()='Test Scores over Time']/ancestor::div[contains(@class,'class_widget_title test_score_overtime')]/following-sibling::div//*[name()='tspan' and text()='Test Scores (%)']")
+	@FindBy(xpath = "//span[contains(text(),'Test Scores Over Time')]/ancestor::div[contains(@class,'class_widget_title test_score_overtime')]/following-sibling::div//*[name()='tspan' and text()='Test Scores (%)']")
 	public WebElement yaxistexton_linechart_tsot;
 
+	@FindBy(xpath = "//span[text()='Test Scores Over Time']/ancestor::div[contains(@class,'class_widget_title test_score_overtime')]/following-sibling::div/div//div[@class='line_chart_graph']//*[name()='line' and @class='vx-line' and @stroke-width='1']")
+	public List<WebElement> horizontalline_onlinechart_tsot;
+	
+	@FindBy(xpath = "//span[text()='Test Scores Over Time']/ancestor::div[contains(@class,'class_widget_title test_score_overtime')]/following-sibling::div/div//div[@class='line_chart_graph']//*[name()='line' and @class='vx-line']/following-sibling::*[name()='svg']//*[name()='tspan']")
+	public List<WebElement> yaxislabelsonhorizontalline_onlinechart;
+	
+	@FindBy(xpath = "//span[contains(text(),'Test Scores over Time')]/ancestor::div[contains(@class,'class_widget_title test_score_overtime')]/following-sibling::div//*[name()='tspan' and text()='Test Scores (%)']")
+	public WebElement yaxistexton_linechart_tsot_withsmallo;
+	
+	@FindBy(xpath = "//span[text()='Test Scores over Time']/ancestor::div[contains(@class,'class_widget_title test_score_overtime')]/following-sibling::div/div//div[@class='line_chart_graph']//*[name()='line' and @class='vx-line']/following-sibling::*[name()='svg']//*[name()='tspan']")
+	public List<WebElement> yaxislabelsonhorizontalline_onlinechart_withsmallo;
+
+	@FindBy(xpath = "//span[text()='Test Scores over Time']/ancestor::div[contains(@class,'class_widget_title test_score_overtime')]/following-sibling::div/div//div[@class='line_chart_graph']//*[name()='line' and @class='vx-line' and @stroke-width='1']")
+	public List<WebElement> horizontalline_onlinechart_tsot_withsmallo;
+	
 	@FindBy(xpath = "//span[@class='sidewidget-header-title' and .='Performance Over Time']/ancestor::div[@class='sidewidget-header']/following-sibling::div/div/div[3]//*[name()='text' and @class='vx-axis-label y---axis']/*[name()='tspan']")
 	public WebElement yaxis_text_label_on_pot_line_chart;
 
-	@FindBy(xpath = "//span[text()='Test Scores over Time']/ancestor::div[contains(@class,'class_widget_title test_score_overtime')]/following-sibling::div/div//div[@class='line_chart_graph']//*[name()='line' and @class='vx-line' and @stroke-width='1']")
-	public List<WebElement> horizontalline_onlinechart_tsot;
-
 	@FindBy(xpath = "//span[@class='sidewidget-header-title' and .='Performance Over Time']/ancestor::div[@class='sidewidget-header']/following-sibling::div/div/div[3]//*[name()='line' and @class='vx-line' and @stroke-width='1']")
 	public List<WebElement> horizontal_line_on_pot_line_chart;
-
-	@FindBy(xpath = "//span[text()='Test Scores over Time']/ancestor::div[contains(@class,'class_widget_title test_score_overtime')]/following-sibling::div/div//div[@class='line_chart_graph']//*[name()='line' and @class='vx-line']/following-sibling::*[name()='svg']//*[name()='tspan']")
-	public List<WebElement> yaxislabelsonhorizontalline_onlinechart;
+	
 
 	@FindBy(xpath = "//span[@class='sidewidget-header-title' and .='Performance Over Time']/ancestor::div[@class='sidewidget-header']/following-sibling::div/div/div[3]//*[name()='line' and @class='vx-line']/following-sibling::*[name()='svg']//*[name()='tspan']")
 	public List<WebElement> yaxis_labels_on_horizontal_line_on_pot_line_chart;
