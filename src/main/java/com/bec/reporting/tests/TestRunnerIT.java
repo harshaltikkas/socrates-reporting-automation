@@ -36,10 +36,10 @@ import cucumber.api.junit.Cucumber;
 features = "classpath:features",
 glue = { "com.bec.reporting.steps" },
 plugin = { "pretty", 
-		   //"html:target/cucumber-reports",
+		   "html:target/cucumber-reports",
 		   "com.bec.reporting.utils.ExtentCucumberFormatter:target/cucumber-reports/extent_report/report.html",
-		   //"json:target/cucumber-reports/json_report/Cucumber.json",
-		   //"junit:target/cucumber-reports/junit_xml_report/Cucumber.xml"
+		   "json:target/cucumber-reports/json_report/Cucumber.json",
+		   "junit:target/cucumber-reports/junit_xml_report/Cucumber.xml",
 		   "rerun:target/failed_scenarios.txt"
 		   },
 tags = { "@Feature" }, 

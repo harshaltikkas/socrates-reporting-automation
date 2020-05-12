@@ -743,7 +743,7 @@ public class UtilityMethods {
 		int sta_ctr = 0;
 		do {
 			try {
-				Assert.assertTrue(homePage.test_avg_score_value_in_sta_for_district.isDisplayed());
+				Assert.assertTrue(homePage.test_avg_score_text_on_sta_table.isDisplayed());
 				log.info("Single Test Analysis Section is now Displaying");
 				isSectionLoad = true;
 			} catch (Exception e1) {
