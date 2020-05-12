@@ -1236,6 +1236,9 @@ public class HomePage {
 	@FindBy(xpath = "//div[contains(text(),'Test Average Score:')]/ancestor::div[@class='bec_singleTest_multi_list_subheader bec_singleTest_multi_list_grid_block']//div[@class='bec_singleTest_multi_list_single_compareBox']")
 	public WebElement test_avg_score_value_in_sta_for_district;
 
+	@FindBy(xpath = "//div[contains(@class,'bec_singleTest_multi_list_single_label') and contains(text(),'Test Average Score:')]")
+	public WebElement test_avg_score_text_on_sta_table;
+	
 	@FindBy(xpath = "//div[@class='bec_singleTest_multi_list_single_q_number']")
 	public List<WebElement> question_list_on_sta;
 
