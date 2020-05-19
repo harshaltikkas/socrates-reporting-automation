@@ -436,7 +436,7 @@ public class FlyInMenuBehaviourSteps {
 		try {
 			UtilityMethods.scrollPageDown(Driver.webdriver, 4);
 			Thread.sleep(1000);
-			homePage.allcheckbox.click();
+			homePage.allcheckbox_in_test_tab.click();
 			Thread.sleep(500);
 			String selectedTestName;
 			int testCheckBoxListSize = 0, randomNumber = 0;

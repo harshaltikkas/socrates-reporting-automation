@@ -36,7 +36,7 @@ Feature: Standard Overview Table and Chart
     And The User click on the strand in header then background of strand colour should be filled with achievement level colour
 
   ##STORY 6a) Standard table / Performance over Time (Line Chart) relationship
-   @Scenario38 @TC_0001 @TC_0002 @TC_0003
+  @Scenario38 @TC_0001 @TC_0002 @TC_0003
   Scenario: Verify Standard table related data on Performance over time chart
     Given User is on portal's login screen with username as "school_admin_one" and password as "password" and usertype as "realm_one"
     When User Click on Standard Performance tab within the Class Context

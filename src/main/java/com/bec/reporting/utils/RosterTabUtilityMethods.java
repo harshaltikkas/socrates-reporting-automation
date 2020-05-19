@@ -28,7 +28,7 @@ public class RosterTabUtilityMethods {
 	}
 
 	/*This method is used to select specified school in school dropdown*/
-	public static void select_School_In_School_DropDown(String school) {
+	public static String select_School_In_School_DropDown(String school) {		
 		try {
 			homePage.schooldropdownbtn.click();
 			Thread.sleep(500);
@@ -41,32 +41,34 @@ public class RosterTabUtilityMethods {
 					.perform();
 			Thread.sleep(500);
 			homePage.schooldropdownbtn.click();
-			Thread.sleep(500);
-			log.info("Selected School:" + homePage.schooldropdownbtn.getText());
+			Thread.sleep(500);			
+			log.info("Selected School:" +school);
 			new Actions(Driver.webdriver).moveToElement(homePage.studentTitleOnSliderMenu).build().perform();
 			RosterTabUtilityMethods.wait_For_Refresh_Icon(homePage.schoolRefreshIcon, "School");
 		} catch (Exception e) {
 			log.error("unable to select school from dropdown");
 			UtilityMethods.processException(e);
 		}
+		return school;
 	}
 	
 	/*This method is used to select specified grade in Grades dropdown*/
-	public static void select_Grade_In_Grades_DropDown(String grade) {
+	public static String select_Grade_In_Grades_DropDown(String grade) {
 		try {
 			homePage.gradedropdownbtn.click();
 			Thread.sleep(500);		
 			Driver.webdriver.findElement(By.xpath("//li[.='"+grade+"']")).click();
 			Thread.sleep(500);		
-			log.info("Selected Grade:" + homePage.gradedropdownbtn.getText());			
+			log.info("Selected Grade:" + grade);			
 		} catch (Exception e) {
 			log.error("unable to select grade from dropdown");
 			UtilityMethods.processException(e);
 		}
+		return grade;
 	}	
 	
 	/*This method is used to select specified Teacher in Teacher dropdown*/
-	public static void select_Teacher_In_Teacher_DropDown(String teacher) {
+	public static String select_Teacher_In_Teacher_DropDown(String teacher) {
 		try {
 			homePage.teachersdropdownbtn.click();
 			Thread.sleep(500);
@@ -80,16 +82,17 @@ public class RosterTabUtilityMethods {
 			Thread.sleep(500);
 			homePage.teachersdropdownbtn.click();
 			Thread.sleep(500);
-			log.info("Selected Teacher:" + homePage.teachersdropdownbtn.getText());			
+			log.info("Selected Teacher:" + teacher);			
 		} catch (Exception e) {
 			log.error("unable to select teacher from dropdown");
 			UtilityMethods.processException(e);
 		}
+		return teacher;
 	}
 	
 	/*This method is used to select specified class in Class dropdown*/
-	public static void select_Class_In_Class_DropDown(String cls) {
-		try {
+	public static String select_Class_In_Class_DropDown(String cls) {
+		try {			
 			homePage.classdropdownbtn.click();
 			Thread.sleep(500);
 			RosterTabUtilityMethods.uncheck_check_All("Class");
@@ -101,16 +104,17 @@ public class RosterTabUtilityMethods {
 					.perform();
 			Thread.sleep(500);
 			homePage.classdropdownbtn.click();
-			Thread.sleep(500);
+			Thread.sleep(500);			
 			log.info("Selected Class:" + cls);			
 		} catch (Exception e) {
 			log.error("unable to select class from dropdown");
 			UtilityMethods.processException(e);
 		}
+		return cls;
 	}	
 	
 	/*This method is used to select specified student in Student dropdown*/
-	public static void select_Student_In_Student_DropDown(String student) {
+	public static String select_Student_In_Student_DropDown(String student) {
 		try {
 			homePage.studentdropdownbtn.click();
 			Thread.sleep(500);
@@ -124,11 +128,12 @@ public class RosterTabUtilityMethods {
 			Thread.sleep(500);
 			homePage.studentdropdownbtn.click();
 			Thread.sleep(500);
-			log.info("Selected Class:" + homePage.studentdropdownbtn.getText());			
+			log.info("Selected Class:" + student);			
 		} catch (Exception e) {
 			log.error("unable to select Student from dropdown");
 			UtilityMethods.processException(e);
 		}
+		return student;
 	}	
 
 	/* This method is used to get all the test names of test tab */

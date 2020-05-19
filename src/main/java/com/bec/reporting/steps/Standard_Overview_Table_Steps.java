@@ -514,7 +514,6 @@ public class Standard_Overview_Table_Steps {
 	@When("^Click on the icon to maximize the Chart$")
 	public void click_on_the_icon_to_maximize_the_Chart() throws Throwable {
 		try {
-			UtilityMethods.wait_For_Student_List_AND_OR_Class_List_Section_Load();
 			jse.executeScript("arguments[0].click();", homePage.performance_overtime_icon);
 			UtilityMethods.wait_For_Performance_Over_Time_Line_Chart_Section_Load();
 		} catch (Exception e) {
@@ -560,8 +559,10 @@ public class Standard_Overview_Table_Steps {
 
 			new Actions(Driver.webdriver).moveToElement(homePage.info_icon_on_performance_over_time).click().build()
 					.perform();
-			Thread.sleep(500);
+			Thread.sleep(1000);
 			Assert.assertTrue(homePage.tooltip_of_info_icon.getText().length() == tooltipText_on_pot_icon.length());
+			new Actions(Driver.webdriver).moveToElement(homePage.overviewtext).click().build()
+			.perform();Thread.sleep(1000);
 			// verifying for student context
 			jse.executeScript("arguments[0].click();", homePage.studentmenu);
 			Thread.sleep(3000);
@@ -570,6 +571,8 @@ public class Standard_Overview_Table_Steps {
 					.perform();
 			Thread.sleep(500);
 			Assert.assertTrue(homePage.tooltip_of_info_icon.getText().length() == tooltipText_on_pot_icon.length());
+			new Actions(Driver.webdriver).moveToElement(homePage.overviewtext).click().build()
+			.perform();Thread.sleep(1000);
 			CBTConfiguration.score = "pass";
 		} catch (Exception e) {
 			UtilityMethods.processException(e);
