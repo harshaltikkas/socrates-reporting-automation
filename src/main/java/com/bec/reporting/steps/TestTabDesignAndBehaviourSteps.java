@@ -72,9 +72,9 @@ public class TestTabDesignAndBehaviourSteps {
 			homePage.testtab.click();
 			IWait.explicit_wait(Driver.webdriver, homePage.searchbarontesttab);
 			Verify.verify(homePage.searchbarontesttab.isDisplayed());
-			homePage.allcheckbox.click();
+			homePage.allcheckbox_in_test_tab.click();
 			Thread.sleep(2000);
-			homePage.allcheckbox.click();
+			homePage.allcheckbox_in_test_tab.click();
 		} catch (Exception e) {
 			UtilityMethods.processException(e);
 		}
@@ -139,7 +139,7 @@ public class TestTabDesignAndBehaviourSteps {
 	public void verify_checkbox_state_as_deselected_while_unchecked_on_checkbox() throws Throwable {
 		try {
 			// Deselecting all checkboxes
-			homePage.allcheckbox.click();
+			homePage.allcheckbox_in_test_tab.click();
 			Thread.sleep(500);
 			int count = 0, selectcheckbox = 0;
 			count = homePage.testscheckboxlist.size();
@@ -368,7 +368,7 @@ public class TestTabDesignAndBehaviourSteps {
 		try {
 			UtilityMethods.scrollPageDown(Driver.webdriver, 8);
 			Thread.sleep(500);
-			homePage.allcheckbox.click();
+			homePage.allcheckbox_in_test_tab.click();
 			Thread.sleep(500);
 			homePage.searchbarontesttab.sendKeys(UtilityMethods.generateRandomString(1));
 			Thread.sleep(500);
@@ -405,7 +405,7 @@ public class TestTabDesignAndBehaviourSteps {
 		try {
 			UtilityMethods.scrollPageDown(Driver.webdriver, 6);
 			Thread.sleep(500);
-			homePage.allcheckbox.click();
+			homePage.allcheckbox_in_test_tab.click();
 			Thread.sleep(500);
 			// Counting the total test
 			totalTestCount = countTotalTest();

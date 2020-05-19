@@ -474,7 +474,7 @@ public class UtilityMethods {
 			if (studentTextonCH.contains("(")) {
 				studentTextonCH = studentTextonCH.substring(0, studentTextonCH.indexOf("(") - 1);
 			}
-			new Actions(Driver.webdriver).moveByOffset(200, 200).build().perform();
+			new Actions(Driver.webdriver).moveByOffset(100, 100).build().perform();Thread.sleep(500);
 		} catch (Exception e) {
 			processException(e);
 		}
@@ -497,7 +497,6 @@ public class UtilityMethods {
 				} else {
 					schoolName = homePage.schoolnameoncontextheader.getText();
 				}
-				new Actions(Driver.webdriver).moveToElement(homePage.overviewtext).build().perform();
 			} catch (Exception e) {
 				new Actions(Driver.webdriver).moveToElement(homePage.tripledotsoncontextheader).click().build()
 						.perform();
@@ -509,9 +508,8 @@ public class UtilityMethods {
 				} else {
 					schoolName = homePage.schoolnameontripledot.getText();
 				}
-				new Actions(Driver.webdriver).moveToElement(homePage.overviewtext).click().build().perform();
-				Thread.sleep(500);
 			}
+			new Actions(Driver.webdriver).moveByOffset(100, 100).click().build().perform();Thread.sleep(500);
 		} catch (Exception e) {
 			processException(e);
 		}
@@ -546,8 +544,7 @@ public class UtilityMethods {
 					districtName = homePage.districtnameontripledot.getText();
 				}
 			}
-			new Actions(Driver.webdriver).moveByOffset(200, 200).build().perform();
-			Thread.sleep(500);
+			new Actions(Driver.webdriver).moveByOffset(100, 100).click().build().perform();Thread.sleep(500);
 		} catch (Exception e) {
 			processException(e);
 		}
@@ -570,8 +567,7 @@ public class UtilityMethods {
 				Thread.sleep(1000);
 				grade = homePage.gradenameontripledot.getText();
 			}
-			new Actions(Driver.webdriver).moveByOffset(200, 200).build().perform();
-			Thread.sleep(1000);
+			new Actions(Driver.webdriver).moveByOffset(100, 100).click().build().perform();Thread.sleep(500);
 		} catch (Exception e) {
 			processException(e);
 		}
@@ -593,8 +589,7 @@ public class UtilityMethods {
 			} else {
 				testsName = homePage.testsNameoncontextheader.getText();
 			}
-			new Actions(Driver.webdriver).moveByOffset(200, 200).build().perform();
-			Thread.sleep(500);
+			new Actions(Driver.webdriver).moveByOffset(100, 100).build().perform();Thread.sleep(500);
 		} catch (Exception e) {
 			processException(e);
 		}
@@ -616,8 +611,7 @@ public class UtilityMethods {
 			} else {
 				teachersName = homePage.teacherNameoncontextheader.getText();
 			}
-			new Actions(Driver.webdriver).moveByOffset(200, 200).build().perform();
-			Thread.sleep(500);
+			new Actions(Driver.webdriver).moveByOffset(100, 100).build().perform();Thread.sleep(500);
 		} catch (Exception e) {
 			processException(e);
 		}
@@ -1002,18 +996,7 @@ public class UtilityMethods {
 	}
 
 	public static void wait_For_CSV_File_Download(File file) throws InterruptedException {
-		/*
-		 * Robot robot=new Robot(); try { do {
-		 * log.info("Waiting for CSV File Save Dialog..."); Thread.sleep(2000); } while
-		 * (homePage.csvDownloadRefreshIcon.isDisplayed()); } catch (Exception e) {
-		 * log.info("CSV file save dialog box is showing"); } Thread.sleep(2000);
-		 * robot.keyPress(KeyEvent.VK_ENTER); Thread.sleep(500);
-		 * robot.keyRelease(KeyEvent.VK_ENTER); Thread.sleep(2000);
-		 * ==============================================
-		 * log.info("Waiting for CSV file to be saved..."); Thread.sleep(2000); if
-		 * (file.exists()) { log.info(file.getAbsoluteFile().getName() +
-		 * " is saved successfully.."); } else { wait_For_CSV_File_Download(file); }
-		 */
+
 		boolean isFileSaved = false;
 		int wait_for_csv = 0;
 		do {
@@ -1025,10 +1008,10 @@ public class UtilityMethods {
 				break;
 			}
 			wait_for_csv++;
-		} while (wait_for_csv <= 10);
+		} while (wait_for_csv <= 15);
 
-		if (isFileSaved == false && wait_for_csv > 10) {
-			log.error(" csv file not saved in 20 seconds...");
+		if (isFileSaved == false && wait_for_csv > 15) {
+			log.error("csv file not saved in 30 seconds...");
 			processException(new Exception());
 		}
 	}
@@ -1338,6 +1321,31 @@ public class UtilityMethods {
 			processException(e);
 		}
 		return name;
+	}
+
+	public static String getRandomTest_From_Test_Tab() {
+		try {
+			String name;
+			homePage.testtab.click();
+			Thread.sleep(500);
+			UtilityMethods.scrollPageDown(Driver.webdriver, 5);
+			Thread.sleep(500);
+			homePage.allcheckbox_in_test_tab.click();
+			Thread.sleep(500);
+			int ran_no = (int) (Math.random()*homePage.testnameslist_on_test_tab.size());
+			new Actions(Driver.webdriver).moveToElement(homePage.testnameslist_on_test_tab.get(ran_no)).build()
+					.perform();
+			name=homePage.testnameslist_on_test_tab.get(ran_no).getText();
+			homePage.testnameslist_on_test_tab.get(ran_no).click();
+			Thread.sleep(500);
+			homePage.testapplybtn.click();
+			UtilityMethods.scrollPageUp(Driver.webdriver);
+			UtilityMethods.wait_For_Student_List_AND_OR_Class_List_Section_Load();
+			return name;
+		} catch (Exception e) {
+			processException(e);
+			return null;
+		}
 	}
 
 }

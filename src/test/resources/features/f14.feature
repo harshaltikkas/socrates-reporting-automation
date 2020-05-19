@@ -1,88 +1,74 @@
 @Feature
-Feature: Validate Test Status Section - Sprint 30 to 33
+Feature: Fly In Menu Behaviour
 
-  @TestStatus1 @BE-1958
-  Scenario: Verify info icon text on summary
+  ##story 1b)
+  @Scenario1 @TC2 
+  Scenario Outline: Arrows to Open and Close the Tab
     Given User is on portal's login screen with username as "district_admin_one" and password as "password" and usertype as "realm_one"
-    When User Click on Test Status tab within the District Context
-    Then Verify info icon text on summary
+    When User Click on Standard Performance tab within the Class Context
+    Then User is able to open and close the "<universaltablist>" tab within the Universal Selector Tab
 
-  @TestStatus2
-  Scenario: Verify summary and detail on test status
+    Examples: 
+      | universaltablist |
+      | Roster           |
+      | Test             |
+      | Date             |
+
+  @Scenario2 @TC3
+  Scenario Outline: Roster Tab shows the dropdown list of Schools and Classes and Students to apply filters.
     Given User is on portal's login screen with username as "district_admin_one" and password as "password" and usertype as "realm_one"
-    When User Click on Test Status tab within the District Context
-    Then Verify summary and detail on test status
+    When User Click on Roster tab within the Universal Selector Tab
+    Then User should be able to select school as "Fair Oaks Ranch Community School" and select grade as "Grade 2" and Class and student as "<selectiontype>" and apply and verify with context header information
 
-  @TestStatus3
-  Scenario: Verify sorting order in summary
+    Examples: 
+      | selectiontype |
+      | single        |
+      | multiple      |
+      | All           |
+
+  @Scenario3 @TC4
+  Scenario: Verify to close the Fly-In menu of the Roster Tab.
     Given User is on portal's login screen with username as "district_admin_one" and password as "password" and usertype as "realm_one"
-    When User Click on Test Status tab within the District Context
-    Then Verify sorting order in summary
+    When User Click on Roster tab within the Universal Selector Tab
+    Then User should be able to click on cancel button to close the Roster Tab
 
-  @TestStatus4
-  Scenario: Verify sorting order in detail
+  @Scenario4 @TC5  
+  Scenario Outline: Test Tab shows the list of all tests and allows an individual test and or multiple tests
     Given User is on portal's login screen with username as "district_admin_one" and password as "password" and usertype as "realm_one"
-    When User Click on Test Status tab within the District Context
-    Then Verify sorting order in detail
+    When User Click on Test tab within the Universal Selector Tab
+    Then User should be able to select "<testtype>" Test and click on apply filter button
 
-  @TestStatus5 @BE-1965
-  Scenario: Verify pagination in summary in test status
-    Given User is on portal's login screen with username as "teacher_two" and password as "password" and usertype as "realm_one"
-    When User Click on Test Status tab within the Class Context
-    Then Verify pagination in summary in test status
+    Examples: 
+      | testtype |
+      | multiple |
+      | single   |
 
-	@TestStatus6 @BE-1974,75,76
-  Scenario: Verify Test Status default reports at Student Context when the Teacher logs in
-    Given User is on portal's login screen with username as "teacher_two" and password as "password" and usertype as "realm_one"
-    When User Click on Test Status tab within the Student Context
-    Then Verify Test Status default reports at Student Context when the Teacher logs in
-
-    @TestStatus7 @BE-2063 
-  Scenario: Verify CSV download of Test Status report in School context
-    Given User is on portal's login screen with username as "school_admin_two" and password as "password" and usertype as "realm_one"
-    When User Click on Test Status tab within the School Context
-    Then verify csv download functionality
+  @Scenario5 @TC6
+  Scenario: Verify to close the Fly-In menu of the Test Tab.
     Given User is on portal's login screen with username as "district_admin_one" and password as "password" and usertype as "realm_one"
-    When User Click on Test Status tab within the District Context
-    Then verify csv download functionality
+    When User Click on Test tab within the Universal Selector Tab
+    Then User should be able to click on cancel button to close the Test Tab
 
-   @TestStatus8 @BE-2118 @BE-2119 @BE-2126 @BE-2127 @BE-2218 @BE-2219
-  Scenario: Verify the Print PDF of Test Status District
+  @Scenario6 @TC7
+  Scenario: Date Tab allows to select District Term
     Given User is on portal's login screen with username as "district_admin_one" and password as "password" and usertype as "realm_one"
-    When User Click on Test Status tab within the District Context
-    Then verify the Print PDF of Test Status District
-    Given User is on portal's login screen with username as "teacher_two" and password as "password" and usertype as "realm_one"
-    When User Click on Test Status tab within the Student Context
-    Then verify the Print PDF of Test Status District
-    Given User is on portal's login screen with username as "school_admin_two" and password as "password" and usertype as "realm_one"
-    When User Click on Test Status tab within the School Context
-    Then verify the Print PDF of Test Status District
-    When User Click on Test Status tab within the Class Context
-    Then verify the Print PDF of Test Status District
+    When User Click on Date tab within the Universal Selector Tab
+    Then User should be able to select district term and click on apply filter button
 
-  @TestStatus9 @BE-2069
-  Scenario: Verify that Tests are listed in Correct Order for Test Scores Comparision
-    Given User is on portal's login screen with username as "district_admin_one" and password as "password" and usertype as "realm_one"   
-    When User Click on Comparison Tab in Test Scores tab within the District Context
-    Then verify Tests are listed in Correct Order for Test Scores Comparision
+  @Scenario7 @TC8
+  Scenario: Verify to close the Fly-In menu of the Date Tab.
+    Given User is on portal's login screen with username as "district_admin_one" and password as "password" and usertype as "realm_one"
+    When User Click on Date tab within the Universal Selector Tab
+    Then User should be able to click on cancel button to close the Date Tab
 
-  @TestStatus10 @BE-2167 @BE-2168
-  Scenario: Verify the No Data Modal for Test Status
-    Given User is on portal's login screen with username as "teacher_one" and password as "password" and usertype as "realm_one"
-    Then verify the No Data Modal for Test Status
+  @Scenario8 @TC9
+  Scenario Outline: Showing tool tip when tab hovered over
+    Given User is on portal's login screen with username as "district_admin_one" and password as "password" and usertype as "realm_one"
+    When User mousehover on "<universaltablistone>" tab within the Universal Selector Tab
+    Then "<universaltablistone>" tab show tool tip "<tooltiptext>"
 
-   @TestStatus11 @BE-1989
-  Scenario: Verify the data displayed in Detail section of Test Status Class View
-    Given User is on portal's login screen with username as "school_admin_two" and password as "password" and usertype as "realm_one"
-    When User Click on Test Status tab within the School Context
-    And User Click on Test Status tab within the Class Context
-    Then Verify the data displayed in Detail section of Test Status Class View
-    Given User is on portal's login screen with username as "teacher_two" and password as "password" and usertype as "realm_one"
-    When User Click on Test Status tab within the Class Context
-    Then Verify the data displayed in Detail section of Test Status Class View
-
-   @TestStatus12 @BE-2026
-  Scenario: Verify the data displayed in Detail section of Test Status School View
-    Given User is on portal's login screen with username as "school_admin_two" and password as "password" and usertype as "realm_one"
-    When User Click on Test Status tab within the School Context
-    Then Verify the data displayed in Detail section of Test Status School View
+    Examples: 
+      | universaltablistone | tooltiptext                        |
+      | Roster              | Select Student, Class, Grade, etc. |
+      | Test                | Select Test(s)                     |
+      | Date                | Select Dates                       |

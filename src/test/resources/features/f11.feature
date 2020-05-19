@@ -27,9 +27,9 @@ Feature: Sprint 11 & Sprint 12 & Sprint 13 & Sprint 14 & Sprint 15 User Stories
     Given User is on portal's login screen with username as "district_admin_one" and password as "password" and usertype as "realm_one"
     Then verify No test data available for school as "Fair Oaks Ranch Community School" and grade as "Grade k" selection screen on selection from the Roster tab
 
-  ##BE-989   
+  ##BE-989  
   Scenario: Verify Showing No data screen for Date range which has no test data within the date tab
-    Given User is on portal's login screen with username as "district_admin_one" and password as "password" and usertype as "realm_one"
+    Given User is on portal's login screen with username as "teacher_four" and password as "password" and usertype as "realm_fauquier"
     Then verify Showing No data screen for Date range which has no test data within the date tab
 
   ##BE-988    

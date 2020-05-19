@@ -178,7 +178,7 @@ public class HomePage {
 	public WebElement datecancelbtn;
 
 	@FindBy(xpath = "//label[@class='input-checkbox checkbox-lightBlue']")
-	public WebElement allcheckbox;
+	public WebElement allcheckbox_in_test_tab;
 
 	@FindBy(xpath = "//div[@class='menu-title' and contains(text(),'Student')]/following-sibling::div//div[@class='menu-dropdown-list-inr']/ul/li")
 	public WebElement studentdropdownallcheckbox;
@@ -1259,7 +1259,16 @@ public class HomePage {
 
 	@FindBy(xpath = "//span[@class='bec_singleTest_filter_radio_label text-capitalize' and .='view']/preceding-sibling::span")
 	public WebElement view_rb_on_filter_in_sta;
+	
+	@FindBy(xpath = "//span[@class='bec_singleTest_filter_checkbox_label' and contains(text(),'All')]")
+	public WebElement all_chkbox_on_filter_in_sta;
 
+	@FindBy(xpath = "//span[contains(@class,'bec_singleTest_filter_checkbox_label')]")
+	public List<WebElement> chkbox_list_text_under_view_on_sta_filter;
+	
+	@FindBy(xpath = "//li/div[contains(text(),'View:')]/ancestor::li//li/span[not(contains(text(),'All')) and contains(@class,'bec_singleTest_filter_checkbox') and not(contains(@class,'text'))]")
+	public List<WebElement> chkbox_list_under_view_on_sta_filter;
+	
 	@FindBy(xpath = "//span[@class='bec_singleTest_filter_radio_label text-capitalize' and .='question']/preceding-sibling::span")
 	public WebElement question_rb_on_filter_in_sta;
 
@@ -1268,6 +1277,9 @@ public class HomePage {
 
 	@FindBy(xpath = "//button[@class='btn bec_singleTest_popup_apply_filter_apply' and .='Apply']")
 	public WebElement apply_button_on_filter_in_sta;
+	
+	@FindBy(xpath = "//button[@class='btn bec_singleTest_popup_apply_filter_cancel' and .='Cancel']")
+	public WebElement cancel_button_on_filter_in_sta;
 
 	@FindBy(xpath = "//div[@class='bec_singleTest_multi_list_row bec_singleTest_multi_list_grid_block']")
 	public List<WebElement> records_on_sta;
@@ -1286,6 +1298,15 @@ public class HomePage {
 
 	@FindBy(xpath = "//span[@class='bec_singleTest_checkbox_label']")
 	public List<WebElement> compare_cb_list_on_sta;
+	
+	@FindBy(xpath = "//div[contains(@class,'bec_singleTest_multi_list_single_taxonomy')]")
+	public WebElement view_text_in_sta_table_header;
+	
+	@FindBy(xpath = "//span[@class='bec_compare_checkbox_label']")
+	public List<WebElement> compare_cb_list_on_comparison_tab;
+	
+	@FindBy(xpath = "//div[@class='bec_compare_multi_list_sub_block_compare_row']//div[@class='bec_compare_multi_list_sub_block_compare_label']")
+	public List<WebElement> compare_list_of_avg_on_comparison_tab;
 
 	@FindBy(xpath = "//span[@class='bec_singleTest_multi_list_name']")
 	public List<WebElement> compared_columns_list_on_table_on_sta;

@@ -337,8 +337,6 @@ public class Sprint_Nine_Steps {
 					"Student Name", "Student ID(SIS)", "Test Type", "Test Name", "Test Submitted", "Test Graded",
 					"Percent Score" };
 
-			// IWait.check_Absence_of_Element(homePage.takemeback);
-
 			IWait.explicit_wait(Driver.webdriver, homePage.csvDownloadIcon);
 			homePage.csvDownloadIcon.click();
 			Thread.sleep(1000);
@@ -370,7 +368,6 @@ public class Sprint_Nine_Steps {
 				file = new File(folder + "\\" + fileName);
 				UtilityMethods.wait_For_CSV_File_Download(file);
 				UtilityMethods.Verify_Columns_Header_of_CSV(test_status, file);
-
 			}
 			log.info("After Downloading, deleting the file :" + file.getAbsoluteFile().getName());
 			UtilityMethods.Delete_CSV(file);
