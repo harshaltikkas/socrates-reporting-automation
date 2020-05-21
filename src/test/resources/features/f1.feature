@@ -37,7 +37,7 @@ Feature: Validate Test Status Section - Sprint 30 to 33
     When User Click on Test Status tab within the Student Context
     Then Verify Test Status default reports at Student Context when the Teacher logs in
 
-   @TestStatus7 @BE-2063 
+  @TestStatus7 @BE-2063 
   Scenario: Verify CSV download of Test Status report in School context
     Given User is on portal's login screen with username as "school_admin_two" and password as "password" and usertype as "realm_one"
     When User Click on Test Status tab within the School Context

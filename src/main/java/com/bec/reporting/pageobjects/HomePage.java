@@ -39,7 +39,7 @@ public class HomePage {
 	@FindBy(xpath = "//div[@class='menu-title' and contains(text(),'Class')]/span[@class='data-refresh']//i[@class='material-icons' and contains(text(),'autorenew')]")
 	public WebElement classRefreshIcon;
 
-	@FindBy(xpath = "//div[@class='menu-title' and contains(text(),'Grades')]/span[@class='data-refresh']//i[@class='material-icons' and contains(text(),'autorenew')]")
+	@FindBy(xpath = "//div[@class='menu-title' and contains(text(),'Grade')]/span[@class='data-refresh']//i[@class='material-icons' and contains(text(),'autorenew')]")
 	public WebElement gradeRefreshIcon;
 
 	@FindBy(xpath = "//div[@class='menu-title' and contains(text(),'Teacher')]/span[@class='data-refresh']//i[@class='material-icons' and contains(text(),'autorenew')]")
@@ -150,7 +150,7 @@ public class HomePage {
 	@FindBy(xpath = "//span[contains(text(),'Student Data')]/ancestor::div[@class='menu-title']/following-sibling::div/button")
 	public WebElement studentdatadropdownbtn;
 
-	@FindBy(xpath = "//div[@class='menu-title' and contains(text(),'Grades')]/following-sibling::div/button")
+	@FindBy(xpath = "//div[@class='menu-title' and contains(text(),'Grade')]/following-sibling::div/button")
 	public WebElement gradedropdownbtn;
 
 	@FindBy(xpath = "//div[@class='menu-title' and contains(text(),'District Term')]/following-sibling::div/button")
@@ -210,7 +210,7 @@ public class HomePage {
 	@FindBy(xpath = "//div[@class='menu-title' and contains(text(),'School')]/following-sibling::div//div[@class='menu-dropdown-list-inr']/ul//li")
 	public List<WebElement> schoollist;
 
-	@FindBy(xpath = "//div[@class='menu-title' and contains(text(),'Grades')]/following-sibling::div//div[@class='menu-dropdown-list-inr']/ul//li")
+	@FindBy(xpath = "//div[@class='menu-title' and contains(text(),'Grade')]/following-sibling::div//div[@class='menu-dropdown-list-inr']/ul//li")
 	public List<WebElement> gradelist;
 
 	@FindBy(xpath = "//div[@class='menu-title' and contains(text(),'Class')]/following-sibling::div//div[@class='menu-dropdown-list-inr']/ul//li")

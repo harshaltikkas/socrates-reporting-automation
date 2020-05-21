@@ -151,7 +151,7 @@ public class PaginationOfDropDownListSteps {
 
 			homePage.gradedropdownbtn.click();
 			Thread.sleep(500);
-			check_paginator_on_Roster("Grades", 20);
+			check_paginator_on_Roster("Grade", 20);
 			homePage.gradelist.get(4).click();
 			Thread.sleep(500);
 
