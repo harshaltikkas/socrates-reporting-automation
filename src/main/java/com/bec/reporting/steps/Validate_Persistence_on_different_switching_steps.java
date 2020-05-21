@@ -136,11 +136,13 @@ public class Validate_Persistence_on_different_switching_steps {
 			Assert.assertTrue(homePage.activedistrictmenu.isDisplayed());
 			Assert.assertTrue(homePage.activestandardperformancebtn.isDisplayed());
 			String test_name_on_ch;
+			jse.executeScript("arguments[0].click();", homePage.statab);
+			UtilityMethods.wait_For_STA_Section_Load();			
+			
 			String testname = UtilityMethods.getRandomTest_From_Test_Tab();
+			UtilityMethods.wait_For_STA_Section_Load();
 			log.info("Selected Test in Test Tab :" + testname);
 			test_name_on_ch = UtilityMethods.getTestsNameonUI();
-			jse.executeScript("arguments[0].click();", homePage.statab);
-			UtilityMethods.wait_For_STA_Section_Load();
 			Assert.assertTrue(testname.equals(test_name_on_ch));
 
 			// BE-2274
@@ -263,10 +265,8 @@ public class Validate_Persistence_on_different_switching_steps {
 	public void verify_User_is_switched_to_School_and_Class_subway_is_enabled_and_Student_subway_is_disabled()
 			throws Throwable {
 		try {
-
 			Assert.assertTrue(homePage.activeschoolmenu.isDisplayed());
 			Assert.assertTrue(homePage.classmenu.isDisplayed());
-
 			try {
 				homePage.studentmenu.click();
 				Assert.assertTrue(homePage.activestudentmenu.isDisplayed());
@@ -274,11 +274,9 @@ public class Validate_Persistence_on_different_switching_steps {
 			} catch (Exception e) {
 				log.info("Student Subway filter is disabled");
 			}
-
 		} catch (Exception e) {
 			UtilityMethods.processException(e);
 		}
-
 	}
 
 	@Then("^Navigate back to District and click on Roster tab and select multiple Schools and click apply$")
@@ -305,7 +303,6 @@ public class Validate_Persistence_on_different_switching_steps {
 			Thread.sleep(500);
 			homePage.rosterapplybtn.click();
 			UtilityMethods.wait_For_Student_List_AND_OR_Class_List_Section_Load();
-
 		} catch (Exception e) {
 			UtilityMethods.processException(e);
 		}
@@ -315,7 +312,6 @@ public class Validate_Persistence_on_different_switching_steps {
 	public void verify_User_is_in_District_context_and_School_subway_is_enabled_and_Class_and_Student_subway_are_disabled()
 			throws Throwable {
 		try {
-
 			Assert.assertTrue(homePage.schoolmenu.isDisplayed());
 			Assert.assertTrue(homePage.activedistrictmenu.isDisplayed());
 			try {
@@ -328,7 +324,6 @@ public class Validate_Persistence_on_different_switching_steps {
 				log.info("Class Subway filter is disabled");
 				log.info("Student Subway filter is disabled");
 			}
-
 		} catch (Exception e) {
 			UtilityMethods.processException(e);
 		}
@@ -359,7 +354,6 @@ public class Validate_Persistence_on_different_switching_steps {
 			homePage.rosterapplybtn.click();
 			UtilityMethods.wait_For_Student_List_AND_OR_Class_List_Section_Load();
 			UtilityMethods.scrollPageUp(Driver.webdriver, 4);
-
 		} catch (Exception e) {
 			UtilityMethods.processException(e);
 		}
@@ -390,7 +384,6 @@ public class Validate_Persistence_on_different_switching_steps {
 			homePage.rosterapplybtn.click();
 			UtilityMethods.wait_For_Student_List_AND_OR_Class_List_Section_Load();
 			UtilityMethods.scrollPageUp(Driver.webdriver, 4);
-
 		} catch (Exception e) {
 			UtilityMethods.processException(e);
 		}
@@ -411,7 +404,6 @@ public class Validate_Persistence_on_different_switching_steps {
 			homePage.rosterapplybtn.click();
 			UtilityMethods.wait_For_Performance_Over_Time_Line_Chart_Section_Load();
 			UtilityMethods.scrollPageUp(Driver.webdriver, 4);
-
 		} catch (Exception e) {
 			UtilityMethods.processException(e);
 		}
@@ -423,7 +415,6 @@ public class Validate_Persistence_on_different_switching_steps {
 			Assert.assertTrue(homePage.schoolmenu.isDisplayed());
 			Assert.assertTrue(homePage.classmenu.isDisplayed());
 			Assert.assertTrue(homePage.activestudentmenu.isDisplayed());
-
 		} catch (Exception e) {
 			UtilityMethods.processException(e);
 		}
@@ -463,7 +454,6 @@ public class Validate_Persistence_on_different_switching_steps {
 			homePage.rosterapplybtn.click();
 			UtilityMethods.wait_For_Student_List_AND_OR_Class_List_Section_Load();
 			UtilityMethods.scrollPageUp(Driver.webdriver, 4);
-
 		} catch (Exception e) {
 			UtilityMethods.processException(e);
 		}
@@ -479,7 +469,7 @@ public class Validate_Persistence_on_different_switching_steps {
 		} catch (Exception e) {
 			UtilityMethods.processException(e);
 		}
-		log.info("Scenario BE-2257,2258,2259,2261,2262,2263");
+		log.info("Scenario BE-2257,2258,2259,2261,2262,2263 completed");
 	}
 
 	@When("^User click on Roster tab and select one Teacher and one Class and click apply$")
@@ -491,7 +481,6 @@ public class Validate_Persistence_on_different_switching_steps {
 			RosterTabUtilityMethods.select_Class_In_Class_DropDown("Grade 6 - Hines - 0");
 			homePage.rosterapplybtn.click();
 			UtilityMethods.wait_For_Student_List_AND_OR_Class_List_Section_Load();
-
 		} catch (Exception e) {
 			UtilityMethods.processException(e);
 		}
@@ -522,7 +511,6 @@ public class Validate_Persistence_on_different_switching_steps {
 			homePage.rosterapplybtn.click();
 			UtilityMethods.wait_For_Student_List_AND_OR_Class_List_Section_Load();
 			UtilityMethods.scrollPageUp(Driver.webdriver, 4);
-
 		} catch (Exception e) {
 			UtilityMethods.processException(e);
 		}
@@ -540,7 +528,6 @@ public class Validate_Persistence_on_different_switching_steps {
 			RosterTabUtilityMethods.select_Student_In_Student_DropDown("Paul Blair");
 			homePage.rosterapplybtn.click();
 			UtilityMethods.wait_For_Performance_Over_Time_Line_Chart_Section_Load();
-
 		} catch (Exception e) {
 			UtilityMethods.processException(e);
 		}
@@ -578,7 +565,6 @@ public class Validate_Persistence_on_different_switching_steps {
 			homePage.studentdropdownbtn.click();
 			homePage.rosterapplybtn.click();
 			UtilityMethods.wait_For_Student_List_AND_OR_Class_List_Section_Load();
-
 		} catch (Exception e) {
 			UtilityMethods.processException(e);
 		}
@@ -593,58 +579,63 @@ public class Validate_Persistence_on_different_switching_steps {
 			UtilityMethods.wait_For_STA_Section_Load();
 			homePage.rostertab.click();
 			Thread.sleep(1000);
-			String scName,grade,teacherName,className,student_name;
-			String scName_on_ch,grade_name_on_ch,teacher_name_on_ch,class_name_on_ch,student_name_on_ch;			
-			
-			scName=RosterTabUtilityMethods.select_School_In_School_DropDown("Golden Oak Community School");
-			grade=RosterTabUtilityMethods.select_Grade_In_Grades_DropDown("Grade 4");
-			teacherName=RosterTabUtilityMethods.select_Teacher_In_Teacher_DropDown("Anastasia Clarke");
-			className=RosterTabUtilityMethods.select_Class_In_Class_DropDown("Grade 4 - McCarthy - 0");
-			UtilityMethods.scrollPageDown(Driver.webdriver, 7);Thread.sleep(500);
-			student_name=RosterTabUtilityMethods.select_Student_In_Student_DropDown("Wendy Allen");
+			String scName, grade, teacherName, className, student_name;
+			String scName_on_ch, grade_name_on_ch, teacher_name_on_ch, class_name_on_ch, student_name_on_ch;
+
+			scName = RosterTabUtilityMethods.select_School_In_School_DropDown("Golden Oak Community School");
+			grade = RosterTabUtilityMethods.select_Grade_In_Grades_DropDown("Grade 4");
+			teacherName = RosterTabUtilityMethods.select_Teacher_In_Teacher_DropDown("Anastasia Clarke");
+			className = RosterTabUtilityMethods.select_Class_In_Class_DropDown("Grade 4 - McCarthy - 0");
+			UtilityMethods.scrollPageDown(Driver.webdriver, 7);
+			Thread.sleep(500);
+			student_name = RosterTabUtilityMethods.select_Student_In_Student_DropDown("Wendy Allen");
 			homePage.rosterapplybtn.click();
 			UtilityMethods.scrollPageUp(Driver.webdriver);
 			UtilityMethods.wait_For_STA_Section_Load();
-			grade=grade.substring(grade.indexOf(" ")+1);
-			scName_on_ch=UtilityMethods.getSchoolNameonUI();
-			teacher_name_on_ch=UtilityMethods.getTeacherNameonUI();			
-			grade_name_on_ch=UtilityMethods.getGradeNameonUI();
-			class_name_on_ch=UtilityMethods.getClassNameonUI();
-			student_name_on_ch=UtilityMethods.getStudentNameonUI();
-			
+			grade = grade.substring(grade.indexOf(" ") + 1);
+			scName_on_ch = UtilityMethods.getSchoolNameonUI();
+			teacher_name_on_ch = UtilityMethods.getTeacherNameonUI();
+			grade_name_on_ch = UtilityMethods.getGradeNameonUI();
+			class_name_on_ch = UtilityMethods.getClassNameonUI();
+			student_name_on_ch = UtilityMethods.getStudentNameonUI();
+
 			Assert.assertTrue(student_name.equals(student_name_on_ch));
 			Assert.assertTrue(scName_on_ch.equals(scName));
 			Assert.assertTrue(grade.equals(grade_name_on_ch));
 			Assert.assertTrue(teacherName.equals(teacher_name_on_ch));
-			Assert.assertTrue(className.equals(class_name_on_ch));			
+			Assert.assertTrue(className.equals(class_name_on_ch));
 			log.info("Roster Tab value matched with context header data on student context");
-			homePage.classmenu.click();Thread.sleep(500);
+			homePage.classmenu.click();
+			Thread.sleep(500);
 			UtilityMethods.wait_For_STA_Section_Load();
-			scName_on_ch=UtilityMethods.getSchoolNameonUI();
-			teacher_name_on_ch=UtilityMethods.getTeacherNameonUI();			
-			grade_name_on_ch=UtilityMethods.getGradeNameonUI();
-			class_name_on_ch=UtilityMethods.getClassNameonUI();
+			scName_on_ch = UtilityMethods.getSchoolNameonUI();
+			teacher_name_on_ch = UtilityMethods.getTeacherNameonUI();
+			grade_name_on_ch = UtilityMethods.getGradeNameonUI();
+			class_name_on_ch = UtilityMethods.getClassNameonUI();
 			Assert.assertTrue(scName_on_ch.equals(scName));
 			Assert.assertTrue(grade.equals(grade_name_on_ch));
 			Assert.assertTrue(teacherName.equals(teacher_name_on_ch));
 			Assert.assertTrue(className.equals(class_name_on_ch));
 			log.info("Roster Tab value matched with context header data on class context");
-			homePage.schoolmenu.click();Thread.sleep(500);
+			homePage.schoolmenu.click();
+			Thread.sleep(500);
 			UtilityMethods.wait_For_STA_Section_Load();
-			scName_on_ch=UtilityMethods.getSchoolNameonUI();
-			grade_name_on_ch=UtilityMethods.getGradeNameonUI();			
+			scName_on_ch = UtilityMethods.getSchoolNameonUI();
+			grade_name_on_ch = UtilityMethods.getGradeNameonUI();
 			Assert.assertTrue(scName_on_ch.equals(scName));
 			Assert.assertTrue(grade.equals(grade_name_on_ch));
 			log.info("Roster Tab value matched with context header data on school context");
-			homePage.districtmenu.click();Thread.sleep(500);
+			homePage.districtmenu.click();
+			Thread.sleep(500);
 			UtilityMethods.wait_For_STA_Section_Load();
-			grade_name_on_ch=UtilityMethods.getGradeNameonUI();			
+			grade_name_on_ch = UtilityMethods.getGradeNameonUI();
 			Assert.assertTrue(grade.equals(grade_name_on_ch));
 			log.info("Roster Tab value matched with context header data on school context");
 		} catch (Exception e) {
 			UtilityMethods.processException(e);
 		}
-		
+		log.info("Scenario BE-2270 completed");
 	}
 
+	
 }

@@ -1025,7 +1025,7 @@ public class UtilityMethods {
 			Thread.sleep(500);
 			new Actions(Driver.webdriver).moveToElement(homePage.studentTitleOnSliderMenu).build().perform();
 			Driver.webdriver.findElement(By.xpath("//li[.='Golden Oak Community School']")).click();
-			RosterTabUtilityMethods.wait_For_Refresh_Icon(homePage.gradeRefreshIcon, "Grades");
+			RosterTabUtilityMethods.wait_For_Refresh_Icon(homePage.gradeRefreshIcon, "Grade");
 			homePage.gradedropdownbtn.click();
 			Thread.sleep(500);
 			Driver.webdriver.findElement(By.xpath("//li[.='Grade 4']")).click();
@@ -1340,7 +1340,7 @@ public class UtilityMethods {
 			Thread.sleep(500);
 			homePage.testapplybtn.click();
 			UtilityMethods.scrollPageUp(Driver.webdriver);
-			UtilityMethods.wait_For_Student_List_AND_OR_Class_List_Section_Load();
+		
 			return name;
 		} catch (Exception e) {
 			processException(e);

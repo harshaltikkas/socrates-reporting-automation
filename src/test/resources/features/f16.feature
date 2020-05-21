@@ -31,24 +31,23 @@ Feature: Subway Navigation Changes - Sprint35 Scenarios
     Then Navigate back to School and click on Roster tab and select a Class and multiple Students and click apply
     And Verify User is switched to Class and School and Student subway filters are enabled
     
-  #This is failing as not persistence of test name on diff context header    
-  @BE-2277
+  #BE-2266,2267,2268 already covered previously  
+  @BE-2277 
   Scenario: Verify Test Scores Comparison Persistence on switching to all other levels
     Given User is on portal's login screen with username as "district_admin_one" and password as "password" and usertype as "realm_one"
     Then Verify Test Scores Comparison Persistence on switching to all other levels
 
-  #This is failing as not persistence of test name on diff context header    
   @BE-2276 @BE-2274
   Scenario: Verify Single Test Analysis Persistence on switching to all other levels through subway nav filters
     Given User is on portal's login screen with username as "district_admin_one" and password as "password" and usertype as "realm_one"
     Then Verify Single Test Analysis Persistence on switching to all other levels through subway nav filters
     
-    #failing, as grade selected in roster is not matched with context header grade value on school context,same for district context
-  @BE-2270
+  @BE-2270 @BE-2269
   Scenario: Verify the persistence by selecting data in Roster tab filters of STA
     Given User is on portal's login screen with username as "district_admin_one" and password as "password" and usertype as "realm_one"
     Then Verify the persistence by selecting data in Roster tab filters of STA
     
+  
     
     
     

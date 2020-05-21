@@ -326,16 +326,14 @@ public class Sprint_Nine_Steps {
 			String folder = "C:\\Users\\" + user + "\\Downloads";
 			String fileName = null;
 
-			String sp_list[] = new String[] { "District Name", "School Name", "Grade", "Teacher Name", "Class Name",
+			String sp_ts_list[] = new String[] { "District Name", "School Name", "Grade", "Teacher Name", "Class Name",
 					"Student Name", "Student ID(SIS)", "Test Type", "Test Name", "Test Submitted", "Test Graded",
-					"Question Numbers", "Points Earned", "Total Points", "Strand", "Standard", "DOK",
-					"Claims & Targets", "Topics", "Skills" };
+					"Question Numbers", "Points Earned", "Total Points", "TestScore %", "Standard", "DOK",
+					"Claims & Targets", "Topics", "Skills", "ELD Domain", "ELD Task", "ELD Standard" };
+
 			String test_status[] = new String[] { "District Name", "School Name", "Grade", "Teacher Name", "Class Name",
 					"Student Name", "Student ID(SIS)", "Test Type", "Test Name", "Assignment Name", "Test Status",
 					"Start Date", "Due Date", "Submit Date" };
-			String test_scores[] = new String[] { "District Name", "School Name", "Grade", "Teacher Name", "Class Name",
-					"Student Name", "Student ID(SIS)", "Test Type", "Test Name", "Test Submitted", "Test Graded",
-					"Percent Score" };
 
 			IWait.explicit_wait(Driver.webdriver, homePage.csvDownloadIcon);
 			homePage.csvDownloadIcon.click();
@@ -354,15 +352,15 @@ public class Sprint_Nine_Steps {
 			}
 
 			if (Standard_Overview_Table_Steps.performanceMenuClicked) {
-				fileName = "standard_performance.csv";
+				fileName = "ar_report_csv.csv";
 				file = new File(folder + "\\" + fileName);
 				UtilityMethods.wait_For_CSV_File_Download(file);
-				UtilityMethods.Verify_Columns_Header_of_CSV(sp_list, file);
+				UtilityMethods.Verify_Columns_Header_of_CSV(sp_ts_list, file);
 			} else if (Standard_Overview_Table_Steps.testScoreMenuClicked) {
-				fileName = "test_scores.csv";
+				fileName = "ar_report_csv.csv";
 				file = new File(folder + "\\" + fileName);
 				UtilityMethods.wait_For_CSV_File_Download(file);
-				UtilityMethods.Verify_Columns_Header_of_CSV(test_scores, file);
+				UtilityMethods.Verify_Columns_Header_of_CSV(sp_ts_list, file);
 			} else if (Standard_Overview_Table_Steps.test_status_Menu_Clicked) {
 				fileName = "test_status.csv";
 				file = new File(folder + "\\" + fileName);
