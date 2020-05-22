@@ -1003,6 +1003,7 @@ public class UtilityMethods {
 			log.info("Waiting for CSV file to be saved...");
 			Thread.sleep(2000);
 			if (file.exists()) {
+				Thread.sleep(1000);
 				log.info(file.getAbsoluteFile().getName() + " is saved successfully..");
 				isFileSaved = true;
 				break;
@@ -1025,7 +1026,7 @@ public class UtilityMethods {
 			Thread.sleep(500);
 			new Actions(Driver.webdriver).moveToElement(homePage.studentTitleOnSliderMenu).build().perform();
 			Driver.webdriver.findElement(By.xpath("//li[.='Golden Oak Community School']")).click();
-			RosterTabUtilityMethods.wait_For_Refresh_Icon(homePage.gradeRefreshIcon, "Grade");
+			RosterTabUtilityMethods.wait_For_Refresh_Icon(homePage.schoolRefreshIcon, "School");
 			homePage.gradedropdownbtn.click();
 			Thread.sleep(500);
 			Driver.webdriver.findElement(By.xpath("//li[.='Grade 4']")).click();
@@ -1045,6 +1046,7 @@ public class UtilityMethods {
 	public static void Verify_Columns_Header_of_CSV(String[] details, File csv_File_Name) {
 		CSVReader csvReader = null;
 		try {
+			log.info("Verifying csv file headers....");
 			// Create an object of filereader
 			// class with CSV file as a parameter.
 			FileReader filereader = new FileReader(csv_File_Name);
@@ -1062,6 +1064,7 @@ public class UtilityMethods {
 				log.info("Headers matched with the csv file...");
 				break;
 			}
+			log.info("csv file headers matched successfully..");
 		} catch (Exception e) {
 			log.error("Headers not matched with the list...");
 			processException(e);
@@ -1078,10 +1081,12 @@ public class UtilityMethods {
 
 	/** This method is used to delete the csv file in download folder **/
 	public static void Delete_CSV(File f) {
+		log.info("trying to delete csv file,after verification of headers.");
 		if (f.exists()) {
 			log.info("Deleting the file: " + f.getAbsoluteFile().getName());
 			f.delete();
 		}
+		log.info("csv file deleted successfully");
 	}
 
 	/** This method is used to delete the pdf file in download folder **/
