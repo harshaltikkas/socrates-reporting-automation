@@ -326,10 +326,10 @@ public class Sprint_Nine_Steps {
 			String folder = "C:\\Users\\" + user + "\\Downloads";
 			String fileName = null;
 
-			String sp_ts_list[] = new String[] { "District Name", "School Name", "Grade", "Teacher Name", "Class Name",
+			String sp_ts_list[] = new String[] { "District Name", "School Name", "Teacher Name", "Class Name",
 					"Student Name", "Student ID(SIS)", "Test Type", "Test Name", "Test Submitted", "Test Graded",
 					"Question Numbers", "Points Earned", "Total Points", "TestScore %", "Standard", "DOK",
-					"Claims & Targets", "Topics", "Skills", "ELD Domain", "ELD Task", "ELD Standard" };
+					 "ELD Domain", "ELD Task", "ELD Standard" };
 
 			String test_status[] = new String[] { "District Name", "School Name", "Grade", "Teacher Name", "Class Name",
 					"Student Name", "Student ID(SIS)", "Test Type", "Test Name", "Assignment Name", "Test Status",

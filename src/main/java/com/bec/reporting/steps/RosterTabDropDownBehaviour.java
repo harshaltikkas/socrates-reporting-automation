@@ -34,7 +34,6 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.PageFactory;
 import com.bec.reporting.pageobjects.HomePage;
 import com.bec.reporting.utils.CBTConfiguration;
-import com.bec.reporting.utils.API_Connection;
 import com.bec.reporting.utils.Driver;
 import com.bec.reporting.utils.IWait;
 import com.bec.reporting.utils.RosterTabUtilityMethods;
@@ -53,88 +52,7 @@ public class RosterTabDropDownBehaviour {
 	HomePage homePage = PageFactory.initElements(Driver.webdriver, HomePage.class);
 	public static String selectedSchoolName, selectedclassText, selectedStudentText;
 	int schoolcount = 0, selectedschoolIndex = 0, classcount = 0, selectedclassIndex = 0, studentcount = 0,
-			selectedstudent = 0;
-
-	/**
-	 * This method is used to click on roster tab and verify the default first
-	 * alphabatical selection of school and class and 'all' as student.
-	 * 
-	 * @throws Throwable
-	 */
-	@Then("^User Click on Roster tab within the Universal Selector Tab and school value and class value and 'all' student are selected$")
-	public void user_Click_on_Roster_tab_within_the_Universal_Selector_Tab_and_school_value_and_class_value_and_all_student_are_selected()
-			throws Throwable {
-		try {
-			String defaultSelectedSchool, defaultSelectedClass, apiFirstSchool = "", apiFirstClass = "";
-			int school_list_size = API_Connection.getAllSchoolNames().size();
-			int schoolId = 0, class_list_size = 0;
-			boolean disabled_classAndstudent = false;
-			if (school_list_size > 1) {
-				apiFirstSchool = "All";
-			} else if (school_list_size == 1) {
-				apiFirstSchool = API_Connection.getFirstAlphaSchoolName();
-				schoolId = API_Connection.getSchoolIDBySchoolName(apiFirstSchool);
-			}
-
-			if (apiFirstSchool.equalsIgnoreCase("all")) {
-				disabled_classAndstudent = true;
-			} else {
-				class_list_size = API_Connection.getAllClassesNamesBySchoolName(schoolId).size();
-				if (class_list_size > 1) {
-					apiFirstClass = "All";
-				} else if (class_list_size > 1) {
-					apiFirstClass = API_Connection.getFirstAlphaClassNameBySchoolName(schoolId);
-				}
-			}
-			Thread.sleep(500);
-			homePage.rostertab.click();
-			IWait.explicit_wait(Driver.webdriver, homePage.studentTitleOnSliderMenu);
-			Verify.verify(homePage.studentTitleOnSliderMenu.isDisplayed());
-			Thread.sleep(500);
-			if (disabled_classAndstudent) {
-				UtilityMethods.scrollPageDown(Driver.webdriver, 2);
-				Thread.sleep(500);
-				Assert.assertTrue(homePage.schooldropdownbtn.getText().equals(apiFirstSchool));
-				Assert.assertTrue(homePage.classdropdownbtn.getText().equals("Select Class"));
-				Assert.assertTrue(homePage.studentdropdownbtn.getText().equals("Select Student"));
-			} else {
-				if (homePage.schooldropdownbtn.getText().contains("...")) {
-					new Actions(Driver.webdriver).moveToElement(homePage.schooldropdownbtn).build().perform();
-					defaultSelectedSchool = homePage.schooldropdownbtntooltip.getText();
-					Thread.sleep(500);
-				} else {
-					defaultSelectedSchool = homePage.schooldropdownbtn.getText();
-				}
-				new Actions(Driver.webdriver).moveToElement(homePage.studentTitleOnSliderMenu).build().perform();
-				UtilityMethods.scrollPageDown(Driver.webdriver, 2);
-				Thread.sleep(500);
-				schoolId = API_Connection.getSchoolIDBySchoolName(defaultSelectedSchool);
-				class_list_size = API_Connection.getAllClassesNamesBySchoolName(schoolId).size();
-				if (class_list_size > 1) {
-					apiFirstClass = "All";
-				} else if (class_list_size > 1) {
-					apiFirstClass = API_Connection.getFirstAlphaClassNameBySchoolName(schoolId);
-				}
-				if (homePage.classdropdownbtn.getText().contains("...")) {
-					new Actions(Driver.webdriver).moveToElement(homePage.classdropdownbtn).build().perform();
-					defaultSelectedClass = homePage.classdropdownbtntooltip.getText();
-					Thread.sleep(500);
-				} else {
-					defaultSelectedClass = homePage.classdropdownbtn.getText();
-				}
-				Assert.assertTrue(defaultSelectedSchool.equals(apiFirstSchool));
-				Assert.assertTrue(defaultSelectedClass.equals(apiFirstClass));
-				Assert.assertTrue(homePage.studentdropdownbtn.getText().equals("All"));
-			}
-			homePage.rostercancelbtn.click();
-			UtilityMethods.scrollPageUp(Driver.webdriver);
-			Thread.sleep(500);
-			CBTConfiguration.score = "pass";
-		} catch (Exception e) {
-			UtilityMethods.processException(e);
-		}
-		log.info("Scenario 10_1 Completed");
-	}
+			selectedstudent = 0;	
 
 	/**
 	 * This method is used to click on roster and verify the school and class name

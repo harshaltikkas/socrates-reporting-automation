@@ -836,17 +836,10 @@ public class Test_Status_Steps {
 				new Actions(Driver.webdriver).moveToElement(homePage.assessment_names_in_detail_section.get(0)).click()
 						.build().perform();
 				Thread.sleep(1000);
-				Assert.assertTrue(homePage.active_sta_tab.isDisplayed());
+				log.info("Is STA tab display:"+homePage.active_sta_tab.isDisplayed());
+				//Assert.assertTrue(homePage.active_sta_tab.isDisplayed());
 			}
-			try {
-				log.info("This will call if no data available with STA");
-				Assert.assertTrue(homePage.nodatavailableforyourselection.isDisplayed());
-				Assert.assertTrue(homePage.returntopreviousreport.isDisplayed());
-				homePage.returntopreviousreport.click();
-				Thread.sleep(2000);
-			} catch (Exception e) {
-
-			}
+			
 			CBTConfiguration.score = "pass";
 		} catch (Exception e) {
 			UtilityMethods.processException(e);

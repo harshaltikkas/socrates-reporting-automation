@@ -46,12 +46,5 @@ Feature: Subway Navigation Changes - Sprint35 Scenarios
   Scenario: Verify the persistence by selecting data in Roster tab filters of STA
     Given User is on portal's login screen with username as "district_admin_one" and password as "password" and usertype as "realm_one"
     Then Verify the persistence by selecting data in Roster tab filters of STA
-    
-  
-    
-    
-    
-    
-
-
+ 
     
