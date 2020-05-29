@@ -14,7 +14,7 @@ Feature: Fly In Menu Behaviour
       | Test             |
       | Date             |
 
-  @Scenario2 @TC3
+   @Scenario2 @TC3
   Scenario Outline: Roster Tab shows the dropdown list of Schools and Classes and Students to apply filters.
     Given User is on portal's login screen with username as "district_admin_one" and password as "password" and usertype as "realm_one"
     When User Click on Roster tab within the Universal Selector Tab

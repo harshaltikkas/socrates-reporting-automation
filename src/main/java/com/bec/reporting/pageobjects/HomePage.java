@@ -77,6 +77,9 @@ public class HomePage {
 
 	@FindBy(xpath = "//input[@id='login']")
 	public WebElement loginbtn;
+	
+	@FindBy(xpath = "//button[contains(text(),'Sign in')]")
+	public WebElement loginbtn_on_stg;
 
 	@FindBy(xpath = "//div[.='Class']//span[@class='data-refresh']//i[@class='material-icons' and contains(text(),'autorenew')]")
 	public WebElement classdrpdwnrefreshicon;
@@ -506,6 +509,15 @@ public class HomePage {
 
 	@FindBy(xpath = "//div[@class='single-filter-text']//span[contains(text(),'Student')]")
 	public WebElement studentmenu;
+	
+	@FindBy(xpath = "//span[contains(text(),'Resources')]")
+	public WebElement resources_txt_on_dashboard;
+	
+	@FindBy(xpath = "//div[@class='tile']//a/p[contains(text(),'Reports')]")
+	public WebElement report_link_on_dashboard;
+	
+	@FindBy(xpath = "//p[contains(text(),'Sign Out')]")
+	public WebElement sign_out_link;
 
 	@FindBy(xpath = "//div[@class='single-filter-text']//span[contains(text(),'Class')]")
 	public WebElement classmenu;
