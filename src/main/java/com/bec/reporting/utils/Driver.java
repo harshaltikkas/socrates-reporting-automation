@@ -244,6 +244,30 @@ public class Driver {
 		}
 		return true;
 	}
+	
+	/**
+	 * This method launch the browser with the specified url and realm values, which is used for staging and prod
+	 * 
+	 * @param url
+	 * @return
+	 */
+	public static boolean launch_browser(String url,String userType) {
+		try {
+			url=url.concat(userType);
+			webdriver.get(url);
+			String os = System.getProperty("os.name");
+			if (os.equalsIgnoreCase("Mac OS X")) {
+				webdriver.manage().window().setPosition(new Point(0, 0));
+				webdriver.manage().window().setSize(new Dimension(1440, 900));
+				webdriver.switchTo().window(webdriver.getWindowHandle());
+			} else {
+				webdriver.manage().window().maximize();
+			}
+		} catch (Exception e) {
+			return false;
+		}
+		return true;
+	}
 
 	/**
 	 * This is used to close single instance of driver/browser

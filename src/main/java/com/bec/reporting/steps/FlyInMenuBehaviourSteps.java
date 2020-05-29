@@ -75,35 +75,52 @@ public class FlyInMenuBehaviourSteps {
 			prop = FileRead.readProperties();
 			String env = prop.getProperty("app_env");
 			String url = null;
-			if (env.equalsIgnoreCase("dev")) {
-				url = prop.getProperty("dev_portalUrl");
-			} else if (env.equalsIgnoreCase("uat")) {
-				url = prop.getProperty("uat_portalUrl");
-			} else if (env.equalsIgnoreCase("staging")) {
-				url = prop.getProperty("staging_portalUrl");
-			}
 			uname = prop.getProperty(username);
 			passwd = prop.getProperty(password);
 			realm = prop.getProperty(usertype);
-			Driver.launch_browser(url);
+			if (env.equalsIgnoreCase("dev")) {
+				url = prop.getProperty("dev_portalUrl");
+				Driver.launch_browser(url);
+			} else if (env.equalsIgnoreCase("uat")) {
+				url = prop.getProperty("uat_portalUrl");
+				Driver.launch_browser(url);
+			} else if (env.equalsIgnoreCase("staging")) {
+				url = prop.getProperty("staging_portalUrl");
+				Driver.launch_browser(url, realm);
+			} else if (env.equalsIgnoreCase("prod")) {
+				url = prop.getProperty("prod_portalUrl");
+				Driver.launch_browser(url, realm);
+			}
+
 			Thread.sleep(3000);
 			homePage.username.clear();
 			homePage.username.sendKeys(uname);
 			homePage.password.clear();
 			homePage.password.sendKeys(passwd);
 			Thread.sleep(500);
-			Select select = new Select(homePage.usertypedropdown);
-			Thread.sleep(500);
-			select.selectByValue(realm);
-			Thread.sleep(1000);
-			homePage.loginbtn.click();
+
+			if (env.equalsIgnoreCase("dev") || env.equalsIgnoreCase("uat")) {
+				Select select = new Select(homePage.usertypedropdown);
+				Thread.sleep(500);
+				select.selectByValue(realm);
+				Thread.sleep(1000);
+				homePage.loginbtn.click();
+			} else if (env.equalsIgnoreCase("staging") || env.equalsIgnoreCase("prod")) {
+				homePage.loginbtn_on_stg.click();
+			}
 			Instant start = Instant.now();
 			log.info("Current Time after clicking on login button: " + java.time.LocalTime.now());
-			IWait.explicit_wait(Driver.webdriver, homePage.studentmenu);
+			if (env.equalsIgnoreCase("dev") || env.equalsIgnoreCase("uat")) {
+				IWait.explicit_wait(Driver.webdriver, homePage.studentmenu);
+			} else if (env.equalsIgnoreCase("staging") || env.equalsIgnoreCase("prod")) {
+				IWait.explicit_wait(Driver.webdriver, homePage.resources_txt_on_dashboard);
+				homePage.report_link_on_dashboard.click();
+				IWait.explicit_wait(Driver.webdriver, homePage.studentmenu);
+			}
 			Instant end = Instant.now();
 			Duration timeElapsed = Duration.between(start, end);
-			log.info("Time taken for page load: " + timeElapsed.toMillis()/1000 + " seconds");
-			token=API_Connection.getToken();
+			log.info("Time taken for page load: " + timeElapsed.toMillis() / 1000 + " seconds");
+			token = API_Connection.getToken();
 		} catch (Exception e) {
 			log.error("failed to login");
 			UtilityMethods.processException(e);
@@ -180,7 +197,8 @@ public class FlyInMenuBehaviourSteps {
 					selectedTeacher = "";
 			int customSize = 0, randomIndex = 0;
 			// selecting school from dropdown
-			selectedSchool = sc;selectedGrade = grade;
+			selectedSchool = sc;
+			selectedGrade = grade;
 			RosterTabUtilityMethods.select_School_In_School_DropDown(sc);
 			UtilityMethods.scrollPageDown(Driver.webdriver, 3);
 			Thread.sleep(500);
@@ -363,22 +381,22 @@ public class FlyInMenuBehaviourSteps {
 			Actions actions = new Actions(Driver.webdriver);
 			actions.moveByOffset(200, 200).build().perform();
 			Thread.sleep(500);
-			classNameonCH=UtilityMethods.getClassNameonUI();
+			classNameonCH = UtilityMethods.getClassNameonUI();
 			log.info("class name on CH:" + classNameonCH);
 			Assert.assertTrue(selectedClass.equals(classNameonCH));
 			actions.moveToElement(homePage.overviewtext).click().perform();
 			// verifying teacher name on context header
-			teacherNameonCH=UtilityMethods.getTeacherNameonUI();
+			teacherNameonCH = UtilityMethods.getTeacherNameonUI();
 			log.info("Teacher name on CH:" + teacherNameonCH);
 			Assert.assertTrue(selectedTeacher.equals(teacherNameonCH));
-			
+
 			// verifying Grade name context header
-			gradeNameonCH=UtilityMethods.getGradeNameonUI();
+			gradeNameonCH = UtilityMethods.getGradeNameonUI();
 			log.info("Grade name on CH:" + gradeNameonCH);
 			selectedGrade = selectedGrade.substring(selectedGrade.indexOf(" ") + 1);
 			Assert.assertTrue(selectedGrade.equals(gradeNameonCH));
 			// verifying school name context header
-			schoolNameonCH=UtilityMethods.getSchoolNameonUI();
+			schoolNameonCH = UtilityMethods.getSchoolNameonUI();
 			log.info("School name on CH:" + schoolNameonCH);
 			Assert.assertTrue(selectedSchool.equals(schoolNameonCH));
 			actions.moveToElement(homePage.overviewtext).click().perform();

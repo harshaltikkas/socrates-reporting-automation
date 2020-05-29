@@ -12,8 +12,8 @@ import cucumber.api.junit.Cucumber;
 features = "@target/failed_scenarios.txt",//Cucumber execute failed scenarios from this file
 glue = { "com.bec.reporting.steps" },
 plugin = { "pretty", 		
-		   "com.bec.reporting.utils.ExtentCucumberFormatter:target/cucumber-reports/extent_report_failed/report.html",		 
-		   "rerun:target/failed_scenarios.txt"
+		   "com.bec.reporting.utils.ExtentCucumberFormatter:target1/cucumber-reports/extent_report_failed/report.html",		 
+		   "rerun:target1/failed_scenarios.txt"
 		   },
 tags = { "@Feature" }, 
 monochrome = true)

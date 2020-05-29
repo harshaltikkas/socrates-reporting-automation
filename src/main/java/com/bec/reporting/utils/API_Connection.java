@@ -35,16 +35,22 @@ public class API_Connection {
 		String token = "";
 		try {
 			prop = FileRead.readProperties();
-			
-			 String payload = "{\n" + "  \"username\": \"" + FlyInMenuBehaviourSteps.uname
-			 + "\",\n" + "  \"password\": \"" + FlyInMenuBehaviourSteps.passwd + "\",\n" +
-			 "  \"realm\": \"" + FlyInMenuBehaviourSteps.realm + "\"\n" + "}";
-			 
+			String apiUrl;
+			String payload = "{\n" + "  \"username\": \"" + FlyInMenuBehaviourSteps.uname + "\",\n"
+					+ "  \"password\": \"" + FlyInMenuBehaviourSteps.passwd + "\",\n" + "  \"realm\": \""
+					+ FlyInMenuBehaviourSteps.realm + "\"\n" + "}";
 
-			/*String payload = "{\n" + "  \"username\": \"Failly353175\",\n" + "  \"password\": \"password\",\n"
-					+ "  \"realm\": \"sulphur\"\n" + "}";*/
-		
-			String apiUrl = prop.getProperty("atlantis_api_url");
+			/*
+			 * String payload = "{\n" + "  \"username\": \"Failly353175\",\n" +
+			 * "  \"password\": \"password\",\n" + "  \"realm\": \"sulphur\"\n" + "}";
+			 */
+
+			if (prop.getProperty("app_env").equalsIgnoreCase("staging")
+					|| prop.getProperty("app_env").equalsIgnoreCase("prod")) {
+				apiUrl = prop.getProperty("stg_atlantis_api_url");
+			} else {
+				apiUrl = prop.getProperty("atlantis_api_url");
+			}
 			Response response = RestAssured.given().header("Content-Type", "application/json").body(payload)
 					.post(apiUrl);
 			if (response.getStatusCode() != 200) {
@@ -57,28 +63,28 @@ public class API_Connection {
 			log.error(e.getMessage());
 			UtilityMethods.processException(e);
 		}
-		log.info("Retrived Access Token Successfully");	
+		log.info("Retrived Access Token Successfully");
 		return token;
 	}
-	
+
 	/**
 	 * This method is used to get District ID based on default api
 	 * 
 	 * @return
 	 */
 	public static String getUserRole() {
-		String user_role="";
+		String user_role = "";
 		try {
-			prop = FileRead.readProperties();		
+			prop = FileRead.readProperties();
 			String apiUrl = prop.getProperty("apiURL") + "/user/skus?values=X58691,X69071,X70225";
 			Response response = RestAssured.given().header("Authorization", "Bearer " + FlyInMenuBehaviourSteps.token)
 					.contentType("application/json").get(apiUrl);
-			 
+
 			if (response.getStatusCode() != 200) {
 				log.info("Error occurred in getting User Role. status code : " + response.getStatusCode());
 				return null;
 			} else {
-				user_role =	(String) new JsonPath(response.asString()).get("role");
+				user_role = (String) new JsonPath(response.asString()).get("role");
 			}
 		} catch (Exception e) {
 			log.error("Unable to get logged in user role...");
@@ -332,7 +338,8 @@ public class API_Connection {
 	 * 
 	 * @return
 	 */
-	public static String getFirstAlphaLastNameStudentByAlphaClassAndSchoolName(int classId,int schoolId,int getDistrictId) {
+	public static String getFirstAlphaLastNameStudentByAlphaClassAndSchoolName(int classId, int schoolId,
+			int getDistrictId) {
 		String studentName = "";
 		Map<String, Integer> studentMap = new TreeMap<String, Integer>();
 		try {

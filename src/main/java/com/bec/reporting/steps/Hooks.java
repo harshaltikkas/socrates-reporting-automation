@@ -29,8 +29,13 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Properties;
+
+import org.openqa.selenium.support.PageFactory;
+
+import com.bec.reporting.pageobjects.HomePage;
 import com.bec.reporting.utils.Driver;
 import com.bec.reporting.utils.FileRead;
+import com.bec.reporting.utils.IWait;
 import com.bec.reporting.utils.Reporter;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
@@ -41,6 +46,7 @@ import lombok.extern.slf4j.Slf4j;
 public class Hooks {
 
 	public static String reportBrowser;
+
 	/**
 	 * This is pre scenario executing method to launch the browser
 	 * 
@@ -86,6 +92,12 @@ public class Hooks {
 		if (scenario.isFailed()) {
 			Driver.embedScreenshot(scenario);
 		}
+		Properties prop = FileRead.readProperties();
+		HomePage homePage = PageFactory.initElements(Driver.webdriver, HomePage.class);
+		if (prop.getProperty("app_env").equalsIgnoreCase("staging")
+				|| prop.getProperty("app_env").equalsIgnoreCase("prod")) {
+			homePage.sign_out_link.click();
+			IWait.explicit_wait(Driver.webdriver, homePage.username);
+		}
 	}
-
 }
