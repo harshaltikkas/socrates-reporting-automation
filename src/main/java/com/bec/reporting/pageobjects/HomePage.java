@@ -518,6 +518,9 @@ public class HomePage {
 	
 	@FindBy(xpath = "//p[contains(text(),'Sign Out')]")
 	public WebElement sign_out_link;
+	
+	@FindBy(xpath = "//li[contains(text(),'Sign Out')]")
+	public WebElement sign_out_link_on_dashboard;
 
 	@FindBy(xpath = "//div[@class='single-filter-text']//span[contains(text(),'Class')]")
 	public WebElement classmenu;

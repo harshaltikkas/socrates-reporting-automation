@@ -594,6 +594,7 @@ public class Test_Status_Steps {
 
 	@When("^User Click on Test Status tab within the School Context$")
 	public void user_Click_on_Test_Status_tab_within_the_School_Context() throws Throwable {
+
 		try {
 			UtilityMethods.wait_For_Context_Header_Section();
 			Assert.assertTrue(homePage.activeschoolmenu.getAttribute("class").contains("active"));
@@ -602,7 +603,10 @@ public class Test_Status_Steps {
 			Thread.sleep(3000);
 		}
 		try {
-			UtilityMethods.select_Grade_Four_From_Roster();
+			if (FlyInMenuBehaviourSteps.env.equalsIgnoreCase("dev")
+					|| FlyInMenuBehaviourSteps.env.equalsIgnoreCase("uat")) {
+				UtilityMethods.select_Grade_Four_From_Roster();
+			}
 			Assert.assertTrue(homePage.active_test_status_btn.getAttribute("class").contains("active_tab"));
 		} catch (Exception e) {
 			jse.executeScript("arguments[0].click();", homePage.test_status_btn);
@@ -836,10 +840,10 @@ public class Test_Status_Steps {
 				new Actions(Driver.webdriver).moveToElement(homePage.assessment_names_in_detail_section.get(0)).click()
 						.build().perform();
 				Thread.sleep(1000);
-				log.info("Is STA tab display:"+homePage.active_sta_tab.isDisplayed());
-				//Assert.assertTrue(homePage.active_sta_tab.isDisplayed());
+				log.info("Is STA tab display:" + homePage.active_sta_tab.isDisplayed());
+				// Assert.assertTrue(homePage.active_sta_tab.isDisplayed());
 			}
-			
+
 			CBTConfiguration.score = "pass";
 		} catch (Exception e) {
 			UtilityMethods.processException(e);
@@ -1213,8 +1217,8 @@ public class Test_Status_Steps {
 	@Then("^Verify Student Data filter by class dropdown with info icon within the Roster tab$")
 	public void verify_Student_Data_filter_by_class_dropdown_with_info_icon_within_the_Roster_tab() throws Throwable {
 		try {
-			String roster_tooltip_text="Select additional classes to include this data in the student's reports.";
-			String tooltip_text_on_ch="This report includes student data from another class or classes.";
+			String roster_tooltip_text = "Select additional classes to include this data in the student's reports.";
+			String tooltip_text_on_ch = "This report includes student data from another class or classes.";
 			homePage.rostertab.click();
 			Thread.sleep(500);
 			RosterTabUtilityMethods.select_Student_In_Student_DropDown("Earl Blackman");
@@ -1226,16 +1230,21 @@ public class Test_Status_Steps {
 			Assert.assertTrue(homePage.studentdata_filter.isDisplayed());
 			homePage.studentdata_filter.click();
 			Assert.assertTrue(homePage.tooltip_text_on_roster.getText().equals(roster_tooltip_text));
-			
-			homePage.studentdatadropdownbtn.click();Thread.sleep(500);
-			//this is for selecting 'all' 
-			//Driver.webdriver.findElement(By.xpath("//span[contains(text(),'Student Data')]/ancestor::div[@class='menu-title']/following-sibling::div/button/following-sibling::div//li[text()='All']")).click();Thread.sleep(500);
-			Driver.webdriver.findElement(By.xpath("//li[.='GRADE 4 - ALVARADO - 1']")).click();Thread.sleep(500);
-			homePage.studentdatadropdownbtn.click();Thread.sleep(500);
+
+			homePage.studentdatadropdownbtn.click();
+			Thread.sleep(500);
+			// this is for selecting 'all'
+			// Driver.webdriver.findElement(By.xpath("//span[contains(text(),'Student
+			// Data')]/ancestor::div[@class='menu-title']/following-sibling::div/button/following-sibling::div//li[text()='All']")).click();Thread.sleep(500);
+			Driver.webdriver.findElement(By.xpath("//li[.='GRADE 4 - ALVARADO - 1']")).click();
+			Thread.sleep(500);
+			homePage.studentdatadropdownbtn.click();
+			Thread.sleep(500);
 			homePage.rosterapplybtn.click();
 			UtilityMethods.wait_For_Performance_Over_Time_Line_Chart_Section_Load();
 			Assert.assertTrue(homePage.info_icon_on_ch.isDisplayed());
-			homePage.info_icon_on_ch.click();Thread.sleep(500);
+			homePage.info_icon_on_ch.click();
+			Thread.sleep(500);
 			Assert.assertTrue(homePage.tooltip_text_on_ch.getText().equals(tooltip_text_on_ch));
 			CBTConfiguration.score = "pass";
 		} catch (Exception e) {

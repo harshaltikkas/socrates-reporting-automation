@@ -1,12 +1,16 @@
 package com.bec.reporting.steps;
 
+import java.util.Properties;
+
 import org.junit.Assert;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.PageFactory;
 
 import com.bec.reporting.pageobjects.HomePage;
 import com.bec.reporting.utils.CBTConfiguration;
 import com.bec.reporting.utils.Driver;
+import com.bec.reporting.utils.FileRead;
 import com.bec.reporting.utils.RosterTabUtilityMethods;
 import com.bec.reporting.utils.UtilityMethods;
 
@@ -27,11 +31,12 @@ public class Validate_Persistence_on_different_switching_steps {
 		try {
 			String grade_no_on_ch, test_name_on_ch;
 			homePage.rostertab.click();
-			Thread.sleep(1000);
+			Thread.sleep(500);
 			String grade = homePage.gradedropdownbtn.getText();
 			grade = grade.substring(grade.indexOf(" ") + 1);
-			homePage.rostercancelbtn.click();
+			homePage.rostertab.click();
 			Thread.sleep(500);
+			UtilityMethods.scrollPageDown(Driver.webdriver, 4);
 			String testname = UtilityMethods.getRandomTest_From_Test_Tab();
 			log.info("Selected Test in Test Tab :" + testname);
 			Assert.assertTrue(homePage.activedistrictmenu.isDisplayed());
@@ -137,8 +142,8 @@ public class Validate_Persistence_on_different_switching_steps {
 			Assert.assertTrue(homePage.activestandardperformancebtn.isDisplayed());
 			String test_name_on_ch;
 			jse.executeScript("arguments[0].click();", homePage.statab);
-			UtilityMethods.wait_For_STA_Section_Load();			
-			
+			UtilityMethods.wait_For_STA_Section_Load();
+			UtilityMethods.scrollPageDown(Driver.webdriver, 3);
 			String testname = UtilityMethods.getRandomTest_From_Test_Tab();
 			UtilityMethods.wait_For_STA_Section_Load();
 			log.info("Selected Test in Test Tab :" + testname);
@@ -153,9 +158,14 @@ public class Validate_Persistence_on_different_switching_steps {
 			String selectedViewName = homePage.chkbox_list_text_under_view_on_sta_filter.get(1).getText();
 			homePage.chkbox_list_text_under_view_on_sta_filter.get(1).click();
 			Thread.sleep(500);
-			log.info("selectedViewName:" + selectedViewName);
+			log.info("selected View Name: " + selectedViewName);
+			if(homePage.chkbox_list_text_under_view_on_sta_filter.size()==2) {
+				homePage.cancel_button_on_filter_in_sta.click();
+			}
+			else {
 			homePage.apply_button_on_filter_in_sta.click();
-			Thread.sleep(3000);
+			}
+			Thread.sleep(2000);
 			Assert.assertTrue(homePage.view_text_in_sta_table_header.getText().equals(selectedViewName));
 
 			homePage.schoolmenu.click();
@@ -253,6 +263,8 @@ public class Validate_Persistence_on_different_switching_steps {
 			Thread.sleep(500);
 			RosterTabUtilityMethods.select_School_In_School_DropDown("Golden Oak Community School");
 			Thread.sleep(500);
+			UtilityMethods.scrollPageDown(Driver.webdriver, 2);
+			Thread.sleep(500);
 			homePage.rosterapplybtn.click();
 			UtilityMethods.wait_For_Student_List_AND_OR_Class_List_Section_Load();
 
@@ -345,9 +357,16 @@ public class Validate_Persistence_on_different_switching_steps {
 			Thread.sleep(500);
 			homePage.schooldropdownbtn.click();
 			Thread.sleep(500);
+			new Actions(Driver.webdriver).moveToElement(homePage.rostertab).build().perform();
 			RosterTabUtilityMethods.wait_For_Refresh_Icon(homePage.schoolRefreshIcon, "School");
 			Assert.assertTrue(homePage.teachersdropdownbtn.isDisplayed());
-			RosterTabUtilityMethods.select_Teacher_In_Teacher_DropDown("John Stephenson");
+			Properties prop = FileRead.readProperties();
+			if (prop.getProperty("app_env").equalsIgnoreCase("staging")
+					|| prop.getProperty("app_env").equalsIgnoreCase("prod")) {
+				RosterTabUtilityMethods.select_Teacher_In_Teacher_DropDown("Amanda Jones");
+			} else {
+				RosterTabUtilityMethods.select_Teacher_In_Teacher_DropDown("John Stephenson");
+			}
 			Assert.assertTrue(homePage.classdropdownbtn.isDisplayed());
 			RosterTabUtilityMethods.select_Class_In_Class_DropDown("Grade 6 - Jones - 0");
 			UtilityMethods.scrollPageDown(Driver.webdriver, 4);
@@ -370,16 +389,32 @@ public class Validate_Persistence_on_different_switching_steps {
 			RosterTabUtilityMethods.select_School_In_School_DropDown("Golden Oak Community School");
 			homePage.teachersdropdownbtn.click();
 			RosterTabUtilityMethods.uncheck_check_All("Teacher");
-			homePage.searchbaronteacherdropdown.sendKeys("Michael Segura");
-			Thread.sleep(500);
-			Driver.webdriver.findElementByXPath("//li[.='Michael Segura']").click();
-			Thread.sleep(500);
-			homePage.searchcancelonteacherdropdown.click();
-			Thread.sleep(500);
-			homePage.searchbaronteacherdropdown.sendKeys("John Stephenson");
-			Thread.sleep(500);
-			Driver.webdriver.findElementByXPath("//li[.='John Stephenson']").click();
-			Thread.sleep(500);
+			Properties prop = FileRead.readProperties();
+			if (prop.getProperty("app_env").equalsIgnoreCase("staging")
+					|| prop.getProperty("app_env").equalsIgnoreCase("prod")) {
+				homePage.searchbaronteacherdropdown.sendKeys("Paula Torgeson");
+				Thread.sleep(500);
+				Driver.webdriver.findElementByXPath("//li[.='Paula Torgeson']").click();
+				Thread.sleep(500);
+				homePage.searchcancelonteacherdropdown.click();
+				Thread.sleep(500);
+				homePage.searchbaronteacherdropdown.sendKeys("Amanda Jones");
+				Thread.sleep(500);
+				Driver.webdriver.findElementByXPath("//li[.='Amanda Jones']").click();
+				Thread.sleep(500);
+			} else {
+				homePage.searchbaronteacherdropdown.sendKeys("Michael Segura");
+				Thread.sleep(500);
+				Driver.webdriver.findElementByXPath("//li[.='Michael Segura']").click();
+				Thread.sleep(500);
+				homePage.searchcancelonteacherdropdown.click();
+				Thread.sleep(500);
+				homePage.searchbaronteacherdropdown.sendKeys("John Stephenson");
+				Thread.sleep(500);
+				Driver.webdriver.findElementByXPath("//li[.='John Stephenson']").click();
+				Thread.sleep(500);
+			}
+			homePage.teachersdropdownbtn.click();Thread.sleep(500);
 			UtilityMethods.scrollPageDown(Driver.webdriver, 4);
 			homePage.rosterapplybtn.click();
 			UtilityMethods.wait_For_Student_List_AND_OR_Class_List_Section_Load();
@@ -398,9 +433,15 @@ public class Validate_Persistence_on_different_switching_steps {
 			homePage.rostertab.click();
 			Thread.sleep(500);
 			RosterTabUtilityMethods.select_School_In_School_DropDown("Golden Oak Community School");
-			RosterTabUtilityMethods.select_Class_In_Class_DropDown("Grade 6 - Jones - 0");
-			RosterTabUtilityMethods.select_Student_In_Student_DropDown("Terri Alexander");
 			UtilityMethods.scrollPageDown(Driver.webdriver, 4);
+			RosterTabUtilityMethods.select_Class_In_Class_DropDown("Grade 6 - Jones - 0");
+			Properties prop = FileRead.readProperties();
+			if (prop.getProperty("app_env").equalsIgnoreCase("staging")
+					|| prop.getProperty("app_env").equalsIgnoreCase("prod")) {
+				RosterTabUtilityMethods.select_Student_In_Student_DropDown("Samantha Cortez");
+			} else {
+				RosterTabUtilityMethods.select_Student_In_Student_DropDown("Terri Alexander");
+			}			
 			homePage.rosterapplybtn.click();
 			UtilityMethods.wait_For_Performance_Over_Time_Line_Chart_Section_Load();
 			UtilityMethods.scrollPageUp(Driver.webdriver, 4);
@@ -430,27 +471,49 @@ public class Validate_Persistence_on_different_switching_steps {
 			Thread.sleep(500);
 			RosterTabUtilityMethods.select_School_In_School_DropDown("Golden Oak Community School");
 			RosterTabUtilityMethods.select_Class_In_Class_DropDown("Grade 6 - Jones - 0");
+			UtilityMethods.scrollPageDown(Driver.webdriver, 4);
 			homePage.studentdropdownbtn.click();
 			Thread.sleep(500);
 			RosterTabUtilityMethods.uncheck_check_All("Student");
 			Thread.sleep(500);
-			homePage.searchbaronstudentdropdown.sendKeys("Terri Alexander");
+			Properties prop = FileRead.readProperties();
+			if (prop.getProperty("app_env").equalsIgnoreCase("staging")
+					|| prop.getProperty("app_env").equalsIgnoreCase("prod")) {
+				homePage.searchbaronstudentdropdown.sendKeys("Samantha Cortez");
+				Thread.sleep(500);
+				Driver.webdriver.findElementByXPath("//li[.='Samantha Cortez']").click();
+				Thread.sleep(500);
+				homePage.searchcancelonstudentdropdown.click();
+				Thread.sleep(500);
+				homePage.searchbaronstudentdropdown.sendKeys("Ricardo Aguiar");
+				Thread.sleep(500);
+				Driver.webdriver.findElementByXPath("//li[.='Ricardo Aguiar']").click();
+				Thread.sleep(500);
+				homePage.searchcancelonstudentdropdown.click();
+				Thread.sleep(500);
+				homePage.searchbaronstudentdropdown.sendKeys("Jacen Fadri");
+				Thread.sleep(500);
+				Driver.webdriver.findElementByXPath("//li[.='Jacen Fadri']").click();
+			} else {
+				homePage.searchbaronstudentdropdown.sendKeys("Terri Alexander");
+				Thread.sleep(500);
+				Driver.webdriver.findElementByXPath("//li[.='Terri Alexander']").click();
+				Thread.sleep(500);
+				homePage.searchcancelonstudentdropdown.click();
+				Thread.sleep(500);
+				homePage.searchbaronstudentdropdown.sendKeys("Melissa Gagner");
+				Thread.sleep(500);
+				Driver.webdriver.findElementByXPath("//li[.='Melissa Gagner']").click();
+				Thread.sleep(500);
+				homePage.searchcancelonstudentdropdown.click();
+				Thread.sleep(500);
+				homePage.searchbaronstudentdropdown.sendKeys("Ann Galyean");
+				Thread.sleep(500);
+				Driver.webdriver.findElementByXPath("//li[.='Ann Galyean']").click();
+			}
+			Thread.sleep(500);	
+			homePage.studentdropdownbtn.click();
 			Thread.sleep(500);
-			Driver.webdriver.findElementByXPath("//li[.='Terri Alexander']").click();
-			Thread.sleep(500);
-			homePage.searchcancelonstudentdropdown.click();
-			Thread.sleep(500);
-			homePage.searchbaronstudentdropdown.sendKeys("Melissa Gagner");
-			Thread.sleep(500);
-			Driver.webdriver.findElementByXPath("//li[.='Melissa Gagner']").click();
-			Thread.sleep(500);
-			homePage.searchcancelonstudentdropdown.click();
-			Thread.sleep(500);
-			homePage.searchbaronstudentdropdown.sendKeys("Ann Galyean");
-			Thread.sleep(500);
-			Driver.webdriver.findElementByXPath("//li[.='Ann Galyean']").click();
-			Thread.sleep(500);
-			UtilityMethods.scrollPageDown(Driver.webdriver, 4);
 			homePage.rosterapplybtn.click();
 			UtilityMethods.wait_For_Student_List_AND_OR_Class_List_Section_Load();
 			UtilityMethods.scrollPageUp(Driver.webdriver, 4);
@@ -634,18 +697,18 @@ public class Validate_Persistence_on_different_switching_steps {
 		} catch (Exception e) {
 			UtilityMethods.processException(e);
 		}
-		CBTConfiguration.score="pass";
+		CBTConfiguration.score = "pass";
 		log.info("Scenario BE-2270 completed");
 	}
 
 	@Then("^Verify Standard Performance Summary Persistence on switching to all other levels$")
 	public void verify_Standard_Performance_Summary_Persistence_on_switching_to_all_other_levels() throws Throwable {
-	try{
-		
-	} catch (Exception e) {
-		UtilityMethods.processException(e);
-	}
-	CBTConfiguration.score="pass";
-	log.info("Scenario BE-2319 completed");
+		try {
+
+		} catch (Exception e) {
+			UtilityMethods.processException(e);
+		}
+		CBTConfiguration.score = "pass";
+		log.info("Scenario BE-2319 completed");
 	}
 }
