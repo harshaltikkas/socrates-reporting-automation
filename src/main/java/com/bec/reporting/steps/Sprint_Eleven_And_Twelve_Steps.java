@@ -375,7 +375,7 @@ public class Sprint_Eleven_And_Twelve_Steps {
 		try {
 			Assert.assertTrue(homePage.activeschoolmenu.isDisplayed());
 			Assert.assertTrue(homePage.activestandardperformancebtn.isDisplayed());
-			UtilityMethods.scrollPageDown(Driver.webdriver, 3);
+			UtilityMethods.scrollPageDown(Driver.webdriver, 5);
 			Thread.sleep(500);
 			int randNo = UtilityMethods.generateRandomNumberBySkippingIndex(homePage.strandnameslist.size(), 0);
 			new Actions(Driver.webdriver).moveToElement(homePage.strandnameslist.get(randNo)).click().build().perform();
@@ -387,21 +387,21 @@ public class Sprint_Eleven_And_Twelve_Steps {
 			new Actions(Driver.webdriver).moveToElement(standardList.get(0)).build().perform();
 			Thread.sleep(500);
 			new Actions(Driver.webdriver).moveToElement(standardList.get(0)).click().build().perform();
-			Thread.sleep(5000);
-			UtilityMethods.scrollPageDown(Driver.webdriver, 8);
+			UtilityMethods.wait_For_Student_List_AND_OR_Class_List_Section_Load();
+			UtilityMethods.scrollPageDown(Driver.webdriver, 8);Thread.sleep(500);
 			Assert.assertTrue(homePage.noofquestionstext.isDisplayed());
 			new Actions(Driver.webdriver).moveToElement(homePage.classORSchoolNamesListInClassListPageHeaders.get(0))
 					.click().build().perform();
-			Thread.sleep(5000);
+			UtilityMethods.wait_For_Student_List_AND_OR_Class_List_Section_Load();
 			UtilityMethods.scrollPageUp(Driver.webdriver);
-			Thread.sleep(5000);
+			Thread.sleep(500);
 			Assert.assertTrue(homePage.activeclassmenu.isDisplayed());
 
-			UtilityMethods.scrollPageDown(Driver.webdriver, 10);
+			UtilityMethods.scrollPageDown(Driver.webdriver, 10);Thread.sleep(500);
 			Assert.assertTrue(homePage.noofquestionstext.isDisplayed());
 			new Actions(Driver.webdriver).moveToElement(homePage.classORSchoolNamesListInClassListPageHeaders.get(0))
 					.click().build().perform();
-			Thread.sleep(5000);
+			UtilityMethods.wait_For_Performance_Over_Time_Line_Chart_Section_Load();
 			UtilityMethods.scrollPageUp(Driver.webdriver);
 			Thread.sleep(500);
 			Assert.assertTrue(homePage.activestudentmenu.isDisplayed());

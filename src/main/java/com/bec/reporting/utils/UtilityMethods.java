@@ -1080,13 +1080,16 @@ public class UtilityMethods {
 	}
 
 	/** This method is used to delete the csv file in download folder **/
-	public static void Delete_CSV(File f) {
-		log.info("trying to delete csv file,after verification of headers.");
-		if (f.exists()) {
-			log.info("Deleting the file: " + f.getAbsoluteFile().getName());
-			f.delete();
-		}
-		log.info("csv file deleted successfully");
+	public static void Delete_CSV(String f) {
+		//log.info("trying to delete csv files in folder");
+		File path = new File(f);
+	    File[] files = path.listFiles();
+	    for (File file : files) {	       
+	        if(file.isFile()) {
+	    	file.delete();
+	        }
+	    }
+		//log.info("csv file deleted successfully");
 	}
 
 	/** This method is used to delete the pdf file in download folder **/
@@ -1337,15 +1340,15 @@ public class UtilityMethods {
 			Thread.sleep(500);
 			homePage.allcheckbox_in_test_tab.click();
 			Thread.sleep(500);
-			int ran_no = (int) (Math.random()*homePage.testnameslist_on_test_tab.size());
+			int ran_no=generateRandomNumberBySkippingIndex(homePage.testnameslist_on_test_tab.size(), 0);
+			//int ran_no = (int) (Math.random()*homePage.testnameslist_on_test_tab.size());
 			new Actions(Driver.webdriver).moveToElement(homePage.testnameslist_on_test_tab.get(ran_no)).build()
 					.perform();
 			name=homePage.testnameslist_on_test_tab.get(ran_no).getText();
 			homePage.testnameslist_on_test_tab.get(ran_no).click();
 			Thread.sleep(500);
 			homePage.testapplybtn.click();
-			UtilityMethods.scrollPageUp(Driver.webdriver);
-		
+			UtilityMethods.scrollPageUp(Driver.webdriver);		
 			return name;
 		} catch (Exception e) {
 			processException(e);

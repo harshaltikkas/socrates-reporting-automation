@@ -56,7 +56,7 @@ public class FlyInMenuBehaviourSteps {
 	 */
 	HomePage homePage = PageFactory.initElements(Driver.webdriver, HomePage.class);
 	public static Properties prop;
-	public static String toolTipText = "";
+	public static String toolTipText = "", env;
 	public static String classNameonCH, schoolNameonCH, teacherNameonCH, gradeNameonCH, studentTextonCH;
 	public static String uname, passwd, realm;
 	public static String token;
@@ -70,10 +70,15 @@ public class FlyInMenuBehaviourSteps {
 	@Given("^User is on portal's login screen with username as \"([^\"]*)\" and password as \"([^\"]*)\" and usertype as \"([^\"]*)\"$")
 	public void user_is_on_portal_s_login_screen_with_username_as_and_password_as_and_usertype_as(String username,
 			String password, String usertype) throws Throwable {
+		try {
+			homePage.sign_out_link.click();
+			IWait.explicit_wait(Driver.webdriver, homePage.username);
+		} catch (Exception e) {
+		}
 		log.info("User is on portal's login screen");
 		try {
 			prop = FileRead.readProperties();
-			String env = prop.getProperty("app_env");
+			env = prop.getProperty("app_env");
 			String url = null;
 			uname = prop.getProperty(username);
 			passwd = prop.getProperty(password);

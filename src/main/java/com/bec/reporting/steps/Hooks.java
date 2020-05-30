@@ -29,13 +29,10 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Properties;
-
 import org.openqa.selenium.support.PageFactory;
-
 import com.bec.reporting.pageobjects.HomePage;
 import com.bec.reporting.utils.Driver;
 import com.bec.reporting.utils.FileRead;
-import com.bec.reporting.utils.IWait;
 import com.bec.reporting.utils.Reporter;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
@@ -46,6 +43,7 @@ import lombok.extern.slf4j.Slf4j;
 public class Hooks {
 
 	public static String reportBrowser;
+	HomePage homePage = PageFactory.initElements(Driver.webdriver, HomePage.class);
 
 	/**
 	 * This is pre scenario executing method to launch the browser
@@ -66,7 +64,7 @@ public class Hooks {
 				browser = System.getProperty("browser");
 			}
 			log.info(" Launch Browser: " + "\"" + browser + "\"" + " on Environment:"
-					+ p.getProperty("seleniumEnvironment"));
+					+ p.getProperty("app_env"));
 			Driver.webdriver = Driver.getCurrentDriver(p.getProperty("seleniumEnvironment"), browser);
 			reportBrowser = browser;
 			Reporter.assignAuthor("BenchMark Universal - Automation Tool");
@@ -83,21 +81,14 @@ public class Hooks {
 	 * @throws FileNotFoundException
 	 * @throws IOException
 	 * @throws SQLException
-	 */
+	 */	
 	@After
-	public void after(Scenario scenario) throws FileNotFoundException, IOException, SQLException {
+	public void after(Scenario scenario) throws FileNotFoundException, IOException {
 		if (Driver.crossbrwr) {
 			Driver.crossBrowserSetting();
 		}
 		if (scenario.isFailed()) {
 			Driver.embedScreenshot(scenario);
-		}
-		Properties prop = FileRead.readProperties();
-		HomePage homePage = PageFactory.initElements(Driver.webdriver, HomePage.class);
-		if (prop.getProperty("app_env").equalsIgnoreCase("staging")
-				|| prop.getProperty("app_env").equalsIgnoreCase("prod")) {
-			homePage.sign_out_link.click();
-			IWait.explicit_wait(Driver.webdriver, homePage.username);
-		}
+		}		 
 	}
 }

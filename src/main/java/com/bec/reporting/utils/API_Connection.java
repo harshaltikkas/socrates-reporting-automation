@@ -73,10 +73,17 @@ public class API_Connection {
 	 * @return
 	 */
 	public static String getUserRole() {
-		String user_role = "";
-		try {
+		String user_role = "",apiUrl="";
+		try {					
 			prop = FileRead.readProperties();
-			String apiUrl = prop.getProperty("apiURL") + "/user/skus?values=X58691,X69071,X70225";
+			if (prop.getProperty("app_env").equalsIgnoreCase("staging")
+					|| prop.getProperty("app_env").equalsIgnoreCase("prod")) {
+				apiUrl = prop.getProperty("stg_apiURL") + "/user/skus?values=X58691,X69071,X70225";
+			} else {
+				apiUrl = prop.getProperty("apiURL") + "/user/skus?values=X58691,X69071,X70225";
+			}
+			
+			
 			Response response = RestAssured.given().header("Authorization", "Bearer " + FlyInMenuBehaviourSteps.token)
 					.contentType("application/json").get(apiUrl);
 

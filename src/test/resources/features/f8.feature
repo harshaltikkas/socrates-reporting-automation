@@ -37,8 +37,8 @@ Feature: Spint 9 User Stories
     When User Click on Standard Performance tab within the Student Context
     Then verify Standards Question Filter dropdown label and position within Standard Performance Overview
 
- ##PDF save ,open, read, verify and delele
-  ## BE-845,846,847,848,849   
+  ##PDF save ,open, read, verify and delele
+  ## BE-845,846,847,848,849
   #Scenario: Verify PDF contents with different subscenarioes
   #Given User is on portal's login screen with username as "teacher_one" and password as "password" and usertype as "realm_one"
   #When User Click on Standard Performance tab within the Class Context
@@ -49,8 +49,8 @@ Feature: Spint 9 User Stories
   #Then verify Context header content for the Standards Overview context selected shown in all PDF's
   #When User Click on Standard Performance tab within the Student Context
   #Then verify Context header content for the Standards Overview context selected shown in all PDF's
-  
-  ## Verifying View Texonomy on Standard Performance 
+ 
+  ## Verifying View Texonomy on Standard Performance
   Scenario: Verify View Texonomy on Standard Performance
     Given User is on portal's login screen with username as "teacher_one" and password as "password" and usertype as "realm_one"
     When User Click on Standard Performance tab within the Class Context
@@ -61,9 +61,9 @@ Feature: Spint 9 User Stories
     Then verify View Texonomy on Standard Performance
     When User Click on Standard Performance tab within the Student Context
     Then verify View Texonomy on Standard Performance
-    
-     ## Verifying csv download for sp and test score 
-    Scenario: Verify CSV download for Standard Performance Report details and Test Scores Report details
+
+  ## Verifying csv download for sp and test score
+  Scenario: Verify CSV download for Standard Performance Report details and Test Scores Report details
     Given User is on portal's login screen with username as "teacher_one" and password as "password" and usertype as "realm_one"
     When User Click on Standard Performance tab within the Class Context
     Then verify csv download functionality

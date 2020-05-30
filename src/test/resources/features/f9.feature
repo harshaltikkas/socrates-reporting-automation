@@ -63,7 +63,7 @@ Feature: Standard Overview Table and Chart
   ##STORY 6f) Relationship between Line Chart for Test Scores at the Class Level and Student List module & STORY AND
   ##STORY 7a) Standards and Test Score Detail
   ##STORY 6c) Student and Class level
-  @Scenario40 @TC_0029 @TC_0030_DB @TC_0031 @TC_0032 @TC_005 @TC_006
+	@Scenario40 @TC_0029 @TC_0030_DB @TC_0031 @TC_0032 @TC_005 @TC_006
   Scenario: Verify The appearance of the student list and the line chart, when viewing the class context for the Test Scores Overview
     Given User is on portal's login screen with username as "school_admin_one" and password as "password" and usertype as "realm_one"
     When User click on Class Context and Test Score button

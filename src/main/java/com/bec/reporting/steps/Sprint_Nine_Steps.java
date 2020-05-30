@@ -162,7 +162,7 @@ public class Sprint_Nine_Steps {
 			String school, classN, district, tests, dates, assessedWith, teacherN, studentName, grade;
 			new Actions(Driver.webdriver).moveToElement(homePage.overviewtext).click().build().perform();
 			Thread.sleep(500);
-			// String testDataAssessedForGrade, grade;
+		
 			school = UtilityMethods.getSchoolNameonUI();
 			district = UtilityMethods.getDistrictNameonUI();
 			grade = UtilityMethods.getGradeNameonUI();
@@ -325,7 +325,8 @@ public class Sprint_Nine_Steps {
 			String user = System.getProperty("user.name");
 			String folder = "C:\\Users\\" + user + "\\Downloads";
 			String fileName = null;
-
+			//to delete if previous files are not deleted
+			UtilityMethods.Delete_CSV(folder);
 			/*
 			 * String sp_ts_list[] = new String[] { "District Name", "School Name","Grade",
 			 * "Teacher Name", "Class Name", "Student Name", "Student ID(SIS)", "Test Type",
@@ -373,7 +374,7 @@ public class Sprint_Nine_Steps {
 				//UtilityMethods.Verify_Columns_Header_of_CSV(test_status, file);
 			}
 			log.info("After Downloading, deleting the file :" + file.getAbsoluteFile().getName());
-			UtilityMethods.Delete_CSV(file);
+			UtilityMethods.Delete_CSV(folder);
 
 		} catch (Exception e) {
 			UtilityMethods.processException(e);

@@ -1212,7 +1212,7 @@ public class Standard_Overview_Table_Steps {
 			} catch (Exception e) {
 				CBTConfiguration.score = "pass";
 			}
-			UtilityMethods.scrollPageDown(Driver.webdriver, 7);
+			UtilityMethods.scrollPageDown(Driver.webdriver, 9);
 			Thread.sleep(500);
 			// clicking on icon to maximize the student list
 			homePage.studentlisticon.click();
@@ -1234,15 +1234,12 @@ public class Standard_Overview_Table_Steps {
 	@When("^Click or select strand and standard from the standard table$")
 	public void click_or_select_strand_and_standard_from_the_standard_table() throws Throwable {
 		try {
-			int standardListSize = homePage.standardnameslist.size();
-			int randomNumber = (int) (Math.random() * standardListSize);
+			int randomNumber = 10;
 			UtilityMethods.scrollPageDown(Driver.webdriver, 4);
 			Thread.sleep(500);
 			new Actions(Driver.webdriver).moveToElement(homePage.standardnameslist.get(randomNumber)).build().perform();
 			Thread.sleep(500);
 			headerOnToolTip = homePage.stranddefinitionlist.get(randomNumber).getText();
-			// String subcat =
-			// homePage.standardsubdefinitionlist.get(randomNumber).getText();
 			subHeaderOnToolTip = homePage.standarddescriptionlist.get(randomNumber).getText();
 			subHeaderOnToolTip = subHeaderOnToolTip.substring(0, subHeaderOnToolTip.indexOf(":") - 1)
 					+ subHeaderOnToolTip.substring(subHeaderOnToolTip.indexOf(":"));
