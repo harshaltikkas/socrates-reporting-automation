@@ -688,7 +688,7 @@ public class Test_Status_Steps {
 		} catch (Exception e) {
 			jse.executeScript("arguments[0].click();", homePage.comparisontab);
 		}
-		UtilityMethods.wait_For_Comparison_Tab_Section_Load();
+		UtilityMethods.wait_For_Comparison_Tab_Section_Load_under_test_score();
 	}
 
 	@Then("^verify Tests are listed in Correct Order for Test Scores Comparision$")

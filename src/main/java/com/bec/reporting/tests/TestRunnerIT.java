@@ -42,7 +42,7 @@ plugin = { "pretty",
 		   "junit:target/cucumber-reports/junit_xml_report/Cucumber.xml",
 		   "rerun:target/failed_scenarios.txt"
 		   },
-tags = { "@smoketest" }, 
+tags = { "@Feature" }, 
 monochrome = true)
 
 public class TestRunnerIT {

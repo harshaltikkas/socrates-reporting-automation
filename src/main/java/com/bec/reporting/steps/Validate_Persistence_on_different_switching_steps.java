@@ -50,7 +50,7 @@ public class Validate_Persistence_on_different_switching_steps {
 			UtilityMethods.wait_For_Test_Score_Detail_Section();
 
 			jse.executeScript("arguments[0].click();", homePage.comparisontab);
-			UtilityMethods.wait_For_Comparison_Tab_Section_Load();
+			UtilityMethods.wait_For_Comparison_Tab_Section_Load_under_test_score();
 			Assert.assertTrue(homePage.compare_cb_list_on_comparison_tab.get(0).getText().equals("District"));
 			homePage.compare_cb_list_on_comparison_tab.get(0).click();
 			Thread.sleep(500);
@@ -58,7 +58,7 @@ public class Validate_Persistence_on_different_switching_steps {
 					homePage.compare_list_of_avg_on_comparison_tab.get(0).getText().equals("District Average"));
 
 			jse.executeScript("arguments[0].click();", homePage.schoolmenu);
-			UtilityMethods.wait_For_Comparison_Tab_Section_Load();
+			UtilityMethods.wait_For_Comparison_Tab_Section_Load_under_test_score();
 			test_name_on_ch = UtilityMethods.getTestsNameonUI();
 			Assert.assertTrue(testname.equals(test_name_on_ch));
 
@@ -72,7 +72,7 @@ public class Validate_Persistence_on_different_switching_steps {
 			Assert.assertTrue(homePage.compare_list_of_avg_on_comparison_tab.get(1).getText().equals("School Average"));
 
 			jse.executeScript("arguments[0].click();", homePage.classmenu);
-			UtilityMethods.wait_For_Comparison_Tab_Section_Load();
+			UtilityMethods.wait_For_Comparison_Tab_Section_Load_under_test_score();
 			test_name_on_ch = UtilityMethods.getTestsNameonUI();
 			Assert.assertTrue(testname.equals(test_name_on_ch));
 			Assert.assertTrue(homePage.compare_cb_list_on_comparison_tab.get(0).getText().equals("Class"));
@@ -87,7 +87,7 @@ public class Validate_Persistence_on_different_switching_steps {
 			Assert.assertTrue(homePage.compare_list_of_avg_on_comparison_tab.get(2).getText().equals("Class Average"));
 
 			jse.executeScript("arguments[0].click();", homePage.studentmenu);
-			UtilityMethods.wait_For_Comparison_Tab_Section_Load();
+			UtilityMethods.wait_For_Comparison_Tab_Section_Load_under_test_score();
 			test_name_on_ch = UtilityMethods.getTestsNameonUI();
 			Assert.assertTrue(testname.equals(test_name_on_ch));
 			Assert.assertTrue(homePage.compare_cb_list_on_comparison_tab.get(0).getText().equals("Class"));
@@ -99,7 +99,7 @@ public class Validate_Persistence_on_different_switching_steps {
 			Assert.assertTrue(homePage.compare_list_of_avg_on_comparison_tab.get(2).getText().equals("Class Average"));
 
 			jse.executeScript("arguments[0].click();", homePage.classmenu);
-			UtilityMethods.wait_For_Comparison_Tab_Section_Load();
+			UtilityMethods.wait_For_Comparison_Tab_Section_Load_under_test_score();
 			test_name_on_ch = UtilityMethods.getTestsNameonUI();
 			Assert.assertTrue(testname.equals(test_name_on_ch));
 			Assert.assertTrue(homePage.compare_cb_list_on_comparison_tab.get(0).getText().equals("Class"));
@@ -111,7 +111,7 @@ public class Validate_Persistence_on_different_switching_steps {
 			Assert.assertTrue(homePage.compare_list_of_avg_on_comparison_tab.get(2).getText().equals("Class Average"));
 
 			jse.executeScript("arguments[0].click();", homePage.schoolmenu);
-			UtilityMethods.wait_For_Comparison_Tab_Section_Load();
+			UtilityMethods.wait_For_Comparison_Tab_Section_Load_under_test_score();
 			test_name_on_ch = UtilityMethods.getTestsNameonUI();
 			Assert.assertTrue(testname.equals(test_name_on_ch));
 			Assert.assertTrue(homePage.compare_cb_list_on_comparison_tab.get(0).getText().equals("School"));
@@ -121,7 +121,7 @@ public class Validate_Persistence_on_different_switching_steps {
 			Assert.assertTrue(homePage.compare_list_of_avg_on_comparison_tab.get(1).getText().equals("School Average"));
 
 			jse.executeScript("arguments[0].click();", homePage.districtmenu);
-			UtilityMethods.wait_For_Comparison_Tab_Section_Load();
+			UtilityMethods.wait_For_Comparison_Tab_Section_Load_under_test_score();
 			test_name_on_ch = UtilityMethods.getTestsNameonUI();
 			Assert.assertTrue(testname.equals(test_name_on_ch));
 			Assert.assertTrue(homePage.compare_cb_list_on_comparison_tab.get(0).getText().equals("District"));
@@ -159,11 +159,10 @@ public class Validate_Persistence_on_different_switching_steps {
 			homePage.chkbox_list_text_under_view_on_sta_filter.get(1).click();
 			Thread.sleep(500);
 			log.info("selected View Name: " + selectedViewName);
-			if(homePage.chkbox_list_text_under_view_on_sta_filter.size()==2) {
+			if (homePage.chkbox_list_text_under_view_on_sta_filter.size() == 2) {
 				homePage.cancel_button_on_filter_in_sta.click();
-			}
-			else {
-			homePage.apply_button_on_filter_in_sta.click();
+			} else {
+				homePage.apply_button_on_filter_in_sta.click();
 			}
 			Thread.sleep(2000);
 			Assert.assertTrue(homePage.view_text_in_sta_table_header.getText().equals(selectedViewName));
@@ -414,7 +413,8 @@ public class Validate_Persistence_on_different_switching_steps {
 				Driver.webdriver.findElementByXPath("//li[.='John Stephenson']").click();
 				Thread.sleep(500);
 			}
-			homePage.teachersdropdownbtn.click();Thread.sleep(500);
+			homePage.teachersdropdownbtn.click();
+			Thread.sleep(500);
 			UtilityMethods.scrollPageDown(Driver.webdriver, 4);
 			homePage.rosterapplybtn.click();
 			UtilityMethods.wait_For_Student_List_AND_OR_Class_List_Section_Load();
@@ -441,7 +441,7 @@ public class Validate_Persistence_on_different_switching_steps {
 				RosterTabUtilityMethods.select_Student_In_Student_DropDown("Samantha Cortez");
 			} else {
 				RosterTabUtilityMethods.select_Student_In_Student_DropDown("Terri Alexander");
-			}			
+			}
 			homePage.rosterapplybtn.click();
 			UtilityMethods.wait_For_Performance_Over_Time_Line_Chart_Section_Load();
 			UtilityMethods.scrollPageUp(Driver.webdriver, 4);
@@ -511,7 +511,7 @@ public class Validate_Persistence_on_different_switching_steps {
 				Thread.sleep(500);
 				Driver.webdriver.findElementByXPath("//li[.='Ann Galyean']").click();
 			}
-			Thread.sleep(500);	
+			Thread.sleep(500);
 			homePage.studentdropdownbtn.click();
 			Thread.sleep(500);
 			homePage.rosterapplybtn.click();
@@ -704,11 +704,509 @@ public class Validate_Persistence_on_different_switching_steps {
 	@Then("^Verify Standard Performance Summary Persistence on switching to all other levels$")
 	public void verify_Standard_Performance_Summary_Persistence_on_switching_to_all_other_levels() throws Throwable {
 		try {
+			Assert.assertTrue(homePage.activedistrictmenu.isDisplayed());
+			Assert.assertTrue(homePage.activestandardperformancebtn.isDisplayed());
+			jse.executeScript("arguments[0].click();", homePage.summarytab);
+			UtilityMethods.wait_For_Summary_Tab_Section_Load();
+			new Actions(Driver.webdriver).moveToElement(homePage.viewDropDown_on_summary).click().build().perform();
+			Thread.sleep(500);
+			homePage.viewDropDownList_on_summary.get(1).click();
+			Thread.sleep(500);
+			String selected_view = homePage.viewDropDown_on_summary.getText();
+			homePage.compare_cb_list_on_summary.get(0).click();
+			Thread.sleep(500);
+			Assert.assertTrue(homePage.compare_list_of_avg_on_summary_tab.get(0).getText().equals("District Average"));
+
+			jse.executeScript("arguments[0].click();", homePage.schoolmenu);
+			UtilityMethods.wait_For_Summary_Tab_Section_Load();
+			Thread.sleep(1000);
+			Assert.assertTrue(selected_view.equals(homePage.viewDropDown_on_summary.getText()));
+			homePage.compare_cb_list_on_summary.get(0).click();
+			Thread.sleep(500);
+			Assert.assertTrue(homePage.compare_list_of_avg_on_summary_tab.get(0).getText().equals("District Average"));
+			Assert.assertTrue(homePage.compare_list_of_avg_on_summary_tab.get(1).getText().equals("School Average"));
+
+			jse.executeScript("arguments[0].click();", homePage.classmenu);
+			UtilityMethods.wait_For_Summary_Tab_Section_Load();
+			Thread.sleep(1000);
+			Assert.assertTrue(selected_view.equals(homePage.viewDropDown_on_summary.getText()));
+			homePage.compare_cb_list_on_summary.get(0).click();
+			Thread.sleep(500);
+			Assert.assertTrue(homePage.compare_list_of_avg_on_summary_tab.get(0).getText().equals("District Average"));
+			Assert.assertTrue(homePage.compare_list_of_avg_on_summary_tab.get(1).getText().equals("School Average"));
+			Assert.assertTrue(homePage.compare_list_of_avg_on_summary_tab.get(2).getText().equals("Class Average"));
+
+			jse.executeScript("arguments[0].click();", homePage.studentmenu);
+			UtilityMethods.wait_For_Summary_Tab_Section_Load();
+			Thread.sleep(1000);
+			Assert.assertTrue(selected_view.equals(homePage.viewDropDown_on_summary.getText()));
+			Assert.assertTrue(homePage.compare_list_of_avg_on_summary_tab.get(0).getText().equals("District Average"));
+			Assert.assertTrue(homePage.compare_list_of_avg_on_summary_tab.get(1).getText().equals("School Average"));
+			Assert.assertTrue(homePage.compare_list_of_avg_on_summary_tab.get(2).getText().equals("Class Average"));
+
+			jse.executeScript("arguments[0].click();", homePage.classmenu);
+			UtilityMethods.wait_For_Summary_Tab_Section_Load();
+			Thread.sleep(1000);
+			Assert.assertTrue(selected_view.equals(homePage.viewDropDown_on_summary.getText()));
+			Assert.assertTrue(homePage.compare_list_of_avg_on_summary_tab.get(0).getText().equals("District Average"));
+			Assert.assertTrue(homePage.compare_list_of_avg_on_summary_tab.get(1).getText().equals("School Average"));
+			Assert.assertTrue(homePage.compare_list_of_avg_on_summary_tab.get(2).getText().equals("Class Average"));
+
+			jse.executeScript("arguments[0].click();", homePage.schoolmenu);
+			UtilityMethods.wait_For_Summary_Tab_Section_Load();
+			Thread.sleep(1000);
+			Assert.assertTrue(selected_view.equals(homePage.viewDropDown_on_summary.getText()));
+			Assert.assertTrue(homePage.compare_list_of_avg_on_summary_tab.get(0).getText().equals("District Average"));
+			Assert.assertTrue(homePage.compare_list_of_avg_on_summary_tab.get(1).getText().equals("School Average"));
+
+			jse.executeScript("arguments[0].click();", homePage.districtmenu);
+			UtilityMethods.wait_For_Summary_Tab_Section_Load();
+			Thread.sleep(1000);
+			Assert.assertTrue(selected_view.equals(homePage.viewDropDown_on_summary.getText()));
+			Assert.assertTrue(homePage.compare_list_of_avg_on_summary_tab.get(0).getText().equals("District Average"));
 
 		} catch (Exception e) {
 			UtilityMethods.processException(e);
 		}
 		CBTConfiguration.score = "pass";
 		log.info("Scenario BE-2319 completed");
+	}
+
+	@Then("^Verify Standard Performance Comparison Persistence on switching to all other levels$")
+	public void verify_Standard_Performance_Comparison_Persistence_on_switching_to_all_other_levels() throws Throwable {
+		try {
+			Assert.assertTrue(homePage.activedistrictmenu.isDisplayed());
+			Assert.assertTrue(homePage.activestandardperformancebtn.isDisplayed());
+			jse.executeScript("arguments[0].click();", homePage.comparisontab);
+			UtilityMethods.wait_For_Standards_Pop_up_Load();
+			new Actions(Driver.webdriver).moveToElement(homePage.dropDowns_on_edit_standards_on_pop_up.get(0)).click()
+					.build().perform();
+			Thread.sleep(500);
+			new Actions(Driver.webdriver).moveToElement(homePage.viewDropDown_list_on_edit_standards_on_pop_up.get(2))
+					.click().build().perform();
+			Thread.sleep(1000);
+			String view_name_on_pop_up = homePage.dropDowns_on_edit_standards_on_pop_up.get(0).getText();
+			log.info("view name from popup on District menu:" + view_name_on_pop_up);
+			new Actions(Driver.webdriver).moveToElement(homePage.applyBtnOnstandardTab).click().build().perform();
+			UtilityMethods.wait_For_Comparison_Tab_Section_Load_under_standard_performance();
+			log.info("view on comparison table: " + homePage.comparison_tab_sp_text.getText());
+			Assert.assertTrue(view_name_on_pop_up.equals(homePage.comparison_tab_sp_text.getText()));
+			log.info("selected view from popup on DA menu and view name on table are same on school context");
+			homePage.compare_cb_list_on_comparison.get(0).click();
+			Thread.sleep(500);
+			Assert.assertTrue(
+					homePage.compare_list_of_avg_on_comparison_tab.get(0).getText().equals("District Average"));
+
+			// clicking on school menu
+			jse.executeScript("arguments[0].click();", homePage.schoolmenu);
+			log.info("clicked on school menu");
+			Thread.sleep(15000);
+			log.info("view name from popup on school menu:" + view_name_on_pop_up);
+			Assert.assertTrue(
+					view_name_on_pop_up.equals(homePage.dropDowns_on_edit_standards_on_pop_up.get(0).getText()));
+
+			new Actions(Driver.webdriver).moveToElement(homePage.applyBtnOnstandardTab).click().build().perform();
+			UtilityMethods.wait_For_Comparison_Tab_Section_Load_under_standard_performance();
+			log.info("view on comparison table: " + homePage.comparison_tab_sp_text.getText());
+			Assert.assertTrue(view_name_on_pop_up.equals(homePage.comparison_tab_sp_text.getText()));
+			homePage.compare_cb_list_on_summary.get(0).click();
+			Thread.sleep(500);
+			Assert.assertTrue(homePage.compare_list_of_avg_on_summary_tab.get(0).getText().equals("District Average"));
+			Assert.assertTrue(homePage.compare_list_of_avg_on_summary_tab.get(1).getText().equals("School Average"));
+
+			// clicking on class menu
+			jse.executeScript("arguments[0].click();", homePage.classmenu);
+			log.info("clicked on class menu");
+			Thread.sleep(15000);
+			log.info("view name from popup on class menu:" + view_name_on_pop_up);
+			Assert.assertTrue(
+					view_name_on_pop_up.equals(homePage.dropDowns_on_edit_standards_on_pop_up.get(0).getText()));
+
+			new Actions(Driver.webdriver).moveToElement(homePage.applyBtnOnstandardTab).click().build().perform();
+			UtilityMethods.wait_For_Comparison_Tab_Section_Load_under_standard_performance();
+			log.info("view on comparison table: " + homePage.comparison_tab_sp_text.getText());
+			Assert.assertTrue(view_name_on_pop_up.equals(homePage.comparison_tab_sp_text.getText()));
+			homePage.compare_cb_list_on_summary.get(0).click();
+			Thread.sleep(500);
+			Assert.assertTrue(homePage.compare_list_of_avg_on_summary_tab.get(0).getText().equals("District Average"));
+			Assert.assertTrue(homePage.compare_list_of_avg_on_summary_tab.get(1).getText().equals("School Average"));
+			Assert.assertTrue(homePage.compare_list_of_avg_on_summary_tab.get(2).getText().equals("Class Average"));
+
+			// clicking on student menu
+			jse.executeScript("arguments[0].click();", homePage.studentmenu);
+			Thread.sleep(15000);
+			log.info("view name from popup on student menu:" + view_name_on_pop_up);
+			Assert.assertTrue(
+					view_name_on_pop_up.equals(homePage.dropDowns_on_edit_standards_on_pop_up.get(0).getText()));
+
+			new Actions(Driver.webdriver).moveToElement(homePage.applyBtnOnstandardTab).click().build().perform();
+			UtilityMethods.wait_For_Comparison_Tab_Section_Load_under_standard_performance();
+			log.info("view on comparison table: " + homePage.comparison_tab_sp_text.getText());
+			Assert.assertTrue(view_name_on_pop_up.equals(homePage.comparison_tab_sp_text.getText()));
+
+			Assert.assertTrue(homePage.compare_list_of_avg_on_summary_tab.get(0).getText().equals("District Average"));
+			Assert.assertTrue(homePage.compare_list_of_avg_on_summary_tab.get(1).getText().equals("School Average"));
+			Assert.assertTrue(homePage.compare_list_of_avg_on_summary_tab.get(2).getText().equals("Class Average"));
+
+			jse.executeScript("arguments[0].click();", homePage.classmenu);
+			UtilityMethods.wait_For_Comparison_Tab_Section_Load_under_standard_performance();
+			Assert.assertTrue(view_name_on_pop_up.equals(homePage.comparison_tab_sp_text.getText()));
+			Assert.assertTrue(homePage.compare_list_of_avg_on_summary_tab.get(0).getText().equals("District Average"));
+			Assert.assertTrue(homePage.compare_list_of_avg_on_summary_tab.get(1).getText().equals("School Average"));
+			Assert.assertTrue(homePage.compare_list_of_avg_on_summary_tab.get(2).getText().equals("Class Average"));
+
+			jse.executeScript("arguments[0].click();", homePage.schoolmenu);
+			UtilityMethods.wait_For_Comparison_Tab_Section_Load_under_standard_performance();
+			Assert.assertTrue(view_name_on_pop_up.equals(homePage.comparison_tab_sp_text.getText()));
+			Assert.assertTrue(homePage.compare_list_of_avg_on_summary_tab.get(0).getText().equals("District Average"));
+			Assert.assertTrue(homePage.compare_list_of_avg_on_summary_tab.get(1).getText().equals("School Average"));
+
+			jse.executeScript("arguments[0].click();", homePage.districtmenu);
+			UtilityMethods.wait_For_Comparison_Tab_Section_Load_under_standard_performance();
+			Assert.assertTrue(view_name_on_pop_up.equals(homePage.comparison_tab_sp_text.getText()));
+			Assert.assertTrue(homePage.compare_list_of_avg_on_summary_tab.get(0).getText().equals("District Average"));
+
+		} catch (Exception e) {
+			UtilityMethods.processException(e);
+		}
+		CBTConfiguration.score = "pass";
+		log.info("Scenario BE-2320 completed");
+	}
+
+	@Then("^User Click on School subway navigation and verify reports for the first school from the list is displayed$")
+	public void user_Click_on_School_subway_navigation_and_verify_reports_for_the_first_school_from_the_list_is_displayed()
+			throws Throwable {
+		try {
+			String schoolname, schoolname_on_ch;
+			homePage.rostertab.click();
+			Thread.sleep(1000);
+			String grade = homePage.gradedropdownbtn.getText();
+			homePage.rostercancelbtn.click();
+			Thread.sleep(500);
+			schoolname = homePage.classORSchoolNamesListInClassListPageHeaders.get(0).getText();
+			log.info("First School from the list is" + schoolname);
+			jse.executeScript("arguments[0].click();", homePage.schoolmenu);
+			Assert.assertTrue(homePage.activeschoolmenu.isDisplayed());
+			UtilityMethods.wait_For_Student_List_AND_OR_Class_List_Section_Load();
+			schoolname_on_ch = UtilityMethods.getSchoolNameonUI();
+			Assert.assertTrue(schoolname.equals(schoolname_on_ch));
+			log.info(
+					"First School from the list in District is matched with School name of context header in School context");
+			homePage.rostertab.click();
+			Thread.sleep(1000);
+			String grade_on_roster = homePage.gradedropdownbtn.getText();
+			homePage.rostercancelbtn.click();
+			Thread.sleep(500);
+			log.info(grade_on_roster);
+			Assert.assertTrue(grade_on_roster.equals(grade));
+			log.info("Roster Tab value in School matched with Roster Tab value in District");
+		} catch (Exception e) {
+			UtilityMethods.processException(e);
+		}
+	}
+
+	@Then("^User Click on Class subway navigation and verify reports for the fisrt class from the list is displayed$")
+	public void user_Click_on_Class_subway_navigation_and_verify_reports_for_the_fisrt_class_from_the_list_is_displayed()
+			throws Throwable {
+		try {
+			String classname, classname_on_ch, classname_on_roster, grade_on_roster, schoolname, schoolname_on_roster;
+			classname = homePage.classORSchoolNamesListInClassListPageHeaders.get(0).getText();
+			homePage.rostertab.click();
+			Thread.sleep(1000);
+			schoolname = homePage.schooldropdownbtn.getText();
+			String grade = homePage.gradedropdownbtn.getText();
+			homePage.rostercancelbtn.click();
+			Thread.sleep(500);
+			log.info("First Class from the list is" + classname);
+			jse.executeScript("arguments[0].click();", homePage.classmenu);
+			Assert.assertTrue(homePage.activeclassmenu.isDisplayed());
+			UtilityMethods.wait_For_Student_List_AND_OR_Class_List_Section_Load();
+			classname_on_ch = UtilityMethods.getClassNameonUI();
+			Assert.assertTrue(classname_on_ch.equals(classname));
+			log.info(
+					"First Class from the list in School is matched with the Class name in context header of Class context");
+			homePage.rostertab.click();
+			Thread.sleep(1000);
+			schoolname_on_roster = homePage.schooldropdownbtn.getText();
+			grade_on_roster = homePage.gradedropdownbtn.getText();
+			classname_on_roster = homePage.classdropdownbtn.getText();
+			homePage.rostercancelbtn.click();
+			Thread.sleep(500);
+			Assert.assertTrue(schoolname_on_roster.equals(schoolname));
+			Assert.assertTrue(grade_on_roster.equals(grade));
+			Assert.assertTrue(classname_on_roster.equals(classname));
+			log.info("Roster Tab value in Class matched with Roster Tab value in School");
+		} catch (Exception e) {
+			UtilityMethods.processException(e);
+		}
+	}
+
+	@Then("^User Click on Student subway navigation and verify reports for the first student from the list is displayed$")
+	public void user_Click_on_Student_subway_navigation_and_verify_reports_for_the_first_student_from_the_list_is_displayed()
+			throws Throwable {
+		try {
+			String studentname, studentname_on_ch, studentname_on_roster, teachername, teachername_on_roster,
+					schoolname, schoolname_on_roster, classname, classname_on_roster;
+			studentname = homePage.classORSchoolNamesListInClassListPageHeaders.get(0).getText();
+			homePage.rostertab.click();
+			Thread.sleep(1000);
+			schoolname = homePage.schooldropdownbtn.getText();
+			String grade = homePage.gradedropdownbtn.getText();
+			teachername = homePage.teachersdropdownbtn.getText();
+			classname = homePage.classdropdownbtn.getText();
+			homePage.rostercancelbtn.click();
+			Thread.sleep(500);
+			log.info("First Class from the list is" + studentname);
+			jse.executeScript("arguments[0].click();", homePage.studentmenu);
+			Assert.assertTrue(homePage.activestudentmenu.isDisplayed());
+			UtilityMethods.wait_For_Performance_Over_Time_Line_Chart_Section_Load();
+			studentname_on_ch = UtilityMethods.getStudentNameonUI();
+			Assert.assertTrue(studentname_on_ch.equals(studentname));
+			log.info(
+					"First Student from the list in Class is matched with the Student name in context header of Student context");
+			homePage.rostertab.click();
+			Thread.sleep(1000);
+			schoolname_on_roster = homePage.schooldropdownbtn.getText();
+			String grade_on_roster = homePage.gradedropdownbtn.getText();
+			teachername_on_roster = homePage.teachersdropdownbtn.getText();
+			classname_on_roster = homePage.classdropdownbtn.getText();
+			studentname_on_roster = homePage.studentdropdownbtn.getText();
+			homePage.rostercancelbtn.click();
+			Thread.sleep(500);
+			Assert.assertTrue(schoolname_on_roster.equals(schoolname));
+			Assert.assertTrue(grade_on_roster.equals(grade));
+			Assert.assertTrue(teachername_on_roster.equals(teachername));
+			Assert.assertTrue(classname_on_roster.equals(classname));
+			Assert.assertTrue(studentname_on_roster.equals(studentname));
+			log.info("Roster Tab value in Student matched with Roster Tab value in Class");
+			Thread.sleep(2000);
+		} catch (Exception e) {
+			UtilityMethods.processException(e);
+		}
+	}
+
+	@Then("^User Click on Class subway navigation and verify the Roster for Class name$")
+	public void user_Click_on_Class_subway_navigation_and_verify_the_Roster_for_Class_name() throws Throwable {
+		try {
+			String classname_on_roster, classname, teachername, teachername_on_roster, schoolname, schoolname_on_roster;
+			homePage.rostertab.click();
+			Thread.sleep(1000);
+			schoolname = homePage.schooldropdownbtn.getText();
+			String grade = homePage.gradedropdownbtn.getText();
+			teachername = homePage.teachersdropdownbtn.getText();
+			classname = homePage.classdropdownbtn.getText();
+			homePage.rostercancelbtn.click();
+			Thread.sleep(500);
+			jse.executeScript("arguments[0].click();", homePage.classmenu);
+			Assert.assertTrue(homePage.activeclassmenu.isDisplayed());
+			UtilityMethods.wait_For_Student_List_AND_OR_Class_List_Section_Load();
+			homePage.rostertab.click();
+			Thread.sleep(1000);
+			schoolname_on_roster = homePage.schooldropdownbtn.getText();
+			String grade_on_roster = homePage.gradedropdownbtn.getText();
+			teachername_on_roster = homePage.teachersdropdownbtn.getText();
+			classname_on_roster = homePage.classdropdownbtn.getText();
+			homePage.rostercancelbtn.click();
+			Thread.sleep(500);
+			Assert.assertTrue(schoolname_on_roster.equals(schoolname));
+			Assert.assertTrue(grade_on_roster.equals(grade));
+			Assert.assertTrue(teachername_on_roster.equals(teachername));
+			Assert.assertTrue(classname_on_roster.equals(classname));
+			log.info("Roster Tab value in Class matched with Roster Tab value in Student");
+			Thread.sleep(2000);
+		} catch (Exception e) {
+			UtilityMethods.processException(e);
+		}
+	}
+
+	@Then("^User Click on School subway navigation and verify the Roster for School name$")
+	public void user_Click_on_School_subway_navigation_and_verify_the_Roster_for_School_name() throws Throwable {
+		try {
+			String schoolname, schoolname_on_roster, grade_on_roster;
+			homePage.rostertab.click();
+			Thread.sleep(1000);
+			schoolname = homePage.schooldropdownbtn.getText();
+			String grade = homePage.gradedropdownbtn.getText();
+			homePage.rostercancelbtn.click();
+			jse.executeScript("arguments[0].click();", homePage.schoolmenu);
+			Assert.assertTrue(homePage.activeschoolmenu.isDisplayed());
+			UtilityMethods.wait_For_Student_List_AND_OR_Class_List_Section_Load();
+			homePage.rostertab.click();
+			Thread.sleep(1000);
+			schoolname_on_roster = homePage.schooldropdownbtn.getText();
+			grade_on_roster = homePage.gradedropdownbtn.getText();
+			homePage.rostercancelbtn.click();
+			Thread.sleep(500);
+			Assert.assertTrue(schoolname_on_roster.equals(schoolname));
+			Assert.assertTrue(grade_on_roster.equals(grade));
+			log.info("Roster Tab value in School matched with Roster Tab value in School");
+			Thread.sleep(2000);
+		} catch (Exception e) {
+			UtilityMethods.processException(e);
+		}
+	}
+
+	@Then("^User Click on District subway navgation and verify the Roster tab$")
+	public void user_Click_on_District_subway_navgation_and_verify_the_Roster_tab() throws Throwable {
+		try {
+			String schoolname, schoolname_on_roster, grade_on_roster;
+			schoolname = "All";
+			homePage.rostertab.click();
+			Thread.sleep(1000);
+			String grade = homePage.gradedropdownbtn.getText();
+			homePage.rostercancelbtn.click();
+			jse.executeScript("arguments[0].click();", homePage.districtmenu);
+			Assert.assertTrue(homePage.activedistrictmenu.isDisplayed());
+			UtilityMethods.wait_For_Student_List_AND_OR_Class_List_Section_Load();
+			homePage.rostertab.click();
+			Thread.sleep(1000);
+			schoolname_on_roster = homePage.schooldropdownbtn.getText();
+			grade_on_roster = homePage.gradedropdownbtn.getText();
+			homePage.rostercancelbtn.click();
+			Thread.sleep(500);
+			Assert.assertTrue(schoolname_on_roster.equals(schoolname));
+			Assert.assertTrue(grade_on_roster.equals(grade));
+			log.info("Roster Tab value in District matched with Roster Tab value in School");
+		} catch (Exception e) {
+			UtilityMethods.processException(e);
+		}
+	}
+
+	@Then("^Verify the Persistence of Date tab by switching to different levels using subway navigation$")
+	public void verify_the_Persistence_of_Date_tab_by_switching_to_different_levels_using_subway_navigation()
+			throws Throwable {
+		try {
+			homePage.datetab.click();
+			Thread.sleep(500);
+			homePage.districttermdropdownbtn.click();
+			Thread.sleep(500);
+			homePage.districttermlist.get(1).click();
+			Thread.sleep(500);
+			String districtterm = homePage.districttermdropdownbtn.getText();
+			districtterm = districtterm.substring(0, districtterm.indexOf(" "));
+			log.info("selected district term:" + districtterm);
+			homePage.dateapplybtn.click();
+			UtilityMethods.scrollPageUp(Driver.webdriver);
+			UtilityMethods.wait_For_Student_List_AND_OR_Class_List_Section_Load();
+			String datesonCH = homePage.datesoncontextheader.getText().trim();
+			datesonCH = datesonCH.substring(6, 10) + "-" + datesonCH.substring(17);
+			log.info("datesonCH :" + datesonCH);
+			Assert.assertEquals(districtterm, datesonCH);
+			Thread.sleep(1000);
+
+			/**
+			 * Verifying Date tab Persistence in School context
+			 */
+
+			jse.executeScript("arguments[0].click();", homePage.schoolmenu);
+			UtilityMethods.wait_For_Student_List_AND_OR_Class_List_Section_Load();
+			Assert.assertTrue(homePage.activeschoolmenu.isDisplayed());
+			homePage.datetab.click();
+			Thread.sleep(1000);
+			String schooldistrictterm = homePage.districttermdropdownbtn.getText();
+			schooldistrictterm = schooldistrictterm.substring(0, schooldistrictterm.indexOf(" "));
+			homePage.datecancelbtn.click();
+			log.info("selected district term:" + schooldistrictterm);
+			Assert.assertTrue(schooldistrictterm.equals(districtterm));
+			Thread.sleep(1000);
+
+			/**
+			 * Verifying Date tab Persistence in Class context
+			 */
+
+			jse.executeScript("arguments[0].click();", homePage.classmenu);
+			UtilityMethods.wait_For_Student_List_AND_OR_Class_List_Section_Load();
+			Assert.assertTrue(homePage.activeclassmenu.isDisplayed());
+			homePage.datetab.click();
+			Thread.sleep(1000);
+			String classdistrictterm = homePage.districttermdropdownbtn.getText();
+			classdistrictterm = classdistrictterm.substring(0, classdistrictterm.indexOf(" "));
+			homePage.datecancelbtn.click();
+			log.info("selected district term:" + classdistrictterm);
+			Assert.assertTrue(classdistrictterm.equals(districtterm));
+			Thread.sleep(1000);
+
+			/**
+			 * Verifying Date tab Persistence in Student context
+			 */
+
+			jse.executeScript("arguments[0].click();", homePage.studentmenu);
+			UtilityMethods.wait_For_Performance_Over_Time_Line_Chart_Section_Load();
+			Assert.assertTrue(homePage.activestudentmenu.isDisplayed());
+			homePage.datetab.click();
+			Thread.sleep(1000);
+			String studentdistrictterm = homePage.districttermdropdownbtn.getText();
+			studentdistrictterm = studentdistrictterm.substring(0, studentdistrictterm.indexOf(" "));
+			homePage.datecancelbtn.click();
+			log.info("selected district term:" + studentdistrictterm);
+			Assert.assertTrue(studentdistrictterm.equals(districtterm));
+			Thread.sleep(1000);
+
+			/**
+			 * Verifying Persistence in reverse order
+			 */
+
+			jse.executeScript("arguments[0].click();", homePage.classmenu);
+			Assert.assertTrue(homePage.activeclassmenu.isDisplayed());
+			UtilityMethods.wait_For_Student_List_AND_OR_Class_List_Section_Load();
+			homePage.datetab.click();
+			Thread.sleep(1000);
+			classdistrictterm = homePage.districttermdropdownbtn.getText();
+			classdistrictterm = classdistrictterm.substring(0, classdistrictterm.indexOf(" "));
+			homePage.datecancelbtn.click();
+			log.info("selected district term:" + classdistrictterm);
+			Assert.assertTrue(classdistrictterm.equals(studentdistrictterm));
+			Thread.sleep(1000);
+
+			/**
+			 * Verifying Date tab Persistence in School context
+			 */
+
+			jse.executeScript("arguments[0].click();", homePage.schoolmenu);
+			Assert.assertTrue(homePage.activeschoolmenu.isDisplayed());
+			UtilityMethods.wait_For_Student_List_AND_OR_Class_List_Section_Load();
+			homePage.datetab.click();
+			Thread.sleep(1000);
+			schooldistrictterm = homePage.districttermdropdownbtn.getText();
+			schooldistrictterm = schooldistrictterm.substring(0, schooldistrictterm.indexOf(" "));
+			homePage.datecancelbtn.click();
+			log.info("selected district term:" + schooldistrictterm);
+			Assert.assertTrue(schooldistrictterm.equals(studentdistrictterm));
+			Thread.sleep(1000);
+
+			/**
+			 * Verifying Date tab Persistence in District context
+			 */
+
+			jse.executeScript("arguments[0].click();", homePage.districtmenu);
+			Assert.assertTrue(homePage.activedistrictmenu.isDisplayed());
+			UtilityMethods.wait_For_Student_List_AND_OR_Class_List_Section_Load();
+			homePage.datetab.click();
+			Thread.sleep(1000);
+			districtterm = homePage.districttermdropdownbtn.getText();
+			districtterm = districtterm.substring(0, districtterm.indexOf(" "));
+			homePage.datecancelbtn.click();
+			log.info("selected district term:" + districtterm);
+			Assert.assertTrue(districtterm.equals(studentdistrictterm));
+			Thread.sleep(1000);
+		} catch (Exception e) {
+			UtilityMethods.processException(e);
+		}
+	}
+	
+	@Then("^Verify Standard Performance Grouping Persistence for teacher at class level$")
+	public void verify_Standard_Performance_Grouping_Persistence_for_teacher_at_class_level() throws Throwable {
+	    try {
+	    	Assert.assertTrue(homePage.activeclassmenu.isDisplayed());
+			Assert.assertTrue(homePage.activestandardperformancebtn.isDisplayed());
+			jse.executeScript("arguments[0].click();", homePage.groupingTab);
+			Thread.sleep(5000);
+			Assert.assertTrue(homePage.groupingTabText.getText().equals("Edit Groups"));
+	    
+	    } catch (Exception e) {
+			UtilityMethods.processException(e);
+		}
+		CBTConfiguration.score = "pass";
+		log.info("Scenario BE-2339 completed");
 	}
 }

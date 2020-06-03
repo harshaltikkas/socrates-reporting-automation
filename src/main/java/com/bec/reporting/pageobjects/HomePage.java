@@ -802,10 +802,10 @@ public class HomePage {
 	@FindBy(xpath = "//i[@class='material-icons' and contains(text(),'show_chart')]/ancestor::span/following-sibling::span[@class='sidewidget-header-title']")
 	public WebElement performanceovrtimeheader;
 
-	@FindBy(xpath = "//span[@class='infoIcon' and not(@style)]")
+	@FindBy(xpath = "//span//img[contains(@style,'margin-top: -4px')]")
 	public WebElement info_icon_on_performance_over_time_header;
 
-	@FindBy(xpath = "//span[@class='infoIcon' and @style]")
+	@FindBy(xpath = "//span//img[contains(@style,'margin-top: 5px')]")
 	public WebElement info_icon_on_performance_over_time;
 
 	@FindBy(xpath = "//div[@class='infoIconTooltipBlockInr']")
@@ -1053,6 +1053,9 @@ public class HomePage {
 	
 	@FindBy(xpath = "//div[@class='bec_compare_multi_list']//div[@class='bec_compare_multi_list_header_label' and text()='Tests']")
 	public WebElement comparison_tab_tests_text;
+	
+	@FindBy(xpath = "//div[@class='bec_compare_multi_list_header_label']/span")
+	public WebElement comparison_tab_sp_text;
 
 	@FindBy(xpath = "//div[@class='standard-grid-filter-view']/div[@class='standard-grid-filter-view-label' and contains(text(),'Test(s) assessed for:')]/following-sibling::div/button")
 	public WebElement gradeDropDown;
@@ -1123,6 +1126,12 @@ public class HomePage {
 
 	@FindBy(xpath = "//div[@class='bec_groups_popup_modal_submit_button']//button[contains(text(),'Apply')]")
 	public WebElement applyBtnOngroupingTab;
+	
+	@FindBy(xpath = "//div[@class='bec_compares_popup_modal_submit_button']//button[contains(text(),'Apply')]")
+	public WebElement applyBtnOnstandardTab;
+	
+	@FindBy(xpath = "//div[@class='Beneath_Strands']")
+	public WebElement beneath_strands_on_standards_pop_up;
 
 	@FindBy(xpath = "//div[contains(text(),' Test(s) assessed for : ')]/ancestor::div[@class='bec_groups_popup_modal_row']//div[@class='bec_groups_popup_dropdown_main']/button")
 	public WebElement testAssessedForGradeGroupingTab;
@@ -1310,9 +1319,15 @@ public class HomePage {
 
 	@FindBy(xpath = "//div[@class='bec_singleTest_multi_list_single_question text-left']//div[@class='bec_singleTest_questionList']")
 	public List<WebElement> questions_values_on_sta;
+	
+	@FindBy(xpath = "//label[contains(@class,'bec_summary_checkbox_check')]")
+	public List<WebElement> compare_cb_list_on_summary;
 
 	@FindBy(xpath = "//span[@class='bec_singleTest_checkbox_label']")
 	public List<WebElement> compare_cb_list_on_sta;
+	
+	@FindBy(xpath = "//label[contains(@class,'bec_compare_checkbox_check')]")
+	public List<WebElement> compare_cb_list_on_comparison;
 	
 	@FindBy(xpath = "//div[contains(@class,'bec_singleTest_multi_list_single_taxonomy')]")
 	public WebElement view_text_in_sta_table_header;
@@ -1322,6 +1337,9 @@ public class HomePage {
 	
 	@FindBy(xpath = "//div[@class='bec_compare_multi_list_sub_block_compare_row']//div[@class='bec_compare_multi_list_sub_block_compare_label']")
 	public List<WebElement> compare_list_of_avg_on_comparison_tab;
+	
+	@FindBy(xpath = "//div[@class='bec_summary_multi_list_sub_block_compare_row']//div[@class='bec_summary_multi_list_sub_block_compare_label']")
+	public List<WebElement> compare_list_of_avg_on_summary_tab;
 
 	@FindBy(xpath = "//span[@class='bec_singleTest_multi_list_name']")
 	public List<WebElement> compared_columns_list_on_table_on_sta;
@@ -1511,10 +1529,16 @@ public class HomePage {
 
 	@FindBy(xpath = "//div[@class='bec_summary_taxonomy_standard-grid-filter-view']/div[contains(text(),'View :')]/following-sibling::div/button")
 	public WebElement viewDropDown_on_summary;
-
+	
+	@FindBy(xpath = "//button[@class='bec_compares_popup_dropdown_selector']")
+	public List<WebElement> dropDowns_on_edit_standards_on_pop_up;
+	
 	@FindBy(xpath = "//div[@class='bec_summary_taxonomy_standard-grid-filter-view']/div[contains(text(),'View :')]/following-sibling::div/button//div[@class='bec_summary_taxonomy_bec_tooltip_content']")
 	public WebElement viewDropDownToolTipText_on_summary;
 
+	@FindBy(xpath = "//div[@class='bec_compares_popup_dropdown_selectorList']/ul/li")
+	public List<WebElement> viewDropDown_list_on_edit_standards_on_pop_up;
+	
 	@FindBy(xpath = "//div[@class='bec_summary_taxonomy_standard-grid-filter-single-item']")
 	public List<WebElement> viewDropDownList_on_summary;
 	
