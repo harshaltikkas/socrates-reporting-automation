@@ -894,9 +894,9 @@ public class UtilityMethods {
 	}
 
 	/**
-	 * This method is used to wait till the loading of comparison section
+	 * This method is used to wait till the loading of comparison section under test scores
 	 */
-	public static void wait_For_Comparison_Tab_Section_Load() {
+	public static void wait_For_Comparison_Tab_Section_Load_under_test_score() {
 		boolean isSectionLoad = false;
 		int cmprson_ctr = 0;
 		do {
@@ -916,6 +916,60 @@ public class UtilityMethods {
 
 		if (isSectionLoad == false && cmprson_ctr > 15) {
 			log.info("Comparison Tab Section is not loaded in 30 seconds..");
+			processException(new Exception());
+		}
+	}
+	
+	/**
+	 * This method is used to wait till the loading of comparison section under standard performance
+	 */
+	public static void wait_For_Comparison_Tab_Section_Load_under_standard_performance() {
+		boolean isSectionLoad = false;
+		int cmprson_ctr = 0;
+		do {
+			try {
+				Assert.assertTrue(homePage.comparison_tab_sp_text.isDisplayed());
+				log.info("Comparison Tab Section is now Displaying");
+				isSectionLoad = true;
+			} catch (Exception e1) {
+				log.info("Waiting for Comparison Tab Section Loading");
+				try {
+					Thread.sleep(2000);
+					cmprson_ctr++;
+				} catch (InterruptedException e) {
+				}
+			}
+		} while (isSectionLoad == false && cmprson_ctr <= 15);
+
+		if (isSectionLoad == false && cmprson_ctr > 15) {
+			log.info("Comparison Tab Section is not loaded in 30 seconds..");
+			processException(new Exception());
+		}
+	}
+	
+	/**
+	 * This method is used to wait till the loading of comparison section
+	 */
+	public static void wait_For_Standards_Pop_up_Load() {
+		boolean isSectionLoad = false;
+		int cmprson_ctr = 0;
+		do {
+			try {
+				Assert.assertTrue(homePage.beneath_strands_on_standards_pop_up.isDisplayed());
+				log.info("Edit Standard Tab Section is now Displaying");
+				isSectionLoad = true;
+			} catch (Exception e1) {
+				log.info("Waiting for Edit Standard Tab Section Loading");
+				try {
+					Thread.sleep(2000);
+					cmprson_ctr++;
+				} catch (InterruptedException e) {
+				}
+			}
+		} while (isSectionLoad == false && cmprson_ctr <= 15);
+
+		if (isSectionLoad == false && cmprson_ctr > 15) {
+			log.info("Edit Standard Tab Section is not loaded in 30 seconds..");
 			processException(new Exception());
 		}
 	}
