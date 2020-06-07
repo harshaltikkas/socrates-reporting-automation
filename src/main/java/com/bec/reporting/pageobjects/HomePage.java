@@ -99,10 +99,10 @@ public class HomePage {
 	@FindBy(xpath = "//div[@class='universal-test-search']//span//div//input[@placeholder='Search']")
 	public WebElement searchbarontesttab;
 
-	@FindBy(xpath = "//span[text()='Student Data']/ancestor::div[@class='menu-title']//span[@class='infoIconForRoster_ico']")
+	@FindBy(xpath = "//span[text()='Student Data']/ancestor::div[@class='menu-title']//span[contains(@class,'infoIconForRoster')]")
 	public WebElement studentdata_filter;
 	
-	@FindBy(xpath = "//span[@class='infoIconForRosterClass']/span")
+	@FindBy(xpath = "//span[@class='infoIconForRosterClass']/img")
 	public WebElement info_icon_on_ch;
 	
 	@FindBy(xpath = "//span[@class='infoIconForRoster_tooltip_Description']")
@@ -1166,8 +1166,8 @@ public class HomePage {
 	@FindBy(xpath = "//i[@class='material-icons' and contains(text(),'add_circle_outline')]")
 	public WebElement plusIconOfnoofgroupsLabelOnGroupingTab;
 
-	@FindBy(xpath = "//i[@class='material-icons-outlined' and contains(text(),'info')]")
-	public WebElement tooltipIconOfnoofgroupsLabelOnGroupingTab;
+	@FindBy(xpath = "//span[@class='bec_groups_popup_modal_tooltip']//img")
+	public WebElement tooltipIconOf_group_by_LabelOnGroupingTab;
 
 	@FindBy(xpath = "//li[@class='activeGroupPopupRadio']//span[@class='bec_groups_popup_modal_radio_label']")
 	public WebElement selectedGrpNameOnUI;
@@ -1599,4 +1599,6 @@ public class HomePage {
 	@FindBy(xpath = "//div[@class='testStatus_detail_body_content_col' and contains(@style,'cursor')]")
 	public List<WebElement> class_Names_under_details_in_Test_status;
 	
+	@FindBy(xpath="//div[@class='menu-title' and contains(text(),'School')]/following-sibling::div//div[@class='menu-dropdown-list-inr']/ul/li'")
+    public List<WebElement> schooldropdownallcheckbox;
 }

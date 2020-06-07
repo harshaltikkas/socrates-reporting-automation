@@ -421,7 +421,7 @@ public class Sprint_Eight_And_Tenth_Steps {
 			Thread.sleep(500);
 			// verifying Group By UI elements
 			Assert.assertTrue(homePage.GrpByTextOnGroupingTab.isDisplayed());
-			Assert.assertTrue(homePage.tooltipIconOfnoofgroupsLabelOnGroupingTab.isDisplayed());
+			Assert.assertTrue(homePage.tooltipIconOf_group_by_LabelOnGroupingTab.isDisplayed());
 			Assert.assertTrue(homePage.groupByListOnGroupingTab.get(0).getText().equals("Cluster"));
 			Assert.assertTrue(homePage.groupByListOnGroupingTab.get(1).getText().equals("Average"));
 			Assert.assertTrue(homePage.groupByListOnGroupingTab.get(2).getText().equals("High-Low"));
@@ -448,7 +448,7 @@ public class Sprint_Eight_And_Tenth_Steps {
 	
 	private void wait_For_Assessed_With_on_grouping_tab() {
 		try {
-			Thread.sleep(100);
+			Thread.sleep(1000);
 			Assert.assertTrue(homePage.AssessedWithRefreshIconTab.isDisplayed());
 			log.info("wait for AssessedWithRefreshIconTab ...");
 			Thread.sleep(2000);

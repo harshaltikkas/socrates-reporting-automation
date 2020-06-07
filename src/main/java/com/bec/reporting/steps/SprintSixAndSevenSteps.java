@@ -83,8 +83,10 @@ public class SprintSixAndSevenSteps {
 	@Then("^Verify the tooltipicon in performance over time line chart and student list$")
 	public void verify_the_tooltipicon_in_performance_over_time_line_chart_and_student_list() throws Throwable {
 		try {
+			Thread.sleep(2000);
 			js.executeScript("arguments[0].click();", homePage.performance_overtime_icon);
-			Thread.sleep(1000);
+			UtilityMethods.wait_For_Performance_Over_Time_Line_Chart_Section_Load();
+			Thread.sleep(500);
 			Assert.assertTrue(homePage.info_icon_on_performance_over_time_header.isDisplayed());
 			js.executeScript("arguments[0].click();", homePage.info_icon_on_performance_over_time_header);
 			Thread.sleep(1000);
@@ -124,13 +126,9 @@ public class SprintSixAndSevenSteps {
 
 	@Then("^Verify the tooltipicon is not present$")
 	public void verify_the_tooltipicon_is_not_present() throws Throwable {
-		try {			
-			Assert.assertTrue(homePage.tooltip_of_info_icon.getText().equals(tooltipText_of_avg_score_heading));
-			CBTConfiguration.score = "fail";
-			UtilityMethods.processException(new Exception());
-		} catch (Exception e) {
-			CBTConfiguration.score = "pass";
-		}
+		Thread.sleep(500);
+		IWait.check_Absence_of_Element(homePage.info_icon_on_performance_over_time_header);
+		CBTConfiguration.score = "pass";
 		log.info("Scenario BE-653 completed");
 	}
 
@@ -144,12 +142,12 @@ public class SprintSixAndSevenSteps {
 	public void verify_the_diamond_shape_stroke_on_the_x_axis_and_Color_changes_within_the_Line_Charts()
 			throws Throwable {
 		try {
-			if ((Standard_Overview_Table_Steps.underClassContext )
+			if ((Standard_Overview_Table_Steps.underClassContext)
 					&& Standard_Overview_Table_Steps.performanceMenuClicked) {
-				//UtilityMethods.wait_For_Page_Section_Load();
+				// UtilityMethods.wait_For_Page_Section_Load();
 				homePage.performance_overtime_icon.click();
 				UtilityMethods.wait_For_Performance_Over_Time_Line_Chart_Section_Load();
-				
+
 			}
 			UtilityMethods.scrollPageDown(Driver.webdriver, 7);
 			Thread.sleep(500);
@@ -312,8 +310,6 @@ public class SprintSixAndSevenSteps {
 		}
 		log.info("Scenario BE-666,685,677,686 completed");
 	}
-
-	
 
 	@Then("^verify the diamond shape stroke on the x-axis and Color changes within the Line Charts within test score menu$")
 	public void verify_the_diamond_shape_stroke_on_the_x_axis_and_Color_changes_within_the_Line_Charts_within_test_score_menu()

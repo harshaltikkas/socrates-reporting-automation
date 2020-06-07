@@ -40,8 +40,8 @@ Feature: Subway Navigation Changes - Sprint35 Scenarios
   Scenario: Verify Single Test Analysis Persistence on switching to all other levels through subway nav filters
     Given User is on portal's login screen with username as "district_admin_one" and password as "password" and usertype as "realm_one"
     Then Verify Single Test Analysis Persistence on switching to all other levels through subway nav filters
-
-  @BE-2270 @BE-2269
+ 
+ @BE-2270 @BE-2269 
   Scenario: Verify the persistence by selecting data in Roster tab filters of STA
     Given User is on portal's login screen with username as "district_admin_one" and password as "password" and usertype as "realm_one"
     Then Verify the persistence by selecting data in Roster tab filters of STA

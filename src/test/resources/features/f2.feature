@@ -28,10 +28,9 @@ Feature: Validate Test Status Continues - Sprint 34
   Scenario: Verify Teacher A from class A leaves and Teacher B takes over class A, and accessing the reports within same school and in same district
     Given User is on portal's login screen with username as "multi_class_roster_district_admin" and password as "password" and usertype as "realm_fauquier"
     Then Verify Teacher A from class A leaves and Teacher B takes over class A, and accessing the reports within same school and in same district
-    
+   
   @TestStatus18 @BE-1811 @BE-1812 @BE-2223 @BE-2224 @BE-2225
   Scenario: Verify Student Data filter by class dropdown with info icon within the Roster tab
     Given User is on portal's login screen with username as "teacher_b" and password as "password" and usertype as "realm_test_tab_pagination"
-    Then Verify Student Data filter by class dropdown with info icon within the Roster tab
-    
+    Then Verify Student Data filter by class dropdown with info icon within the Roster tab    
  
