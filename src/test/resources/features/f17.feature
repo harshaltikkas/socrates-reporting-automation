@@ -5,8 +5,7 @@ Feature: Sprint36 Scenarios
   Scenario: Verify Standard Performance Summary Persistence on switching to all other levels
     Given User is on portal's login screen with username as "district_admin_one" and password as "password" and usertype as "realm_one"
     Then Verify Standard Performance Summary Persistence on switching to all other levels
-
-	#failing as strand name is not same on popup as selected previously
+  
   @BE-2320 
   Scenario: Verify Standard Performance Comparison Persistence on switching to all other levels
     Given User is on portal's login screen with username as "district_admin_one" and password as "password" and usertype as "realm_one"
@@ -23,11 +22,11 @@ Feature: Sprint36 Scenarios
     Then User Click on District subway navgation and verify the Roster tab
 
   @BE-2268
-  Scenario: Verify Test tab persistence with DA login
+  Scenario: Verify Date tab persistence with DA login
     Given User is on portal's login screen with username as "district_admin_one" and password as "password" and usertype as "realm_one"
     Then Verify the Persistence of Date tab by switching to different levels using subway navigation
     
-    @BE-2339
+   @BE-2339
   Scenario: Verify Standard Performance Grouping Persistence for teacher at class level 
     Given User is on portal's login screen with username as "teacher_two" and password as "password" and usertype as "realm_one"
     Then Verify Standard Performance Grouping Persistence for teacher at class level

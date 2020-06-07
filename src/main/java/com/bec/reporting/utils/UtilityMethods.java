@@ -683,7 +683,7 @@ public class UtilityMethods {
 		int list_on_sp_ctr = 0;
 		do {
 			try {
-				Assert.assertTrue(homePage.noofquestionstext.isDisplayed());
+				Assert.assertTrue(homePage.textingraystripinstudentlist.isDisplayed());
 				log.info("List Section on Standard Performance is now Displaying");
 				isSectionLoad = true;
 			} catch (Exception e1) {

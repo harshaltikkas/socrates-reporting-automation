@@ -680,20 +680,7 @@ public class Validate_Persistence_on_different_switching_steps {
 			Assert.assertTrue(teacherName.equals(teacher_name_on_ch));
 			Assert.assertTrue(className.equals(class_name_on_ch));
 			log.info("Roster Tab value matched with context header data on class context");
-			homePage.schoolmenu.click();
-			Thread.sleep(500);
-			UtilityMethods.wait_For_STA_Section_Load();
-			scName_on_ch = UtilityMethods.getSchoolNameonUI();
-			grade_name_on_ch = UtilityMethods.getGradeNameonUI();
-			Assert.assertTrue(scName_on_ch.equals(scName));
-			Assert.assertTrue(grade.equals(grade_name_on_ch));
-			log.info("Roster Tab value matched with context header data on school context");
-			homePage.districtmenu.click();
-			Thread.sleep(500);
-			UtilityMethods.wait_For_STA_Section_Load();
-			grade_name_on_ch = UtilityMethods.getGradeNameonUI();
-			Assert.assertTrue(grade.equals(grade_name_on_ch));
-			log.info("Roster Tab value matched with context header data on school context");
+			
 		} catch (Exception e) {
 			UtilityMethods.processException(e);
 		}
@@ -801,7 +788,9 @@ public class Validate_Persistence_on_different_switching_steps {
 			jse.executeScript("arguments[0].click();", homePage.schoolmenu);
 			log.info("clicked on school menu");
 			Thread.sleep(15000);
-			log.info("view name from popup on school menu:" + view_name_on_pop_up);
+			log.info("previously selected view name from popup on district menu:" + view_name_on_pop_up);
+			
+			log.info("selected view name on popup on school menu:" + homePage.dropDowns_on_edit_standards_on_pop_up.get(0).getText());
 			Assert.assertTrue(
 					view_name_on_pop_up.equals(homePage.dropDowns_on_edit_standards_on_pop_up.get(0).getText()));
 
@@ -809,10 +798,10 @@ public class Validate_Persistence_on_different_switching_steps {
 			UtilityMethods.wait_For_Comparison_Tab_Section_Load_under_standard_performance();
 			log.info("view on comparison table: " + homePage.comparison_tab_sp_text.getText());
 			Assert.assertTrue(view_name_on_pop_up.equals(homePage.comparison_tab_sp_text.getText()));
-			homePage.compare_cb_list_on_summary.get(0).click();
+			homePage.compare_cb_list_on_comparison.get(0).click();
 			Thread.sleep(500);
-			Assert.assertTrue(homePage.compare_list_of_avg_on_summary_tab.get(0).getText().equals("District Average"));
-			Assert.assertTrue(homePage.compare_list_of_avg_on_summary_tab.get(1).getText().equals("School Average"));
+			Assert.assertTrue(homePage.compare_list_of_avg_on_comparison_tab.get(0).getText().equals("District Average"));
+			Assert.assertTrue(homePage.compare_list_of_avg_on_comparison_tab.get(1).getText().equals("School Average"));
 
 			// clicking on class menu
 			jse.executeScript("arguments[0].click();", homePage.classmenu);
@@ -826,11 +815,11 @@ public class Validate_Persistence_on_different_switching_steps {
 			UtilityMethods.wait_For_Comparison_Tab_Section_Load_under_standard_performance();
 			log.info("view on comparison table: " + homePage.comparison_tab_sp_text.getText());
 			Assert.assertTrue(view_name_on_pop_up.equals(homePage.comparison_tab_sp_text.getText()));
-			homePage.compare_cb_list_on_summary.get(0).click();
+			homePage.compare_cb_list_on_comparison.get(0).click();
 			Thread.sleep(500);
-			Assert.assertTrue(homePage.compare_list_of_avg_on_summary_tab.get(0).getText().equals("District Average"));
-			Assert.assertTrue(homePage.compare_list_of_avg_on_summary_tab.get(1).getText().equals("School Average"));
-			Assert.assertTrue(homePage.compare_list_of_avg_on_summary_tab.get(2).getText().equals("Class Average"));
+			Assert.assertTrue(homePage.compare_list_of_avg_on_comparison_tab.get(0).getText().equals("District Average"));
+			Assert.assertTrue(homePage.compare_list_of_avg_on_comparison_tab.get(1).getText().equals("School Average"));
+			Assert.assertTrue(homePage.compare_list_of_avg_on_comparison_tab.get(2).getText().equals("Class Average"));
 
 			// clicking on student menu
 			jse.executeScript("arguments[0].click();", homePage.studentmenu);
@@ -844,27 +833,27 @@ public class Validate_Persistence_on_different_switching_steps {
 			log.info("view on comparison table: " + homePage.comparison_tab_sp_text.getText());
 			Assert.assertTrue(view_name_on_pop_up.equals(homePage.comparison_tab_sp_text.getText()));
 
-			Assert.assertTrue(homePage.compare_list_of_avg_on_summary_tab.get(0).getText().equals("District Average"));
-			Assert.assertTrue(homePage.compare_list_of_avg_on_summary_tab.get(1).getText().equals("School Average"));
-			Assert.assertTrue(homePage.compare_list_of_avg_on_summary_tab.get(2).getText().equals("Class Average"));
+			Assert.assertTrue(homePage.compare_list_of_avg_on_comparison_tab.get(0).getText().equals("District Average"));
+			Assert.assertTrue(homePage.compare_list_of_avg_on_comparison_tab.get(1).getText().equals("School Average"));
+			Assert.assertTrue(homePage.compare_list_of_avg_on_comparison_tab.get(2).getText().equals("Class Average"));
 
 			jse.executeScript("arguments[0].click();", homePage.classmenu);
 			UtilityMethods.wait_For_Comparison_Tab_Section_Load_under_standard_performance();
 			Assert.assertTrue(view_name_on_pop_up.equals(homePage.comparison_tab_sp_text.getText()));
-			Assert.assertTrue(homePage.compare_list_of_avg_on_summary_tab.get(0).getText().equals("District Average"));
-			Assert.assertTrue(homePage.compare_list_of_avg_on_summary_tab.get(1).getText().equals("School Average"));
-			Assert.assertTrue(homePage.compare_list_of_avg_on_summary_tab.get(2).getText().equals("Class Average"));
+			Assert.assertTrue(homePage.compare_list_of_avg_on_comparison_tab.get(0).getText().equals("District Average"));
+			Assert.assertTrue(homePage.compare_list_of_avg_on_comparison_tab.get(1).getText().equals("School Average"));
+			Assert.assertTrue(homePage.compare_list_of_avg_on_comparison_tab.get(2).getText().equals("Class Average"));
 
 			jse.executeScript("arguments[0].click();", homePage.schoolmenu);
 			UtilityMethods.wait_For_Comparison_Tab_Section_Load_under_standard_performance();
 			Assert.assertTrue(view_name_on_pop_up.equals(homePage.comparison_tab_sp_text.getText()));
-			Assert.assertTrue(homePage.compare_list_of_avg_on_summary_tab.get(0).getText().equals("District Average"));
-			Assert.assertTrue(homePage.compare_list_of_avg_on_summary_tab.get(1).getText().equals("School Average"));
+			Assert.assertTrue(homePage.compare_list_of_avg_on_comparison_tab.get(0).getText().equals("District Average"));
+			Assert.assertTrue(homePage.compare_list_of_avg_on_comparison_tab.get(1).getText().equals("School Average"));
 
 			jse.executeScript("arguments[0].click();", homePage.districtmenu);
 			UtilityMethods.wait_For_Comparison_Tab_Section_Load_under_standard_performance();
 			Assert.assertTrue(view_name_on_pop_up.equals(homePage.comparison_tab_sp_text.getText()));
-			Assert.assertTrue(homePage.compare_list_of_avg_on_summary_tab.get(0).getText().equals("District Average"));
+			Assert.assertTrue(homePage.compare_list_of_avg_on_comparison_tab.get(0).getText().equals("District Average"));
 
 		} catch (Exception e) {
 			UtilityMethods.processException(e);

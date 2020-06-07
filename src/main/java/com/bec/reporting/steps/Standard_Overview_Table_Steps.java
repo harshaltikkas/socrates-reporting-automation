@@ -141,6 +141,7 @@ public class Standard_Overview_Table_Steps {
 			Assert.assertTrue(homePage.activestandardperformancebtn.getAttribute("class").contains("active_tab"));
 		} catch (Exception e) {
 			jse.executeScript("arguments[0].click();", homePage.standardperformancebtn);
+			Thread.sleep(1500);
 		}
 		UtilityMethods.wait_For_Student_List_AND_OR_Class_List_Section_Load();
 		Standard_Overview_Table_Steps.performanceMenuClicked = true;
@@ -942,6 +943,7 @@ public class Standard_Overview_Table_Steps {
 			Assert.assertTrue(homePage.activetestscoresbtn.getAttribute("class").equals("active_tab"));
 		} catch (Exception e) {
 			jse.executeScript("arguments[0].click();", homePage.testscoresbtn);
+			Thread.sleep(1500);
 		}
 		UtilityMethods.wait_For_Test_Score_Overview_Section_Load();
 		Standard_Overview_Table_Steps.testScoreMenuClicked = true;
@@ -1234,7 +1236,7 @@ public class Standard_Overview_Table_Steps {
 	@When("^Click or select strand and standard from the standard table$")
 	public void click_or_select_strand_and_standard_from_the_standard_table() throws Throwable {
 		try {
-			int randomNumber = 10;
+			int randomNumber = 1;
 			UtilityMethods.scrollPageDown(Driver.webdriver, 4);
 			Thread.sleep(500);
 			new Actions(Driver.webdriver).moveToElement(homePage.standardnameslist.get(randomNumber)).build().perform();
