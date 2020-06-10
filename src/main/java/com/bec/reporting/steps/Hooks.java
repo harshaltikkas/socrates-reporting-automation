@@ -27,7 +27,6 @@ package com.bec.reporting.steps;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.sql.SQLException;
 import java.util.Properties;
 import org.openqa.selenium.support.PageFactory;
 import com.bec.reporting.pageobjects.HomePage;
@@ -63,8 +62,7 @@ public class Hooks {
 			} else {
 				browser = System.getProperty("browser");
 			}
-			log.info(" Launch Browser: " + "\"" + browser + "\"" + " on Environment:"
-					+ p.getProperty("app_env"));
+			log.info(" Launch Browser: " + "\"" + browser + "\"" + " on Environment:" + p.getProperty("app_env"));
 			Driver.webdriver = Driver.getCurrentDriver(p.getProperty("seleniumEnvironment"), browser);
 			reportBrowser = browser;
 			Reporter.assignAuthor("BenchMark Universal - Automation Tool");
@@ -81,7 +79,7 @@ public class Hooks {
 	 * @throws FileNotFoundException
 	 * @throws IOException
 	 * @throws SQLException
-	 */	
+	 */
 	@After
 	public void after(Scenario scenario) throws FileNotFoundException, IOException {
 		if (Driver.crossbrwr) {
@@ -89,6 +87,6 @@ public class Hooks {
 		}
 		if (scenario.isFailed()) {
 			Driver.embedScreenshot(scenario);
-		}		 
-	}
+		}
+	}	
 }

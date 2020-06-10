@@ -230,6 +230,12 @@ public class HomePage {
 
 	@FindBy(xpath = "//div[@class='menu-title' and contains(text(),'Student')]/following-sibling::div//div[@class='menu-dropdown-list-inr']//ul//div/li")
 	public List<WebElement> studentlistondropdown;
+	
+	@FindBy(xpath = "//span[contains(text(),'Student Data')]/ancestor::div[@class='menu-title']/following-sibling::div//div[@class='menu-dropdown-list-inr']/ul[@class='studentDataFillterBlock']/li/span/span")
+	public List<WebElement> studentdatadropdownlist;
+	
+	@FindBy(xpath = "//span[contains(text(),'Student Data')]/ancestor::div[@class='menu-title']/following-sibling::div//div[@class='menu-dropdown-list-inr']/ul[@class='studentDataFillterBlock']/li/span/div/div[@class='bec_tooltip_content']")
+	public List<WebElement> tt_on_studentdatadropdownlist;
 
 	@FindBy(xpath = "//div[@class='menu-title' and contains(text(),'Student')]/following-sibling::div//div[@class='menu-dropdown-list-inr']//ul//div/li//input")
 	public List<WebElement> studentlistondropdownwithinput;
@@ -1065,6 +1071,12 @@ public class HomePage {
 
 	@FindBy(xpath = "//div[@class='standard-grid-filter-view']/div[contains(text(),'View :')]/following-sibling::div/button")
 	public WebElement viewDropDown;
+	
+	@FindBy(xpath = "//div[@class='standard-grid-filter-single-item']")
+	public List<WebElement> viewDropDownList;
+	
+	@FindBy(xpath = "//div[@class='standard-grid-filter-single-item']//div[@class='bec_tooltip_content']")
+	public List<WebElement> viewDropDownTTTList;
 
 	@FindBy(xpath = "//div[@class='standard-grid-filter-view']/div[contains(text(),'View :')]/following-sibling::div/button//div[@class='bec_tooltip_content']")
 	public WebElement viewDropDownToolTipText;
@@ -1474,19 +1486,13 @@ public class HomePage {
 	public WebElement pdf_print_button_in_test_status;
 	
 	@FindBy(xpath = "//*[@class='testStatusDataPrint']/img")
-	public WebElement pdf_print_button_in_test_status_under_sc;
-
-	@FindBy(xpath = "//*[@class='batchPrintContainer_tile' and contains(text(),'Print Report Options:')]")
-	public WebElement print_Report_Overlay;
+	public WebElement pdf_print_button_in_test_status_under_sc;	
 	
-	@FindBy(xpath = "//*[@class='testStatusPopup_title' and contains(text(),'Print Report Options:')]")
-	public WebElement print_Report_Overlay_in_test_status;
+	@FindBy(xpath = "//*[contains(text(),'Print Report Options:')]")
+	public WebElement print_Report_Overlay_on_print_popup;
 
-	@FindBy(xpath = "//*[@class='batchPrintActionBtns_cancel']/button")
-	public WebElement batch_cancel_button;
-	
-	@FindBy(xpath = "//*[@class='testStatusPopupActionBtns_cancel']/button")
-	public WebElement test_status_cancel_button;
+	@FindBy(xpath = "//button[text()='Cancel']")
+	public WebElement cancel_button_on_popup;
 
 	@FindBy(xpath = "//span[contains(@class,'batchPrint_checkbox')]")
 	public WebElement standards_checkbox;
@@ -1502,6 +1508,9 @@ public class HomePage {
 
 	@FindBy(xpath = "//span[@class='batchPrintTitle']")
 	public List<WebElement> selection_texts_on_model;
+	
+	@FindBy(xpath = "//span[@class='SpotPrintTitle']")
+	public List<WebElement> texts_on_model_on_spot_print_popup;
 
 	@FindBy(xpath = "//li[@class='inactive_tab']/span[contains(text(), 'Summary')]")
 	public WebElement summarytab;
@@ -1509,7 +1518,7 @@ public class HomePage {
 	@FindBy(xpath = "//li[@class='inactive_tab' and contains(text(), 'Comparison')]")
 	public WebElement comparisontab;
 
-	@FindBy(xpath = "//div[@class='batchPrintContainer_body_title' and contains(text(),'Batch Print')]")
+	@FindBy(xpath = "//div[contains(text(),'Batch Print')]")
 	public WebElement batch_print_title;
 	
 	@FindBy(xpath = "//div[@class='testStatusPopup_inr_title' and contains(text(),'Report Level')]")
@@ -1518,14 +1527,14 @@ public class HomePage {
 	@FindBy(xpath = "//div[@class='testStatusPopup_inr_title' and contains(text(),'Test Status')]")
 	public WebElement test_status_title;
 
-	@FindBy(xpath = "//div[@class='batchPrintContainer_body_title' and contains(text(),'Show')]")
+	@FindBy(xpath = "//div[contains(text(),'Show')]")
 	public WebElement show_title_on_model;
-
-	@FindBy(xpath = "//*[@class='batchPrintActionBtns_apply']/button")
-	public WebElement batch_print_button;
 	
-	@FindBy(xpath = "//*[@class='testStatusPopupActionBtns_apply']/button")
-	public WebElement test_status_print_button;
+	@FindBy(xpath = "//div[text()='View']")
+	public WebElement view_title_on_model;
+
+	@FindBy(xpath = "//button[text()='Print']")
+	public WebElement print_button_on_popup;
 
 	@FindBy(xpath = "//div[@class='bec_summary_taxonomy_standard-grid-filter-view']/div[contains(text(),'View :')]/following-sibling::div/button")
 	public WebElement viewDropDown_on_summary;

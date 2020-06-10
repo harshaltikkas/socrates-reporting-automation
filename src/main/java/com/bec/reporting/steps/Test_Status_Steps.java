@@ -626,7 +626,7 @@ public class Test_Status_Steps {
 						.build().perform();
 			}
 			Thread.sleep(2000);
-			Assert.assertTrue(homePage.print_Report_Overlay_in_test_status.isDisplayed());
+			Assert.assertTrue(homePage.print_Report_Overlay_on_print_popup.isDisplayed());
 
 			Assert.assertTrue(homePage.test_status_title.isDisplayed());
 
@@ -651,11 +651,11 @@ public class Test_Status_Steps {
 				Assert.assertTrue(
 						homePage.checkbox_list_under_test_status.get(i).getAttribute("class").contains("selected"));
 			}
-			Assert.assertTrue(homePage.test_status_print_button.isDisplayed());
-			Assert.assertTrue(homePage.test_status_cancel_button.isDisplayed());
-			homePage.test_status_cancel_button.click();
+			Assert.assertTrue(homePage.print_button_on_popup.isDisplayed());
+			Assert.assertTrue(homePage.cancel_button_on_popup.isDisplayed());
+			homePage.cancel_button_on_popup.click();
 			Thread.sleep(500);
-			IWait.check_Absence_of_Element(homePage.print_Report_Overlay_in_test_status);
+			IWait.check_Absence_of_Element(homePage.print_Report_Overlay_on_print_popup);
 
 			CBTConfiguration.score = "pass";
 			Standard_Overview_Table_Steps.resetStatus();
@@ -1199,7 +1199,7 @@ public class Test_Status_Steps {
 			homePage.rosterapplybtn.click();
 			UtilityMethods.scrollPageUp(Driver.webdriver);
 			UtilityMethods.wait_For_Student_List_AND_OR_Class_List_Section_Load();
-			homePage.studentmenu.click();
+			homePage.studentmenu.click();Thread.sleep(2000);
 			UtilityMethods.wait_For_Performance_Over_Time_Line_Chart_Section_Load();
 			// clicking on "Pretest" associated circle value
 			homePage.testScoresonPerPage_on_pot.get(0).click();
