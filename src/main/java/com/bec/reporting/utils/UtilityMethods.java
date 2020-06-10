@@ -32,6 +32,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -474,7 +475,8 @@ public class UtilityMethods {
 			if (studentTextonCH.contains("(")) {
 				studentTextonCH = studentTextonCH.substring(0, studentTextonCH.indexOf("(") - 1);
 			}
-			new Actions(Driver.webdriver).moveByOffset(100, 100).build().perform();Thread.sleep(500);
+			new Actions(Driver.webdriver).moveByOffset(100, 100).build().perform();
+			Thread.sleep(500);
 		} catch (Exception e) {
 			processException(e);
 		}
@@ -509,7 +511,8 @@ public class UtilityMethods {
 					schoolName = homePage.schoolnameontripledot.getText();
 				}
 			}
-			new Actions(Driver.webdriver).moveByOffset(100, 100).click().build().perform();Thread.sleep(500);
+			new Actions(Driver.webdriver).moveByOffset(100, 100).click().build().perform();
+			Thread.sleep(500);
 		} catch (Exception e) {
 			processException(e);
 		}
@@ -544,7 +547,8 @@ public class UtilityMethods {
 					districtName = homePage.districtnameontripledot.getText();
 				}
 			}
-			new Actions(Driver.webdriver).moveByOffset(100, 100).click().build().perform();Thread.sleep(500);
+			new Actions(Driver.webdriver).moveByOffset(100, 100).click().build().perform();
+			Thread.sleep(500);
 		} catch (Exception e) {
 			processException(e);
 		}
@@ -567,7 +571,8 @@ public class UtilityMethods {
 				Thread.sleep(1000);
 				grade = homePage.gradenameontripledot.getText();
 			}
-			new Actions(Driver.webdriver).moveByOffset(100, 100).click().build().perform();Thread.sleep(500);
+			new Actions(Driver.webdriver).moveByOffset(100, 100).click().build().perform();
+			Thread.sleep(500);
 		} catch (Exception e) {
 			processException(e);
 		}
@@ -589,7 +594,8 @@ public class UtilityMethods {
 			} else {
 				testsName = homePage.testsNameoncontextheader.getText();
 			}
-			new Actions(Driver.webdriver).moveByOffset(100, 100).build().perform();Thread.sleep(500);
+			new Actions(Driver.webdriver).moveByOffset(100, 100).build().perform();
+			Thread.sleep(500);
 		} catch (Exception e) {
 			processException(e);
 		}
@@ -611,7 +617,8 @@ public class UtilityMethods {
 			} else {
 				teachersName = homePage.teacherNameoncontextheader.getText();
 			}
-			new Actions(Driver.webdriver).moveByOffset(100, 100).build().perform();Thread.sleep(500);
+			new Actions(Driver.webdriver).moveByOffset(100, 100).build().perform();
+			Thread.sleep(500);
 		} catch (Exception e) {
 			processException(e);
 		}
@@ -704,8 +711,10 @@ public class UtilityMethods {
 
 	/**
 	 * This method is used to wait till the loading of Grouping Table Section
+	 * 
+	 * @throws InterruptedException
 	 */
-	public static void wait_For_Strands_Text_After_Apply_BtnOn_GroupingTab() {
+	public static void wait_For_Strands_Text_After_Apply_BtnOn_GroupingTab() throws InterruptedException {
 		boolean isSectionLoad = false;
 		int grouping_table_ctr = 0;
 		do {
@@ -715,15 +724,11 @@ public class UtilityMethods {
 				isSectionLoad = true;
 			} catch (Exception e1) {
 				log.info("wait for strands Text on table header After Apply Btn On Grouping Tab ...");
-				try {
-					Thread.sleep(2000);
-					grouping_table_ctr++;
-				} catch (InterruptedException e) {
-				}
+				grouping_table_ctr++;
 			}
-		} while (isSectionLoad == false && grouping_table_ctr <= 15);
+		} while (isSectionLoad == false && grouping_table_ctr < 3);
 
-		if (isSectionLoad == false && grouping_table_ctr > 15) {
+		if (isSectionLoad == false && grouping_table_ctr == 3) {
 			log.info("Strands_Text_After_Apply_BtnOn_GroupingTab is not loaded in 30 seconds..");
 			processException(new Exception());
 		}
@@ -814,8 +819,10 @@ public class UtilityMethods {
 	/**
 	 * This method is used to wait till the loading of Performance Over Time Line
 	 * Chart section
+	 * 
+	 * @throws InterruptedException
 	 */
-	public static void wait_For_Performance_Over_Time_Line_Chart_Section_Load() {
+	public static void wait_For_Performance_Over_Time_Line_Chart_Section_Load() throws InterruptedException {
 		boolean isSectionLoad = false;
 		int pot_ctr = 0;
 		do {
@@ -825,15 +832,11 @@ public class UtilityMethods {
 				isSectionLoad = true;
 			} catch (Exception e1) {
 				log.info("Waiting for Performance Over Time Line Chart Loading");
-				try {
-					Thread.sleep(2000);
-					pot_ctr++;
-				} catch (InterruptedException e) {
-				}
+				pot_ctr++;
 			}
-		} while (isSectionLoad == false && pot_ctr <= 15);
+		} while (isSectionLoad == false && pot_ctr < 3);
 
-		if (isSectionLoad == false && pot_ctr > 15) {
+		if (isSectionLoad == false && pot_ctr == 3) {
 			log.info("Perfomance Over Time Line Chart is not loaded in 30 seconds..");
 			processException(new Exception());
 		}
@@ -894,7 +897,8 @@ public class UtilityMethods {
 	}
 
 	/**
-	 * This method is used to wait till the loading of comparison section under test scores
+	 * This method is used to wait till the loading of comparison section under test
+	 * scores
 	 */
 	public static void wait_For_Comparison_Tab_Section_Load_under_test_score() {
 		boolean isSectionLoad = false;
@@ -919,9 +923,10 @@ public class UtilityMethods {
 			processException(new Exception());
 		}
 	}
-	
+
 	/**
-	 * This method is used to wait till the loading of comparison section under standard performance
+	 * This method is used to wait till the loading of comparison section under
+	 * standard performance
 	 */
 	public static void wait_For_Comparison_Tab_Section_Load_under_standard_performance() {
 		boolean isSectionLoad = false;
@@ -946,7 +951,7 @@ public class UtilityMethods {
 			processException(new Exception());
 		}
 	}
-	
+
 	/**
 	 * This method is used to wait till the loading of comparison section
 	 */
@@ -1135,15 +1140,15 @@ public class UtilityMethods {
 
 	/** This method is used to delete the csv file in download folder **/
 	public static void Delete_CSV(String f) {
-		//log.info("trying to delete csv files in folder");
+		// log.info("trying to delete csv files in folder");
 		File path = new File(f);
-	    File[] files = path.listFiles();
-	    for (File file : files) {	       
-	        if(file.isFile()) {
-	    	file.delete();
-	        }
-	    }
-		//log.info("csv file deleted successfully");
+		File[] files = path.listFiles();
+		for (File file : files) {
+			if (file.isFile()) {
+				file.delete();
+			}
+		}
+		// log.info("csv file deleted successfully");
 	}
 
 	/** This method is used to delete the pdf file in download folder **/
@@ -1276,7 +1281,10 @@ public class UtilityMethods {
 
 			}
 			if (Standard_Overview_Table_Steps.performanceMenuClicked) {
-				wait_For_Performance_Over_Time_Line_Chart_Section_Load();
+				try {
+					wait_For_Performance_Over_Time_Line_Chart_Section_Load();
+				} catch (InterruptedException e) {
+				}
 			} else {
 				wait_For_Test_Score_Overview_Section_Load();
 			}
@@ -1394,20 +1402,46 @@ public class UtilityMethods {
 			Thread.sleep(500);
 			homePage.allcheckbox_in_test_tab.click();
 			Thread.sleep(500);
-			int ran_no=generateRandomNumberBySkippingIndex(homePage.testnameslist_on_test_tab.size(), 0);
-			//int ran_no = (int) (Math.random()*homePage.testnameslist_on_test_tab.size());
+			int ran_no = generateRandomNumberBySkippingIndex(homePage.testnameslist_on_test_tab.size(), 0);
+			// int ran_no = (int) (Math.random()*homePage.testnameslist_on_test_tab.size());
 			new Actions(Driver.webdriver).moveToElement(homePage.testnameslist_on_test_tab.get(ran_no)).build()
 					.perform();
-			name=homePage.testnameslist_on_test_tab.get(ran_no).getText();
+			name = homePage.testnameslist_on_test_tab.get(ran_no).getText();
 			homePage.testnameslist_on_test_tab.get(ran_no).click();
 			Thread.sleep(500);
 			homePage.testapplybtn.click();
-			UtilityMethods.scrollPageUp(Driver.webdriver);		
+			UtilityMethods.scrollPageUp(Driver.webdriver);
 			return name;
 		} catch (Exception e) {
 			processException(e);
 			return null;
 		}
+	}
+
+	public static List<String> getViewNames_From_View_DropDown_on_SP() {
+		List<String> viewList = new LinkedList<String>();
+		try {
+			String txt = "";
+			homePage.viewDropDown.click();
+			Thread.sleep(500);
+			for (int i = 0; i < homePage.viewDropDownList.size(); i++) {
+				new Actions(Driver.webdriver).moveToElement(homePage.viewDropDownList.get(i)).build().perform();
+				Thread.sleep(500);
+				txt = homePage.viewDropDownList.get(i).getText();
+				if (txt.contains("...")) {
+					new Actions(Driver.webdriver).moveToElement(homePage.viewDropDownTTTList.get(i)).build().perform();
+					Thread.sleep(500);
+					viewList.add(homePage.viewDropDownTTTList.get(i).getText());
+				} else {
+					viewList.add(txt);
+				}
+			}
+			homePage.viewDropDown.click();
+			Thread.sleep(500);
+		} catch (Exception e) {
+			processException(e);
+		}
+		return viewList;
 	}
 
 }

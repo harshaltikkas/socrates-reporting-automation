@@ -62,7 +62,7 @@ Feature: Spint 9 User Stories
     When User Click on Standard Performance tab within the Student Context
     Then verify View Texonomy on Standard Performance
 
-  ## Verifying csv download for sp and test score
+  ## Verifying csv download for sp and test score 
   Scenario: Verify CSV download for Standard Performance Report details and Test Scores Report details
     Given User is on portal's login screen with username as "teacher_one" and password as "password" and usertype as "realm_one"
     When User Click on Standard Performance tab within the Class Context

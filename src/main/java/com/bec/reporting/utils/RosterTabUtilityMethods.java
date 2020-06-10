@@ -241,11 +241,11 @@ public class RosterTabUtilityMethods {
 				log.info("Thread sleep called for " + str + " Loading :" + count + " Times");
 				Thread.sleep(2000);
 				count++;
-				if (count > 60) {
+				if (count > 70) {
 					log.error("Issue in " + str + " Data Loading");
 					UtilityMethods.processException(new Exception());
 				}
-			} while (el.isDisplayed() && count <= 60);
+			} while (el.isDisplayed() && count <= 70);
 		} catch (Exception e) {
 			log.info(str + " Refresh Icon Display off");
 		}

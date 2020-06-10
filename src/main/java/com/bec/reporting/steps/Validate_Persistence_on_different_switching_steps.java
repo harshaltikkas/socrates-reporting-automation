@@ -165,6 +165,8 @@ public class Validate_Persistence_on_different_switching_steps {
 				homePage.apply_button_on_filter_in_sta.click();
 			}
 			Thread.sleep(2000);
+			log.info("view name on sta table header :"+homePage.view_text_in_sta_table_header.getText());
+			log.info("verifying view selected on filter matched with STA table column header on District menu");
 			Assert.assertTrue(homePage.view_text_in_sta_table_header.getText().equals(selectedViewName));
 
 			homePage.schoolmenu.click();
@@ -173,10 +175,11 @@ public class Validate_Persistence_on_different_switching_steps {
 			test_name_on_ch = UtilityMethods.getTestsNameonUI();
 			log.info("Test Name on CH on school menu:" + test_name_on_ch);
 			Assert.assertTrue(testname.equals(test_name_on_ch));
-
+			log.info("verifying view selected on filter matched with STA table column header on school menu");
 			Assert.assertTrue(homePage.view_text_in_sta_table_header.getText().equals(selectedViewName));
 			homePage.filter_in_sta_for_district.click();
 			Thread.sleep(1000);
+			// BE-2274 end here
 			Assert.assertTrue(
 					homePage.chkbox_list_under_view_on_sta_filter.get(1).getAttribute("class").contains("Selected"));
 			homePage.cancel_button_on_filter_in_sta.click();

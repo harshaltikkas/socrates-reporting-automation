@@ -73,7 +73,7 @@ public class BatchPrintSteps {
 			String studentName = UtilityMethods.getStudentNameonUI();
 			new Actions(Driver.webdriver).moveToElement(homePage.print_pdf_batch_button).click().build().perform();
 			Thread.sleep(2000);
-			Assert.assertTrue(homePage.print_Report_Overlay.isDisplayed());
+			Assert.assertTrue(homePage.print_Report_Overlay_on_print_popup.isDisplayed());
 			Assert.assertTrue(homePage.batch_print_title.isDisplayed());
 			Assert.assertTrue(homePage.radio_buttons_under_batch_print.get(0).getAttribute("class")
 					.contains("selectedBatchOption"));
@@ -92,12 +92,12 @@ public class BatchPrintSteps {
 				Assert.assertTrue(homePage.selection_texts_on_model.get(1).getText()
 						.equals("Individual Reports for All Students in the Class"));
 			}
-			Assert.assertTrue(homePage.batch_print_button.isDisplayed());
-			Assert.assertTrue(homePage.batch_cancel_button.isDisplayed());
+			Assert.assertTrue(homePage.print_button_on_popup.isDisplayed());
+			Assert.assertTrue(homePage.cancel_button_on_popup.isDisplayed());
 			// verify cancel clicking button
-			homePage.batch_cancel_button.click();
+			homePage.cancel_button_on_popup.click();
 			Thread.sleep(1000);
-			IWait.check_Absence_of_Element(homePage.print_Report_Overlay);
+			IWait.check_Absence_of_Element(homePage.print_Report_Overlay_on_print_popup);
 			CBTConfiguration.score = "pass";
 		} catch (Exception e) {
 			UtilityMethods.processException(e);
@@ -152,7 +152,7 @@ public class BatchPrintSteps {
 			String className = UtilityMethods.getClassNameonUI();
 			new Actions(Driver.webdriver).moveToElement(homePage.print_pdf_batch_button).click().build().perform();
 			Thread.sleep(2000);
-			Assert.assertTrue(homePage.print_Report_Overlay.isDisplayed());
+			Assert.assertTrue(homePage.print_Report_Overlay_on_print_popup.isDisplayed());
 			Assert.assertTrue(homePage.batch_print_title.isDisplayed());
 			Assert.assertTrue(homePage.radio_buttons_under_batch_print.get(0).getAttribute("class")
 					.contains("selectedBatchOption"));
@@ -170,12 +170,12 @@ public class BatchPrintSteps {
 				Assert.assertTrue(homePage.selection_texts_on_model.get(1).getText()
 						.equals("Individual Reports for All Students in the Class"));
 			}
-			Assert.assertTrue(homePage.batch_print_button.isDisplayed());
-			Assert.assertTrue(homePage.batch_cancel_button.isDisplayed());
+			Assert.assertTrue(homePage.print_button_on_popup.isDisplayed());
+			Assert.assertTrue(homePage.cancel_button_on_popup.isDisplayed());
 			// verify cancel clicking button
-			homePage.batch_cancel_button.click();
+			homePage.cancel_button_on_popup.click();
 			Thread.sleep(1000);
-			IWait.check_Absence_of_Element(homePage.print_Report_Overlay);
+			IWait.check_Absence_of_Element(homePage.print_Report_Overlay_on_print_popup);
 			CBTConfiguration.score = "pass";
 		} catch (Exception e) {
 			UtilityMethods.processException(e);
