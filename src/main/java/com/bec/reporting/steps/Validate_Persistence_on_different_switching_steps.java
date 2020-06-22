@@ -531,6 +531,7 @@ public class Validate_Persistence_on_different_switching_steps {
 			Assert.assertTrue(homePage.activeclassmenu.isDisplayed());
 			Assert.assertTrue(homePage.schoolmenu.isDisplayed());
 			Assert.assertTrue(homePage.studentmenu.isDisplayed());
+			UtilityMethods.wait_For_Student_List_AND_OR_Class_List_Section_Load();
 			CBTConfiguration.score = "pass";
 		} catch (Exception e) {
 			UtilityMethods.processException(e);
