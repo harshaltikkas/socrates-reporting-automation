@@ -235,12 +235,12 @@ public class Sprint_Eleven_And_Twelve_Steps {
 			homePage.rostertab.click();
 			Thread.sleep(500);
 			RosterTabUtilityMethods.select_School_In_School_DropDown(sc);
-			UtilityMethods.scrollPageDown(Driver.webdriver, 6);
+			UtilityMethods.scrollPageDown(Driver.webdriver, 5);
 			Thread.sleep(500);
 			RosterTabUtilityMethods.select_Grade_In_Grades_DropDown(grade);
 			homePage.rosterapplybtn.click();			
-			UtilityMethods.scrollPageDown(Driver.webdriver, 3);
 			Thread.sleep(500);
+			UtilityMethods.scrollPageDown(Driver.webdriver, 3);
 			IWait.explicit_wait(Driver.webdriver, homePage.nodatavailableforyourselection);
 			Assert.assertTrue(homePage.nodatavailableforyourselection.isDisplayed());
 			Assert.assertTrue(homePage.returntopreviousreport.isDisplayed());

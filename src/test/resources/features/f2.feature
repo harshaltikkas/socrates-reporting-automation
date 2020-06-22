@@ -24,7 +24,6 @@ Feature: Validate Test Status Continues - Sprint 34
     Given User is on portal's login screen with username as "district_admin_test_tab_pagination" and password as "password" and usertype as "realm_test_tab_pagination"
     Then Verify user accessing the reports of the student on moving Student A from school A to school B within the same district
   
-  #This is failing as after clicking on student menu. showing no data  
   @TestStatus17 @BE-1789 @BE-1810
   Scenario: Verify Teacher A from class A leaves and Teacher B takes over class A, and accessing the reports within same school and in same district
     Given User is on portal's login screen with username as "multi_class_roster_district_admin" and password as "password" and usertype as "realm_fauquier"

@@ -639,4 +639,56 @@ public class FlyInMenuBehaviourSteps {
 		}
 		log.info("Scenario 8 Completed");
 	}
+
+	@Then("^Verify Adding School label within the context header at district context$")
+	public void verify_Adding_School_label_within_the_context_header_at_district_context() throws Throwable {
+		try {
+			for (int j = 0; j < homePage.contextheader_title_list.size(); j++) {
+				if (homePage.contextheader_title_list.get(j).getText().contains("School")) {
+					UtilityMethods.processException(new Exception());
+				}
+			}
+			int count = 0;
+			homePage.rostertab.click();
+			Thread.sleep(500);
+			homePage.schooldropdownbtn.click();
+			Thread.sleep(500);
+			RosterTabUtilityMethods.uncheck_check_All("School");
+			for (int i = 1; i < homePage.schoollist.size(); i = i + 2) {
+				if (homePage.schoollist.get(i).getText().equals("")) {
+					UtilityMethods.scroll_Div(homePage.schoollist.get(i), 20);
+				}
+				homePage.schoollist.get(i).click();
+				count++;
+				Thread.sleep(500);
+			}
+			homePage.schooldropdownbtn.click();
+			Thread.sleep(500);
+			homePage.rosterapplybtn.click();
+			UtilityMethods.wait_For_Student_List_AND_OR_Class_List_Section_Load();
+			Assert.assertTrue(homePage.contextheader_title_list.get(0).getText().equals("School:"));
+			Assert.assertTrue(homePage.contextheader_text_list.get(0).getText().equals("Custom (" + count + ")"));
+
+			homePage.rostertab.click();
+			Thread.sleep(500);
+			homePage.schooldropdownbtn.click();
+			Thread.sleep(500);
+			RosterTabUtilityMethods.uncheck_check_All("School");
+			homePage.schooldropdownbtn.click();
+			Thread.sleep(500);
+			homePage.rosterapplybtn.click();
+			UtilityMethods.wait_For_Student_List_AND_OR_Class_List_Section_Load();
+
+			for (int j = 0; j < homePage.contextheader_title_list.size(); j++) {
+				if (homePage.contextheader_title_list.get(j).getText().contains("School")) {
+					UtilityMethods.processException(new Exception());
+				}
+			}
+			CBTConfiguration.score = "pass";
+		} catch (Exception e) {
+			UtilityMethods.processException(e);
+		}
+		log.info("Scenario BE-2472 Completed");
+	}
+
 }

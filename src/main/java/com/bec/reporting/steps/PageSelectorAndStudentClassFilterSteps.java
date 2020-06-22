@@ -182,7 +182,7 @@ public class PageSelectorAndStudentClassFilterSteps {
 			String compareText,tooltiptext;
 			for (int i = 0,tooltipcount=0; i < homePage.contextheader_text_list.size(); i++) {
 				if (homePage.contextheader_text_list.get(i).getText().contains("...")) {
-									new Actions(Driver.webdriver).moveToElement(homePage.contextheader_text_list.get(i)).perform();
+					new Actions(Driver.webdriver).moveToElement(homePage.contextheader_text_list.get(i)).build().perform();
 					tooltiptext=homePage.contextheadertooltiplist.get(tooltipcount).getText();
 					new Actions(Driver.webdriver).moveToElement(homePage.overviewtext).build().perform();
 					Thread.sleep(500);
@@ -196,8 +196,8 @@ public class PageSelectorAndStudentClassFilterSteps {
 			String headerText;
 			for (int i = 0; i < homePage.contextheader_text_list.size(); i++) {
 				headerText = homePage.contextheader_title_list.get(i).getText();
-				new Actions(Driver.webdriver).moveToElement(homePage.contextheader_text_list.get(i)).click().build().perform();;
-				Thread.sleep(500);
+				new Actions(Driver.webdriver).moveToElement(homePage.contextheader_text_list.get(i)).click().build().perform();
+				Thread.sleep(1000);
 				if (headerText.equals("Class:") || headerText.equals("Student:")) {
 					Assert.assertTrue(homePage.rostertab.isDisplayed());
 					Verify.verify(homePage.studentTitleOnSliderMenu.isDisplayed());

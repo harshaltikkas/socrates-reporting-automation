@@ -683,9 +683,37 @@ public class UtilityMethods {
 	}
 
 	/**
+	 * This method is used to wait till the loading of Standard Table section
+	 */
+	public static void wait_For_Standard_Table_Section_Load() {
+		boolean isSectionLoad = false;
+		int list_on_sp_ctr = 0;
+		do {
+			try {
+				Assert.assertTrue(homePage.strandnameslist.get(0).isDisplayed());
+				log.info("Standard Table Section on Standard Performance is now Displaying");
+				isSectionLoad = true;
+			} catch (Exception e1) {
+				log.info("Waiting for Standard Table Section on Standard Performance Loading");
+				try {
+					Thread.sleep(2000);
+					list_on_sp_ctr++;
+				} catch (InterruptedException e) {
+				}
+			}
+		} while (isSectionLoad == false && list_on_sp_ctr <= 15);
+
+		if (isSectionLoad == false && list_on_sp_ctr > 15) {
+			log.info("Standard Table Section on Standard Performance is not loaded in 30 seconds..");
+			processException(new Exception());
+		}
+	}
+	
+	/**
 	 * This method is used to wait till the loading of Student List section
 	 */
 	public static void wait_For_Student_List_AND_OR_Class_List_Section_Load() {
+		wait_For_Standard_Table_Section_Load();
 		boolean isSectionLoad = false;
 		int list_on_sp_ctr = 0;
 		do {
@@ -834,10 +862,10 @@ public class UtilityMethods {
 				log.info("Waiting for Performance Over Time Line Chart Loading");
 				pot_ctr++;
 			}
-		} while (isSectionLoad == false && pot_ctr < 3);
+		} while (isSectionLoad == false && pot_ctr < 6);
 
-		if (isSectionLoad == false && pot_ctr == 3) {
-			log.info("Perfomance Over Time Line Chart is not loaded in 30 seconds..");
+		if (isSectionLoad == false && pot_ctr == 6) {
+			log.info("Perfomance Over Time Line Chart is not loaded in 60 seconds..");
 			processException(new Exception());
 		}
 	}

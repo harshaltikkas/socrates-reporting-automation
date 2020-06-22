@@ -1093,7 +1093,7 @@ public class HomePage {
 	@FindBy(xpath = "//div[contains(text(),'No data available!')]")
 	public WebElement nodatavailable;
 
-	@FindBy(xpath = "//div[contains(text(),'No data available for your selection.')]")
+	@FindBy(xpath = "//div[contains(text(),'No data available for your selection')]")
 	public WebElement nodatavailableforyourselection;
 
 	@FindBy(xpath = "//h1[.='Benchmark Universe']")

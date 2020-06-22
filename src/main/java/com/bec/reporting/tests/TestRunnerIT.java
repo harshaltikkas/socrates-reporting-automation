@@ -42,10 +42,9 @@ import lombok.extern.slf4j.Slf4j;
 		"html:target/cucumber-reports",
 		"com.bec.reporting.utils.ExtentCucumberFormatter:target/cucumber-reports/extent_report/report.html",
 		"json:target/cucumber-reports/json_report/Cucumber.json",
-		"junit:target/cucumber-reports/junit_xml_report/Cucumber.xml",
-		"rerun:target/failed_scenarios.txt" },
-		tags = { "@Feature" }, 
-		monochrome = true)
+		"junit:target/cucumber-reports/junit_xml_report/Cucumber.xml", "rerun:target/failed_scenarios.txt" },
+
+		tags = { "@Feature" }, monochrome = true)
 @Slf4j
 public class TestRunnerIT {
 
@@ -67,6 +66,8 @@ public class TestRunnerIT {
 			File trgDir = new File("C:/Users/" + user + "/Desktop/Reports/" + currentdate.getMonth() + "-"
 					+ currentdate.getYear() + "/extent_report_" + currentdate.getDayOfMonth() + "_"
 					+ currentdate.getMonthValue() + "_" + currentdate.getYear());
+			log.info("Source dir:" + srcDir);
+			log.info("Target dir:" + trgDir);
 			if (trgDir.exists()) {
 				deleteFolder(trgDir);
 				FileUtils.copyDirectory(srcDir, trgDir);
