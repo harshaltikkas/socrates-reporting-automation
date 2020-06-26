@@ -8,6 +8,7 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.PageFactory;
 
 import com.bec.reporting.pageobjects.HomePage;
+import com.bec.reporting.utils.API_Connection;
 import com.bec.reporting.utils.CBTConfiguration;
 import com.bec.reporting.utils.Driver;
 import com.bec.reporting.utils.FileRead;
@@ -165,7 +166,7 @@ public class Validate_Persistence_on_different_switching_steps {
 				homePage.apply_button_on_filter_in_sta.click();
 			}
 			Thread.sleep(2000);
-			log.info("view name on sta table header :"+homePage.view_text_in_sta_table_header.getText());
+			log.info("view name on sta table header :" + homePage.view_text_in_sta_table_header.getText());
 			log.info("verifying view selected on filter matched with STA table column header on District menu");
 			Assert.assertTrue(homePage.view_text_in_sta_table_header.getText().equals(selectedViewName));
 
@@ -265,11 +266,8 @@ public class Validate_Persistence_on_different_switching_steps {
 			Thread.sleep(500);
 			RosterTabUtilityMethods.select_School_In_School_DropDown("Golden Oak Community School");
 			Thread.sleep(500);
-			UtilityMethods.scrollPageDown(Driver.webdriver, 2);
-			Thread.sleep(500);
 			homePage.rosterapplybtn.click();
 			UtilityMethods.wait_For_Student_List_AND_OR_Class_List_Section_Load();
-
 		} catch (Exception e) {
 			UtilityMethods.processException(e);
 		}
@@ -281,6 +279,10 @@ public class Validate_Persistence_on_different_switching_steps {
 		try {
 			Assert.assertTrue(homePage.activeschoolmenu.isDisplayed());
 			Assert.assertTrue(homePage.classmenu.isDisplayed());
+			new Actions(Driver.webdriver).moveToElement(homePage.studentmenu).build().perform();
+			Thread.sleep(500);
+			Assert.assertTrue(homePage.tooltip_on_user_menu.get(0).getText().contains("Class level must be selected."));
+
 			try {
 				homePage.studentmenu.click();
 				Assert.assertTrue(homePage.activestudentmenu.isDisplayed());
@@ -328,6 +330,15 @@ public class Validate_Persistence_on_different_switching_steps {
 		try {
 			Assert.assertTrue(homePage.schoolmenu.isDisplayed());
 			Assert.assertTrue(homePage.activedistrictmenu.isDisplayed());
+
+			new Actions(Driver.webdriver).moveToElement(homePage.studentmenu).build().perform();
+			Thread.sleep(500);
+			Assert.assertTrue(
+					homePage.tooltip_on_user_menu.get(0).getText().contains("School level must be selected."));
+			new Actions(Driver.webdriver).moveToElement(homePage.classmenu).build().perform();
+			Thread.sleep(500);
+			Assert.assertTrue(
+					homePage.tooltip_on_user_menu.get(1).getText().contains("School level must be selected."));
 			try {
 				homePage.classmenu.click();
 				Assert.assertTrue(homePage.activeclassmenu.isDisplayed());
@@ -352,6 +363,7 @@ public class Validate_Persistence_on_different_switching_steps {
 			homePage.schooldropdownbtn.click();
 			Thread.sleep(500);
 			RosterTabUtilityMethods.uncheck_check_All("School");
+			Thread.sleep(500);
 			RosterTabUtilityMethods.uncheck_check_All("School");
 			homePage.searchbaronschooldropdown.sendKeys("Golden Oak Community School");
 			Thread.sleep(500);
@@ -372,9 +384,11 @@ public class Validate_Persistence_on_different_switching_steps {
 			Assert.assertTrue(homePage.classdropdownbtn.isDisplayed());
 			RosterTabUtilityMethods.select_Class_In_Class_DropDown("Grade 6 - Jones - 0");
 			UtilityMethods.scrollPageDown(Driver.webdriver, 4);
+			Thread.sleep(500);
 			homePage.rosterapplybtn.click();
 			UtilityMethods.wait_For_Student_List_AND_OR_Class_List_Section_Load();
 			UtilityMethods.scrollPageUp(Driver.webdriver, 4);
+			Thread.sleep(500);
 		} catch (Exception e) {
 			UtilityMethods.processException(e);
 		}
@@ -419,9 +433,11 @@ public class Validate_Persistence_on_different_switching_steps {
 			homePage.teachersdropdownbtn.click();
 			Thread.sleep(500);
 			UtilityMethods.scrollPageDown(Driver.webdriver, 4);
+			Thread.sleep(500);
 			homePage.rosterapplybtn.click();
 			UtilityMethods.wait_For_Student_List_AND_OR_Class_List_Section_Load();
 			UtilityMethods.scrollPageUp(Driver.webdriver, 4);
+			Thread.sleep(500);
 		} catch (Exception e) {
 			UtilityMethods.processException(e);
 		}
@@ -437,6 +453,7 @@ public class Validate_Persistence_on_different_switching_steps {
 			Thread.sleep(500);
 			RosterTabUtilityMethods.select_School_In_School_DropDown("Golden Oak Community School");
 			UtilityMethods.scrollPageDown(Driver.webdriver, 4);
+			Thread.sleep(500);
 			RosterTabUtilityMethods.select_Class_In_Class_DropDown("Grade 6 - Jones - 0");
 			Properties prop = FileRead.readProperties();
 			if (prop.getProperty("app_env").equalsIgnoreCase("staging")
@@ -448,6 +465,7 @@ public class Validate_Persistence_on_different_switching_steps {
 			homePage.rosterapplybtn.click();
 			UtilityMethods.wait_For_Performance_Over_Time_Line_Chart_Section_Load();
 			UtilityMethods.scrollPageUp(Driver.webdriver, 4);
+			Thread.sleep(500);
 		} catch (Exception e) {
 			UtilityMethods.processException(e);
 		}
@@ -456,7 +474,12 @@ public class Validate_Persistence_on_different_switching_steps {
 	@Then("^Verify User is switched to Student and School and Class subway filters are enabled$")
 	public void verify_User_is_switched_to_Student_and_School_and_Class_subway_filters_are_enabled() throws Throwable {
 		try {
-			Assert.assertTrue(homePage.schoolmenu.isDisplayed());
+			if (API_Connection.getUserRole().equalsIgnoreCase("DISTRICT_ADMIN")) {
+				Assert.assertTrue(homePage.districtmenu.isDisplayed());				
+			}
+			if (API_Connection.getUserRole().equalsIgnoreCase("SCHOOL_ADMIN")) {
+				Assert.assertTrue(homePage.schoolmenu.isDisplayed());				
+			}			
 			Assert.assertTrue(homePage.classmenu.isDisplayed());
 			Assert.assertTrue(homePage.activestudentmenu.isDisplayed());
 		} catch (Exception e) {
@@ -475,6 +498,7 @@ public class Validate_Persistence_on_different_switching_steps {
 			RosterTabUtilityMethods.select_School_In_School_DropDown("Golden Oak Community School");
 			RosterTabUtilityMethods.select_Class_In_Class_DropDown("Grade 6 - Jones - 0");
 			UtilityMethods.scrollPageDown(Driver.webdriver, 4);
+			Thread.sleep(500);
 			homePage.studentdropdownbtn.click();
 			Thread.sleep(500);
 			RosterTabUtilityMethods.uncheck_check_All("Student");
@@ -520,6 +544,7 @@ public class Validate_Persistence_on_different_switching_steps {
 			homePage.rosterapplybtn.click();
 			UtilityMethods.wait_For_Student_List_AND_OR_Class_List_Section_Load();
 			UtilityMethods.scrollPageUp(Driver.webdriver, 4);
+			Thread.sleep(500);
 		} catch (Exception e) {
 			UtilityMethods.processException(e);
 		}
@@ -529,6 +554,9 @@ public class Validate_Persistence_on_different_switching_steps {
 	public void verify_User_is_switched_to_Class_and_School_and_Student_subway_filters_are_enabled() throws Throwable {
 		try {
 			Assert.assertTrue(homePage.activeclassmenu.isDisplayed());
+			if (API_Connection.getUserRole().equalsIgnoreCase("DISTRICT_ADMIN")) {
+				Assert.assertTrue(homePage.districtmenu.isDisplayed());
+			}
 			Assert.assertTrue(homePage.schoolmenu.isDisplayed());
 			Assert.assertTrue(homePage.studentmenu.isDisplayed());
 			UtilityMethods.wait_For_Student_List_AND_OR_Class_List_Section_Load();
@@ -684,7 +712,7 @@ public class Validate_Persistence_on_different_switching_steps {
 			Assert.assertTrue(teacherName.equals(teacher_name_on_ch));
 			Assert.assertTrue(className.equals(class_name_on_ch));
 			log.info("Roster Tab value matched with context header data on class context");
-			
+
 		} catch (Exception e) {
 			UtilityMethods.processException(e);
 		}
@@ -793,8 +821,9 @@ public class Validate_Persistence_on_different_switching_steps {
 			log.info("clicked on school menu");
 			Thread.sleep(15000);
 			log.info("previously selected view name from popup on district menu:" + view_name_on_pop_up);
-			
-			log.info("selected view name on popup on school menu:" + homePage.dropDowns_on_edit_standards_on_pop_up.get(0).getText());
+
+			log.info("selected view name on popup on school menu:"
+					+ homePage.dropDowns_on_edit_standards_on_pop_up.get(0).getText());
 			Assert.assertTrue(
 					view_name_on_pop_up.equals(homePage.dropDowns_on_edit_standards_on_pop_up.get(0).getText()));
 
@@ -804,7 +833,8 @@ public class Validate_Persistence_on_different_switching_steps {
 			Assert.assertTrue(view_name_on_pop_up.equals(homePage.comparison_tab_sp_text.getText()));
 			homePage.compare_cb_list_on_comparison.get(0).click();
 			Thread.sleep(500);
-			Assert.assertTrue(homePage.compare_list_of_avg_on_comparison_tab.get(0).getText().equals("District Average"));
+			Assert.assertTrue(
+					homePage.compare_list_of_avg_on_comparison_tab.get(0).getText().equals("District Average"));
 			Assert.assertTrue(homePage.compare_list_of_avg_on_comparison_tab.get(1).getText().equals("School Average"));
 
 			// clicking on class menu
@@ -821,7 +851,8 @@ public class Validate_Persistence_on_different_switching_steps {
 			Assert.assertTrue(view_name_on_pop_up.equals(homePage.comparison_tab_sp_text.getText()));
 			homePage.compare_cb_list_on_comparison.get(0).click();
 			Thread.sleep(500);
-			Assert.assertTrue(homePage.compare_list_of_avg_on_comparison_tab.get(0).getText().equals("District Average"));
+			Assert.assertTrue(
+					homePage.compare_list_of_avg_on_comparison_tab.get(0).getText().equals("District Average"));
 			Assert.assertTrue(homePage.compare_list_of_avg_on_comparison_tab.get(1).getText().equals("School Average"));
 			Assert.assertTrue(homePage.compare_list_of_avg_on_comparison_tab.get(2).getText().equals("Class Average"));
 
@@ -837,27 +868,31 @@ public class Validate_Persistence_on_different_switching_steps {
 			log.info("view on comparison table: " + homePage.comparison_tab_sp_text.getText());
 			Assert.assertTrue(view_name_on_pop_up.equals(homePage.comparison_tab_sp_text.getText()));
 
-			Assert.assertTrue(homePage.compare_list_of_avg_on_comparison_tab.get(0).getText().equals("District Average"));
+			Assert.assertTrue(
+					homePage.compare_list_of_avg_on_comparison_tab.get(0).getText().equals("District Average"));
 			Assert.assertTrue(homePage.compare_list_of_avg_on_comparison_tab.get(1).getText().equals("School Average"));
 			Assert.assertTrue(homePage.compare_list_of_avg_on_comparison_tab.get(2).getText().equals("Class Average"));
 
 			jse.executeScript("arguments[0].click();", homePage.classmenu);
 			UtilityMethods.wait_For_Comparison_Tab_Section_Load_under_standard_performance();
 			Assert.assertTrue(view_name_on_pop_up.equals(homePage.comparison_tab_sp_text.getText()));
-			Assert.assertTrue(homePage.compare_list_of_avg_on_comparison_tab.get(0).getText().equals("District Average"));
+			Assert.assertTrue(
+					homePage.compare_list_of_avg_on_comparison_tab.get(0).getText().equals("District Average"));
 			Assert.assertTrue(homePage.compare_list_of_avg_on_comparison_tab.get(1).getText().equals("School Average"));
 			Assert.assertTrue(homePage.compare_list_of_avg_on_comparison_tab.get(2).getText().equals("Class Average"));
 
 			jse.executeScript("arguments[0].click();", homePage.schoolmenu);
 			UtilityMethods.wait_For_Comparison_Tab_Section_Load_under_standard_performance();
 			Assert.assertTrue(view_name_on_pop_up.equals(homePage.comparison_tab_sp_text.getText()));
-			Assert.assertTrue(homePage.compare_list_of_avg_on_comparison_tab.get(0).getText().equals("District Average"));
+			Assert.assertTrue(
+					homePage.compare_list_of_avg_on_comparison_tab.get(0).getText().equals("District Average"));
 			Assert.assertTrue(homePage.compare_list_of_avg_on_comparison_tab.get(1).getText().equals("School Average"));
 
 			jse.executeScript("arguments[0].click();", homePage.districtmenu);
 			UtilityMethods.wait_For_Comparison_Tab_Section_Load_under_standard_performance();
 			Assert.assertTrue(view_name_on_pop_up.equals(homePage.comparison_tab_sp_text.getText()));
-			Assert.assertTrue(homePage.compare_list_of_avg_on_comparison_tab.get(0).getText().equals("District Average"));
+			Assert.assertTrue(
+					homePage.compare_list_of_avg_on_comparison_tab.get(0).getText().equals("District Average"));
 
 		} catch (Exception e) {
 			UtilityMethods.processException(e);
@@ -1186,17 +1221,17 @@ public class Validate_Persistence_on_different_switching_steps {
 			UtilityMethods.processException(e);
 		}
 	}
-	
+
 	@Then("^Verify Standard Performance Grouping Persistence for teacher at class level$")
 	public void verify_Standard_Performance_Grouping_Persistence_for_teacher_at_class_level() throws Throwable {
-	    try {
-	    	Assert.assertTrue(homePage.activeclassmenu.isDisplayed());
+		try {
+			Assert.assertTrue(homePage.activeclassmenu.isDisplayed());
 			Assert.assertTrue(homePage.activestandardperformancebtn.isDisplayed());
 			jse.executeScript("arguments[0].click();", homePage.groupingTab);
 			Thread.sleep(5000);
 			Assert.assertTrue(homePage.groupingTabText.getText().equals("Edit Groups"));
-	    
-	    } catch (Exception e) {
+
+		} catch (Exception e) {
 			UtilityMethods.processException(e);
 		}
 		CBTConfiguration.score = "pass";

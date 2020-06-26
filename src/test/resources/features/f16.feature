@@ -18,8 +18,8 @@ Feature: Subway Navigation Changes - Sprint35 Scenarios
     Then Navigate back to District and click on Roster tab and select a School and a Class and multiple Students and click apply
     And Verify User is switched to Class and School and Student subway filters are enabled
 
-  ##SA - Verify the Universal SeleVerify User is switched to Student and School and Class subway filters are enabledctor filters and Subway navigation changes when user logged in as SA
-  @BE-2261 @BE-2262 @BE-2263 
+  ##SA - verify User is switched to Student and School and Class subway filters are enabledctor filters and Subway navigation changes when user logged in as SA
+  @BE-2261 @BE-2262 @BE-2263
     Scenario: Verify Universal Selector filters when user logged in as School Admin
     Given User is on portal's login screen with username as "school_admin_one" and password as "password" and usertype as "realm_one"
     When User click on Roster tab and select one Teacher and one Class and click apply

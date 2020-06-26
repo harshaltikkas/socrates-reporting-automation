@@ -30,6 +30,7 @@ import java.time.Instant;
 import java.util.Properties;
 import org.junit.Assert;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.PageFactory;
@@ -55,11 +56,13 @@ public class FlyInMenuBehaviourSteps {
 	 * This is used to initialize webelement of the webpages
 	 */
 	HomePage homePage = PageFactory.initElements(Driver.webdriver, HomePage.class);
+	public static JavascriptExecutor jse = (JavascriptExecutor) Driver.webdriver;
 	public static Properties prop;
 	public static String toolTipText = "", env;
 	public static String classNameonCH, schoolNameonCH, teacherNameonCH, gradeNameonCH, studentTextonCH;
 	public static String uname, passwd, realm;
 	public static String token;
+	
 
 	/**
 	 * method used to launch the browser with the url and provide the
@@ -108,10 +111,10 @@ public class FlyInMenuBehaviourSteps {
 				Select select = new Select(homePage.usertypedropdown);
 				Thread.sleep(500);
 				select.selectByValue(realm);
-				Thread.sleep(1000);
-				homePage.loginbtn.click();
+				Thread.sleep(1000);			
+				jse.executeScript("arguments[0].click();", homePage.loginbtn);
 			} else if (env.equalsIgnoreCase("staging") || env.equalsIgnoreCase("prod")) {
-				homePage.loginbtn_on_stg.click();
+				jse.executeScript("arguments[0].click();", homePage.loginbtn_on_stg);				
 			}
 			Instant start = Instant.now();
 			log.info("Current Time after clicking on login button: " + java.time.LocalTime.now());
