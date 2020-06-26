@@ -15,7 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class RosterTabUtilityMethods {
 	static HomePage homePage = PageFactory.initElements(Driver.webdriver, HomePage.class);
-	
+
 	/* This method is used to deselct all checkbox in universal selector dropdown */
 	public static void uncheck_check_All(String roster_field) {
 		try {
@@ -27,22 +27,29 @@ public class RosterTabUtilityMethods {
 		}
 	}
 
-	/*This method is used to select specified school in school dropdown*/
-	public static String select_School_In_School_DropDown(String school) {		
+	/* This method is used to select specified school in school dropdown */
+	public static String select_School_In_School_DropDown(String school) {
 		try {
 			homePage.schooldropdownbtn.click();
 			Thread.sleep(500);
-			RosterTabUtilityMethods.uncheck_check_All("School");
+			if (homePage.schooldropdownbtn.getText().equals("All")) {
+				RosterTabUtilityMethods.uncheck_check_All("School");
+			} else {
+				RosterTabUtilityMethods.uncheck_check_All("School");
+				Thread.sleep(500);
+				RosterTabUtilityMethods.uncheck_check_All("School");
+				Thread.sleep(500);
+			}
 			homePage.searchbaronschooldropdown.sendKeys(school);
 			Thread.sleep(500);
-			Driver.webdriver.findElement(By.xpath("//li[.='"+school+"']")).click();
+			Driver.webdriver.findElement(By.xpath("//li[.='" + school + "']")).click();
 			Thread.sleep(500);
 			new Actions(Driver.webdriver).moveToElement(homePage.searchcancelonschooldropdown).click().build()
 					.perform();
 			Thread.sleep(500);
 			homePage.schooldropdownbtn.click();
-			Thread.sleep(500);			
-			log.info("Selected School:" +school);
+			Thread.sleep(500);
+			log.info("Selected School:" + school);
 			new Actions(Driver.webdriver).moveToElement(homePage.studentTitleOnSliderMenu).build().perform();
 			RosterTabUtilityMethods.wait_For_Refresh_Icon(homePage.schoolRefreshIcon, "School");
 		} catch (Exception e) {
@@ -51,23 +58,23 @@ public class RosterTabUtilityMethods {
 		}
 		return school;
 	}
-	
-	/*This method is used to select specified grade in Grades dropdown*/
+
+	/* This method is used to select specified grade in Grades dropdown */
 	public static String select_Grade_In_Grades_DropDown(String grade) {
 		try {
 			homePage.gradedropdownbtn.click();
-			Thread.sleep(500);		
-			Driver.webdriver.findElement(By.xpath("//li[.='"+grade+"']")).click();
-			Thread.sleep(500);		
-			log.info("Selected Grade:" + grade);			
+			Thread.sleep(500);
+			Driver.webdriver.findElement(By.xpath("//li[.='" + grade + "']")).click();
+			Thread.sleep(500);
+			log.info("Selected Grade:" + grade);
 		} catch (Exception e) {
 			log.error("unable to select grade from dropdown");
 			UtilityMethods.processException(e);
 		}
 		return grade;
-	}	
-	
-	/*This method is used to select specified Teacher in Teacher dropdown*/
+	}
+
+	/* This method is used to select specified Teacher in Teacher dropdown */
 	public static String select_Teacher_In_Teacher_DropDown(String teacher) {
 		try {
 			homePage.teachersdropdownbtn.click();
@@ -75,45 +82,44 @@ public class RosterTabUtilityMethods {
 			RosterTabUtilityMethods.uncheck_check_All("Teacher");
 			homePage.searchbaronteacherdropdown.sendKeys(teacher);
 			Thread.sleep(500);
-			Driver.webdriver.findElement(By.xpath("//li[.='"+teacher+"']")).click();
+			Driver.webdriver.findElement(By.xpath("//li[.='" + teacher + "']")).click();
 			Thread.sleep(500);
 			new Actions(Driver.webdriver).moveToElement(homePage.searchcancelonteacherdropdown).click().build()
 					.perform();
 			Thread.sleep(500);
 			homePage.teachersdropdownbtn.click();
 			Thread.sleep(500);
-			log.info("Selected Teacher:" + teacher);			
+			log.info("Selected Teacher:" + teacher);
 		} catch (Exception e) {
 			log.error("unable to select teacher from dropdown");
 			UtilityMethods.processException(e);
 		}
 		return teacher;
 	}
-	
-	/*This method is used to select specified class in Class dropdown*/
+
+	/* This method is used to select specified class in Class dropdown */
 	public static String select_Class_In_Class_DropDown(String cls) {
-		try {			
+		try {
 			homePage.classdropdownbtn.click();
 			Thread.sleep(500);
 			RosterTabUtilityMethods.uncheck_check_All("Class");
 			homePage.searchbaronclassdropdown.sendKeys(cls);
 			Thread.sleep(500);
-			Driver.webdriver.findElement(By.xpath("//li[.='"+cls+"']")).click();
+			Driver.webdriver.findElement(By.xpath("//li[.='" + cls + "']")).click();
 			Thread.sleep(500);
-			new Actions(Driver.webdriver).moveToElement(homePage.searchcancelonclassdropdown).click().build()
-					.perform();
+			new Actions(Driver.webdriver).moveToElement(homePage.searchcancelonclassdropdown).click().build().perform();
 			Thread.sleep(500);
 			homePage.classdropdownbtn.click();
-			Thread.sleep(500);			
-			log.info("Selected Class:" + cls);			
+			Thread.sleep(500);
+			log.info("Selected Class:" + cls);
 		} catch (Exception e) {
 			log.error("unable to select class from dropdown");
 			UtilityMethods.processException(e);
 		}
 		return cls;
-	}	
-	
-	/*This method is used to select specified student in Student dropdown*/
+	}
+
+	/* This method is used to select specified student in Student dropdown */
 	public static String select_Student_In_Student_DropDown(String student) {
 		try {
 			homePage.studentdropdownbtn.click();
@@ -121,20 +127,20 @@ public class RosterTabUtilityMethods {
 			RosterTabUtilityMethods.uncheck_check_All("Student");
 			homePage.searchbaronstudentdropdown.sendKeys(student);
 			Thread.sleep(500);
-			Driver.webdriver.findElement(By.xpath("//li[.='"+student+"']")).click();
+			Driver.webdriver.findElement(By.xpath("//li[.='" + student + "']")).click();
 			Thread.sleep(500);
 			new Actions(Driver.webdriver).moveToElement(homePage.searchcancelonstudentdropdown).click().build()
 					.perform();
 			Thread.sleep(500);
 			homePage.studentdropdownbtn.click();
 			Thread.sleep(500);
-			log.info("Selected Class:" + student);			
+			log.info("Selected Class:" + student);
 		} catch (Exception e) {
 			log.error("unable to select Student from dropdown");
 			UtilityMethods.processException(e);
 		}
 		return student;
-	}	
+	}
 
 	/* This method is used to get all the test names of test tab */
 	public static LinkedList<String> getAllTestNamesOfTestTab() {
@@ -175,7 +181,7 @@ public class RosterTabUtilityMethods {
 		}
 		return testNames;
 	}
-	
+
 	/* This method is used to get all the test names of test score over time */
 	public static LinkedList<String> getAllTestNamesOf_TestScoreOverTime() {
 		LinkedList<String> testNames = new LinkedList<String>();
@@ -184,7 +190,8 @@ public class RosterTabUtilityMethods {
 			if (PaginationUtility_for_Pages.checkPaginator_on_tsot()) {
 				// this lool will execute for the no. of circle available on paginator
 				for (int i = homePage.circle_list_on_paginator_on_tsot.size() - 1; i >= 0; i--) {
-					PaginationUtility_for_Pages.clicking_on_indexed_circle_of_paginator(homePage.circle_list_on_paginator_on_tsot,i);
+					PaginationUtility_for_Pages
+							.clicking_on_indexed_circle_of_paginator(homePage.circle_list_on_paginator_on_tsot, i);
 					Assert.assertTrue(homePage.testNamesonPerPage_onlinechart.size() <= 10);
 					for (int j = homePage.testNamesonPerPage_onlinechart.size() - 1; j >= 0; j--) {
 						testNames.add(getTestNamesFromToolTip_On_TSOT(j));
@@ -195,12 +202,13 @@ public class RosterTabUtilityMethods {
 				do {
 					if (PaginationUtility_for_Pages.check_Enabled_Left_Arrow_on_Paginator_on_tsot()) {
 						PaginationUtility_for_Pages.clicking_on_enabled_left_Arrow_of_paginator_on_tsot();
-						PaginationUtility_for_Pages.clicking_on_first_circle_of_paginator(homePage.circle_list_on_paginator_on_tsot);
+						PaginationUtility_for_Pages
+								.clicking_on_first_circle_of_paginator(homePage.circle_list_on_paginator_on_tsot);
 						Assert.assertTrue(homePage.testNamesonPerPage_onlinechart.size() <= 10);
 						for (int j = homePage.testNamesonPerPage_onlinechart.size() - 1; j >= 0; j--) {
 							testNames.add(getTestNamesFromToolTip_On_TSOT(j));
 						}
-					} 
+					}
 				} while (PaginationUtility_for_Pages.check_Enabled_Left_Arrow_on_Paginator_on_tsot());
 			} else {
 				// when paginator is not found
@@ -215,22 +223,22 @@ public class RosterTabUtilityMethods {
 		}
 		return testNames;
 	}
-	
+
 	public static String getTestNamesFromToolTip_On_TSOT(int index) {
-		String testName="";
+		String testName = "";
 		try {
 			new Actions(Driver.webdriver).moveToElement(homePage.testNamesonPerPage_onlinechart.get(index)).build()
 					.perform();
 			testName = homePage.testNametooltip_onlinechart.getText();
 			new Actions(Driver.webdriver).moveToElement(homePage.testScoresPercentage).build().perform();
 			Thread.sleep(500);
-			Thread.sleep(500);			
+			Thread.sleep(500);
 		} catch (InterruptedException e) {
 			UtilityMethods.processException(e);
 		}
 		return testName;
 	}
-	
+
 	/**
 	 * This method is used to wait till refresh icon for the roster tab dropdown
 	 **/

@@ -516,6 +516,9 @@ public class HomePage {
 	@FindBy(xpath = "//div[@class='single-filter-text']//span[contains(text(),'Student')]")
 	public WebElement studentmenu;
 	
+	@FindBy(xpath = "//div[@class='subway_nav_tooltiptext']")
+	public List<WebElement> tooltip_on_user_menu;
+	
 	@FindBy(xpath = "//span[contains(text(),'Resources')]")
 	public WebElement resources_txt_on_dashboard;
 	
