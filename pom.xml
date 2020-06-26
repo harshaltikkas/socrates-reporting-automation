@@ -234,8 +234,95 @@
 			<artifactId>poi-ooxml</artifactId>
 			<version>3.17</version>
 		</dependency>
+
 	</dependencies>
 	<build>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>com.spotify</groupId>
+					<artifactId>dockerfile-maven-plugin</artifactId>
+					<version>1.4.9</version>
+					<configuration>
+						<repository>${project.artifactId}</repository>
+					</configuration>
+				</plugin>
+
+
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-dependency-plugin</artifactId>
+					<executions>
+						<execution>
+							<id>unpack</id>
+							<phase>package</phase>
+							<goals>
+								<goal>unpack</goal>
+							</goals>
+							<configuration>
+								<artifactItems>
+									<artifactItem>
+										<groupId>${project.groupId}</groupId>
+										<artifactId>${project.artifactId}</artifactId>
+										<version>${project.version}</version>
+									</artifactItem>
+								</artifactItems>
+							</configuration>
+						</execution>
+					</executions>
+				</plugin>
+
+				<!--This plugin's configuration is used to store Eclipse m2e settings 
+					only. It has no influence on the Maven build itself. -->
+				<plugin>
+					<groupId>org.eclipse.m2e</groupId>
+					<artifactId>lifecycle-mapping</artifactId>
+					<version>1.0.0</version>
+					<configuration>
+						<lifecycleMappingMetadata>
+							<pluginExecutions>
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<groupId>
+											com.github.temyers
+										</groupId>
+										<artifactId>
+											cucumber-jvm-parallel-plugin
+										</artifactId>
+										<versionRange>[${cucumber.jvm.parallel.version},)</versionRange>
+										<goals>
+											<goal>generateRunners</goal>
+										</goals>
+									</pluginExecutionFilter>
+									<action>
+										<ignore></ignore>
+									</action>
+								</pluginExecution>
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<groupId>
+											org.codehaus.mojo
+										</groupId>
+										<artifactId>
+											exec-maven-plugin
+										</artifactId>
+										<versionRange>
+											[1.6.0,)
+										</versionRange>
+										<goals>
+											<goal>exec</goal>
+										</goals>
+									</pluginExecutionFilter>
+									<action>
+										<ignore></ignore>
+									</action>
+								</pluginExecution>
+							</pluginExecutions>
+						</lifecycleMappingMetadata>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -246,18 +333,102 @@
 					<source>1.8</source>
 					<target>1.8</target>
 					<fork>true</fork>
-					<executable>${jdk.compiler.path}</executable>
+					<executable>${jdk.compiler.path}</executable>				
 				</configuration>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
 				<version>${surefire.maven.plugin.version}</version>
-				<configuration>
-					<includes>
-						<include>**/*RunnerIT.java</include>
-					</includes>
-				</configuration>
+				<executions>
+					<execution>
+						<id>acceptance-test</id>
+						<phase>integration-test</phase>
+						<goals>
+							<goal>test</goal>
+						</goals>
+						<configuration>
+							<forkCount>${acceptance.test.parallel.count}</forkCount>
+							<reuseForks>true</reuseForks>
+							<includes>
+								 <include>**/*IT.class</include> 
+								<!--<include>**/*RunnerIT.class</include>-->							
+							</includes>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<artifactId>maven-resources-plugin</artifactId>
+				<version>3.1.0</version>
+				<executions>
+					<execution>
+						<id>copy-resources</id>
+						<!-- here the phase you need -->
+						<phase>validate</phase>
+						<goals>
+							<goal>copy-resources</goal>
+						</goals>
+						<configuration>					
+							<outputDirectory>${basedir}/target/extra-resources</outputDirectory>						
+							<resources>
+								<resource>
+									<directory>src/test/resources</directory>
+									<filtering>true</filtering>
+								</resource>
+							</resources>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>com.github.temyers</groupId>
+				<artifactId>cucumber-jvm-parallel-plugin</artifactId>
+				<version>${cucumber.jvm.parallel.version}</version>
+				<executions>
+					<execution>
+						<id>generateRunners</id>
+						<phase>validate</phase>
+						<goals>
+							<goal>generateRunners</goal>
+						</goals>
+						<configuration>
+							<!-- Mandatory -->
+							<!-- comma separated list of package names to scan for glue code -->
+							<glue>com.bec.reporting.steps</glue>
+							<!-- These are the default values -->
+							<!-- Where to output the generated Junit tests -->
+							<outputDirectory>${project.build.directory}/generated-test-sources/features</outputDirectory>
+							<!-- The directory containing your feature files. -->
+							<featuresDirectory>src/test/resources/features</featuresDirectory>
+							<cucumberOutputDir>${project.build.directory}/cucumber_reports/test_results</cucumberOutputDir>
+							<plugins>
+								<plugin>
+									<name>com.bec.reporting.utils.ExtentCucumberFormatter</name>
+									<extension>html</extension>
+								</plugin>
+							</plugins>
+							<customVmTemplate>
+								src/test/resources/cucumber-extents-report-runner.java.vm
+							</customVmTemplate>
+							<!-- comma separated list of output formats -->
+							<format>junit</format>
+							<!-- CucumberOptions.strict property -->
+							<strict>true</strict>
+							<!-- CucumberOptions.monochrome property -->
+							<monochrome>true</monochrome>
+							<namingScheme>pattern</namingScheme>
+							<!-- The class naming pattern to use. Only required/used if naming 
+								scheme is 'pattern'. -->
+							<namingPattern>{f}_Parallel{c}IT</namingPattern>
+
+							<!-- If set to true, only feature files containing the required tags 
+								shall be generated. -->
+							<!-- Excluded tags (~@notMe) are ignored. -->
+							<filterFeaturesByTags>false</filterFeaturesByTags>
+						</configuration>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>
