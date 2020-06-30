@@ -44,7 +44,7 @@ import lombok.extern.slf4j.Slf4j;
 		"json:target/json_report/Cucumber.json",
 		"junit:target/junit_xml_report/Cucumber.xml", "rerun:target/failed_scenarios.txt" },
 
-		tags = { "@Harshu" }, monochrome = true)
+		tags = { "@Feature" }, monochrome = true)
 @Slf4j
 public class TestRunnerOne {
 

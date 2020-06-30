@@ -2,7 +2,7 @@
 Feature: Fly In Menu Behaviour
 
   ##story 1b)
-  @Scenario1 @TC2 @Harshu
+  @Scenario1 @TC2
   Scenario Outline: Arrows to Open and Close the Tab
     Given User is on portal's login screen with username as "district_admin_one" and password as "password" and usertype as "realm_one"
     When User Click on Standard Performance tab within the Class Context
@@ -10,9 +10,9 @@ Feature: Fly In Menu Behaviour
 
     Examples: 
       | universaltablist |
-#      | Roster           |
-#      | Test             |
-      | Date1             |
+      | Roster           |
+      | Test             |
+      | Date             |
 
   @Scenario2 @TC3
   Scenario Outline: Roster Tab shows the dropdown list of Schools and Classes and Students to apply filters.
@@ -26,7 +26,7 @@ Feature: Fly In Menu Behaviour
       | multiple      |
       | All           |
 
-  @Scenario3 @TC4 @Harshu
+  @Scenario3 @TC4
   Scenario: Verify to close the Fly-In menu of the Roster Tab.
     Given User is on portal's login screen with username as "district_admin_one" and password as "password" and usertype as "realm_one"
     When User Click on Roster tab within the Universal Selector Tab
