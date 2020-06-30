@@ -67,7 +67,7 @@ public class Test_Status_Steps {
 			homePage.info_icon_in_ts.click();
 			Thread.sleep(500);
 			Assert.assertTrue(homePage.tool_tip_on_info_icon_in_ts.getText().equals(info_text));
-			new Actions(Driver.webdriver).moveByOffset(200, 200).click().build().perform();
+			new Actions(Driver.webdriver).moveByOffset(10, 10).click().build().perform();
 			CBTConfiguration.score = "pass";
 		} catch (Exception e) {
 			UtilityMethods.processException(e);
@@ -360,9 +360,7 @@ public class Test_Status_Steps {
 								.moveToElement(homePage.circle_list_on_paginator_on_summary_in_ts
 										.get(homePage.circle_list_on_paginator_on_summary_in_ts.size() - 1))
 								.build().perform();
-						UtilityMethods.scrollPageDown(Driver.webdriver, 2);
-						Thread.sleep(500);
-
+						
 						PaginationUtility_for_Pages
 								.clicking_on_enabled_right_Arrow_of_paginator_on_summary_in_Test_Status();
 						PaginationUtility_for_Pages.clicking_on_last_circle_of_paginator(

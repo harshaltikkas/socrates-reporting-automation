@@ -16,8 +16,7 @@
 	<properties>
 		<restassured.verson>2.9.0</restassured.verson>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<maven.compiler.source>1.8</maven.compiler.source>
-		<maven.compiler.target>1.8</maven.compiler.target>
+		<jdk.compiler.path>C:\Program Files\Java\jdk1.8.0_212\bin\javac.exe</jdk.compiler.path>
 	</properties>
 
 	<dependencies>
@@ -207,6 +206,18 @@
 						<includes>
 							<include>**/*Runner*.java</include>
 						</includes>
+					</configuration>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<version>3.6.0</version>
+					<configuration>
+						<compilerVersion>1.8</compilerVersion>
+						<source>1.8</source>
+						<target>1.8</target>
+						<fork>true</fork>
+						<executable>${jdk.compiler.path}</executable>
 					</configuration>
 				</plugin>
 			</plugins>

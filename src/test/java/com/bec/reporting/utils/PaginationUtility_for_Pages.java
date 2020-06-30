@@ -44,6 +44,7 @@ public class PaginationUtility_for_Pages {
 		try {
 			new Actions(Driver.webdriver).moveToElement(homePage.paginator_on_list_under_sp).build().perform();
 			log.info("Paginator Found in List under Standard Performance");
+			UtilityMethods.scrollPageDown(Driver.webdriver, 2);Thread.sleep(500);
 			return true;
 		} catch (Exception e) {
 			log.info("Paginator Not Found in List under Standard Performance");
@@ -78,6 +79,7 @@ public class PaginationUtility_for_Pages {
 		try {
 			new Actions(Driver.webdriver).moveToElement(homePage.paginator_on_pot_under_sp).build().perform();
 			log.info("Paginator Found in Performance Over Time under Standard Performance");
+			UtilityMethods.scrollPageDown(Driver.webdriver, 2);Thread.sleep(500);
 			return true;
 		} catch (Exception e) {
 			log.info("Paginator Not Found in POT under Standard Performance");
@@ -112,6 +114,7 @@ public class PaginationUtility_for_Pages {
 		try {
 			new Actions(Driver.webdriver).moveToElement(homePage.paginator_on_list_under_sp).build().perform();
 			log.info("Paginator Found in Test Score Detail");
+			UtilityMethods.scrollPageDown(Driver.webdriver, 2);Thread.sleep(500);
 			return true;
 		} catch (Exception e) {
 			log.info("Paginator Not Found in Test Score Detail");
@@ -145,6 +148,7 @@ public class PaginationUtility_for_Pages {
 		try {
 			new Actions(Driver.webdriver).moveToElement(homePage.paginator_on_tsot).build().perform();
 			log.info("Paginator Found on Test Score Over Time");
+			UtilityMethods.scrollPageDown(Driver.webdriver, 2);Thread.sleep(500);
 			return true;
 		} catch (Exception e) {
 			log.info("Paginator Not Found on Test Score Over Time");
@@ -179,6 +183,7 @@ public class PaginationUtility_for_Pages {
 			new Actions(Driver.webdriver).moveToElement(homePage.paginator_on_tso_under_ts_under_student).build()
 					.perform();
 			log.info("Paginator Found on Test Score Overview ");
+			UtilityMethods.scrollPageDown(Driver.webdriver, 2);Thread.sleep(500);
 			return true;
 		} catch (Exception e) {
 			log.info("Paginator Not Found on Test Score Overview ");
@@ -212,6 +217,7 @@ public class PaginationUtility_for_Pages {
 		try {
 			new Actions(Driver.webdriver).moveToElement(homePage.paginator_on_sta).build().perform();
 			log.info("Paginator Found on Single Test Analysis");
+			UtilityMethods.scrollPageDown(Driver.webdriver, 2);Thread.sleep(500);
 			return true;
 		} catch (Exception e) {
 			log.info("Paginator Not Found on Single Test Analysis");
@@ -245,6 +251,7 @@ public class PaginationUtility_for_Pages {
 			try {
 				new Actions(Driver.webdriver).moveToElement(homePage.paginator_on_summary_in_ts).build().perform();
 				log.info("Paginator Found on Summary in Test Status");
+				UtilityMethods.scrollPageDown(Driver.webdriver, 2);Thread.sleep(500);
 				return true;
 			} catch (Exception e) {
 				log.info("Paginator Not Found on Summary in Test Status");
@@ -301,6 +308,7 @@ public class PaginationUtility_for_Pages {
 		try {
 			list_of_circles.get(index).click();
 			Thread.sleep(500);
+			UtilityMethods.scrollPageDown(Driver.webdriver,1);Thread.sleep(500);
 		} catch (InterruptedException e) {
 			log.error("Error in clicking of index circle of paginator");
 			UtilityMethods.processException(e);

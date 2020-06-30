@@ -11,7 +11,7 @@ Feature: Single Test Analysis - Sprint 22
     Given User is on portal's login screen with username as "district_admin_one" and password as "password" and usertype as "realm_one"
     Then The Default View Behaviour of the Single Test Analysis when the user clicks on the single test analysis tab
 
-  ## BE-1555,1556 (passed) 
+  ## BE-1555,1556 (passed)
   Scenario: Verify Adding Teacher label to Context Header for the School Admins
     Given User is on portal's login screen with username as "school_admin_one" and password as "password" and usertype as "realm_one"
     Then veryfy Teacher label to Context Header for the School Admins for teacher "Ryan Whitaker"

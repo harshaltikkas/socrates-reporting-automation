@@ -262,7 +262,7 @@ public class FlyInMenuBehaviourSteps {
 				// selecting Teacher from dropdown
 				Thread.sleep(1000);
 				selectedTeacher = homePage.teacherslist.get(2).getText();
-				homePage.teacherslist.get(2).click();
+				homePage.teacherslist.get(2).click();Thread.sleep(500);
 				log.info("Selected Teacher is:" + selectedTeacher);
 				homePage.teachersdropdownbtn.click();
 				// selecting class from dropdown
@@ -307,10 +307,9 @@ public class FlyInMenuBehaviourSteps {
 			}
 			Thread.sleep(500);
 			homePage.rosterapplybtn.click();
-			Thread.sleep(3000);
-			UtilityMethods.scrollPageUp(Driver.webdriver);
 			Thread.sleep(500);
-			UtilityMethods.wait_For_Context_Header_Section();
+			UtilityMethods.scrollPageUp(Driver.webdriver);
+			Thread.sleep(500);			
 
 			/**
 			 * verifying class and school,teacher,grade and student on context menu by
@@ -319,7 +318,7 @@ public class FlyInMenuBehaviourSteps {
 
 			switch (selectiontype) {
 			case "single":
-				Thread.sleep(3000);
+				UtilityMethods.wait_For_Performance_Over_Time_Line_Chart_Section_Load();
 				if (homePage.studentnameoncontextheader.getText().contains("...")) {
 					new Actions(Driver.webdriver).moveToElement(homePage.studentnameoncontextheader).build().perform();
 					studentTextonCH = homePage.studentnameoncontextheadertooltiptext.getText();
@@ -334,7 +333,7 @@ public class FlyInMenuBehaviourSteps {
 				break;
 
 			case "multiple":
-				Thread.sleep(3000);
+				UtilityMethods.wait_For_Student_List_AND_OR_Class_List_Section_Load();
 				if (homePage.studentnameoncontextheader.getText().contains("...")) {
 					new Actions(Driver.webdriver).moveToElement(homePage.studentnameoncontextheader).build().perform();
 					studentTextonCH = homePage.studentnameoncontextheadertooltiptext.getText();
@@ -347,9 +346,8 @@ public class FlyInMenuBehaviourSteps {
 				verify_Single_Selection_context_header_content(selectedClass, selectedGrade, selectedSchool,
 						selectedTeacher);
 				break;
-
 			default:
-				Thread.sleep(1000);
+				UtilityMethods.wait_For_Student_List_AND_OR_Class_List_Section_Load();
 				// verifying Grade name context header
 				if (homePage.gradenameoncontextheader.getText().contains("...")) {
 					new Actions(Driver.webdriver).moveToElement(homePage.gradenameoncontextheader).build().perform();
@@ -361,7 +359,7 @@ public class FlyInMenuBehaviourSteps {
 				log.info("Grade name on CH:" + gradeNameonCH);
 				selectedGrade = selectedGrade.substring(selectedGrade.indexOf(" ") + 1);
 				Assert.assertTrue(selectedGrade.equals(gradeNameonCH));
-				new Actions(Driver.webdriver).moveByOffset(200, 200).build().perform();
+				new Actions(Driver.webdriver).moveByOffset(10, 10).build().perform();
 				// verifying school name context header
 				if (homePage.schoolnameoncontextheader.getText().contains("...")) {
 					new Actions(Driver.webdriver).moveToElement(homePage.schoolnameoncontextheader).build().perform();
@@ -387,7 +385,7 @@ public class FlyInMenuBehaviourSteps {
 		try {
 			// verifying class name on context header
 			Actions actions = new Actions(Driver.webdriver);
-			actions.moveByOffset(200, 200).build().perform();
+			actions.moveByOffset(10, 10).build().perform();
 			Thread.sleep(500);
 			classNameonCH = UtilityMethods.getClassNameonUI();
 			log.info("class name on CH:" + classNameonCH);

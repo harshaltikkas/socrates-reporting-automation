@@ -297,19 +297,21 @@ public class RosterTabDropDownBehaviour {
 
 			homePage.rosterapplybtn.click();
 			UtilityMethods.scrollPageUp(Driver.webdriver);
-			Thread.sleep(3000);
-
-			IWait.explicit_wait(Driver.webdriver, homePage.rostertab);
+			UtilityMethods.wait_For_Student_List_AND_OR_Class_List_Section_Load();
 			homePage.rostertab.click();
 			IWait.explicit_wait(Driver.webdriver, homePage.studentTitleOnSliderMenu);
 			Verify.verify(homePage.studentTitleOnSliderMenu.isDisplayed());
 			Thread.sleep(500);
 			homePage.studentdropdownbtn.click();
 			Thread.sleep(500);
-			UtilityMethods.scrollPageDown(Driver.webdriver, 8);
+			UtilityMethods.scrollPageDown(Driver.webdriver, 8);Thread.sleep(500);
 			// verifying after applying result,selected student names are on top
-			UtilityMethods.scroll_Div_UP(homePage.studentlistondropdownwithinput.get(0), -20);
-
+			UtilityMethods.scroll_Div_UP(homePage.studentlistondropdownwithinput.get(0), -20);Thread.sleep(500);
+			homePage.rostertab.click();Thread.sleep(1000);
+			homePage.rostertab.click();Thread.sleep(500);
+			UtilityMethods.scrollPageDown(Driver.webdriver, 8);Thread.sleep(500);
+			homePage.studentdropdownbtn.click();
+			Thread.sleep(500);
 			for (int i = 0; i < customSize; i++) {
 				if (homePage.studentlistondropdown.get(i).getText().equals("")) {
 					UtilityMethods.scroll_Div(homePage.studentlistondropdown.get(i), 20);
