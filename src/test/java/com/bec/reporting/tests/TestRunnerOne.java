@@ -38,11 +38,10 @@ import cucumber.api.junit.Cucumber;
 import lombok.extern.slf4j.Slf4j;
 
 @RunWith(Cucumber.class)
-@CucumberOptions(features = ".", glue = { "com.bec.reporting.steps" }, plugin = { "pretty",
-		"html:target/htmlreports",
+@CucumberOptions(features = ".", glue = { "com.bec.reporting.steps" }, plugin = { "pretty", "html:target/htmlreports",
 		"com.bec.reporting.utils.ExtentCucumberFormatter:target/cucumber-reports/extent_report/report.html",
-		"json:target/json_report/Cucumber.json",
-		"junit:target/junit_xml_report/Cucumber.xml", "rerun:target/failed_scenarios.txt" },
+		"json:target/json_report/Cucumber.json", "junit:target/junit_xml_report/Cucumber.xml",
+		"rerun:target/failed_scenarios.txt" },
 
 		tags = { "@Feature" }, monochrome = true)
 @Slf4j
@@ -50,7 +49,7 @@ public class TestRunnerOne {
 
 	public static Properties config;
 	public static Scenario scenario;
-	
+
 	/**
 	 * This method is used to copy the extent report at reports folder at desktop
 	 */
@@ -80,7 +79,7 @@ public class TestRunnerOne {
 		}
 	}
 
-	static void deleteFolder(File file) {
+	public static void deleteFolder(File file) {
 		for (File subFile : file.listFiles()) {
 			if (subFile.isDirectory()) {
 				deleteFolder(subFile);

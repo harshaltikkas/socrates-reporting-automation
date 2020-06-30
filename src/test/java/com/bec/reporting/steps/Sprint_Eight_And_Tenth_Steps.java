@@ -462,9 +462,9 @@ public class Sprint_Eight_And_Tenth_Steps {
 			throws Throwable {
 		try {
 			new Actions(Driver.webdriver).moveToElement(homePage.groupingTab).click().build().perform();
-			Thread.sleep(5000);
+			Thread.sleep(12000);
 			new Actions(Driver.webdriver).moveToElement(homePage.selectStrandsOnGroupingTab).click().build().perform();
-			Thread.sleep(500);
+			Thread.sleep(1000);
 			new Actions(Driver.webdriver).moveToElement(homePage.selectStrandsListInDropdownGroupingTab.get(0)).click()
 					.build().perform();
 			Thread.sleep(500);

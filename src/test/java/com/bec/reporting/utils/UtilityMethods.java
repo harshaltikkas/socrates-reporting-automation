@@ -475,7 +475,7 @@ public class UtilityMethods {
 			if (studentTextonCH.contains("(")) {
 				studentTextonCH = studentTextonCH.substring(0, studentTextonCH.indexOf("(") - 1);
 			}
-			new Actions(Driver.webdriver).moveByOffset(100, 100).build().perform();
+			new Actions(Driver.webdriver).moveByOffset(10, 10).build().perform();
 			Thread.sleep(500);
 		} catch (Exception e) {
 			processException(e);
@@ -511,7 +511,7 @@ public class UtilityMethods {
 					schoolName = homePage.schoolnameontripledot.getText();
 				}
 			}
-			new Actions(Driver.webdriver).moveByOffset(100, 100).click().build().perform();
+			new Actions(Driver.webdriver).moveByOffset(10, 10).click().build().perform();
 			Thread.sleep(500);
 		} catch (Exception e) {
 			processException(e);
@@ -547,7 +547,7 @@ public class UtilityMethods {
 					districtName = homePage.districtnameontripledot.getText();
 				}
 			}
-			new Actions(Driver.webdriver).moveByOffset(100, 100).click().build().perform();
+			new Actions(Driver.webdriver).moveByOffset(10, 10).click().build().perform();
 			Thread.sleep(500);
 		} catch (Exception e) {
 			processException(e);
@@ -571,7 +571,7 @@ public class UtilityMethods {
 				Thread.sleep(1000);
 				grade = homePage.gradenameontripledot.getText();
 			}
-			new Actions(Driver.webdriver).moveByOffset(100, 100).click().build().perform();
+			new Actions(Driver.webdriver).moveByOffset(10, 10).click().build().perform();
 			Thread.sleep(500);
 		} catch (Exception e) {
 			processException(e);
@@ -594,7 +594,7 @@ public class UtilityMethods {
 			} else {
 				testsName = homePage.testsNameoncontextheader.getText();
 			}
-			new Actions(Driver.webdriver).moveByOffset(100, 100).build().perform();
+			new Actions(Driver.webdriver).moveByOffset(10, 10).build().perform();
 			Thread.sleep(500);
 		} catch (Exception e) {
 			processException(e);
@@ -617,7 +617,7 @@ public class UtilityMethods {
 			} else {
 				teachersName = homePage.teacherNameoncontextheader.getText();
 			}
-			new Actions(Driver.webdriver).moveByOffset(100, 100).build().perform();
+			new Actions(Driver.webdriver).moveByOffset(10, 10).build().perform();
 			Thread.sleep(500);
 		} catch (Exception e) {
 			processException(e);
@@ -651,7 +651,7 @@ public class UtilityMethods {
 		String testsName = "";
 		try {
 			testsName = homePage.datesoncontextheader.getText();
-			new Actions(Driver.webdriver).moveByOffset(200, 200).build().perform();
+			new Actions(Driver.webdriver).moveByOffset(20, 20).build().perform();
 			Thread.sleep(500);
 		} catch (Exception e) {
 			processException(e);
@@ -674,7 +674,7 @@ public class UtilityMethods {
 			} else {
 				className = homePage.classnameoncontextheader.getText();
 			}
-			new Actions(Driver.webdriver).moveByOffset(200, 200).build().perform();
+			new Actions(Driver.webdriver).moveByOffset(20, 20).build().perform();
 			Thread.sleep(500);
 		} catch (Exception e) {
 			processException(e);
@@ -1287,7 +1287,7 @@ public class UtilityMethods {
 		} else {
 			log.info("Context Header Section is now clickable");
 			isSectionLoad = true;
-			new Actions(Driver.webdriver).moveByOffset(200, 200).build().perform();
+			new Actions(Driver.webdriver).moveByOffset(20, 20).build().perform();
 		}
 	}
 

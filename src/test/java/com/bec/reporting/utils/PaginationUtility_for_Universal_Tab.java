@@ -41,6 +41,7 @@ public class PaginationUtility_for_Universal_Tab {
 	public static boolean checkPaginator_on_test_tab() {
 		try {
 			new Actions(Driver.webdriver).moveToElement(homePage.testpaginator).build().perform();
+			UtilityMethods.scrollPageDown(Driver.webdriver, 2);Thread.sleep(500);
 			return true;
 		} catch (Exception e) {
 			log.info("Paginator Not Found in Test Tab");
