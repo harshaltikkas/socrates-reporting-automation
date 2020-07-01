@@ -57,7 +57,7 @@ public class Sprint_Eleven_And_Twelve_Steps {
 			throws Throwable {
 		try {
 			new Actions(Driver.webdriver).moveToElement(homePage.groupingTab).click().build().perform();
-			Thread.sleep(3000);
+			Thread.sleep(12000);
 
 			Assert.assertTrue(homePage.groupingTabText.getText().equals("Edit Groups"));
 
