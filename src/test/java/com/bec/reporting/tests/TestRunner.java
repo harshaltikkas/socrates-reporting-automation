@@ -45,7 +45,7 @@ import lombok.extern.slf4j.Slf4j;
 
 		tags = { "@Feature" }, monochrome = true)
 @Slf4j
-public class TestRunnerOne {
+public class TestRunner {
 
 	public static Properties config;
 	public static Scenario scenario;

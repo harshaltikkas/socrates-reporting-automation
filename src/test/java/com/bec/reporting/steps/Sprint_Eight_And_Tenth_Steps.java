@@ -328,7 +328,7 @@ public class Sprint_Eight_And_Tenth_Steps {
 		try {
 			// checking Test(s) assessed for Dropdown
 			new Actions(Driver.webdriver).moveToElement(homePage.groupingTab).click().build().perform();
-			Thread.sleep(3000);
+			Thread.sleep(12000);
 			Assert.assertTrue(homePage.testAssessedForGradeGroupingTab.isDisplayed());
 			int index = 0;
 			try {
