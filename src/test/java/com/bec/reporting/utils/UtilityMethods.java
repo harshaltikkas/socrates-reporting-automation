@@ -1430,13 +1430,15 @@ public class UtilityMethods {
 			Thread.sleep(500);
 			homePage.allcheckbox_in_test_tab.click();
 			Thread.sleep(500);
+			UtilityMethods.scrollPageDown(Driver.webdriver, 4);
+			Thread.sleep(500);
 			int ran_no = generateRandomNumberBySkippingIndex(homePage.testnameslist_on_test_tab.size(), 0);
 			// int ran_no = (int) (Math.random()*homePage.testnameslist_on_test_tab.size());
 			new Actions(Driver.webdriver).moveToElement(homePage.testnameslist_on_test_tab.get(ran_no)).build()
 					.perform();
 			name = homePage.testnameslist_on_test_tab.get(ran_no).getText();
 			homePage.testnameslist_on_test_tab.get(ran_no).click();
-			Thread.sleep(500);
+			Thread.sleep(500);			
 			homePage.testapplybtn.click();
 			UtilityMethods.scrollPageUp(Driver.webdriver);
 			return name;

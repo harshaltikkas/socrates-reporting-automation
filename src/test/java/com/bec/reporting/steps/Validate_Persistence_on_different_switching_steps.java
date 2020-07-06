@@ -141,11 +141,10 @@ public class Validate_Persistence_on_different_switching_steps {
 		try {
 			Assert.assertTrue(homePage.activedistrictmenu.isDisplayed());
 			Assert.assertTrue(homePage.activestandardperformancebtn.isDisplayed());
-			String test_name_on_ch;
-			jse.executeScript("arguments[0].click();", homePage.statab);
-			UtilityMethods.wait_For_STA_Section_Load();
-			UtilityMethods.scrollPageDown(Driver.webdriver, 3);
+			String test_name_on_ch;			
+			UtilityMethods.scrollPageDown(Driver.webdriver, 3);Thread.sleep(500);
 			String testname = UtilityMethods.getRandomTest_From_Test_Tab();
+			jse.executeScript("arguments[0].click();", homePage.statab);
 			UtilityMethods.wait_For_STA_Section_Load();
 			log.info("Selected Test in Test Tab :" + testname);
 			test_name_on_ch = UtilityMethods.getTestsNameonUI();
@@ -168,7 +167,7 @@ public class Validate_Persistence_on_different_switching_steps {
 			Thread.sleep(2000);
 			log.info("view name on sta table header :" + homePage.view_text_in_sta_table_header.getText());
 			log.info("verifying view selected on filter matched with STA table column header on District menu");
-			Assert.assertTrue(homePage.view_text_in_sta_table_header.getText().equals(selectedViewName));
+			Assert.assertTrue(homePage.view_text_in_sta_table_header.getText().equalsIgnoreCase(selectedViewName));
 
 			homePage.schoolmenu.click();
 			UtilityMethods.wait_For_STA_Section_Load();
@@ -177,7 +176,7 @@ public class Validate_Persistence_on_different_switching_steps {
 			log.info("Test Name on CH on school menu:" + test_name_on_ch);
 			Assert.assertTrue(testname.equals(test_name_on_ch));
 			log.info("verifying view selected on filter matched with STA table column header on school menu");
-			Assert.assertTrue(homePage.view_text_in_sta_table_header.getText().equals(selectedViewName));
+			Assert.assertTrue(homePage.view_text_in_sta_table_header.getText().equalsIgnoreCase(selectedViewName));
 			homePage.filter_in_sta_for_district.click();
 			Thread.sleep(1000);
 			// BE-2274 end here
@@ -265,6 +264,8 @@ public class Validate_Persistence_on_different_switching_steps {
 			homePage.rostertab.click();
 			Thread.sleep(500);
 			RosterTabUtilityMethods.select_School_In_School_DropDown("Golden Oak Community School");
+			Thread.sleep(500);
+			UtilityMethods.scrollPageDown(Driver.webdriver, 2);
 			Thread.sleep(500);
 			homePage.rosterapplybtn.click();
 			UtilityMethods.wait_For_Student_List_AND_OR_Class_List_Section_Load();
@@ -475,11 +476,11 @@ public class Validate_Persistence_on_different_switching_steps {
 	public void verify_User_is_switched_to_Student_and_School_and_Class_subway_filters_are_enabled() throws Throwable {
 		try {
 			if (API_Connection.getUserRole().equalsIgnoreCase("DISTRICT_ADMIN")) {
-				Assert.assertTrue(homePage.districtmenu.isDisplayed());				
+				Assert.assertTrue(homePage.districtmenu.isDisplayed());
 			}
 			if (API_Connection.getUserRole().equalsIgnoreCase("SCHOOL_ADMIN")) {
-				Assert.assertTrue(homePage.schoolmenu.isDisplayed());				
-			}			
+				Assert.assertTrue(homePage.schoolmenu.isDisplayed());
+			}
 			Assert.assertTrue(homePage.classmenu.isDisplayed());
 			Assert.assertTrue(homePage.activestudentmenu.isDisplayed());
 		} catch (Exception e) {

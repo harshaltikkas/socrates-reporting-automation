@@ -43,7 +43,7 @@ import lombok.extern.slf4j.Slf4j;
 		"json:target/json_report/Cucumber.json", "junit:target/junit_xml_report/Cucumber.xml",
 		"rerun:target/failed_scenarios.txt" },
 
-		tags = { "@Feature" }, monochrome = true)
+		tags = { "@smoketest" }, monochrome = true)
 @Slf4j
 public class TestRunner {
 
@@ -89,5 +89,4 @@ public class TestRunner {
 		}
 		file.delete();
 	}
-
 }
