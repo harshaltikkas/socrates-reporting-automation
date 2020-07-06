@@ -62,7 +62,6 @@ public class FlyInMenuBehaviourSteps {
 	public static String classNameonCH, schoolNameonCH, teacherNameonCH, gradeNameonCH, studentTextonCH;
 	public static String uname, passwd, realm;
 	public static String token;
-	
 
 	/**
 	 * method used to launch the browser with the url and provide the
@@ -111,10 +110,10 @@ public class FlyInMenuBehaviourSteps {
 				Select select = new Select(homePage.usertypedropdown);
 				Thread.sleep(500);
 				select.selectByValue(realm);
-				Thread.sleep(1000);			
+				Thread.sleep(1000);
 				jse.executeScript("arguments[0].click();", homePage.loginbtn);
 			} else if (env.equalsIgnoreCase("staging") || env.equalsIgnoreCase("prod")) {
-				jse.executeScript("arguments[0].click();", homePage.loginbtn_on_stg);				
+				jse.executeScript("arguments[0].click();", homePage.loginbtn_on_stg);
 			}
 			Instant start = Instant.now();
 			log.info("Current Time after clicking on login button: " + java.time.LocalTime.now());
@@ -262,7 +261,8 @@ public class FlyInMenuBehaviourSteps {
 				// selecting Teacher from dropdown
 				Thread.sleep(1000);
 				selectedTeacher = homePage.teacherslist.get(2).getText();
-				homePage.teacherslist.get(2).click();Thread.sleep(500);
+				homePage.teacherslist.get(2).click();
+				Thread.sleep(500);
 				log.info("Selected Teacher is:" + selectedTeacher);
 				homePage.teachersdropdownbtn.click();
 				// selecting class from dropdown
@@ -309,7 +309,7 @@ public class FlyInMenuBehaviourSteps {
 			homePage.rosterapplybtn.click();
 			Thread.sleep(500);
 			UtilityMethods.scrollPageUp(Driver.webdriver);
-			Thread.sleep(500);			
+			Thread.sleep(500);
 
 			/**
 			 * verifying class and school,teacher,grade and student on context menu by

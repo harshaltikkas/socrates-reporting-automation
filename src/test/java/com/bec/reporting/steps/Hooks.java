@@ -88,5 +88,5 @@ public class Hooks {
 		if (scenario.isFailed()) {
 			Driver.embedScreenshot(scenario);
 		}
-	}	
+	}
 }

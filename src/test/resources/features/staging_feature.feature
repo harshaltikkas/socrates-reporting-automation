@@ -1,6 +1,6 @@
 @smoketest
 Feature: Staging/Prod Test Scanarios to check UI functionality
-
+	
   Scenario: Verify CSV download of Test Status report in School context
     Given User is on portal's login screen with username as "stg_sa_one" and password as "password" and usertype as "realm_stg_sulphur"
     When User Click on Test Status tab within the School Context
@@ -52,8 +52,7 @@ Feature: Staging/Prod Test Scanarios to check UI functionality
   Scenario: Verify Adding Teacher label to Context Header for the School Admins
     Given User is on portal's login screen with username as "stg_sa_one" and password as "password" and usertype as "realm_stg_sulphur"
     Then veryfy Teacher label to Context Header for the School Admins for teacher "Vincent Ortiz"
-
-  ## DA - Verify the Universal Selector filters and Subway navigation changes when user logged in as DA
+	
   Scenario: Verify Universal Selector filters when user logged in as District Admin
     Given User is on portal's login screen with username as "stg_da_two" and password as "password" and usertype as "realm_stg_sulphur"
     When User click on Roster tab and select single School and click apply
@@ -72,7 +71,7 @@ Feature: Staging/Prod Test Scanarios to check UI functionality
   Scenario: Verify Test Scores Comparison Persistence on switching to all other levels
     Given User is on portal's login screen with username as "stg_da_two" and password as "password" and usertype as "realm_stg_sulphur"
     Then Verify Test Scores Comparison Persistence on switching to all other levels
-
+	
   Scenario: Verify Single Test Analysis Persistence on switching to all other levels through subway nav filters
     Given User is on portal's login screen with username as "stg_da_two" and password as "password" and usertype as "realm_stg_sulphur"
     Then Verify Single Test Analysis Persistence on switching to all other levels through subway nav filters
