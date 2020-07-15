@@ -32,12 +32,15 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
@@ -46,11 +49,13 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.PageFactory;
+
 import com.bec.reporting.pageobjects.HomePage;
 import com.bec.reporting.steps.Standard_Overview_Table_Steps;
 import com.itextpdf.text.pdf.PdfReader;
 import com.itextpdf.text.pdf.parser.PdfTextExtractor;
 import com.opencsv.CSVReader;
+
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -680,40 +685,13 @@ public class UtilityMethods {
 			processException(e);
 		}
 		return className;
-	}
+	}	
 
-	/**
-	 * This method is used to wait till the loading of Standard Table section
-	 */
-	public static void wait_For_Standard_Table_Section_Load() {
-		boolean isSectionLoad = false;
-		int list_on_sp_ctr = 0;
-		do {
-			try {
-				Assert.assertTrue(homePage.strandnameslist.get(0).isDisplayed());
-				log.info("Standard Table Section on Standard Performance is now Displaying");
-				isSectionLoad = true;
-			} catch (Exception e1) {
-				log.info("Waiting for Standard Table Section on Standard Performance Loading");
-				try {
-					Thread.sleep(2000);
-					list_on_sp_ctr++;
-				} catch (InterruptedException e) {
-				}
-			}
-		} while (isSectionLoad == false && list_on_sp_ctr <= 15);
-
-		if (isSectionLoad == false && list_on_sp_ctr > 15) {
-			log.info("Standard Table Section on Standard Performance is not loaded in 30 seconds..");
-			processException(new Exception());
-		}
-	}
-	
 	/**
 	 * This method is used to wait till the loading of Student List section
 	 */
 	public static void wait_For_Student_List_AND_OR_Class_List_Section_Load() {
-		wait_For_Standard_Table_Section_Load();
+		wait_For_Standard_Performance_Table_Section();
 		boolean isSectionLoad = false;
 		int list_on_sp_ctr = 0;
 		do {
@@ -851,6 +829,7 @@ public class UtilityMethods {
 	 * @throws InterruptedException
 	 */
 	public static void wait_For_Performance_Over_Time_Line_Chart_Section_Load() throws InterruptedException {
+		wait_For_Standard_Performance_Table_Section();		
 		boolean isSectionLoad = false;
 		int pot_ctr = 0;
 		do {
@@ -862,7 +841,7 @@ public class UtilityMethods {
 				log.info("Waiting for Performance Over Time Line Chart Loading");
 				pot_ctr++;
 			}
-		} while (isSectionLoad == false && pot_ctr < 6);
+		} while (isSectionLoad == false && pot_ctr <= 6);
 
 		if (isSectionLoad == false && pot_ctr == 6) {
 			log.info("Perfomance Over Time Line Chart is not loaded in 60 seconds..");
@@ -1426,19 +1405,16 @@ public class UtilityMethods {
 			String name;
 			homePage.testtab.click();
 			Thread.sleep(500);
-			UtilityMethods.scrollPageDown(Driver.webdriver, 5);
-			Thread.sleep(500);
 			homePage.allcheckbox_in_test_tab.click();
 			Thread.sleep(500);
-			UtilityMethods.scrollPageDown(Driver.webdriver, 4);
+			UtilityMethods.scrollPageDown(Driver.webdriver, 7);
 			Thread.sleep(500);
 			int ran_no = generateRandomNumberBySkippingIndex(homePage.testnameslist_on_test_tab.size(), 0);
-			// int ran_no = (int) (Math.random()*homePage.testnameslist_on_test_tab.size());
 			new Actions(Driver.webdriver).moveToElement(homePage.testnameslist_on_test_tab.get(ran_no)).build()
 					.perform();
 			name = homePage.testnameslist_on_test_tab.get(ran_no).getText();
 			homePage.testnameslist_on_test_tab.get(ran_no).click();
-			Thread.sleep(500);			
+			Thread.sleep(500);
 			homePage.testapplybtn.click();
 			UtilityMethods.scrollPageUp(Driver.webdriver);
 			return name;
@@ -1474,4 +1450,203 @@ public class UtilityMethods {
 		return viewList;
 	}
 
+	public static boolean isNumber(String string) {
+		return string.matches("^\\d+$");
+	}
+
+	public static boolean isAlphabate(String str) {
+		return ((!str.equals("")) && (str != null) && (str.matches("^[a-zA-Z]*$")));
+	}
+
+	/** This method is used to fetch and store all strands name of sp table **/
+	public static List<String> get_Strand_Names_From_Standard_Performance_Tabel() {
+		List<String> strand_names_List = new LinkedList<String>();
+		try {
+			WebElement rightArrowEnable = null;
+			boolean enabledRightArrowFound = false;
+			int tt_ctr = 0;
+			do {
+				if (enabledRightArrowFound) {
+					if (homePage.strandnameslist.get(homePage.strandnameslist.size() - 1).getText().contains("...")) {
+						new Actions(Driver.webdriver)
+								.moveToElement(homePage.strandnameslist.get(homePage.strandnameslist.size() - 1))
+								.build().perform();
+						Thread.sleep(500);
+						strand_names_List.add(homePage.strandnamestooltiplist.get(tt_ctr).getText());
+						tt_ctr++;
+						new Actions(Driver.webdriver).moveToElement(homePage.overviewtext).build().perform();
+					} else {
+						strand_names_List
+								.add(homePage.strandnameslist.get(homePage.strandnameslist.size() - 1).getText());
+					}
+				} else {
+					for (int i = 0; i < homePage.strandnameslist.size(); i++) {
+						if (homePage.strandnameslist.get(i).getText().contains("...")) {
+							new Actions(Driver.webdriver).moveToElement(homePage.strandnameslist.get(i)).build()
+									.perform();
+							Thread.sleep(500);
+							strand_names_List.add(homePage.strandnamestooltiplist.get(tt_ctr).getText());
+							tt_ctr++;
+							new Actions(Driver.webdriver).moveToElement(homePage.overviewtext).build().perform();
+						} else {
+							strand_names_List.add(homePage.strandnameslist.get(i).getText());
+						}
+					}
+				}
+				try {
+					rightArrowEnable = homePage.enabledrightarrow;
+					rightArrowEnable.isEnabled();
+					enabledRightArrowFound = true;
+					rightArrowEnable.click();
+					Thread.sleep(500);
+				} catch (Exception e) {
+					enabledRightArrowFound = false;
+				}
+
+			} while (enabledRightArrowFound);
+		} catch (Exception e) {
+			processException(e);
+		}
+		return strand_names_List;
+	}
+
+	/**
+	 * This method is used to fetch and store all strands name of comparison table
+	 **/
+	public static List<String> get_Strand_Names_From_Comparison_Tabel() {
+		List<String> strand_names_List = new LinkedList<String>();
+		try {
+			WebElement rightArrowEnable = null;
+			boolean enabledRightArrowFound = false;
+
+			do {
+				if (enabledRightArrowFound) {
+					strand_names_List.add(homePage.strandnames_on_comparison_tab
+							.get(homePage.strandnames_on_comparison_tab.size() - 1).getText());
+				} else {
+					for (int i = 0; i < homePage.strandnames_on_comparison_tab.size(); i++) {
+						strand_names_List.add(homePage.strandnames_on_comparison_tab.get(i).getText());
+					}
+				}
+				try {
+					rightArrowEnable = homePage.enabled_right_arrow_on_comparison_tab;
+					rightArrowEnable.isEnabled();
+					enabledRightArrowFound = true;
+					rightArrowEnable.click();
+					Thread.sleep(500);
+				} catch (Exception e) {
+					enabledRightArrowFound = false;
+				}
+
+			} while (enabledRightArrowFound);
+		} catch (Exception e) {
+			processException(e);
+		}
+		return strand_names_List;
+	}
+
+	/**
+	 * This method is used to fetch and store all strands name of Grouping table
+	 **/
+	public static List<String> get_Strand_Names_From_Grouping_Tabel() {
+		List<String> strand_names_List = new LinkedList<String>();
+		try {
+			WebElement rightArrowEnable = null;
+			boolean enabledRightArrowFound = false;
+
+			do {
+				if (enabledRightArrowFound) {
+					strand_names_List.add(homePage.strandnames_on_grouping_tab
+							.get(homePage.strandnames_on_grouping_tab.size() - 1).getText());
+				} else {
+					for (int i = 0; i < homePage.strandnames_on_grouping_tab.size(); i++) {
+						strand_names_List.add(homePage.strandnames_on_grouping_tab.get(i).getText());
+					}
+				}
+				try {
+					rightArrowEnable = homePage.enabled_right_arrow_on_grouping_tab;
+					rightArrowEnable.isEnabled();
+					enabledRightArrowFound = true;
+					rightArrowEnable.click();
+					Thread.sleep(500);
+				} catch (Exception e) {
+					enabledRightArrowFound = false;
+				}
+
+			} while (enabledRightArrowFound);
+		} catch (Exception e) {
+			processException(e);
+		}
+		return strand_names_List;
+	}
+
+	/** This method is used to fetch and store all standards name of sp table **/
+	public static Set<String> get_Standard_Names_From_Standard_Performance_Tabel() {
+		Set<String> standard_names_List = new HashSet<String>();
+		try {
+			WebElement rightArrowEnable = null;
+			boolean enabledRightArrowFound = false;
+			
+			do {
+				if (enabledRightArrowFound) {
+					for (int i = 0; i < homePage.standardnameslist.size(); i++) {
+						standard_names_List.add(homePage.standardnameslist.get(i).getText());
+					}
+					new Actions(Driver.webdriver).moveToElement(homePage.overviewtext).build().perform();
+				} else {
+					for (int i = 0; i < homePage.standardnameslist.size(); i++) {
+						standard_names_List.add(homePage.standardnameslist.get(i).getText());
+					}
+				}
+				try {
+					rightArrowEnable = homePage.enabledrightarrow;
+					rightArrowEnable.isEnabled();
+					enabledRightArrowFound = true;
+					rightArrowEnable.click();
+					Thread.sleep(500);
+				} catch (Exception e) {
+					enabledRightArrowFound = false;
+				}
+
+			} while (enabledRightArrowFound);
+		} catch (Exception e) {
+			processException(e);
+		}
+		return standard_names_List;
+	}
+	
+	/**
+	 * This method is used to fetch and store all standards name of Summary table
+	 **/
+	public static List<String> get_Standard_Names_From_Summary_Tabel() {
+		List<String> standard_names_List = new LinkedList<String>();
+		try {
+			WebElement rightArrowEnable = null;
+			boolean enabledRightArrowFound = false;
+
+			do {
+				if (enabledRightArrowFound) {
+					standard_names_List.add(homePage.standardnames_on_summary_tab
+							.get(homePage.standardnames_on_summary_tab.size() - 1).getText());
+				} else {
+					for (int i = 0; i < homePage.standardnames_on_summary_tab.size(); i++) {
+						standard_names_List.add(homePage.standardnames_on_summary_tab.get(i).getText());
+					}
+				}
+				try {
+					rightArrowEnable = homePage.enabled_right_arrow_on_summary_tab;
+					rightArrowEnable.isEnabled();
+					enabledRightArrowFound = true;
+					rightArrowEnable.click();
+					Thread.sleep(500);
+				} catch (Exception e) {
+					enabledRightArrowFound = false;
+				}
+
+			} while (enabledRightArrowFound);
+		} catch (Exception e) {
+			processException(e);
+		}
+		return standard_names_List;
+	}
 }
