@@ -412,23 +412,34 @@ public class Standard_Overview_Table_Steps {
 	@Then("^The User should be able to see the tool tip having full text of the strand\\.$")
 	public void the_User_should_be_able_to_see_the_tool_tip_having_full_text_of_the_strand() throws Throwable {
 		try {
-			WebElement rightArrowEnable = null, toolTip;
+			WebElement rightArrowEnable = null;
 			boolean enabledRightArrowFound = false;
+			int tt_ctr = 0;
 			Actions action = new Actions(Driver.webdriver);
 			do {
 				if (enabledRightArrowFound) {
 					if (homePage.strandnameslist.get(homePage.strandnameslist.size() - 1).getText().contains("...")) {
-						toolTip = homePage.strandnamestooltip;
-						Assert.assertTrue(toolTip.getText().contains(UtilityMethods.elipsisRemoval(
-								homePage.strandnameslist.get(homePage.strandnameslist.size() - 1).getText())));
+						new Actions(Driver.webdriver)
+								.moveToElement(homePage.strandnameslist.get(homePage.strandnameslist.size() - 1))
+								.build().perform();
+						Thread.sleep(500);
+						Assert.assertTrue(homePage.strandnamestooltiplist.get(tt_ctr).getText()
+								.contains(UtilityMethods.elipsisRemoval(
+										homePage.strandnameslist.get(homePage.strandnameslist.size() - 1).getText())));
+						tt_ctr++;
+						new Actions(Driver.webdriver).moveToElement(homePage.overviewtext).build().perform();
 					}
 				} else {
 					for (int i = 0; i < homePage.strandnameslist.size(); i++) {
 						action.moveToElement(homePage.strandnameslist.get(i)).build().perform();
 						if (homePage.strandnameslist.get(i).getText().contains("...")) {
-							toolTip = homePage.strandnamestooltip;
-							Assert.assertTrue(toolTip.getText().contains(
+							new Actions(Driver.webdriver).moveToElement(homePage.strandnameslist.get(i)).build()
+									.perform();
+							Thread.sleep(500);
+							Assert.assertTrue(homePage.strandnamestooltiplist.get(tt_ctr).getText().contains(
 									UtilityMethods.elipsisRemoval(homePage.strandnameslist.get(i).getText())));
+							tt_ctr++;
+							new Actions(Driver.webdriver).moveToElement(homePage.overviewtext).build().perform();
 						}
 					}
 				}
@@ -562,8 +573,8 @@ public class Standard_Overview_Table_Steps {
 					.perform();
 			Thread.sleep(1000);
 			Assert.assertTrue(homePage.tooltip_of_info_icon.getText().length() == tooltipText_on_pot_icon.length());
-			new Actions(Driver.webdriver).moveToElement(homePage.overviewtext).click().build()
-			.perform();Thread.sleep(1000);
+			new Actions(Driver.webdriver).moveToElement(homePage.overviewtext).click().build().perform();
+			Thread.sleep(1000);
 			// verifying for student context
 			jse.executeScript("arguments[0].click();", homePage.studentmenu);
 			Thread.sleep(3000);
@@ -572,8 +583,8 @@ public class Standard_Overview_Table_Steps {
 					.perform();
 			Thread.sleep(500);
 			Assert.assertTrue(homePage.tooltip_of_info_icon.getText().length() == tooltipText_on_pot_icon.length());
-			new Actions(Driver.webdriver).moveToElement(homePage.overviewtext).click().build()
-			.perform();Thread.sleep(1000);
+			new Actions(Driver.webdriver).moveToElement(homePage.overviewtext).click().build().perform();
+			Thread.sleep(1000);
 			CBTConfiguration.score = "pass";
 		} catch (Exception e) {
 			UtilityMethods.processException(e);
@@ -593,7 +604,7 @@ public class Standard_Overview_Table_Steps {
 			click_on_the_icon_to_maximize_the_Chart();
 			String firstStrandName;
 			if (homePage.strandnameslist.get(0).getText().contains("...")) {
-				firstStrandName = homePage.strandnamestooltip.getText();
+				firstStrandName = homePage.strandnamestooltiplist.get(0).getText();
 			} else {
 				firstStrandName = homePage.strandnameslist.get(0).getText();
 			}
@@ -619,15 +630,22 @@ public class Standard_Overview_Table_Steps {
 			String strandName = "";
 			WebElement rightArrowEnable = null;
 			boolean enabledRightArrowFound = false;
-
+			int tt_ctr = 0;
 			do {
 				if (enabledRightArrowFound) {
 					new Actions(Driver.webdriver)
 							.moveToElement(homePage.strandnameslist.get(homePage.strandnameslist.size() - 1)).click()
 							.build().perform();
-					Thread.sleep(3000);
+					UtilityMethods.wait_For_Student_List_AND_OR_Class_List_Section_Load();
+
 					if (homePage.strandnameslist.get(homePage.strandnameslist.size() - 1).getText().contains("...")) {
-						strandName = homePage.strandnamestooltip.getText();
+						new Actions(Driver.webdriver)
+								.moveToElement(homePage.strandnameslist.get(homePage.strandnameslist.size() - 1))
+								.build().perform();
+						Thread.sleep(500);
+
+						strandName = homePage.strandnamestooltiplist.get(tt_ctr).getText();
+						tt_ctr++;
 					} else {
 						strandName = homePage.strandnameslist.get(homePage.strandnameslist.size() - 1).getText();
 					}
@@ -636,12 +654,16 @@ public class Standard_Overview_Table_Steps {
 					new Actions(Driver.webdriver).moveToElement(homePage.overviewtext).build().perform();
 					Thread.sleep(1000);
 				} else {
-					for (int i = 0; i < homePage.groupingstripclrlist.size(); i++) {
+					for (int i = 0; i < homePage.strandnameslist.size(); i++) {
 						new Actions(Driver.webdriver).moveToElement(homePage.strandnameslist.get(i)).click().build()
 								.perform();
-						Thread.sleep(3000);
+						UtilityMethods.wait_For_Student_List_AND_OR_Class_List_Section_Load();
 						if (homePage.strandnameslist.get(i).getText().contains("...")) {
-							strandName = homePage.strandnamestooltip.getText();
+							new Actions(Driver.webdriver).moveToElement(homePage.strandnameslist.get(i)).build()
+									.perform();
+							Thread.sleep(500);
+							strandName = homePage.strandnamestooltiplist.get(tt_ctr).getText();
+							tt_ctr++;
 						} else {
 							strandName = homePage.strandnameslist.get(i).getText();
 						}
@@ -1014,8 +1036,7 @@ public class Standard_Overview_Table_Steps {
 	 */
 	@When("^User Click on Standard Performance tab within the Student Context$")
 	public void user_Click_on_Standard_Performance_tab_within_the_Student_Context() throws Throwable {
-		try {
-			UtilityMethods.wait_For_Context_Header_Section();
+		try {			
 			Assert.assertTrue(homePage.activestudentmenu.getAttribute("class").contains("active"));
 		} catch (Exception e) {
 			jse.executeScript("arguments[0].click();", homePage.studentmenu);
@@ -1026,6 +1047,7 @@ public class Standard_Overview_Table_Steps {
 		} catch (Exception e) {
 			jse.executeScript("arguments[0].click();", homePage.standardperformancebtn);
 		}
+		jse.executeScript("arguments[0].click();", homePage.overviewtext);
 		UtilityMethods.wait_For_Performance_Over_Time_Line_Chart_Section_Load();
 		Standard_Overview_Table_Steps.performanceMenuClicked = true;
 		Standard_Overview_Table_Steps.underStudentContext = true;
@@ -1035,13 +1057,16 @@ public class Standard_Overview_Table_Steps {
 	public void user_click_on_the_circle_within_the_line_chart_and_should_able_to_see_the_overlay_of_Tool_tip_which_have_following_items_on_performace_over_time()
 			throws Throwable {
 		try {
-			if(Standard_Overview_Table_Steps.performanceMenuClicked && Standard_Overview_Table_Steps.underClassContext) {
-				homePage.performance_overtime_icon.click();Thread.sleep(500);
+			if (Standard_Overview_Table_Steps.performanceMenuClicked
+					&& Standard_Overview_Table_Steps.underClassContext) {
+				homePage.performance_overtime_icon.click();
+				Thread.sleep(500);
 				UtilityMethods.wait_For_Performance_Over_Time_Line_Chart_Section_Load();
 				UtilityMethods.scrollPageDown(Driver.webdriver, 4);
 				Thread.sleep(500);
 			}
-			if(Standard_Overview_Table_Steps.performanceMenuClicked && Standard_Overview_Table_Steps.underClassContext) {
+			if (Standard_Overview_Table_Steps.performanceMenuClicked
+					&& Standard_Overview_Table_Steps.underClassContext) {
 				UtilityMethods.scrollPageDown(Driver.webdriver, 4);
 				Thread.sleep(500);
 			}
@@ -1095,7 +1120,8 @@ public class Standard_Overview_Table_Steps {
 							Integer.parseInt(homePage.testScoresonPerPage_on_pot.get(j).getText()));
 				}
 			}
-			UtilityMethods.scrollPageUp(Driver.webdriver);Thread.sleep(500);
+			UtilityMethods.scrollPageUp(Driver.webdriver);
+			Thread.sleep(500);
 			CBTConfiguration.score = "pass";
 		} catch (Exception e) {
 			UtilityMethods.processException(e);

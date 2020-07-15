@@ -43,7 +43,7 @@ import lombok.extern.slf4j.Slf4j;
 		"json:target/json_report/Cucumber.json", "junit:target/junit_xml_report/Cucumber.xml",
 		"rerun:target/failed_scenarios.txt" },
 
-		tags = { "@smoketest" }, monochrome = true)
+		tags = { "@Feature" }, monochrome = true)
 @Slf4j
 public class TestRunner {
 
@@ -62,7 +62,7 @@ public class TestRunner {
 			String project_path = System.getProperty("user.dir");
 
 			File srcDir = new File(project_path + "/target/cucumber-reports/extent_report");
-			File trgDir = new File("C:/Users/" + user + "/Desktop/Reports/" + currentdate.getMonth() + "-"
+			File trgDir = new File("C:/Users/Administrator/Desktop/Reports/" + currentdate.getMonth() + "-"
 					+ currentdate.getYear() + "/extent_report_" + currentdate.getDayOfMonth() + "_"
 					+ currentdate.getMonthValue() + "_" + currentdate.getYear());
 			log.info("Source dir:" + srcDir);

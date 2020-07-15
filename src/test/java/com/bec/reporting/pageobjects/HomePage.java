@@ -780,14 +780,20 @@ public class HomePage {
 	
 	@FindBy(xpath = "//div[@class='bec_compare_multi_list_header_strands_list']//div[@class='bec_compare_multi_list_header_strands_single']")
 	public List<WebElement> testnames_on_comparison_tab;
+	
+	@FindBy(xpath = "//div[@class='bec_compare_multi_list_header_strands_list']//div[contains(@class,'bec_compare_multi_list_header_strands_single')]")
+	public List<WebElement> strandnames_on_comparison_tab;
+	
+	@FindBy(xpath = "//div[@class='bec_group_multi_list_header_strands_list']//div[contains(@class,'bec_group_multi_list_header_strands_single')]")
+	public List<WebElement> strandnames_on_grouping_tab;
+	
+	@FindBy(xpath = "//div[@class='bec_summary_multi_list_header_strands_list']//div[contains(@class,'bec_summary_multi_list_header_strands_single')]/span")
+	public List<WebElement> standardnames_on_summary_tab;
 
 	@FindBy(xpath = "//div[@class='overview-table-col' and @style and contains(text(),'Avg')]")
-	public List<WebElement> strandavglist;
+	public List<WebElement> strandavglist;	
 
-	@FindBy(xpath = "//div[@class='overview-table-col']/div[@class='overview-table-innr-grd-col-head-guard']//div[@class='bec_tooltip_content']")
-	public WebElement strandnamestooltip;
-
-	@FindBy(xpath = "//div[@class='overview-table-col']//li[not(contains(@class,'StandardsNotAvailable'))]")
+	@FindBy(xpath = "//div[@class='overview-table-col']//li[not(contains(@class,'StandardsNotAvailable'))]/span")
 	public List<WebElement> standardnameslist;
 
 	@FindBy(xpath = "//div[@class='overview-table-col']/div[@class='overview-table-innr-grd-col-head-guard']/div[2]")
@@ -797,13 +803,19 @@ public class HomePage {
 	public List<WebElement> averagelist;
 
 	@FindBy(xpath = "//div[@class='overview-table-col']/div[@class='overview-table-innr-grd-col-head-guard']//div[@class='bec_tooltip_content']")
-	public List<WebElement> strandtooltiplist;
+	public List<WebElement> strandnamestooltiplist;
 
 	@FindBy(xpath = "//span[@class='scroll-left scroll-active']/i[contains(text(),'chevron_right')]")
 	public WebElement enabledrightarrow;
 	
 	@FindBy(xpath = "//div[contains(@class,'bec_compare_multi_list_header_arrow_enable')]//i[@class='material-icons' and contains(text(),'chevron_right')]")
 	public WebElement enabled_right_arrow_on_comparison_tab;
+	
+	@FindBy(xpath = "//div[contains(@class,'bec_group_multi_list_header_arrow_enable')]//i[@class='material-icons' and contains(text(),'chevron_right')]")
+	public WebElement enabled_right_arrow_on_grouping_tab;
+	
+	@FindBy(xpath = "//div[contains(@class,'bec_summary_multi_list_header_left_arrow bec_compare_multi_list_header_arrow_enable')]")
+	public WebElement enabled_right_arrow_on_summary_tab;
 
 	@FindBy(xpath = "//i[@class='material-icons' and contains(text(),'show_chart')]")
 	public WebElement performance_overtime_icon;
@@ -952,7 +964,7 @@ public class HomePage {
 	@FindBy(xpath = "//div[@class='widget-base-sub-title text-center']/preceding-sibling::div[2]/span[not(@class)]")
 	public WebElement studentlistheader;
 
-	@FindBy(xpath = "//div[@class='widget-base-sub-title text-center']/preceding-sibling::div[2]/span[not(@style)]")
+	@FindBy(xpath = "//div[@class='widget-base-sub-title text-center']/preceding-sibling::div[2]/span[not(@style) and not(@class)]")
 	public WebElement pot_header;
 
 	@FindBy(xpath = "//div[@class='widget-base-sub-title text-center']")
@@ -1147,7 +1159,16 @@ public class HomePage {
 	
 	@FindBy(xpath = "//div[@class='Beneath_Strands']")
 	public WebElement beneath_strands_on_standards_pop_up;
+	
+	@FindBy(xpath = "//div[contains(@class,'Beneath_Strands_item')]")
+	public List<WebElement> strands_name_list_on_grouping_or_comparison_popup;
+	
+	@FindBy(xpath = "//div[@class='bec_groups_popup_modal_row_full_length' and @style]")
+	public WebElement alert_txt_on_grouping_tab_pop_up;
 
+	@FindBy(xpath = "//div[contains(text(),'View :')]/ancestor::div[@class='bec_groups_popup_modal_row']//button")
+	public WebElement view_txt_on_GroupingTab_popup;
+	
 	@FindBy(xpath = "//div[contains(text(),' Test(s) assessed for : ')]/ancestor::div[@class='bec_groups_popup_modal_row']//div[@class='bec_groups_popup_dropdown_main']/button")
 	public WebElement testAssessedForGradeGroupingTab;
 
@@ -1345,7 +1366,7 @@ public class HomePage {
 	public List<WebElement> compare_cb_list_on_comparison;
 	
 	@FindBy(xpath = "//div[contains(@class,'bec_singleTest_multi_list_single_taxonomy')]")
-	public WebElement view_text_in_sta_table_header;
+	public List<WebElement> view_text_in_sta_table_header;
 	
 	@FindBy(xpath = "//span[@class='bec_compare_checkbox_label']")
 	public List<WebElement> compare_cb_list_on_comparison_tab;

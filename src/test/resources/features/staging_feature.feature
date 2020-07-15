@@ -71,7 +71,7 @@ Feature: Staging/Prod Test Scanarios to check UI functionality
   Scenario: Verify Test Scores Comparison Persistence on switching to all other levels
     Given User is on portal's login screen with username as "stg_da_two" and password as "password" and usertype as "realm_stg_sulphur"
     Then Verify Test Scores Comparison Persistence on switching to all other levels
-	
+
   Scenario: Verify Single Test Analysis Persistence on switching to all other levels through subway nav filters
     Given User is on portal's login screen with username as "stg_da_two" and password as "password" and usertype as "realm_stg_sulphur"
     Then Verify Single Test Analysis Persistence on switching to all other levels through subway nav filters
