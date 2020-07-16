@@ -685,7 +685,7 @@ public class UtilityMethods {
 			processException(e);
 		}
 		return className;
-	}	
+	}
 
 	/**
 	 * This method is used to wait till the loading of Student List section
@@ -780,15 +780,11 @@ public class UtilityMethods {
 				isSectionLoad = true;
 			} catch (Exception e1) {
 				log.info("Waiting for Test Status Section");
-				try {
-					Thread.sleep(2000);
-					test_stts_ctr++;
-				} catch (InterruptedException e) {
-				}
+				test_stts_ctr++;
 			}
-		} while (isSectionLoad == false && test_stts_ctr <= 15);
+		} while (isSectionLoad == false && test_stts_ctr <= 3);
 
-		if (isSectionLoad == false && test_stts_ctr > 15) {
+		if (isSectionLoad == false && test_stts_ctr > 3) {
 			log.info("Test Status Section is not loaded in 30 seconds..");
 			processException(new Exception());
 		}
@@ -808,15 +804,11 @@ public class UtilityMethods {
 				isSectionLoad = true;
 			} catch (Exception e1) {
 				log.info("Waiting for Test Status Section under student context");
-				try {
-					Thread.sleep(2000);
-					test_stts_ctr_sc++;
-				} catch (InterruptedException e) {
-				}
+				test_stts_ctr_sc++;
 			}
-		} while (isSectionLoad == false && test_stts_ctr_sc <= 15);
+		} while (isSectionLoad == false && test_stts_ctr_sc <= 3);
 
-		if (isSectionLoad == false && test_stts_ctr_sc > 15) {
+		if (isSectionLoad == false && test_stts_ctr_sc > 3) {
 			log.info("Test Status Section under student context is not loaded in 30 seconds..");
 			processException(new Exception());
 		}
@@ -829,7 +821,7 @@ public class UtilityMethods {
 	 * @throws InterruptedException
 	 */
 	public static void wait_For_Performance_Over_Time_Line_Chart_Section_Load() throws InterruptedException {
-		wait_For_Standard_Performance_Table_Section();		
+		wait_For_Standard_Performance_Table_Section();
 		boolean isSectionLoad = false;
 		int pot_ctr = 0;
 		do {
@@ -1088,11 +1080,15 @@ public class UtilityMethods {
 		try {
 			homePage.rostertab.click();
 			Thread.sleep(500);
-			homePage.schooldropdownbtn.click();
-			Thread.sleep(500);
-			new Actions(Driver.webdriver).moveToElement(homePage.studentTitleOnSliderMenu).build().perform();
-			Driver.webdriver.findElement(By.xpath("//li[.='Golden Oak Community School']")).click();
-			RosterTabUtilityMethods.wait_For_Refresh_Icon(homePage.schoolRefreshIcon, "School");
+			if (API_Connection.getUserRole().equals("DISTRICT_ADMIN")) {
+				RosterTabUtilityMethods.select_School_In_School_DropDown("Golden Oak Community School");
+			} else if (API_Connection.getUserRole().equals("SCHOOL_ADMIN")) {
+				homePage.schooldropdownbtn.click();
+				Thread.sleep(500);
+				Driver.webdriver.findElement(By.xpath("//li[.='Golden Oak Community School']")).click();
+				Thread.sleep(500);
+				RosterTabUtilityMethods.wait_For_Refresh_Icon(homePage.schoolRefreshIcon, "School");
+			}
 			homePage.gradedropdownbtn.click();
 			Thread.sleep(500);
 			Driver.webdriver.findElement(By.xpath("//li[.='Grade 4']")).click();
@@ -1586,7 +1582,7 @@ public class UtilityMethods {
 		try {
 			WebElement rightArrowEnable = null;
 			boolean enabledRightArrowFound = false;
-			
+
 			do {
 				if (enabledRightArrowFound) {
 					for (int i = 0; i < homePage.standardnameslist.size(); i++) {
@@ -1614,7 +1610,7 @@ public class UtilityMethods {
 		}
 		return standard_names_List;
 	}
-	
+
 	/**
 	 * This method is used to fetch and store all standards name of Summary table
 	 **/

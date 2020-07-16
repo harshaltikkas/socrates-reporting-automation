@@ -130,8 +130,7 @@ public class Standard_Overview_Table_Steps {
 	 */
 	@When("^User Click on Standard Performance tab within the Class Context$")
 	public static void user_Click_on_Standard_Performance_tab_within_the_Class_Context() throws Throwable {
-		try {
-			UtilityMethods.wait_For_Context_Header_Section();
+		try {			
 			Assert.assertTrue(homePage.activeclassmenu.getAttribute("class").contains("active"));
 		} catch (Exception e) {
 			jse.executeScript("arguments[0].click();", homePage.classmenu);
@@ -577,7 +576,7 @@ public class Standard_Overview_Table_Steps {
 			Thread.sleep(1000);
 			// verifying for student context
 			jse.executeScript("arguments[0].click();", homePage.studentmenu);
-			Thread.sleep(3000);
+			UtilityMethods.wait_For_Performance_Over_Time_Line_Chart_Section_Load();
 			Assert.assertTrue(homePage.performanceovrtimeheader.getText().equals("Performance Over Time"));
 			new Actions(Driver.webdriver).moveToElement(homePage.info_icon_on_performance_over_time).click().build()
 					.perform();
@@ -627,6 +626,8 @@ public class Standard_Overview_Table_Steps {
 	public void select_the_Strand_within_the_Strand_header_from_the_Standard_table_and_selected_strand_becomes_the_header_of_the_Line_Chart()
 			throws Throwable {
 		try {
+			jse.executeScript("arguments[0].click();", homePage.performance_overtime_icon);
+			Thread.sleep(2000);
 			String strandName = "";
 			WebElement rightArrowEnable = null;
 			boolean enabledRightArrowFound = false;

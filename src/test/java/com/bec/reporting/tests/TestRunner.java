@@ -58,7 +58,7 @@ public class TestRunner {
 		try {
 			// Getting the current date value
 			LocalDate currentdate = LocalDate.now();
-			String user = System.getProperty("user.name");
+			//String user = System.getProperty("user.name");
 			String project_path = System.getProperty("user.dir");
 
 			File srcDir = new File(project_path + "/target/cucumber-reports/extent_report");
