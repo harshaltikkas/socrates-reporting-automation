@@ -35,7 +35,7 @@ Feature: Sprint 8 and 10 User Stories
     Given User is on portal's login screen with username as "district_admin_one" and password as "password" and usertype as "realm_one"
     Then verify Context header Updates - Test tab selections
 
-   ##BE-901,902,903,904,905,906,909 
+   ##BE-901,902,903,904,905,906,909
   Scenario: Verify Test Data assessed for Grade dropdown within the Grouping tab selection window
     Given User is on portal's login screen with username as "teacher_one" and password as "password" and usertype as "realm_one"
     Then verify Test Data assessed for Grade dropdown within the Grouping tab selection window

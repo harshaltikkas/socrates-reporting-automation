@@ -360,7 +360,7 @@ public class Test_Status_Steps {
 								.moveToElement(homePage.circle_list_on_paginator_on_summary_in_ts
 										.get(homePage.circle_list_on_paginator_on_summary_in_ts.size() - 1))
 								.build().perform();
-						
+
 						PaginationUtility_for_Pages
 								.clicking_on_enabled_right_Arrow_of_paginator_on_summary_in_Test_Status();
 						PaginationUtility_for_Pages.clicking_on_last_circle_of_paginator(
@@ -592,13 +592,11 @@ public class Test_Status_Steps {
 
 	@When("^User Click on Test Status tab within the School Context$")
 	public void user_Click_on_Test_Status_tab_within_the_School_Context() throws Throwable {
-
 		try {
-			UtilityMethods.wait_For_Context_Header_Section();
 			Assert.assertTrue(homePage.activeschoolmenu.getAttribute("class").contains("active"));
 		} catch (Exception e) {
 			jse.executeScript("arguments[0].click();", homePage.schoolmenu);
-			Thread.sleep(3000);
+			UtilityMethods.wait_For_Student_List_AND_OR_Class_List_Section_Load();
 		}
 		try {
 			if (FlyInMenuBehaviourSteps.env.equalsIgnoreCase("dev")
@@ -892,26 +890,51 @@ public class Test_Status_Steps {
 		}
 	}
 
+	private void close_all_new_window_url() {
+		try {
+			// getting all the handles currently available
+			Set<String> handles = Driver.webdriver.getWindowHandles();
+			Assert.assertTrue(handles.size() >= 2);
+			ArrayList<String> tabs = new ArrayList<String>(Driver.webdriver.getWindowHandles());
+			for (int i = tabs.size() - 1; i > 0; i--) {
+				Driver.webdriver.switchTo().window(tabs.get(i)).close();
+				Thread.sleep(1000);
+			}
+			Driver.webdriver.switchTo().window(tabs.get(0));
+			Thread.sleep(500);
+		} catch (Exception e) {
+			log.error("Unable to close opened windows url...");
+			UtilityMethods.processException(e);
+		}
+	}
+
 	@Then("^Verify row highlighting and Drill down in Student Context$")
 	public void verify_row_highlighting_and_Drill_down_in_Student_Context() throws Throwable {
 		String currentHandle = Driver.webdriver.getWindowHandle();
 		try {
-
 			new Actions(Driver.webdriver).moveToElement(homePage.test_status_filter_list_under_sc.get(1)).click()
 					.build().perform();
 			Thread.sleep(1000);
 			UtilityMethods.wait_For_Test_Status_Section_Load_under_student_context();
 			homePage.not_started_list_in_table_under_sc.get(0).click();
 			Thread.sleep(500);
-			verify_new_window_url(currentHandle, "assignments");
-
+			if (API_Connection.getUserRole().equalsIgnoreCase("TEACHER")) {
+				verify_new_window_url(currentHandle, "assignments");
+			} else {
+				verify_no_new_window(currentHandle);
+			}
 			new Actions(Driver.webdriver).moveToElement(homePage.test_status_filter_list_under_sc.get(2)).click()
 					.build().perform();
 			Thread.sleep(1000);
 			UtilityMethods.wait_For_Test_Status_Section_Load_under_student_context();
 			homePage.in_progress_list_in_table_under_sc.get(0).click();
 			Thread.sleep(500);
-			verify_new_window_url(currentHandle, "assignments");
+
+			if (API_Connection.getUserRole().equalsIgnoreCase("TEACHER")) {
+				verify_new_window_url(currentHandle, "assignments");
+			} else {
+				verify_no_new_window(currentHandle);
+			}
 
 			new Actions(Driver.webdriver).moveToElement(homePage.test_status_filter_list_under_sc.get(3)).click()
 					.build().perform();
@@ -920,28 +943,30 @@ public class Test_Status_Steps {
 			homePage.ntb_graded_list_in_table_under_sc.get(0).click();
 			Thread.sleep(500);
 			verify_new_window_url(currentHandle, "grading");
-
+			close_all_new_window_url();//
+			Thread.sleep(1000);
 			new Actions(Driver.webdriver).moveToElement(homePage.test_status_filter_list_under_sc.get(4)).click()
 					.build().perform();
 			Thread.sleep(1000);
 			UtilityMethods.wait_For_Test_Status_Section_Load_under_student_context();
 			homePage.completed_list_in_table_under_sc.get(0).click();
 			Thread.sleep(1000);
-			Assert.assertTrue(homePage.active_sta_tab.isDisplayed());
 
 			try {
+				Assert.assertTrue(homePage.active_sta_tab.isDisplayed());
+			} catch (Exception e) {
 				log.info("This will call if no data available with STA");
 				Assert.assertTrue(homePage.nodatavailableforyourselection.isDisplayed());
 				Assert.assertTrue(homePage.returntopreviousreport.isDisplayed());
 				homePage.returntopreviousreport.click();
 				Thread.sleep(2000);
-			} catch (Exception e) {
-
 			}
+
 			CBTConfiguration.score = "pass";
 		} catch (Exception e) {
 			UtilityMethods.processException(e);
 		}
+
 		log.info("Scenario TestStatus11 completed");
 	}
 
@@ -1197,7 +1222,8 @@ public class Test_Status_Steps {
 			homePage.rosterapplybtn.click();
 			UtilityMethods.scrollPageUp(Driver.webdriver);
 			UtilityMethods.wait_For_Student_List_AND_OR_Class_List_Section_Load();
-			homePage.studentmenu.click();Thread.sleep(2000);
+			homePage.studentmenu.click();
+			Thread.sleep(2000);
 			UtilityMethods.wait_For_Performance_Over_Time_Line_Chart_Section_Load();
 			// clicking on "Pretest" associated circle value
 			homePage.testScoresonPerPage_on_pot.get(0).click();
