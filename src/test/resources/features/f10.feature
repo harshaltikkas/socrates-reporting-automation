@@ -14,7 +14,7 @@ Feature: Test Tab Design and Behaviour
     When User Click on Test tab within the Universal Selector Tab
     Then verify checkbox state as deselected while unchecked on checkbox.
 
-  @Scenario20 @TC42 
+  @Scenario20 @TC42
   Scenario Outline: Check the position and specification of the object/elements within the test tab test list.
     Given User is on portal's login screen with username as "school_admin_one" and password as "password" and usertype as "realm_one"
     When User Click on Test tab within the Universal Selector Tab
