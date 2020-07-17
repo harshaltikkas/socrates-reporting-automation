@@ -144,10 +144,12 @@ public class TestTabDesignAndBehaviourSteps {
 			int count = 0, selectcheckbox = 0;
 			count = homePage.testscheckboxlist.size();
 			selectcheckbox = (int) (Math.random() * count);
-			UtilityMethods.scrollPageDown(Driver.webdriver, selectcheckbox);
+			UtilityMethods.scrollPageDown(Driver.webdriver, 6);
+			Thread.sleep(500);
 			homePage.testscheckboxlist.get(selectcheckbox).click();
+			Thread.sleep(500);
 
-			Verify.verify(homePage.testscheckboxlistwithinput.get(selectcheckbox).getAttribute("value").equals("true"));
+			Assert.assertTrue(homePage.testscheckboxlistwithinput.get(selectcheckbox).getAttribute("value").equals("true"));
 			homePage.testscheckboxlist.get(selectcheckbox).click();
 			Thread.sleep(500);
 			Assert.assertEquals("false",
