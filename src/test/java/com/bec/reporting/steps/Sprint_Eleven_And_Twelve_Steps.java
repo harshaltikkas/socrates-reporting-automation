@@ -149,9 +149,9 @@ public class Sprint_Eleven_And_Twelve_Steps {
 			Assert.assertTrue(homePage.classORSchoolListPageHeadersList.get(2).getText().equals("% Students Complete"));
 			Assert.assertTrue(homePage.classORSchoolListPageHeadersList.get(3).getText().equals("Score"));
 			new Actions(Driver.webdriver).moveToElement(homePage.classORSchoolListPageHeadersList.get(0)).build()
-					.perform();
+					.perform();Thread.sleep(500);
 			Assert.assertTrue(homePage.classListPageTooltipForClass.getText()
-					.equals("Classes Assessed Online/Classes Rostered."));
+					.equals("Classes Assessed Online/Classes Rostered"));
 
 			List<String> classList = new ArrayList<String>();
 			for (int i = 0; i < homePage.classORSchoolNamesListInClassListPageHeaders.size(); i++) {
@@ -183,7 +183,6 @@ public class Sprint_Eleven_And_Twelve_Steps {
 	@Then("^verify District filter default view reports for the user District admin$")
 	public void verify_District_filter_default_view_reports_for_the_user_District_admin() throws Throwable {
 		try {
-
 			Assert.assertTrue(homePage.activedistrictmenu.isDisplayed());
 			Assert.assertTrue(homePage.activestandardperformancebtn.isDisplayed());
 			Assert.assertTrue(homePage.activeAssessementsbtn.isDisplayed());
@@ -199,7 +198,7 @@ public class Sprint_Eleven_And_Twelve_Steps {
 					.perform();
 
 			Assert.assertTrue(homePage.schoolListPageTooltipForClass.getText()
-					.equals("Schools Assessed Online/Schools Rostered."));
+					.equals("Schools Assessed Online/Schools Rostered"));
 
 			List<String> schoolList = new ArrayList<String>();
 			for (int i = 0; i < homePage.classORSchoolNamesListInClassListPageHeaders.size(); i++) {

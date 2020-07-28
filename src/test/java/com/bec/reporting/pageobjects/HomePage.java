@@ -823,7 +823,7 @@ public class HomePage {
 	@FindBy(xpath = "//i[@class='material-icons' and contains(text(),'show_chart')]/ancestor::span/following-sibling::span[@class='sidewidget-header-title']")
 	public WebElement performanceovrtimeheader;
 
-	@FindBy(xpath = "//span//img[contains(@style,'margin-top: -4px')]")
+	@FindBy(xpath = "//span//img[contains(@style,'margin-top: -3px')]")
 	public WebElement info_icon_on_performance_over_time_header;
 
 	@FindBy(xpath = "//span//img[contains(@style,'margin-top: 5px')]")
@@ -1274,6 +1274,9 @@ public class HomePage {
 	@FindBy(xpath = "//div[@class='student-list-row']//div[@class='student-list-col'][1]")
 	public List<WebElement> classORSchoolNamesListInClassListPageHeaders;
 
+	@FindBy(xpath = "//span[@class='student-list-col-head-name' and contains(text(),'Student')]//span[@class='standard_perfomance_list_head_tooltip_Definition']")
+	public WebElement studentListPageTooltip;
+	
 	@FindBy(xpath = "//span[@class='student-list-col-head-name' and contains(text(),'Class')]//span[@class='standard_perfomance_list_head_tooltip_Definition']")
 	public WebElement classListPageTooltipForClass;
 

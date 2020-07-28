@@ -17,7 +17,7 @@ Feature: Sprint 11 & Sprint 12 & Sprint 13 & Sprint 14 & Sprint 15 User Stories
     Given User is on portal's login screen with username as "school_admin_one" and password as "password" and usertype as "realm_one"
     Then verify School filter default view reports for the user School admin
 
-  ##BE-946 ,949 b,956,953,954,955,
+  ##BE-946 ,949 b,956,953,954,955 
   Scenario: Verify District filter default view reports for the user District admin
     Given User is on portal's login screen with username as "district_admin_one" and password as "password" and usertype as "realm_one"
     Then verify District filter default view reports for the user District admin
