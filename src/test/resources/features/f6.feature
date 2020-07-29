@@ -8,7 +8,7 @@ Feature: Sprint 6 and Sprint 7 Stories
     When User click on Class Context and Test Score button
     Then Verify the comparison band for school and district
 
-   ##BE-653,BE-681,654
+   ##BE-653,BE-681,654  
   Scenario: Verify tooltip icon and text of tooltip icon beside avg info
     Given User is on portal's login screen with username as "teacher_one" and password as "password" and usertype as "realm_one"
     When User Click on Standard Performance tab within the Class Context

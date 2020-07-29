@@ -823,7 +823,7 @@ public class HomePage {
 	@FindBy(xpath = "//i[@class='material-icons' and contains(text(),'show_chart')]/ancestor::span/following-sibling::span[@class='sidewidget-header-title']")
 	public WebElement performanceovrtimeheader;
 
-	@FindBy(xpath = "//span//img[contains(@style,'margin-top: -3px')]")
+	@FindBy(xpath = "//span//img[contains(@style,'margin-top: -4px')]")
 	public WebElement info_icon_on_performance_over_time_header;
 
 	@FindBy(xpath = "//span//img[contains(@style,'margin-top: 5px')]")
