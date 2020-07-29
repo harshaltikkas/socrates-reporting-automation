@@ -79,10 +79,12 @@ public class API_Connection {
 			if (prop.getProperty("app_env").equalsIgnoreCase("staging")
 					|| prop.getProperty("app_env").equalsIgnoreCase("prod")) {
 				apiUrl = prop.getProperty("stg_apiURL") + "/user/skus?values=X58691,X69071,X70225";
-			} else {
-				apiUrl = prop.getProperty("apiURL") + "/user/skus?values=X58691,X69071,X70225";
+			} else if (prop.getProperty("app_env").equalsIgnoreCase("dev")){
+				apiUrl = prop.getProperty("dev_apiURL") + "/user/skus?values=X58691,X69071,X70225";
 			}
-			
+			else if (prop.getProperty("app_env").equalsIgnoreCase("uat")){
+				apiUrl = prop.getProperty("master_apiURL") + "/user/skus?values=X58691,X69071,X70225";
+			}
 			
 			Response response = RestAssured.given().header("Authorization", "Bearer " + FlyInMenuBehaviourSteps.token)
 					.contentType("application/json").get(apiUrl);
@@ -110,7 +112,7 @@ public class API_Connection {
 		try {
 			prop = FileRead.readProperties();
 			String payload = "{\"termId\":" + "null" + ",\"isDistrictEnabled\":" + true + "}";
-			String apiUrl = prop.getProperty("apiURL") + "/universalselector/default";
+			String apiUrl = prop.getProperty("dev_apiURL") + "/universalselector/default";
 			Response response = RestAssured.given().header("Authorization", "Bearer " + FlyInMenuBehaviourSteps.token)
 					.contentType("application/json").body(payload).post(apiUrl);
 			if (response.getStatusCode() != 200) {
@@ -136,7 +138,7 @@ public class API_Connection {
 		List<String> list = new ArrayList<String>();
 		try {
 			prop = FileRead.readProperties();
-			String apiUrl = prop.getProperty("apiURL") + "/universalselector/datetab";
+			String apiUrl = prop.getProperty("dev_apiURL") + "/universalselector/datetab";
 			Response response = RestAssured.given().header("Authorization", "Bearer " + FlyInMenuBehaviourSteps.token)
 					.get(apiUrl);
 			if (response.getStatusCode() != 200) {
@@ -164,7 +166,7 @@ public class API_Connection {
 		Integer schoolID = 0;
 		try {
 			prop = FileRead.readProperties();
-			String apiUrl = prop.getProperty("apiURL") + "/schools?page=0&size=10000&direction=ASC";
+			String apiUrl = prop.getProperty("dev_apiURL") + "/schools?page=0&size=10000&direction=ASC";
 			Response response = RestAssured.given().header("Authorization", "Bearer " + FlyInMenuBehaviourSteps.token)
 					.get(apiUrl);
 			if (response.getStatusCode() != 200) {
@@ -193,7 +195,7 @@ public class API_Connection {
 		Map<String, Integer> schoolMap = new TreeMap<String, Integer>();
 		try {
 			prop = FileRead.readProperties();
-			String apiUrl = prop.getProperty("apiURL") + "/schools?page=0&size=10000&direction=ASC";
+			String apiUrl = prop.getProperty("dev_apiURL") + "/schools?page=0&size=10000&direction=ASC";
 			Response response = RestAssured.given().header("Authorization", "Bearer " + FlyInMenuBehaviourSteps.token)
 					.get(apiUrl);
 			if (response.getStatusCode() != 200) {
@@ -223,7 +225,7 @@ public class API_Connection {
 		Map<String, Integer> classMap = new TreeMap<String, Integer>();
 		try {
 			prop = FileRead.readProperties();
-			String apiUrl = prop.getProperty("apiURL") + "/classes?schoolId=" + schoolId + "&districtId="
+			String apiUrl = prop.getProperty("dev_apiURL") + "/classes?schoolId=" + schoolId + "&districtId="
 					+ getDistrictId();
 			Response response = RestAssured.given().header("Authorization", "Bearer " + FlyInMenuBehaviourSteps.token)
 					.get(apiUrl);
@@ -288,7 +290,7 @@ public class API_Connection {
 		Map<String, Integer> studentMap = new TreeMap<String, Integer>();
 		try {
 			prop = FileRead.readProperties();
-			String apiUrl = prop.getProperty("apiURL") + "/students?schoolId=" + schoolId + "&districtId="
+			String apiUrl = prop.getProperty("dev_apiURL") + "/students?schoolId=" + schoolId + "&districtId="
 					+ getDistrictId() + "&classId=" + classId;
 			Response response = RestAssured.given().header("Authorization", "Bearer " + FlyInMenuBehaviourSteps.token)
 					.get(apiUrl);
@@ -320,7 +322,7 @@ public class API_Connection {
 		Integer classID = 0;
 		try {
 			prop = FileRead.readProperties();
-			String apiUrl = prop.getProperty("apiURL") + "/classes?schoolId=" + schoolId + "&districtId="
+			String apiUrl = prop.getProperty("dev_apiURL") + "/classes?schoolId=" + schoolId + "&districtId="
 					+ getDistrictId();
 			Response response = RestAssured.given().header("Authorization", "Bearer " + FlyInMenuBehaviourSteps.token)
 					.get(apiUrl);
@@ -351,7 +353,7 @@ public class API_Connection {
 		Map<String, Integer> studentMap = new TreeMap<String, Integer>();
 		try {
 			prop = FileRead.readProperties();
-			String apiUrl = prop.getProperty("apiURL") + "/students?schoolId=" + schoolId + "&districtId="
+			String apiUrl = prop.getProperty("dev_apiURL") + "/students?schoolId=" + schoolId + "&districtId="
 					+ getDistrictId + "&classId=" + classId;
 			Response response = RestAssured.given().header("Authorization", "Bearer " + FlyInMenuBehaviourSteps.token)
 					.get(apiUrl);
@@ -383,7 +385,7 @@ public class API_Connection {
 		String studentName = "";
 		try {
 			prop = FileRead.readProperties();
-			String apiUrl = prop.getProperty("apiURL") + "/students?schoolId=" + schoolId + "&districtId="
+			String apiUrl = prop.getProperty("dev_apiURL") + "/students?schoolId=" + schoolId + "&districtId="
 					+ getDistrictId() + "&classId=" + classId;
 			Response response = RestAssured.given().header("Authorization", "Bearer " + FlyInMenuBehaviourSteps.token)
 					.get(apiUrl);

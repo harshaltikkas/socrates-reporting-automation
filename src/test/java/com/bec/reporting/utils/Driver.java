@@ -301,7 +301,7 @@ public class Driver {
 	/**
 	 * This is used to embed screenshot while running scenario
 	 */
-	static int ss_count = 0;
+	static int ss_count = 1;
 	public static void embedScreenshot(Scenario scenario) {
 		log.info("embedScreenshot");
 		String os = System.getProperty("os.name");

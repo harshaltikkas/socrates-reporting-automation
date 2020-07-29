@@ -3,13 +3,13 @@ Feature: Validate Test Status Continues - Sprint 34
 
   @TestStatus13 @BE-2217
   Scenario: Verify Row highlighting and Drill down in Student Context
+    Given User is on portal's login screen with username as "teacher_two" and password as "password" and usertype as "realm_one"
+    When User Click on Test Status tab within the Student Context
+    Then Verify row highlighting and Drill down in Student Context
     Given User is on portal's login screen with username as "school_admin_two" and password as "password" and usertype as "realm_one"
     When User Click on Test Status tab within the School Context
     And User Click on Test Status tab within the Class Context
     And User Click on Test Status tab within the Student Context
-    Then Verify row highlighting and Drill down in Student Context
-    Given User is on portal's login screen with username as "teacher_two" and password as "password" and usertype as "realm_one"
-    When User Click on Test Status tab within the Student Context
     Then Verify row highlighting and Drill down in Student Context
     Given User is on portal's login screen with username as "district_admin_one" and password as "password" and usertype as "realm_one"
     When User Click on Test Status tab within the School Context

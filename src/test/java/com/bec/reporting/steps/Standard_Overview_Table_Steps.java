@@ -27,14 +27,13 @@ package com.bec.reporting.steps;
 
 import java.util.ArrayList;
 import java.util.List;
-
+import java.util.regex.Pattern;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.PageFactory;
-
 import com.bec.reporting.pageobjects.HomePage;
 import com.bec.reporting.utils.API_Connection;
 import com.bec.reporting.utils.CBTConfiguration;
@@ -43,7 +42,6 @@ import com.bec.reporting.utils.IWait;
 import com.bec.reporting.utils.PaginationUtility_for_Pages;
 import com.bec.reporting.utils.UtilityMethods;
 import com.google.common.collect.Ordering;
-
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import lombok.extern.slf4j.Slf4j;
@@ -130,7 +128,7 @@ public class Standard_Overview_Table_Steps {
 	 */
 	@When("^User Click on Standard Performance tab within the Class Context$")
 	public static void user_Click_on_Standard_Performance_tab_within_the_Class_Context() throws Throwable {
-		try {			
+		try {
 			Assert.assertTrue(homePage.activeclassmenu.getAttribute("class").contains("active"));
 		} catch (Exception e) {
 			jse.executeScript("arguments[0].click();", homePage.classmenu);
@@ -1037,7 +1035,7 @@ public class Standard_Overview_Table_Steps {
 	 */
 	@When("^User Click on Standard Performance tab within the Student Context$")
 	public void user_Click_on_Standard_Performance_tab_within_the_Student_Context() throws Throwable {
-		try {			
+		try {
 			Assert.assertTrue(homePage.activestudentmenu.getAttribute("class").contains("active"));
 		} catch (Exception e) {
 			jse.executeScript("arguments[0].click();", homePage.studentmenu);
@@ -1229,7 +1227,6 @@ public class Standard_Overview_Table_Steps {
 	public void user_should_able_to_see_Student_List_and_the_icon_next_to_it_can_be_selected_to_minimize_or_maximize_the_Student_List_window()
 			throws Throwable {
 		try {
-			UtilityMethods.wait_For_Student_List_AND_OR_Class_List_Section_Load();
 			Assert.assertTrue(homePage.student_list_on_list.get(0).isDisplayed());
 			// clicking on icon to minimize the student list
 			homePage.studentlisticon.click();
@@ -1263,9 +1260,7 @@ public class Standard_Overview_Table_Steps {
 	@When("^Click or select strand and standard from the standard table$")
 	public void click_or_select_strand_and_standard_from_the_standard_table() throws Throwable {
 		try {
-			int randomNumber = 1;
-			UtilityMethods.scrollPageDown(Driver.webdriver, 4);
-			Thread.sleep(500);
+			int randomNumber = 1;		
 			new Actions(Driver.webdriver).moveToElement(homePage.standardnameslist.get(randomNumber)).build().perform();
 			Thread.sleep(500);
 			headerOnToolTip = homePage.stranddefinitionlist.get(randomNumber).getText();
@@ -1313,10 +1308,13 @@ public class Standard_Overview_Table_Steps {
 	@Then("^Verify the left most column header should be 'Student \\(X\\)'$")
 	public void verify_the_left_most_column_header_should_be_Student_X() throws Throwable {
 		try {
-			Assert.assertTrue(homePage.StudentRecordsSize.getText()
-					.contains("Students (" + homePage.student_list_on_list.size() + ")"));
-			Assert.assertTrue(homePage.list_header_in_list.get(0).getText()
-					.contains("Students (" + homePage.student_list_on_list.size() + ")"));
+			Pattern p = Pattern.compile("^\\d+\\/\\d+$");
+			String str = homePage.StudentRecordsSize.getText();
+			str = str.substring(str.indexOf("(") + 1, str.indexOf(")"));
+			Assert.assertTrue(p.matcher(str).matches());
+			Assert.assertTrue(Integer.parseInt(str.substring(0, str.indexOf("/"))) <= Integer
+					.parseInt(str.substring(str.indexOf("/") + 1)));
+			Assert.assertTrue(homePage.StudentRecordsSize.getText().contains("Students ("));
 			CBTConfiguration.score = "pass";
 		} catch (Exception e) {
 			UtilityMethods.processException(e);
@@ -1335,25 +1333,12 @@ public class Standard_Overview_Table_Steps {
 	public void select_the_student_within_the_student_list_and_Student_context_with_information_for_that_individual_student_should_be_shown()
 			throws Throwable {
 		try {
-			String className;
-			HomePage homePage = PageFactory.initElements(Driver.webdriver, HomePage.class);
-			new Actions(Driver.webdriver).moveToElement(homePage.classnameoncontextheader).build().perform();
-			if (homePage.classnameoncontextheader.getText().contains("...")) {
-				className = homePage.tooltipofclassnameoncontextheader.getText();
-			} else {
-				className = homePage.classnameoncontextheader.getText();
-			}
-			new Actions(Driver.webdriver).moveToElement(homePage.overviewtext).build().perform();
-			int studentListSize = homePage.noofstudentsinlist.size();
-			int randomNumber = (int) (Math.random() * studentListSize);
-			String StudentName = homePage.studentnameslistinstudentlist.get(randomNumber).getText();
-			UtilityMethods.scrollPageDown(Driver.webdriver, 8);
-			Thread.sleep(500);
+			String className=UtilityMethods.getClassNameonUI();						
+			int randomNumber = 0;
+			String StudentName = homePage.studentnameslistinstudentlist.get(randomNumber).getText();			
 			new Actions(Driver.webdriver).moveToElement(homePage.studentnameslistinstudentlist.get(randomNumber))
 					.click().build().perform();
-			UtilityMethods.wait_For_Performance_Over_Time_Line_Chart_Section_Load();
-			UtilityMethods.scrollPageUp(Driver.webdriver);
-			Thread.sleep(500);
+			UtilityMethods.wait_For_Performance_Over_Time_Line_Chart_Section_Load();			
 			String studentNameonContext = UtilityMethods.getStudentNameonUI();
 			Assert.assertTrue(homePage.activestudentmenu.isDisplayed());
 			Assert.assertTrue(studentNameonContext.contains(StudentName));

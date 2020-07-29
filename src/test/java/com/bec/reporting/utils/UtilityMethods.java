@@ -826,7 +826,7 @@ public class UtilityMethods {
 		int pot_ctr = 0;
 		do {
 			try {
-				Assert.assertTrue(homePage.info_icon_on_performance_over_time_header.isDisplayed());
+				Assert.assertTrue(homePage.testScoresPercentage.isDisplayed());
 				log.info("Perfomance Over Time Line Chart is now Displaying");
 				isSectionLoad = true;
 			} catch (Exception e1) {
