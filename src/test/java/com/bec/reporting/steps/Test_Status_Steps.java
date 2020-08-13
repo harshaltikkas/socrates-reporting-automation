@@ -870,7 +870,7 @@ public class Test_Status_Steps {
 		}
 	}
 
-	private void verify_new_window_url(String baseHandle, String url_text) {
+	public static void verify_new_window_url(String baseHandle, String url_text) {
 		try {
 			// getting all the handles currently available
 			Set<String> handles = Driver.webdriver.getWindowHandles();
@@ -886,7 +886,7 @@ public class Test_Status_Steps {
 		}
 	}
 
-	private void close_all_new_window_url() {
+	public static void close_all_new_window_url() {
 		try {
 			// getting all the handles currently available
 			Set<String> handles = Driver.webdriver.getWindowHandles();

@@ -43,6 +43,7 @@ import java.util.regex.Pattern;
 
 import org.junit.Assert;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -1644,5 +1645,60 @@ public class UtilityMethods {
 			processException(e);
 		}
 		return standard_names_List;
+	}
+
+	public static JavascriptExecutor js = (JavascriptExecutor) Driver.webdriver;
+
+	public static void comparison_under_standard_performance() throws InterruptedException {
+		try {
+			Assert.assertTrue(homePage.standardperformancebtn.getAttribute("class").contains("active_tab"));
+		} catch (Exception e) {
+			js.executeScript("arguments[0].click();", homePage.standardperformancebtn);
+			Thread.sleep(500);
+			UtilityMethods.wait_For_Student_List_AND_OR_Class_List_Section_Load();
+		}
+
+		js.executeScript("arguments[0].click();", homePage.comparisontab);
+		Thread.sleep(20000);
+		js.executeScript("arguments[0].click();", homePage.applyBtnOnstandardTab);
+		UtilityMethods.wait_For_Comparison_Tab_Section_Load_under_standard_performance();
+	}
+
+	public static void groupin_tab_under_standard_performance() throws InterruptedException {
+		try {
+			Assert.assertTrue(homePage.standardperformancebtn.getAttribute("class").contains("active_tab"));
+		} catch (Exception e) {
+			js.executeScript("arguments[0].click();", homePage.standardperformancebtn);
+			Thread.sleep(500);
+			UtilityMethods.wait_For_Student_List_AND_OR_Class_List_Section_Load();
+		}
+
+		js.executeScript("arguments[0].click();", homePage.groupingTab);
+		Thread.sleep(20000);
+		js.executeScript("arguments[0].click();", homePage.applyBtnOngroupingTab);
+		UtilityMethods.wait_For_Strands_Text_After_Apply_BtnOn_GroupingTab();
+	}
+	
+	public static void summary_tab_under_standard_performance() throws InterruptedException {
+		try {
+			Assert.assertTrue(homePage.standardperformancebtn.getAttribute("class").contains("active_tab"));
+		} catch (Exception e) {
+			js.executeScript("arguments[0].click();", homePage.standardperformancebtn);
+			Thread.sleep(500);
+			UtilityMethods.wait_For_Student_List_AND_OR_Class_List_Section_Load();
+		}
+
+		js.executeScript("arguments[0].click();", homePage.summarytab);		
+		UtilityMethods.wait_For_Summary_Tab_Section_Load();
+	}
+	
+	public static void overview_tab_under_Test_Score_Tab() throws InterruptedException {
+		try {
+			Assert.assertTrue(homePage.test_scores_btn.getAttribute("class").contains("active_tab"));
+		} catch (Exception e) {
+			js.executeScript("arguments[0].click();", homePage.test_scores_btn);
+			Thread.sleep(500);
+			UtilityMethods.wait_For_Test_Score_Detail_Section();
+		}
 	}
 }

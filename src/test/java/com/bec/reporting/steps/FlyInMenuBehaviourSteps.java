@@ -691,5 +691,4 @@ public class FlyInMenuBehaviourSteps {
 		}
 		log.info("Scenario BE-2472 Completed");
 	}
-
 }

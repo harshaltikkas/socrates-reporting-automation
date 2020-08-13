@@ -74,7 +74,7 @@ Feature: Validate local/state standards UI functionality
   @BU-11779
   Scenario: Verify In district context on custom selection of schools, the behaviour of school list in UI
     Given User is on portal's login screen with username as "district_admin_one" and password as "password" and usertype as "realm_one"
-    Then Verify In district context on custom selection of schools, the behaviour of school list in UI   
+    Then Verify In district context on custom selection of schools, the behaviour of school list in UI
 
   @BU-11780
   Scenario: Verify In school context on custom selection of classes, the behaviour of class list in UI
