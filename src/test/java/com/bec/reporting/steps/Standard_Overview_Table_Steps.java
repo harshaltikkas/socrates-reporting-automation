@@ -709,7 +709,7 @@ public class Standard_Overview_Table_Steps {
 		}
 		UtilityMethods.wait_For_Student_List_AND_OR_Class_List_Section_Load();
 		try {
-			Assert.assertTrue(homePage.activetestscoresbtn.getAttribute("class").equals("active_tab"));
+			Assert.assertTrue(homePage.active_test_scores_btn.getAttribute("class").equals("active_tab"));
 		} catch (Exception e) {
 			Thread.sleep(500);
 			jse.executeScript("arguments[0].click();", homePage.testscoresbtn);
@@ -723,7 +723,7 @@ public class Standard_Overview_Table_Steps {
 	@When("^User click on Test Score button$")
 	public void user_click_on_Test_Score_button() throws Throwable {
 		try {
-			Assert.assertTrue(homePage.activetestscoresbtn.getAttribute("class").equals("active_tab"));
+			Assert.assertTrue(homePage.active_test_scores_btn.getAttribute("class").equals("active_tab"));
 		} catch (Exception e) {
 			Thread.sleep(500);
 			jse.executeScript("arguments[0].click();", homePage.testscoresbtn);
@@ -748,7 +748,7 @@ public class Standard_Overview_Table_Steps {
 			Thread.sleep(3000);
 		}
 		try {
-			Assert.assertTrue(homePage.activetestscoresbtn.getAttribute("class").equals("active"));
+			Assert.assertTrue(homePage.active_test_scores_btn.getAttribute("class").equals("active"));
 		} catch (Exception e) {
 			Thread.sleep(500);
 			jse.executeScript("arguments[0].click();", homePage.testscoresbtn);
@@ -961,7 +961,7 @@ public class Standard_Overview_Table_Steps {
 			Thread.sleep(3000);
 		}
 		try {
-			Assert.assertTrue(homePage.activetestscoresbtn.getAttribute("class").equals("active_tab"));
+			Assert.assertTrue(homePage.active_test_scores_btn.getAttribute("class").equals("active_tab"));
 		} catch (Exception e) {
 			jse.executeScript("arguments[0].click();", homePage.testscoresbtn);
 			Thread.sleep(1500);
@@ -1498,7 +1498,7 @@ public class Standard_Overview_Table_Steps {
 					"//div[@class='menu-title' and contains(text(),'District Term')]/following-sibling::div//ul/li[contains(text(),'2018-2019')]"))
 					.click();
 			Thread.sleep(500);
-			homePage.dateapplybtn.click();
+			homePage.dateapplybtn.click();			
 			IWait.explicit_wait(Driver.webdriver, homePage.studentmenu);
 		} catch (Exception e) {
 			UtilityMethods.processException(e);

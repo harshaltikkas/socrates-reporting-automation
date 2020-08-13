@@ -472,10 +472,7 @@ public class HomePage {
 	public WebElement active_test_scores_btn;
 
 	@FindBy(xpath = "//li[@class='active' and contains(text(),'Assessments')]")
-	public WebElement activeAssessementsbtn;
-
-	@FindBy(xpath = "//li[@class='active_tab' and contains(text(),'Test Scores')]")
-	public WebElement activetestscoresbtn;
+	public WebElement activeAssessementsbtn;	
 
 	@FindBy(xpath = "//li[@class='active_tab']/span[contains(text(),'Summary')]")
 	public WebElement active_summary_tab;
@@ -543,8 +540,17 @@ public class HomePage {
 	@FindBy(xpath = "//li[.='Standards Performance']")
 	public WebElement standardperformancebtn;
 
-	@FindBy(xpath = "//li[.='Test Status']")
+	@FindBy(xpath = "//li/span[contains(text(),'Test Status')]")
 	public WebElement test_status_btn;
+	
+	@FindBy(xpath = "//div[@class='ts_tooltiptext']")
+	public WebElement test_status_btn_tool_tip;
+	
+	@FindBy(xpath = "//div[@class='PastDistictTermBanner']/div/span")
+	public WebElement past_district_term_banner;
+	
+	@FindBy(xpath = "//div[@class='PastDistictTermBanner']/div/span/u[text()='click here']")
+	public WebElement past_district_term_banner_click_here;
 	
 	@FindBy(xpath = "//li[.='Test Scores']")
 	public WebElement test_scores_btn;
@@ -823,7 +829,7 @@ public class HomePage {
 	@FindBy(xpath = "//i[@class='material-icons' and contains(text(),'show_chart')]/ancestor::span/following-sibling::span[@class='sidewidget-header-title']")
 	public WebElement performanceovrtimeheader;
 
-	@FindBy(xpath = "//span//img[contains(@style,'margin-top: -4px')]")
+	@FindBy(xpath = "//span//img[contains(@style,'margin-top: -4px') or contains(@style,'margin-top: -3px') or contains(@style,'margin-top: -5px') or @class='widget-base-sub-title-img']")
 	public WebElement info_icon_on_performance_over_time_header;
 
 	@FindBy(xpath = "//span//img[contains(@style,'margin-top: 5px')]")
