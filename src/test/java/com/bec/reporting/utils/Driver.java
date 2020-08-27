@@ -29,10 +29,14 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
+
 import org.apache.commons.io.FileUtils;
 import org.junit.Assert;
 import org.openqa.selenium.Dimension;
@@ -168,24 +172,23 @@ public class Driver {
 		log.info("OS " + os);
 
 		switch (browserName) {
-		case "firefox":
 
+		case "firefox":
 			if (os.contains("Windows")) {
-				File pathBinary = new File("C:\\Program Files (x86)\\Mozilla Firefox\\firefox.exe");
-				System.setProperty("webdriver.gecko.driver", "D:\\geckodriver\\geckodriver.exe");
-				/*
-				 * FirefoxBinary firefoxBinary = new FirefoxBinary(pathBinary); FirefoxProfile
-				 * firefoxProfile = new FirefoxProfile();
-				 */
-				webdriver = new FirefoxDriver();
+				// System Property for Gecko Driver
+				System.setProperty("webdriver.gecko.driver", "D:\\GeckoDriver\\geckodriver.exe");
+				// Initialize Gecko Driver using Desired Capabilities Class
+				DesiredCapabilities capabilities = DesiredCapabilities.firefox();
+				capabilities.setCapability("marionette", true);
+				webdriver = new FirefoxDriver(capabilities);
 
 			} else {
 				System.setProperty("webdriver.gecko.driver", "/usr/local/bin/geckodriver");
 				webdriver = new FirefoxDriver();
 			}
 			break;
-		case "chrome":
 
+		case "chrome":
 			if (os.contains("Windows")) {
 				System.setProperty("webdriver.chrome.driver",
 						"C:\\Program Files (x86)\\Google\\Chrome\\Application\\chromedriver.exe");
@@ -202,19 +205,22 @@ public class Driver {
 			// will not launch
 			webdriver = new ChromeDriver(options);
 			break;
-		case "ie":
 
+		case "ie":
 			DesiredCapabilities IEcaps = DesiredCapabilities.internetExplorer();
 			IEcaps.setCapability(InternetExplorerDriver.INTRODUCE_FLAKINESS_BY_IGNORING_SECURITY_DOMAINS, true);
 			System.setProperty("webdriver.ie.driver", "C://Program Files//Internet Explorer//IEDriverServer.exe");
 			webdriver = new InternetExplorerDriver(IEcaps);
 			break;
+
 		case "opera":
 			webdriver = new OperaDriver();
 			break;
+
 		case "safari":
 			webdriver = new SafariDriver();
 			break;
+
 		default:
 			throw new WebDriverException("No browser specified");
 		}
@@ -243,16 +249,17 @@ public class Driver {
 		}
 		return true;
 	}
-	
+
 	/**
-	 * This method launch the browser with the specified url and realm values, which is used for staging and prod
+	 * This method launch the browser with the specified url and realm values, which
+	 * is used for staging and prod
 	 * 
 	 * @param url
 	 * @return
 	 */
-	public static boolean launch_browser(String url,String userType) {
+	public static boolean launch_browser(String url, String userType) {
 		try {
-			url=url.concat(userType);
+			url = url.concat(userType);
 			webdriver.get(url);
 			String os = System.getProperty("os.name");
 			if (os.equalsIgnoreCase("Mac OS X")) {
@@ -301,21 +308,21 @@ public class Driver {
 	/**
 	 * This is used to embed screenshot while running scenario
 	 */
-	static int ss_count = 1;
 	public static void embedScreenshot(Scenario scenario) {
-		log.info("embedScreenshot");
+		log.info("========Embedded Screen Shot=========");
 		String os = System.getProperty("os.name");
 		try {
 			TakesScreenshot ts = (TakesScreenshot) Driver.webdriver;
 			File sourcePath = ts.getScreenshotAs(OutputType.FILE);
 			File destinationPath;
-
+			DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy h-m-s");
+	        Date date = new Date();
 			if (os.equalsIgnoreCase("linux")) {
-				destinationPath = new File(System.getProperty("user.dir")
-						+ "/target/cucumber-reports/screenshots/" + (ss_count++) + ".png");
+				destinationPath = new File(System.getProperty("user.dir") + "/target/cucumber-reports/screenshots/"
+						+ dateFormat.format(date) + ".png");
 			} else {
-				destinationPath = new File(System.getProperty("user.dir")
-						+ "\\target\\cucumber-reports\\screenshots\\" + (ss_count++) + ".png");
+				destinationPath = new File(System.getProperty("user.dir") + "\\target\\cucumber-reports\\screenshots\\"
+						+ dateFormat.format(date) + ".png");
 			}
 			FileUtils.copyFile(sourcePath, destinationPath);
 			Reporter.addScreenCaptureFromPath(destinationPath.toString());

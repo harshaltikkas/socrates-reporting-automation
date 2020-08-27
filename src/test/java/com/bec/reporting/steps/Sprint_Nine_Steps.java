@@ -29,6 +29,7 @@ import java.awt.Robot;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 
 import org.junit.Assert;
@@ -288,7 +289,7 @@ public class Sprint_Nine_Steps {
 	 */
 	@Then("^verify View Texonomy on Standard Performance$")
 	public void verify_View_Texonomy_on_Standard_Performance() throws Throwable {
-		String output = "fail", viewDDText = "";
+		String output = "fail", viewDDText = "";boolean found=false;
 		try {
 			if (Standard_Overview_Table_Steps.performanceMenuClicked) {
 				Assert.assertTrue(homePage.viewDropDown.isDisplayed());
@@ -299,7 +300,13 @@ public class Sprint_Nine_Steps {
 				} else {
 					viewDDText = homePage.viewDropDown.getText();
 				}
-				Assert.assertTrue(API_Connection.getViewDetails().containsValue(viewDDText));
+				Map<Integer,String> map=API_Connection.getViewDetails();
+				for (Map.Entry<Integer, String> data : map.entrySet()) {
+					if(data.getValue().equalsIgnoreCase(viewDDText)) {
+						found=true;
+					}
+				}
+				Assert.assertTrue(found);
 				output = "pass";
 			} else if (Standard_Overview_Table_Steps.testScoreMenuClicked) {
 				try {

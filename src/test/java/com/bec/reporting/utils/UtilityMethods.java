@@ -209,6 +209,28 @@ public class UtilityMethods {
 			} else {
 				Assert.assertTrue(element.getAttribute("fill").equalsIgnoreCase("#32AC41"));
 			}
+			
+			/*
+			 * List<String> list=API_Connection.get_Achievement_Levels();
+			 * 
+			 * if (scoreValue >= Integer.parseInt(list.get(0).substring(0,
+			 * list.get(0).indexOf("-"))) && scoreValue <=
+			 * Integer.parseInt(list.get(0).substring(list.get(0).indexOf("-") + 1))) {
+			 * Assert.assertTrue(element.getAttribute("fill").equalsIgnoreCase("#FF5B5B"));
+			 * } else if (scoreValue >= Integer.parseInt(list.get(1).substring(0,
+			 * list.get(1).indexOf("-"))) && scoreValue <=
+			 * Integer.parseInt(list.get(1).substring(list.get(1).indexOf("-") + 1))) {
+			 * Assert.assertTrue(element.getAttribute("fill").equalsIgnoreCase("#FF8E2D"));
+			 * } else if (scoreValue >= Integer.parseInt(list.get(2).substring(0,
+			 * list.get(2).indexOf("-"))) && scoreValue <=
+			 * Integer.parseInt(list.get(2).substring(list.get(2).indexOf("-") + 1))) {
+			 * Assert.assertTrue(element.getAttribute("fill").equalsIgnoreCase("#FFC52D"));
+			 * } else if (scoreValue >= Integer.parseInt(list.get(3).substring(0,
+			 * list.get(3).indexOf("-"))) && scoreValue <=
+			 * Integer.parseInt(list.get(3).substring(list.get(3).indexOf("-") + 1))) {
+			 * Assert.assertTrue(element.getAttribute("fill").equalsIgnoreCase("#32AC41"));
+			 * }
+			 */
 		} catch (Exception e) {
 			UtilityMethods.processException(e);
 		}
@@ -906,10 +928,10 @@ public class UtilityMethods {
 		do {
 			try {
 				Assert.assertTrue(homePage.comparison_tab_tests_text.isDisplayed());
-				log.info("Comparison Tab Section is now Displaying");
+				log.info("Comparison Tab Section under Test Score is now Displaying");
 				isSectionLoad = true;
 			} catch (Exception e1) {
-				log.info("Waiting for Comparison Tab Section Loading");
+				log.info("Waiting for Comparison Tab Section under Test Score Loading");
 				try {
 					Thread.sleep(2000);
 					cmprson_ctr++;
@@ -919,7 +941,7 @@ public class UtilityMethods {
 		} while (isSectionLoad == false && cmprson_ctr <= 15);
 
 		if (isSectionLoad == false && cmprson_ctr > 15) {
-			log.info("Comparison Tab Section is not loaded in 30 seconds..");
+			log.info("Comparison Tab Section under Test Score is not loaded in 30 seconds..");
 			processException(new Exception());
 		}
 	}
@@ -955,29 +977,20 @@ public class UtilityMethods {
 	/**
 	 * This method is used to wait till the loading of comparison section
 	 */
-	public static void wait_For_Standards_Pop_up_Load() {
-		boolean isSectionLoad = false;
-		int cmprson_ctr = 0;
-		do {
-			try {
-				Assert.assertTrue(homePage.beneath_strands_on_standards_pop_up.isDisplayed());
-				log.info("Edit Standard Tab Section is now Displaying");
-				isSectionLoad = true;
-			} catch (Exception e1) {
-				log.info("Waiting for Edit Standard Tab Section Loading");
-				try {
-					Thread.sleep(2000);
-					cmprson_ctr++;
-				} catch (InterruptedException e) {
-				}
-			}
-		} while (isSectionLoad == false && cmprson_ctr <= 15);
-
-		if (isSectionLoad == false && cmprson_ctr > 15) {
-			log.info("Edit Standard Tab Section is not loaded in 30 seconds..");
-			processException(new Exception());
-		}
-	}
+	/*
+	 * public static void wait_For_Standards_Pop_up_Load() { boolean isSectionLoad =
+	 * false; int cmprson_ctr = 0; do { try {
+	 * Assert.assertTrue(homePage.beneath_strands_on_standards_pop_up.isDisplayed())
+	 * ; log.info("Edit Standard Tab Section is now Displaying"); isSectionLoad =
+	 * true; } catch (Exception e1) {
+	 * log.info("Waiting for Edit Standard Tab Section Loading"); try {
+	 * Thread.sleep(2000); cmprson_ctr++; } catch (InterruptedException e) { } } }
+	 * while (isSectionLoad == false && cmprson_ctr <= 15);
+	 * 
+	 * if (isSectionLoad == false && cmprson_ctr > 15) {
+	 * log.info("Edit Standard Tab Section is not loaded in 30 seconds..");
+	 * processException(new Exception()); } }
+	 */
 
 	/**
 	 * This method is used to wait till the loading of Test Score Detail section
@@ -1406,7 +1419,10 @@ public class UtilityMethods {
 			Thread.sleep(500);
 			UtilityMethods.scrollPageDown(Driver.webdriver, 7);
 			Thread.sleep(500);
-			int ran_no = generateRandomNumberBySkippingIndex(homePage.testnameslist_on_test_tab.size(), 0);
+			// int ran_no =
+			// generateRandomNumberBySkippingIndex(homePage.testnameslist_on_test_tab.size(),
+			// 0);
+			int ran_no = 1;
 			new Actions(Driver.webdriver).moveToElement(homePage.testnameslist_on_test_tab.get(ran_no)).build()
 					.perform();
 			name = homePage.testnameslist_on_test_tab.get(ran_no).getText();
@@ -1427,14 +1443,17 @@ public class UtilityMethods {
 			String txt = "";
 			homePage.viewDropDown.click();
 			Thread.sleep(500);
+			int ctr = 0;
 			for (int i = 0; i < homePage.viewDropDownList.size(); i++) {
 				new Actions(Driver.webdriver).moveToElement(homePage.viewDropDownList.get(i)).build().perform();
 				Thread.sleep(500);
 				txt = homePage.viewDropDownList.get(i).getText();
 				if (txt.contains("...")) {
-					new Actions(Driver.webdriver).moveToElement(homePage.viewDropDownTTTList.get(i)).build().perform();
+					new Actions(Driver.webdriver).moveToElement(homePage.viewDropDownTTTList.get(ctr)).build()
+							.perform();
 					Thread.sleep(500);
-					viewList.add(homePage.viewDropDownTTTList.get(i).getText());
+					viewList.add(homePage.viewDropDownTTTList.get(ctr).getText());
+					ctr++;
 				} else {
 					viewList.add(txt);
 				}
@@ -1660,6 +1679,7 @@ public class UtilityMethods {
 
 		js.executeScript("arguments[0].click();", homePage.comparisontab);
 		Thread.sleep(20000);
+
 		js.executeScript("arguments[0].click();", homePage.applyBtnOnstandardTab);
 		UtilityMethods.wait_For_Comparison_Tab_Section_Load_under_standard_performance();
 	}
@@ -1672,13 +1692,12 @@ public class UtilityMethods {
 			Thread.sleep(500);
 			UtilityMethods.wait_For_Student_List_AND_OR_Class_List_Section_Load();
 		}
-
 		js.executeScript("arguments[0].click();", homePage.groupingTab);
 		Thread.sleep(20000);
 		js.executeScript("arguments[0].click();", homePage.applyBtnOngroupingTab);
 		UtilityMethods.wait_For_Strands_Text_After_Apply_BtnOn_GroupingTab();
 	}
-	
+
 	public static void summary_tab_under_standard_performance() throws InterruptedException {
 		try {
 			Assert.assertTrue(homePage.standardperformancebtn.getAttribute("class").contains("active_tab"));
@@ -1687,18 +1706,85 @@ public class UtilityMethods {
 			Thread.sleep(500);
 			UtilityMethods.wait_For_Student_List_AND_OR_Class_List_Section_Load();
 		}
-
-		js.executeScript("arguments[0].click();", homePage.summarytab);		
+		js.executeScript("arguments[0].click();", homePage.summarytab);
 		UtilityMethods.wait_For_Summary_Tab_Section_Load();
 	}
-	
+
 	public static void overview_tab_under_Test_Score_Tab() throws InterruptedException {
 		try {
-			Assert.assertTrue(homePage.test_scores_btn.getAttribute("class").contains("active_tab"));
+			Assert.assertTrue(homePage.active_test_scores_btn.getAttribute("class").equals("active_tab"));
 		} catch (Exception e) {
 			js.executeScript("arguments[0].click();", homePage.test_scores_btn);
 			Thread.sleep(500);
 			UtilityMethods.wait_For_Test_Score_Detail_Section();
+		}
+	}
+
+	public static void comparison_Tab_under_Test_Score_Tab() throws InterruptedException {
+		try {
+			Assert.assertTrue(homePage.active_test_scores_btn.getAttribute("class").equals("active_tab"));
+		} catch (Exception e) {
+			js.executeScript("arguments[0].click();", homePage.test_scores_btn);
+			Thread.sleep(500);
+			UtilityMethods.wait_For_Test_Score_Detail_Section();
+		}
+		js.executeScript("arguments[0].click();", homePage.comparisontab);
+		Thread.sleep(500);
+		UtilityMethods.wait_For_Comparison_Tab_Section_Load_under_test_score();
+	}
+
+	public static void select_view_on_viewDropdown(String view_txt) {
+		try {
+			new Actions(Driver.webdriver).moveToElement(homePage.viewDropDown).click().build().perform();
+			Thread.sleep(500);
+			WebElement el;
+			if (view_txt.length() > 20) {
+				el = Driver.webdriver
+						.findElement(By.xpath("//li//div[@class='bec_tooltip_content' and contains(text(),'" + view_txt
+								+ "')]/ancestor::div[@class='standard-grid-filter-single-item']"));
+			} else {
+				el = Driver.webdriver.findElement(
+						By.xpath("//li//div[@class='standard-grid-filter-single-item' and contains(text(),'" + view_txt
+								+ "')]"));
+			}
+
+			el.click();
+
+		} catch (Exception e) {
+			processException(e);
+		}
+	}
+
+	public static void select_view_on_viewDropdown_on_Grouping_Tab(String view_txt) {
+		try {
+			new Actions(Driver.webdriver).moveToElement(homePage.DropDowns_on_grouping_tab.get(0)).click().build()
+					.perform();
+			Thread.sleep(500);
+			WebElement el = Driver.webdriver.findElement(By
+					.xpath("//div[@class='bec_groups_popup_dropdown_selectorList']/ul/li[text()='" + view_txt + "']"));
+
+			el.click();
+			Thread.sleep(3000);
+
+		} catch (Exception e) {
+			processException(e);
+		}
+	}
+	
+	public static void select_specific_district_term(String range) throws Throwable {
+		try {
+			homePage.datetab.click();
+			Thread.sleep(500);
+			homePage.districttermdropdownbtn.click();
+			Thread.sleep(500);
+			Driver.webdriver.findElement(By.xpath(
+					"//div[@class='menu-title' and contains(text(),'District Term')]/following-sibling::div//ul/li[contains(text(),'"+range+"')]"))
+					.click();
+			Thread.sleep(500);
+			homePage.dateapplybtn.click();			
+			IWait.explicit_wait(Driver.webdriver, homePage.studentmenu);
+		} catch (Exception e) {
+			UtilityMethods.processException(e);
 		}
 	}
 }

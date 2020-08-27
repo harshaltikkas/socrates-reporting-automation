@@ -712,7 +712,7 @@ public class Standard_Overview_Table_Steps {
 			Assert.assertTrue(homePage.active_test_scores_btn.getAttribute("class").equals("active_tab"));
 		} catch (Exception e) {
 			Thread.sleep(500);
-			jse.executeScript("arguments[0].click();", homePage.testscoresbtn);
+			jse.executeScript("arguments[0].click();", homePage.test_scores_btn);
 		}
 		UtilityMethods.wait_For_Test_Score_Detail_Section();
 		Standard_Overview_Table_Steps.testScoreMenuClicked = true;
@@ -726,7 +726,7 @@ public class Standard_Overview_Table_Steps {
 			Assert.assertTrue(homePage.active_test_scores_btn.getAttribute("class").equals("active_tab"));
 		} catch (Exception e) {
 			Thread.sleep(500);
-			jse.executeScript("arguments[0].click();", homePage.testscoresbtn);
+			jse.executeScript("arguments[0].click();", homePage.test_scores_btn);
 		}
 		UtilityMethods.wait_For_Test_Score_Detail_Section();
 		Standard_Overview_Table_Steps.testScoreMenuClicked = true;
@@ -751,7 +751,7 @@ public class Standard_Overview_Table_Steps {
 			Assert.assertTrue(homePage.active_test_scores_btn.getAttribute("class").equals("active"));
 		} catch (Exception e) {
 			Thread.sleep(500);
-			jse.executeScript("arguments[0].click();", homePage.testscoresbtn);
+			jse.executeScript("arguments[0].click();", homePage.test_scores_btn);
 			Thread.sleep(3000);
 		}
 		Standard_Overview_Table_Steps.testScoreMenuClicked = true;
@@ -963,7 +963,7 @@ public class Standard_Overview_Table_Steps {
 		try {
 			Assert.assertTrue(homePage.active_test_scores_btn.getAttribute("class").equals("active_tab"));
 		} catch (Exception e) {
-			jse.executeScript("arguments[0].click();", homePage.testscoresbtn);
+			jse.executeScript("arguments[0].click();", homePage.test_scores_btn);
 			Thread.sleep(1500);
 		}
 		UtilityMethods.wait_For_Test_Score_Overview_Section_Load();
@@ -1136,11 +1136,12 @@ public class Standard_Overview_Table_Steps {
 	@Then("^different coloured strips should be displayed$")
 	public void different_coloured_strips_should_be_displayed() throws Throwable {
 		try {
+			List<String> list = API_Connection.get_Achievement_Levels();
 			Assert.assertTrue(homePage.textoutgraystripinstudentlist.getText().equals("All"));
-			Assert.assertTrue(homePage.textoutredstripinstudentlist.getText().equals("< 40%"));
-			Assert.assertTrue(homePage.textoutorangestripinstudentlist.getText().equals("40-59%"));
-			Assert.assertTrue(homePage.textoutyellowstripinstudentlist.getText().equals("60-79%"));
-			Assert.assertTrue(homePage.textoutgreenstripinstudentlist.getText().equals("≥ 80%"));
+			Assert.assertTrue(homePage.textoutredstripinstudentlist.getText().equals("< "+(Integer.parseInt(list.get(0).substring(list.get(0).indexOf("-") + 1))+1)+"%"));
+			Assert.assertTrue(homePage.textoutorangestripinstudentlist.getText().equals(list.get(1)+"%"));
+			Assert.assertTrue(homePage.textoutyellowstripinstudentlist.getText().equals(list.get(2)+"%"));
+			Assert.assertTrue(homePage.textoutgreenstripinstudentlist.getText().equals("≥ "+list.get(3).substring(0, list.get(3).indexOf("-"))+"%"));
 			CBTConfiguration.score = "pass";
 		} catch (Exception e) {
 			UtilityMethods.processException(e);
@@ -1159,7 +1160,7 @@ public class Standard_Overview_Table_Steps {
 	public void click_on_different_coloured_strips_blue_strip_should_be_display_under_the_clicked_strip_and_the_no_of_student_records_with_that_colour_should_be_display()
 			throws Throwable {
 		try {
-
+			
 			int recordsOnClickedStrip = 0, totalCount = 0;
 			for (int x = 0; x < homePage.avg_score_colouredStripOnStudentList.size(); x++) {
 				if (!(homePage.TextInStripOnStudentList.get(x).getText().equals("0"))) {
@@ -1176,7 +1177,6 @@ public class Standard_Overview_Table_Steps {
 						new Actions(Driver.webdriver)
 								.moveToElement(homePage.circle_list_on_paginator_on_list_under_sp.get(0)).build()
 								.perform();
-						UtilityMethods.scrollPageDown(Driver.webdriver, 2);
 						Thread.sleep(500);
 						for (int i = 0; i <= homePage.circle_list_on_paginator_on_list_under_sp.size() - 1; i++) {
 							PaginationUtility_for_Pages.clicking_on_indexed_circle_of_paginator(

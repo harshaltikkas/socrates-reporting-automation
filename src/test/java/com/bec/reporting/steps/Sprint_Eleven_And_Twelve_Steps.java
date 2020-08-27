@@ -375,9 +375,11 @@ public class Sprint_Eleven_And_Twelve_Steps {
 		try {
 			Assert.assertTrue(homePage.activeschoolmenu.isDisplayed());
 			Assert.assertTrue(homePage.activestandardperformancebtn.isDisplayed());
+			UtilityMethods.select_view_on_viewDropdown("CaCCSS English Language Arts");
+			UtilityMethods.wait_For_Student_List_AND_OR_Class_List_Section_Load();
 			UtilityMethods.scrollPageDown(Driver.webdriver, 5);
 			Thread.sleep(500);
-			int randNo = UtilityMethods.generateRandomNumberBySkippingIndex(homePage.strandnameslist.size(), 0);
+			int randNo = UtilityMethods.generateRandomNumberBySkippingIndex(homePage.strandnameslist.size(), 0);			
 			new Actions(Driver.webdriver).moveToElement(homePage.strandnameslist.get(randNo)).click().build().perform();
 			UtilityMethods.wait_For_Student_List_AND_OR_Class_List_Section_Load();
 
@@ -388,7 +390,7 @@ public class Sprint_Eleven_And_Twelve_Steps {
 			Thread.sleep(500);
 			new Actions(Driver.webdriver).moveToElement(standardList.get(0)).click().build().perform();
 			UtilityMethods.wait_For_Student_List_AND_OR_Class_List_Section_Load();
-			UtilityMethods.scrollPageDown(Driver.webdriver, 8);Thread.sleep(500);
+			UtilityMethods.scrollPageDown(Driver.webdriver, 6);Thread.sleep(500);
 			Assert.assertTrue(homePage.noofquestionstext.isDisplayed());
 			new Actions(Driver.webdriver).moveToElement(homePage.classORSchoolNamesListInClassListPageHeaders.get(0))
 					.click().build().perform();
@@ -418,7 +420,7 @@ public class Sprint_Eleven_And_Twelve_Steps {
 			//UtilityMethods.wait_For_Context_Header_Section();
 			Assert.assertTrue(homePage.activeschoolmenu.isDisplayed());
 			Assert.assertTrue(homePage.activestandardperformancebtn.isDisplayed());
-			homePage.testscoresbtn.click();
+			homePage.test_scores_btn.click();
 			UtilityMethods.wait_For_Test_Score_Detail_Section();
 			Assert.assertTrue(homePage.testscoreovertimetext_underschool_undertest.isDisplayed());
 			UtilityMethods.scrollPageDown(Driver.webdriver, 5);

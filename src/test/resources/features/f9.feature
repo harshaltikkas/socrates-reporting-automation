@@ -92,6 +92,9 @@ Feature: Standard Overview Table and Chart
     When User Click on Standard Performance tab within the Class Context
     Then different coloured strips should be displayed   
     And click on different coloured strips,blue strip should be display under the clicked strip and the no. of student records with that colour should be display
+		Given User is on portal's login screen with username as "ls_teacher_one" and password as "password" and usertype as "realm_ls_dodea"
+    When User Click on Standard Performance tab within the Class Context
+    Then different coloured strips should be displayed 
 
   ##STORY 7a) Standards and Test Score Detail
   @Scenario43 @TC_001 @TC_002 @TC_004 @TC_007 @TC_008 @TC_009 @TC_0010 @TC_0011 @TC_0012 @TC_0013 @TC_0014

@@ -230,12 +230,20 @@ public class SprintSixAndSevenSteps {
 			UtilityMethods.scrollPageDown(Driver.webdriver, 2);
 			Thread.sleep(500);
 			boolean isClassComparePresence = false;
-			Thread.sleep(3000);
+			if (Standard_Overview_Table_Steps.underStudentContext) {
+				UtilityMethods.select_view_on_viewDropdown("CaCCSS English Language Arts");
+				UtilityMethods.wait_For_Performance_Over_Time_Line_Chart_Section_Load();
+			}
+
 			new Actions(Driver.webdriver).moveToElement(homePage.overviewtext).build().perform();
-			UtilityMethods.wait_For_Page_Section_Load();
-			int no = 0;
+			int no = UtilityMethods.generateRandomNumberBySkippingIndex(homePage.strandnameslist.size(), 0);
 			homePage.strandnameslist.get(no).click();
-			Thread.sleep(3000);
+			if (Standard_Overview_Table_Steps.underStudentContext) {
+				UtilityMethods.wait_For_Performance_Over_Time_Line_Chart_Section_Load();
+			}
+			else {
+				UtilityMethods.wait_For_Student_List_AND_OR_Class_List_Section_Load();
+			}
 
 			WebElement el = Driver.webdriver.findElements(By.xpath(
 					"//div[@class='overview-table-body']//div[@class='overview-table-row']//div[@class='overview-table-col']["
@@ -261,7 +269,6 @@ public class SprintSixAndSevenSteps {
 			} catch (Exception e) {
 				log.info("Compare Class Checkbox is not on SP in Class Context");
 			}
-			Thread.sleep(1000);
 
 			homePage.compareschoollabel.click();
 			Thread.sleep(1000);
@@ -413,7 +420,7 @@ public class SprintSixAndSevenSteps {
 								.perform();
 						Thread.sleep(1000);
 
-						Assert.assertTrue(homePage.highlightedtestName_onlinechart.isDisplayed());
+						Assert.assertTrue(homePage.highlightedtestName_onlinechart_on_pot.isDisplayed());
 						new Actions(Driver.webdriver).moveToElement(homePage.testScoresPercentageon_tso).click().build()
 								.perform();
 					}
@@ -436,7 +443,7 @@ public class SprintSixAndSevenSteps {
 									.build().perform();
 							Thread.sleep(1000);
 
-							Assert.assertTrue(homePage.highlightedtestName_onlinechart.isDisplayed());
+							Assert.assertTrue(homePage.highlightedtestName_onlinechart_on_pot.isDisplayed());
 							new Actions(Driver.webdriver).moveToElement(homePage.testScoresPercentageon_tso).click()
 									.build().perform();
 						}
@@ -453,7 +460,7 @@ public class SprintSixAndSevenSteps {
 							.click().build().perform();
 					Thread.sleep(500);
 
-					Assert.assertTrue(homePage.highlightedtestName_onlinechart.isDisplayed());
+					Assert.assertTrue(homePage.highlightedtestName_onlinechart_on_pot.isDisplayed());
 					new Actions(Driver.webdriver).moveToElement(homePage.testScoresPercentageon_tso).click().build()
 							.perform();
 				}

@@ -110,7 +110,7 @@ public class staging_failure {
 			homePage.returntopreviousreport.click();
 			Thread.sleep(2000);
 
-			homePage.testscoresbtn.click();
+			homePage.test_scores_btn.click();
 			Thread.sleep(4000);
 			Assert.assertTrue(homePage.nodatavailableforyourselection.isDisplayed());
 			Assert.assertTrue(homePage.returntopreviousreport.isDisplayed());

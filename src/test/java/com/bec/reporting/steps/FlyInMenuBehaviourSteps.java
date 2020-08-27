@@ -246,7 +246,8 @@ public class FlyInMenuBehaviourSteps {
 				// de-selecting first time"all" students
 				// This is to unselect all student from dropdown,as default is all selected
 				RosterTabUtilityMethods.uncheck_check_All("Student");
-				randomIndex = UtilityMethods.generateRandomNumberBySkippingIndex(homePage.studentlistwithall.size(), 0);
+				//randomIndex = UtilityMethods.generateRandomNumberBySkippingIndex(homePage.studentlistwithall.size(), 0);
+				randomIndex=1;
 				UtilityMethods.scroll_Div(homePage.studentlistwithall.get(randomIndex), 20);
 				Thread.sleep(500);
 				selectedStudent = homePage.studentlistwithall.get(randomIndex).getText();

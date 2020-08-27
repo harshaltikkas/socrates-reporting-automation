@@ -241,7 +241,7 @@ public class Sprint_Eight_And_Tenth_Steps {
 			homePage.testtypedropdown.click();
 			Thread.sleep(500);
 			int testTypeListSize = homePage.testtypecheckboxlist.size();
-			int num = UtilityMethods.generateRandomNumberBySkippingIndex(testTypeListSize, 0);
+			int num = UtilityMethods.generateRandomNumberBySkippingIndex(testTypeListSize, 0);			
 			new Actions(Driver.webdriver).moveToElement(homePage.testtypecheckboxlist.get(num)).click().build()
 					.perform();
 			Thread.sleep(500);
@@ -463,6 +463,8 @@ public class Sprint_Eight_And_Tenth_Steps {
 		try {
 			new Actions(Driver.webdriver).moveToElement(homePage.groupingTab).click().build().perform();
 			Thread.sleep(12000);
+			UtilityMethods.select_view_on_viewDropdown_on_Grouping_Tab("CaCCSS English Language Arts");
+			
 			new Actions(Driver.webdriver).moveToElement(homePage.selectStrandsOnGroupingTab).click().build().perform();
 			Thread.sleep(1000);
 			new Actions(Driver.webdriver).moveToElement(homePage.selectStrandsListInDropdownGroupingTab.get(0)).click()
