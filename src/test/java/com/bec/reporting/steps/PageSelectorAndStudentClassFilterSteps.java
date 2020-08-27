@@ -73,7 +73,7 @@ public class PageSelectorAndStudentClassFilterSteps {
 			JavascriptExecutor jse2 = (JavascriptExecutor)Driver.webdriver;
 			UtilityMethods.scrollPageUp(Driver.webdriver);Thread.sleep(500);
 			UtilityMethods.wait_For_Context_Header_Section();
-			jse2.executeScript("arguments[0].click();", homePage.testscoresbtn);
+			jse2.executeScript("arguments[0].click();", homePage.test_scores_btn);
 			Thread.sleep(3000);
 			Assert.assertTrue(homePage.activeclassmenu.getAttribute("class").contains("active"));
 			try {

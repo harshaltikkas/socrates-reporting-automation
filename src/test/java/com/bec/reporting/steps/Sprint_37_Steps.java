@@ -201,7 +201,7 @@ public class Sprint_37_Steps {
 			view_Names_on_dd = UtilityMethods.getViewNames_From_View_DropDown_on_SP();
 
 			homePage.printIcon.click();
-			Thread.sleep(2000);
+			Thread.sleep(3000);
 			Assert.assertTrue(homePage.print_Report_Overlay_on_print_popup.isDisplayed());
 			Assert.assertTrue(homePage.view_title_on_model.isDisplayed());
 			Assert.assertTrue(homePage.batch_print_title.isDisplayed());

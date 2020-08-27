@@ -40,7 +40,7 @@ Feature: Sprint 8 and 10 User Stories
     Given User is on portal's login screen with username as "teacher_one" and password as "password" and usertype as "realm_one"
     Then verify Test Data assessed for Grade dropdown within the Grouping tab selection window
 
-  ##BE-910,911,912,913 
+  ##BE-910,911,912,913
   Scenario: Verify To check The Strand and or Standard element of the grouping table within the grouping page
     Given User is on portal's login screen with username as "teacher_one" and password as "password" and usertype as "realm_one"
     Then verify To check The Strand and or Standard element of the grouping table within the grouping page

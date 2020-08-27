@@ -80,7 +80,7 @@ public class Single_Test_Analysis_Steps {
 			Assert.assertTrue(homePage.partial_questions_on_reportingkey.isDisplayed());
 			Assert.assertTrue(homePage.not_answered_questions_on_reportingkey.isDisplayed());
 
-			js.executeScript("arguments[0].click();", homePage.testscoresbtn);
+			js.executeScript("arguments[0].click();", homePage.test_scores_btn);
 			Thread.sleep(4000);
 			IWait.check_Absence_of_Element(homePage.correct_questions_on_reportingkey);
 			IWait.check_Absence_of_Element(homePage.incorrect_questions_on_reportingkey);
@@ -129,8 +129,11 @@ public class Single_Test_Analysis_Steps {
 			Thread.sleep(500);
 			UtilityMethods.scrollPageDown(Driver.webdriver, 8);
 			Thread.sleep(1000);
-			int testCount = homePage.testnameslist_on_test_tab.size();
-			int index=UtilityMethods.generateRandomNumberBySkippingIndex(testCount, 0);
+			/*
+			 * int testCount = homePage.testnameslist_on_test_tab.size(); int
+			 * index=UtilityMethods.generateRandomNumberBySkippingIndex(testCount, 0);
+			 */
+			int index=1;
 			log.info("new selected test is:"+homePage.testnameslist_on_test_tab.get(index).getText());
 			homePage.testnameslist_on_test_tab.get(index).click();
 			Thread.sleep(500);

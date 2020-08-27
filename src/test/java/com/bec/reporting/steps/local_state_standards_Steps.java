@@ -2,21 +2,17 @@ package com.bec.reporting.steps;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
-
 import org.junit.Assert;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.PageFactory;
-
 import com.bec.reporting.pageobjects.HomePage;
 import com.bec.reporting.utils.CBTConfiguration;
 import com.bec.reporting.utils.Driver;
 import com.bec.reporting.utils.RosterTabUtilityMethods;
 import com.bec.reporting.utils.UtilityMethods;
-
 import cucumber.api.java.en.Then;
 import lombok.extern.slf4j.Slf4j;
 
@@ -45,21 +41,22 @@ public class local_state_standards_Steps {
 			homePage.viewDropDownList.get(0).click();
 			UtilityMethods.wait_For_Student_List_AND_OR_Class_List_Section_Load();
 
-			List<String> before_dot = new LinkedList<String>();
-			List<String> between_dot = new LinkedList<String>();
-			List<String> after_dot = new LinkedList<String>();
 			String stname;
+			int index_one, index_two, index_three;
 			for (int i = 0; i < homePage.standardnameslist.size(); i++) {
 				stname = homePage.standardnameslist.get(i).getText();
-				before_dot.add(stname.substring(0, stname.indexOf(".")).trim());
-				between_dot.add(stname.substring(stname.indexOf(".") + 1, stname.lastIndexOf(".")).trim());
-				after_dot.add(stname.substring(stname.lastIndexOf(".") + 1).trim());
-			}
+				index_one = stname.indexOf(".");
+				index_two = stname.indexOf(".", index_one + 1);
+				index_three = stname.indexOf(".", index_two + 1);
 
-			for (int i = 0; i < homePage.standardnameslist.size(); i++) {
-				Assert.assertTrue(UtilityMethods.isNumber(before_dot.get(i)));
-				Assert.assertTrue(UtilityMethods.isAlphabate(between_dot.get(i)));
-				Assert.assertTrue(UtilityMethods.isNumber(after_dot.get(i)));
+				Assert.assertTrue(UtilityMethods.isNumber(stname.substring(0, index_one).trim()));
+				Assert.assertTrue(UtilityMethods.isAlphabate(stname.substring(index_one + 1, index_two).trim()));
+				if (index_three == -1) {
+					Assert.assertTrue(UtilityMethods.isNumber(stname.substring(index_two + 1).trim()));
+				} else {
+					Assert.assertTrue(UtilityMethods.isNumber(stname.substring(index_two + 1, index_three).trim()));
+					Assert.assertTrue(UtilityMethods.isAlphabate(stname.substring(index_three + 1).trim()));
+				}
 			}
 
 			new Actions(Driver.webdriver).moveToElement(homePage.standardnameslist.get(0)).click().build().perform();
@@ -130,7 +127,7 @@ public class local_state_standards_Steps {
 			Thread.sleep(1000);
 			String view_name = homePage.viewDropDownToolTipText.getText();
 			js.executeScript("arguments[0].click();", homePage.groupingTab);
-			Thread.sleep(12000);
+			Thread.sleep(10000);
 			Assert.assertTrue(homePage.testAssessedForGradeGroupingTab.isDisplayed());
 			Assert.assertTrue(homePage.view_txt_on_GroupingTab_popup.getText().equals(view_name));
 			for (int i = 0; i < strand_names_on_sp.size(); i++) {
@@ -193,7 +190,7 @@ public class local_state_standards_Steps {
 			UtilityMethods.wait_For_STA_Section_Load();
 			homePage.filter_in_sta_for_district.click();
 			Thread.sleep(2000);
-			Assert.assertTrue(homePage.chkbox_list_text_under_view_on_sta_filter.get(1).getText().startsWith("AZ"));
+			Assert.assertTrue(homePage.chkbox_list_text_under_view_on_sta_filter.get(2).getText().startsWith("AZ"));
 			homePage.cancel_button_on_filter_in_sta.click();
 			Thread.sleep(1000);
 			Assert.assertTrue(homePage.view_text_in_sta_table_header.get(0).getText().startsWith("AZ"));
@@ -222,21 +219,22 @@ public class local_state_standards_Steps {
 			homePage.viewDropDownList.get(0).click();
 			UtilityMethods.wait_For_Performance_Over_Time_Line_Chart_Section_Load();
 
-			List<String> before_dot = new LinkedList<String>();
-			List<String> between_dot = new LinkedList<String>();
-			List<String> after_dot = new LinkedList<String>();
 			String stname;
+			int index_one, index_two, index_three;
 			for (int i = 0; i < homePage.standardnameslist.size(); i++) {
 				stname = homePage.standardnameslist.get(i).getText();
-				before_dot.add(stname.substring(0, stname.indexOf(".")).trim());
-				between_dot.add(stname.substring(stname.indexOf(".") + 1, stname.lastIndexOf(".")).trim());
-				after_dot.add(stname.substring(stname.lastIndexOf(".") + 1).trim());
-			}
+				index_one = stname.indexOf(".");
+				index_two = stname.indexOf(".", index_one + 1);
+				index_three = stname.indexOf(".", index_two + 1);
 
-			for (int i = 0; i < homePage.standardnameslist.size(); i++) {
-				Assert.assertTrue(UtilityMethods.isNumber(before_dot.get(i)));
-				Assert.assertTrue(UtilityMethods.isAlphabate(between_dot.get(i)));
-				Assert.assertTrue(UtilityMethods.isNumber(after_dot.get(i)));
+				Assert.assertTrue(UtilityMethods.isNumber(stname.substring(0, index_one).trim()));
+				Assert.assertTrue(UtilityMethods.isAlphabate(stname.substring(index_one + 1, index_two).trim()));
+				if (index_three == -1) {
+					Assert.assertTrue(UtilityMethods.isNumber(stname.substring(index_two + 1).trim()));
+				} else {
+					Assert.assertTrue(UtilityMethods.isNumber(stname.substring(index_two + 1, index_three).trim()));
+					Assert.assertTrue(UtilityMethods.isAlphabate(stname.substring(index_three + 1).trim()));
+				}
 			}
 
 			new Actions(Driver.webdriver).moveToElement(homePage.standardnameslist.get(0)).build().perform();
@@ -347,21 +345,22 @@ public class local_state_standards_Steps {
 			Assert.assertTrue(homePage.viewDropDownList.get(0).getText().startsWith("AZ"));
 			homePage.viewDropDownList.get(0).click();
 			UtilityMethods.wait_For_Student_List_AND_OR_Class_List_Section_Load();
-			List<String> before_dot = new LinkedList<String>();
-			List<String> between_dot = new LinkedList<String>();
-			List<String> after_dot = new LinkedList<String>();
 			String stname;
+			int index_one, index_two, index_three;
 			for (int i = 0; i < homePage.standardnameslist.size(); i++) {
 				stname = homePage.standardnameslist.get(i).getText();
-				before_dot.add(stname.substring(0, stname.indexOf(".")).trim());
-				between_dot.add(stname.substring(stname.indexOf(".") + 1, stname.lastIndexOf(".")).trim());
-				after_dot.add(stname.substring(stname.lastIndexOf(".") + 1).trim());
-			}
+				index_one = stname.indexOf(".");
+				index_two = stname.indexOf(".", index_one + 1);
+				index_three = stname.indexOf(".", index_two + 1);
 
-			for (int i = 0; i < homePage.standardnameslist.size(); i++) {
-				Assert.assertTrue(UtilityMethods.isNumber(before_dot.get(i)));
-				Assert.assertTrue(UtilityMethods.isAlphabate(between_dot.get(i)));
-				Assert.assertTrue(UtilityMethods.isNumber(after_dot.get(i)));
+				Assert.assertTrue(UtilityMethods.isNumber(stname.substring(0, index_one).trim()));
+				Assert.assertTrue(UtilityMethods.isAlphabate(stname.substring(index_one + 1, index_two).trim()));
+				if (index_three == -1) {
+					Assert.assertTrue(UtilityMethods.isNumber(stname.substring(index_two + 1).trim()));
+				} else {
+					Assert.assertTrue(UtilityMethods.isNumber(stname.substring(index_two + 1, index_three).trim()));
+					Assert.assertTrue(UtilityMethods.isAlphabate(stname.substring(index_three + 1).trim()));
+				}
 			}
 
 			new Actions(Driver.webdriver).moveToElement(homePage.standardnameslist.get(0)).click().build().perform();
@@ -411,7 +410,7 @@ public class local_state_standards_Steps {
 			UtilityMethods.wait_For_STA_Section_Load();
 			homePage.filter_in_sta_for_district.click();
 			Thread.sleep(2000);
-			Assert.assertTrue(homePage.chkbox_list_text_under_view_on_sta_filter.get(1).getText().startsWith("AZ"));
+			Assert.assertTrue(homePage.chkbox_list_text_under_view_on_sta_filter.get(2).getText().startsWith("AZ"));
 			homePage.cancel_button_on_filter_in_sta.click();
 			Thread.sleep(1000);
 			Assert.assertTrue(homePage.view_text_in_sta_table_header.get(0).getText().startsWith("AZ"));
@@ -484,14 +483,14 @@ public class local_state_standards_Steps {
 			new Actions(Driver.webdriver).moveToElement(homePage.viewDropDown).click().build().perform();
 			Thread.sleep(500);
 			Assert.assertTrue(homePage.viewDropDownList.get(0).getText().startsWith("AZ"));
-			homePage.viewDropDownList.get(0).click();
-			UtilityMethods.wait_For_Student_List_AND_OR_Class_List_Section_Load();
+			new Actions(Driver.webdriver).moveToElement(homePage.viewDropDown).click().build().perform();
+			Thread.sleep(500);
 			List<String> strand_names_on_sp = UtilityMethods.get_Strand_Names_From_Standard_Performance_Tabel();
 			new Actions(Driver.webdriver).moveToElement(homePage.viewDropDown).build().perform();
 			Thread.sleep(1000);
 			String view_name = homePage.viewDropDownToolTipText.getText();
 			js.executeScript("arguments[0].click();", homePage.comparisontab);
-			Thread.sleep(25000);
+			Thread.sleep(20000);
 			Assert.assertTrue(homePage.dropDowns_on_edit_standards_on_pop_up.get(0).getText().equals(view_name));
 			for (int i = 0; i < strand_names_on_sp.size(); i++) {
 				Assert.assertTrue(strand_names_on_sp.get(i)
@@ -524,7 +523,7 @@ public class local_state_standards_Steps {
 			Thread.sleep(500);
 			Assert.assertTrue(homePage.schoolListPageTooltipForClass.getText()
 					.equals("Schools Assessed Online/Schools Rostered"));
-			js.executeScript("arguments[0].click();", homePage.testscoresbtn);
+			js.executeScript("arguments[0].click();", homePage.test_scores_btn);
 			Thread.sleep(500);
 			UtilityMethods.wait_For_Test_Score_Detail_Section();
 			new Actions(Driver.webdriver).moveToElement(homePage.classORSchoolListPageHeadersList.get(0)).build()
@@ -582,7 +581,7 @@ public class local_state_standards_Steps {
 			Thread.sleep(500);
 			Assert.assertTrue(
 					homePage.classListPageTooltipForClass.getText().equals("Classes Assessed Online/Classes Rostered"));
-			js.executeScript("arguments[0].click();", homePage.testscoresbtn);
+			js.executeScript("arguments[0].click();", homePage.test_scores_btn);
 			Thread.sleep(500);
 			UtilityMethods.wait_For_Test_Score_Detail_Section();
 			new Actions(Driver.webdriver).moveToElement(homePage.classORSchoolListPageHeadersList.get(0)).build()
@@ -638,16 +637,16 @@ public class local_state_standards_Steps {
 			new Actions(Driver.webdriver).moveToElement(homePage.classORSchoolListPageHeadersList.get(0)).build()
 					.perform();
 			Thread.sleep(500);
-			Assert.assertTrue(homePage.studentListPageTooltip.getText()
-					.equals("Students Assessed Online/Students Rostered"));
-			js.executeScript("arguments[0].click();", homePage.testscoresbtn);
+			Assert.assertTrue(
+					homePage.studentListPageTooltip.getText().equals("Students Assessed Online/Students Rostered"));
+			js.executeScript("arguments[0].click();", homePage.test_scores_btn);
 			Thread.sleep(500);
 			UtilityMethods.wait_For_Test_Score_Detail_Section();
 			new Actions(Driver.webdriver).moveToElement(homePage.classORSchoolListPageHeadersList.get(0)).build()
 					.perform();
 			Thread.sleep(500);
-			Assert.assertTrue(homePage.studentListPageTooltip.getText()
-					.equals("Students Assessed Online/Students Rostered"));
+			Assert.assertTrue(
+					homePage.studentListPageTooltip.getText().equals("Students Assessed Online/Students Rostered"));
 			UtilityMethods.scrollPageDown(Driver.webdriver, 3);
 			Thread.sleep(500);
 			homePage.rostertab.click();
@@ -671,8 +670,8 @@ public class local_state_standards_Steps {
 			new Actions(Driver.webdriver).moveToElement(homePage.classORSchoolListPageHeadersList.get(0)).build()
 					.perform();
 			Thread.sleep(500);
-			Assert.assertTrue(homePage.studentListPageTooltip.getText()
-					.equals("Students Assessed Online/Students Selected"));
+			Assert.assertTrue(
+					homePage.studentListPageTooltip.getText().equals("Students Assessed Online/Students Selected"));
 			js.executeScript("arguments[0].click();", homePage.standardperformancebtn);
 			Thread.sleep(500);
 			UtilityMethods.wait_For_Student_List_AND_OR_Class_List_Section_Load();
@@ -680,8 +679,8 @@ public class local_state_standards_Steps {
 			new Actions(Driver.webdriver).moveToElement(homePage.classORSchoolListPageHeadersList.get(0)).build()
 					.perform();
 			Thread.sleep(500);
-			Assert.assertTrue(homePage.studentListPageTooltip.getText()
-					.equals("Students Assessed Online/Students Selected"));
+			Assert.assertTrue(
+					homePage.studentListPageTooltip.getText().equals("Students Assessed Online/Students Selected"));
 			CBTConfiguration.score = "pass";
 		} catch (Exception e) {
 			UtilityMethods.processException(e);

@@ -48,9 +48,9 @@ Feature: Spint 9 User Stories
   #When User click on Student Context and Test Score button
   #Then verify Context header content for the Standards Overview context selected shown in all PDF's
   #When User Click on Standard Performance tab within the Student Context
-  #Then verify Context header content for the Standards Overview context selected shown in all PDF's
+  #Then verify Context header content for the Standards Overview context selected shown in all PDF's 
+  
  
-  ## Verifying View Texonomy on Standard Performance
   Scenario: Verify View Texonomy on Standard Performance
     Given User is on portal's login screen with username as "teacher_one" and password as "password" and usertype as "realm_one"
     When User Click on Standard Performance tab within the Class Context

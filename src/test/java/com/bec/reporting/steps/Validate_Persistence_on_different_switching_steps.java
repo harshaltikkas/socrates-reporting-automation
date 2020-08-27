@@ -47,7 +47,7 @@ public class Validate_Persistence_on_different_switching_steps {
 			test_name_on_ch = UtilityMethods.getTestsNameonUI();
 			Assert.assertTrue(testname.equals(test_name_on_ch));
 
-			jse.executeScript("arguments[0].click();", homePage.testscoresbtn);
+			jse.executeScript("arguments[0].click();", homePage.test_scores_btn);
 			UtilityMethods.wait_For_Test_Score_Detail_Section();
 
 			jse.executeScript("arguments[0].click();", homePage.comparisontab);
@@ -801,13 +801,7 @@ public class Validate_Persistence_on_different_switching_steps {
 			Assert.assertTrue(homePage.activedistrictmenu.isDisplayed());
 			Assert.assertTrue(homePage.activestandardperformancebtn.isDisplayed());
 			jse.executeScript("arguments[0].click();", homePage.comparisontab);
-			UtilityMethods.wait_For_Standards_Pop_up_Load();
-			new Actions(Driver.webdriver).moveToElement(homePage.dropDowns_on_edit_standards_on_pop_up.get(0)).click()
-					.build().perform();
-			Thread.sleep(500);
-			new Actions(Driver.webdriver).moveToElement(homePage.viewDropDown_list_on_edit_standards_on_pop_up.get(2))
-					.click().build().perform();
-			Thread.sleep(1000);
+			Thread.sleep(15000);
 			String view_name_on_pop_up = homePage.dropDowns_on_edit_standards_on_pop_up.get(0).getText();
 			log.info("view name from popup on District menu:" + view_name_on_pop_up);
 			new Actions(Driver.webdriver).moveToElement(homePage.applyBtnOnstandardTab).click().build().perform();

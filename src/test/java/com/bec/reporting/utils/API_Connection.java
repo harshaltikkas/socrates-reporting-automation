@@ -36,12 +36,13 @@ public class API_Connection {
 		try {
 			prop = FileRead.readProperties();
 			String apiUrl;
+
 			String payload = "{\n" + "  \"username\": \"" + FlyInMenuBehaviourSteps.uname + "\",\n"
 					+ "  \"password\": \"" + FlyInMenuBehaviourSteps.passwd + "\",\n" + "  \"realm\": \""
 					+ FlyInMenuBehaviourSteps.realm + "\"\n" + "}";
 
 			/*
-			 * String payload = "{\n" + "  \"username\": \"Failly353175\",\n" +
+			 * String payload = "{\n" + "  \"username\": \"Drind1999348274\",\n" +
 			 * "  \"password\": \"password\",\n" + "  \"realm\": \"sulphur\"\n" + "}";
 			 */
 
@@ -51,8 +52,8 @@ public class API_Connection {
 			} else {
 				apiUrl = prop.getProperty("atlantis_api_url");
 			}
-			Response response = RestAssured.given().header("Content-Type", "application/json").body(payload)
-					.post(apiUrl);
+			Response response = RestAssured.given().header("Content-Type", "application/json")
+					.body(payload).post(apiUrl);
 			if (response.getStatusCode() != 200) {
 				log.info("Error occurred. status code : " + response.getStatusCode());
 				return null;
@@ -73,19 +74,18 @@ public class API_Connection {
 	 * @return
 	 */
 	public static String getUserRole() {
-		String user_role = "",apiUrl="";
-		try {					
+		String user_role = "", apiUrl = "";
+		try {
 			prop = FileRead.readProperties();
 			if (prop.getProperty("app_env").equalsIgnoreCase("staging")
 					|| prop.getProperty("app_env").equalsIgnoreCase("prod")) {
 				apiUrl = prop.getProperty("stg_apiURL") + "/user/skus?values=X58691,X69071,X70225";
-			} else if (prop.getProperty("app_env").equalsIgnoreCase("dev")){
+			} else if (prop.getProperty("app_env").equalsIgnoreCase("dev")) {
 				apiUrl = prop.getProperty("dev_apiURL") + "/user/skus?values=X58691,X69071,X70225";
-			}
-			else if (prop.getProperty("app_env").equalsIgnoreCase("uat")){
+			} else if (prop.getProperty("app_env").equalsIgnoreCase("uat")) {
 				apiUrl = prop.getProperty("master_apiURL") + "/user/skus?values=X58691,X69071,X70225";
 			}
-			
+
 			Response response = RestAssured.given().header("Authorization", "Bearer " + FlyInMenuBehaviourSteps.token)
 					.contentType("application/json").get(apiUrl);
 
@@ -100,6 +100,49 @@ public class API_Connection {
 			UtilityMethods.processException(e);
 		}
 		return user_role;
+	}
+
+	public static List<String> get_Achievement_Levels() {
+		List<String> list = new ArrayList<String>();		
+		try {
+			prop = FileRead.readProperties();
+			String apiUrl = "";
+			if (prop.getProperty("app_env").equalsIgnoreCase("staging")
+					|| prop.getProperty("app_env").equalsIgnoreCase("prod")) {
+				apiUrl = prop.getProperty("stg_apiURL") + "/universalselector/default";
+			} else if (prop.getProperty("app_env").equalsIgnoreCase("dev")) {
+				apiUrl = prop.getProperty("dev_apiURL") + "/universalselector/default";
+			} else if (prop.getProperty("app_env").equalsIgnoreCase("uat")) {
+				apiUrl = prop.getProperty("master_apiURL") + "/universalselector/default";
+			}
+
+			String payload = "{\n" + "\"termId\":null,\n" + "\"IS_ORR_ACCESSIBLE\":false,\n" + "\"schoolId\":\"\",\n"
+					+ "\"currentTermId\":null,\n" + "\"isDistrictEnabled\":true\n}";
+
+			Response response = RestAssured.given().header("Authorization", "Bearer " + FlyInMenuBehaviourSteps.token)
+					.contentType("application/json").body(payload).post(apiUrl);
+
+			if (response.getStatusCode() != 200) {
+				log.info("Error occurred. status code : " + response.getStatusCode());
+				return null;
+			} else {
+				Map<Object, Object> value = new JsonPath(response.asString())
+						.get("value.preferences.achievementlevels");
+				TreeMap<Object, Object> tm = new TreeMap<Object, Object>(value);
+				for (Map.Entry<Object, Object> map : tm.entrySet()) {
+					list.add(String.valueOf(map.getValue()));
+				}
+			}		
+
+		} catch (Exception e) {
+			log.error(e.getMessage());
+			UtilityMethods.processException(e);
+		}
+		return list;
+	}
+
+	public static void main(String args[]) {
+		get_Achievement_Levels();
 	}
 
 	/**
@@ -483,9 +526,5 @@ public class API_Connection {
 			UtilityMethods.processException(e);
 		}
 		return map;
-	}
-
-	public static void main(String args[]) {
-		getViewDetails();
 	}
 }

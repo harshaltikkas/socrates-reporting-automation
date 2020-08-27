@@ -69,6 +69,7 @@ public class TestTabDesignAndBehaviourSteps {
 		try {
 			// calling method to view the pagination on test tab
 			Standard_Overview_Table_Steps.paginationontesttab();
+			UtilityMethods.wait_For_Student_List_AND_OR_Class_List_Section_Load();
 			homePage.testtab.click();
 			IWait.explicit_wait(Driver.webdriver, homePage.searchbarontesttab);
 			Verify.verify(homePage.searchbarontesttab.isDisplayed());
