@@ -209,7 +209,8 @@ public class UtilityMethods {
 			} else {
 				Assert.assertTrue(element.getAttribute("fill").equalsIgnoreCase("#32AC41"));
 			}
-			
+			// TODO This section will uncomment when POT graph has new changes with
+			// customize band
 			/*
 			 * List<String> list=API_Connection.get_Achievement_Levels();
 			 * 
@@ -247,13 +248,18 @@ public class UtilityMethods {
 	 */
 	public static boolean verifyColorAndScoreOnStudentList(WebElement element, int scoreValue) {
 		try {
-			if (scoreValue < 40) {
+			List<String> list = API_Connection.get_Achievement_Levels();
+			if (scoreValue >= Integer.parseInt(list.get(0).substring(0, list.get(0).indexOf("-")))
+					&& scoreValue <= Integer.parseInt(list.get(0).substring(list.get(0).indexOf("-") + 1))) {
 				Assert.assertTrue(element.getAttribute("class").equalsIgnoreCase("student-list-grade red"));
-			} else if (scoreValue >= 40 && scoreValue <= 59) {
+			} else if (scoreValue >= Integer.parseInt(list.get(1).substring(0, list.get(1).indexOf("-")))
+					&& scoreValue <= Integer.parseInt(list.get(1).substring(list.get(1).indexOf("-") + 1))) {
 				Assert.assertTrue(element.getAttribute("class").equalsIgnoreCase("student-list-grade orange"));
-			} else if (scoreValue >= 60 && scoreValue <= 79) {
+			} else if (scoreValue >= Integer.parseInt(list.get(2).substring(0, list.get(2).indexOf("-")))
+					&& scoreValue <= Integer.parseInt(list.get(2).substring(list.get(2).indexOf("-") + 1))) {
 				Assert.assertTrue(element.getAttribute("class").equalsIgnoreCase("student-list-grade yellow"));
-			} else {
+			} else if (scoreValue >= Integer.parseInt(list.get(3).substring(0, list.get(3).indexOf("-")))
+					&& scoreValue <= Integer.parseInt(list.get(3).substring(list.get(3).indexOf("-") + 1))) {
 				Assert.assertTrue(element.getAttribute("class").equalsIgnoreCase("student-list-grade green"));
 			}
 			return true;
@@ -371,8 +377,10 @@ public class UtilityMethods {
 			Actions dragger = new Actions(Driver.webdriver);
 			if (ctr >= 1) {
 				scrollPageDown(Driver.webdriver, 2);
+				Thread.sleep(500);
 			}
 			ctr++;
+			Thread.sleep(500);
 			dragger.moveToElement(webelement).clickAndHold().moveByOffset(0, scrollPoints).build().perform();
 			Thread.sleep(500);
 			if (webelement.getText().equals("")) {
@@ -1252,8 +1260,9 @@ public class UtilityMethods {
 
 	/**
 	 * This method is used to wait till the loading of context header section
+	 * @throws InterruptedException 
 	 */
-	public static void wait_For_Context_Header_Section() {
+	public static void wait_For_Context_Header_Section() throws InterruptedException {
 		String firstData;
 		boolean isSectionLoad = false;
 
@@ -1277,6 +1286,7 @@ public class UtilityMethods {
 			log.info("Context Header Section is now clickable");
 			isSectionLoad = true;
 			new Actions(Driver.webdriver).moveByOffset(20, 20).build().perform();
+			Thread.sleep(500);
 		}
 	}
 
@@ -1770,7 +1780,7 @@ public class UtilityMethods {
 			processException(e);
 		}
 	}
-	
+
 	public static void select_specific_district_term(String range) throws Throwable {
 		try {
 			homePage.datetab.click();
@@ -1778,10 +1788,11 @@ public class UtilityMethods {
 			homePage.districttermdropdownbtn.click();
 			Thread.sleep(500);
 			Driver.webdriver.findElement(By.xpath(
-					"//div[@class='menu-title' and contains(text(),'District Term')]/following-sibling::div//ul/li[contains(text(),'"+range+"')]"))
+					"//div[@class='menu-title' and contains(text(),'District Term')]/following-sibling::div//ul/li[contains(text(),'"
+							+ range + "')]"))
 					.click();
 			Thread.sleep(500);
-			homePage.dateapplybtn.click();			
+			homePage.dateapplybtn.click();
 			IWait.explicit_wait(Driver.webdriver, homePage.studentmenu);
 		} catch (Exception e) {
 			UtilityMethods.processException(e);

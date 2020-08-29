@@ -281,6 +281,8 @@ public class Validate_Persistence_on_different_switching_steps {
 	public void verify_User_is_switched_to_School_and_Class_subway_is_enabled_and_Student_subway_is_disabled()
 			throws Throwable {
 		try {
+			UtilityMethods.scrollPageUp(Driver.webdriver);
+			Thread.sleep(500);
 			Assert.assertTrue(homePage.activeschoolmenu.isDisplayed());
 			Assert.assertTrue(homePage.classmenu.isDisplayed());
 			new Actions(Driver.webdriver).moveToElement(homePage.studentmenu).build().perform();
@@ -391,7 +393,7 @@ public class Validate_Persistence_on_different_switching_steps {
 			Thread.sleep(500);
 			homePage.rosterapplybtn.click();
 			UtilityMethods.wait_For_Student_List_AND_OR_Class_List_Section_Load();
-			UtilityMethods.scrollPageUp(Driver.webdriver, 4);
+			UtilityMethods.scrollPageUp(Driver.webdriver);
 			Thread.sleep(500);
 		} catch (Exception e) {
 			UtilityMethods.processException(e);
@@ -440,7 +442,7 @@ public class Validate_Persistence_on_different_switching_steps {
 			Thread.sleep(500);
 			homePage.rosterapplybtn.click();
 			UtilityMethods.wait_For_Student_List_AND_OR_Class_List_Section_Load();
-			UtilityMethods.scrollPageUp(Driver.webdriver, 4);
+			UtilityMethods.scrollPageUp(Driver.webdriver);
 			Thread.sleep(500);
 		} catch (Exception e) {
 			UtilityMethods.processException(e);
@@ -468,7 +470,7 @@ public class Validate_Persistence_on_different_switching_steps {
 			}
 			homePage.rosterapplybtn.click();
 			UtilityMethods.wait_For_Performance_Over_Time_Line_Chart_Section_Load();
-			UtilityMethods.scrollPageUp(Driver.webdriver, 4);
+			UtilityMethods.scrollPageUp(Driver.webdriver);
 			Thread.sleep(500);
 		} catch (Exception e) {
 			UtilityMethods.processException(e);
@@ -547,7 +549,7 @@ public class Validate_Persistence_on_different_switching_steps {
 			Thread.sleep(500);
 			homePage.rosterapplybtn.click();
 			UtilityMethods.wait_For_Student_List_AND_OR_Class_List_Section_Load();
-			UtilityMethods.scrollPageUp(Driver.webdriver, 4);
+			UtilityMethods.scrollPageUp(Driver.webdriver);
 			Thread.sleep(500);
 		} catch (Exception e) {
 			UtilityMethods.processException(e);
@@ -563,7 +565,7 @@ public class Validate_Persistence_on_different_switching_steps {
 			}
 			Assert.assertTrue(homePage.schoolmenu.isDisplayed());
 			Assert.assertTrue(homePage.studentmenu.isDisplayed());
-			UtilityMethods.wait_For_Student_List_AND_OR_Class_List_Section_Load();
+
 			CBTConfiguration.score = "pass";
 		} catch (Exception e) {
 			UtilityMethods.processException(e);
@@ -594,6 +596,7 @@ public class Validate_Persistence_on_different_switching_steps {
 			homePage.rostertab.click();
 			Thread.sleep(500);
 			homePage.teachersdropdownbtn.click();
+			Thread.sleep(500);
 			RosterTabUtilityMethods.uncheck_check_All("Teacher");
 			Thread.sleep(500);
 			homePage.searchbaronteacherdropdown.sendKeys("Travis Bruce");
@@ -606,10 +609,13 @@ public class Validate_Persistence_on_different_switching_steps {
 			Thread.sleep(500);
 			Driver.webdriver.findElementByXPath("//li[.='Randy Grant']").click();
 			Thread.sleep(500);
+			homePage.teachersdropdownbtn.click();
+			Thread.sleep(500);
 			UtilityMethods.scrollPageDown(Driver.webdriver, 4);
 			homePage.rosterapplybtn.click();
 			UtilityMethods.wait_For_Student_List_AND_OR_Class_List_Section_Load();
-			UtilityMethods.scrollPageUp(Driver.webdriver, 4);
+			UtilityMethods.scrollPageUp(Driver.webdriver);
+			Thread.sleep(500);
 		} catch (Exception e) {
 			UtilityMethods.processException(e);
 		}
@@ -621,7 +627,9 @@ public class Validate_Persistence_on_different_switching_steps {
 			homePage.rostertab.click();
 			Thread.sleep(500);
 			homePage.teachersdropdownbtn.click();
+			Thread.sleep(500);
 			RosterTabUtilityMethods.uncheck_check_All("Teacher");
+			homePage.teachersdropdownbtn.click();
 			Thread.sleep(500);
 			RosterTabUtilityMethods.select_Class_In_Class_DropDown("Grade 6 - Hines - 0");
 			RosterTabUtilityMethods.select_Student_In_Student_DropDown("Paul Blair");
@@ -662,6 +670,7 @@ public class Validate_Persistence_on_different_switching_steps {
 			Driver.webdriver.findElementByXPath("//li[.='Daniel Castillo']").click();
 			Thread.sleep(500);
 			homePage.studentdropdownbtn.click();
+			Thread.sleep(500);
 			homePage.rosterapplybtn.click();
 			UtilityMethods.wait_For_Student_List_AND_OR_Class_List_Section_Load();
 		} catch (Exception e) {

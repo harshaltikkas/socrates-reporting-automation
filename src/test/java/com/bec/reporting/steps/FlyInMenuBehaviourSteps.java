@@ -439,12 +439,9 @@ public class FlyInMenuBehaviourSteps {
 	 */
 	@When("^User Click on Test tab within the Universal Selector Tab$")
 	public void user_Click_on_Test_tab_within_the_Universal_Selector_Tab() throws Throwable {
-		try {
-			UtilityMethods.wait_For_Context_Header_Section();
+		try {			
 			homePage.testtab.click();
-			IWait.explicit_wait(Driver.webdriver, homePage.searchbarontesttab);
-			Verify.verify(homePage.searchbarontesttab.isDisplayed());
-			Thread.sleep(500);
+			Thread.sleep(1000);
 		} catch (Exception e) {
 			UtilityMethods.processException(e);
 		}
@@ -654,7 +651,7 @@ public class FlyInMenuBehaviourSteps {
 			homePage.rostertab.click();
 			Thread.sleep(500);
 			homePage.schooldropdownbtn.click();
-			Thread.sleep(500);
+			Thread.sleep(1000);
 			RosterTabUtilityMethods.uncheck_check_All("School");
 			for (int i = 1; i < homePage.schoollist.size(); i = i + 2) {
 				if (homePage.schoollist.get(i).getText().equals("")) {

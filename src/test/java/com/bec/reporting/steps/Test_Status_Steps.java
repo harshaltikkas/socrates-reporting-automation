@@ -913,7 +913,7 @@ public class Test_Status_Steps {
 			Thread.sleep(1000);
 			UtilityMethods.wait_For_Test_Status_Section_Load_under_student_context();
 			homePage.not_started_list_in_table_under_sc.get(0).click();
-			Thread.sleep(500);
+			Thread.sleep(1000);
 			if (API_Connection.getUserRole().equalsIgnoreCase("TEACHER")) {
 				verify_new_window_url(currentHandle, "assignments");
 			} else {

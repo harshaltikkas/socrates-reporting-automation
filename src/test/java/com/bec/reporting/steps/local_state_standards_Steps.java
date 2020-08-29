@@ -286,6 +286,7 @@ public class local_state_standards_Steps {
 			for (int i = 1; i < homePage.schoollist.size(); i = i + 2) {
 				if (homePage.schoollist.get(i).getText().equals("")) {
 					UtilityMethods.scroll_Div(homePage.schoollist.get(i), 20);
+					Thread.sleep(500);
 				}
 				homePage.schoollist.get(i).click();
 				Thread.sleep(500);
