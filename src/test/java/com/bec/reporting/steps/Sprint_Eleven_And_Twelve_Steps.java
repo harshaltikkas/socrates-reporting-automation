@@ -135,8 +135,7 @@ public class Sprint_Eleven_And_Twelve_Steps {
 
 	@Then("^verify School filter default view reports for the user School admin$")
 	public void verify_School_filter_default_view_reports_for_the_user_School_admin() throws Throwable {
-		try {
-			Thread.sleep(2000);
+		try {			
 			Assert.assertTrue(homePage.activeschoolmenu.isDisplayed());
 			Assert.assertTrue(homePage.activestandardperformancebtn.isDisplayed());
 			Assert.assertTrue(homePage.activeAssessementsbtn.isDisplayed());
@@ -287,7 +286,7 @@ public class Sprint_Eleven_And_Twelve_Steps {
 					.click();
 			Thread.sleep(500);
 			homePage.dateapplybtn.click();
-			Thread.sleep(3000);
+			Thread.sleep(5000);
 			Assert.assertTrue(homePage.nodatavailableforyourselection.isDisplayed());
 			Assert.assertTrue(homePage.returntopreviousreport.isDisplayed());
 			homePage.returntopreviousreport.click();

@@ -55,6 +55,7 @@ public class Sprint_Eight_And_Tenth_Steps {
 	 */
 	HomePage homePage = PageFactory.initElements(Driver.webdriver, HomePage.class);
 	static JavascriptExecutor js = (JavascriptExecutor) Driver.webdriver;
+
 	@Then("^verify Loading icon within the date tab after filtering the Roster Tab$")
 	public void verify_Loading_icon_within_the_date_tab_after_filtering_the_Roster_Tab() throws Throwable {
 		try {
@@ -235,33 +236,35 @@ public class Sprint_Eight_And_Tenth_Steps {
 			/**
 			 * Performing multiple selection of test type selection
 			 */
-			UtilityMethods.scrollPageDown(Driver.webdriver, 5);Thread.sleep(500);
+			UtilityMethods.scrollPageDown(Driver.webdriver, 5);
+			Thread.sleep(500);
 			homePage.testtab.click();
 			Thread.sleep(500);
 			homePage.testtypedropdown.click();
 			Thread.sleep(500);
 			int testTypeListSize = homePage.testtypecheckboxlist.size();
-			int num = UtilityMethods.generateRandomNumberBySkippingIndex(testTypeListSize, 0);			
+			int num = 3;
 			new Actions(Driver.webdriver).moveToElement(homePage.testtypecheckboxlist.get(num)).click().build()
 					.perform();
 			Thread.sleep(500);
-			new Actions(Driver.webdriver).moveToElement(homePage.doneBtn).click().build()
-			.perform();
+			new Actions(Driver.webdriver).moveToElement(homePage.doneBtn).click().build().perform();
 			Thread.sleep(1000);
 			Assert.assertTrue(homePage.testtypedropdown.getText().equals("Custom (" + (testTypeListSize - 2) + ")"));
 			String testResultCount = homePage.totaltestcount.getText();
 			String noOfTestSelected = testResultCount.substring(testResultCount.lastIndexOf(" ") + 1,
 					testResultCount.indexOf("/"));
-			UtilityMethods.scrollPageDown(Driver.webdriver, 5);Thread.sleep(500);
+			UtilityMethods.scrollPageDown(Driver.webdriver, 6);
+			Thread.sleep(500);
 			homePage.testapplybtn.click();
-			Thread.sleep(3000);
+			UtilityMethods.wait_For_Student_List_AND_OR_Class_List_Section_Load();
 			UtilityMethods.scrollPageUp(Driver.webdriver);
 			Thread.sleep(500);
 			Assert.assertTrue(homePage.testsNameoncontextheader.getText().equals("Custom (" + noOfTestSelected + ")"));
 			/**
 			 * performing single selection of test type
 			 */
-			UtilityMethods.scrollPageDown(Driver.webdriver, 5);Thread.sleep(500);
+			UtilityMethods.scrollPageDown(Driver.webdriver, 5);
+			Thread.sleep(500);
 			homePage.testtab.click();
 			Thread.sleep(500);
 			homePage.testtypedropdown.click();
@@ -273,13 +276,12 @@ public class Sprint_Eight_And_Tenth_Steps {
 			new Actions(Driver.webdriver).moveToElement(homePage.testtypecheckboxlist.get(0)).click().build().perform();
 			Thread.sleep(500);
 			// select random single test type
-			num = UtilityMethods.generateRandomNumberBySkippingIndex(testTypeListSize, 0);
+			num = 2;
 			String testTypeName = homePage.testtypenameslist.get(num).getText();
 			new Actions(Driver.webdriver).moveToElement(homePage.testtypecheckboxlist.get(num)).click().build()
 					.perform();
 			Thread.sleep(500);
-			new Actions(Driver.webdriver).moveToElement(homePage.doneBtn).click().build()
-			.perform();
+			new Actions(Driver.webdriver).moveToElement(homePage.doneBtn).click().build().perform();
 			Thread.sleep(1000);
 			Assert.assertTrue(homePage.testtypedropdown.getText().equals(testTypeName));
 			testResultCount = homePage.totaltestcount.getText();
@@ -291,12 +293,13 @@ public class Sprint_Eight_And_Tenth_Steps {
 			if (Integer.parseInt(noOfTestSelected) == 1) {
 				testName = UtilityMethods.TestNamefromTestTab();
 			}
-			UtilityMethods.scrollPageDown(Driver.webdriver, 5);Thread.sleep(500);
+			UtilityMethods.scrollPageDown(Driver.webdriver, 5);
+			Thread.sleep(500);
 			homePage.testapplybtn.click();
-			Thread.sleep(3000);
+			UtilityMethods.wait_For_Student_List_AND_OR_Class_List_Section_Load();
 			UtilityMethods.scrollPageUp(Driver.webdriver);
 			Thread.sleep(500);
-			UtilityMethods.wait_For_Student_List_AND_OR_Class_List_Section_Load();
+			
 			if (Integer.parseInt(noOfTestSelected) == 1) {
 				if (homePage.testsNameoncontextheader.getText().contains("...")) {
 					new Actions(Driver.webdriver).moveToElement(homePage.testsNameoncontextheader).build().perform();
@@ -342,15 +345,15 @@ public class Sprint_Eight_And_Tenth_Steps {
 				wait_For_Assessed_With_on_grouping_tab();
 			} catch (Exception nse) {
 			}
-			
+
 			// checking Assessed With Dropdown
 			Assert.assertTrue(homePage.assessedWithGroupingTab.isDisplayed());
 			try {
 				new Actions(Driver.webdriver).moveToElement(homePage.assessedWithGroupingTab).click().build().perform();
 				Thread.sleep(500);
 				index = (int) (Math.random() * homePage.assessedWithListGroupingTab.size());
-				new Actions(Driver.webdriver).moveToElement(homePage.assessedWithListGroupingTab.get(4)).click()
-						.build().perform();
+				new Actions(Driver.webdriver).moveToElement(homePage.assessedWithListGroupingTab.get(4)).click().build()
+						.perform();
 				Thread.sleep(2000);
 				index = 0;
 			} catch (Exception nse) {
@@ -389,8 +392,8 @@ public class Sprint_Eight_And_Tenth_Steps {
 				robot.keyRelease(KeyEvent.VK_SUBTRACT);
 				robot.keyRelease(KeyEvent.VK_CONTROL);
 				Thread.sleep(1000);
-				//homePage.selectAllchkboxOnGroupingTab.click();Thread.sleep(500);-
-				
+				// homePage.selectAllchkboxOnGroupingTab.click();Thread.sleep(500);-
+
 			} catch (NoSuchElementException nse) {
 			}
 			// checking no. of groups
@@ -428,12 +431,12 @@ public class Sprint_Eight_And_Tenth_Steps {
 			int no = (int) (homePage.groupByListOnGroupingTab.size() * Math.random());
 			String selectedGrp = homePage.groupByListOnGroupingTab.get(no).getText();
 			Thread.sleep(1000);
-			WebElement el=Driver.webdriver.findElement(By.xpath("//span[.='"+selectedGrp+"']"));
+			WebElement el = Driver.webdriver.findElement(By.xpath("//span[.='" + selectedGrp + "']"));
 			js.executeScript("arguments[0].click();", el);
-			log.info("Selected Group: "+selectedGrp);
+			log.info("Selected Group: " + selectedGrp);
 			Thread.sleep(1000);
 			js.executeScript("arguments[0].click();", homePage.applyBtnOngroupingTab);
-			
+
 			UtilityMethods.wait_For_Strands_Text_After_Apply_BtnOn_GroupingTab();
 			Thread.sleep(500);
 			Assert.assertTrue(homePage.GrpByTextOnUI.isDisplayed());
@@ -444,8 +447,8 @@ public class Sprint_Eight_And_Tenth_Steps {
 		} catch (Exception e) {
 			UtilityMethods.processException(e);
 		}
-	}	
-	
+	}
+
 	private void wait_For_Assessed_With_on_grouping_tab() {
 		try {
 			Thread.sleep(1000);
@@ -455,7 +458,7 @@ public class Sprint_Eight_And_Tenth_Steps {
 			wait_For_Assessed_With_on_grouping_tab();
 		} catch (Exception e) {
 		}
-	}	
+	}
 
 	@Then("^verify To check The Strand and or Standard element of the grouping table within the grouping page$")
 	public void verify_To_check_The_Strand_and_or_Standard_element_of_the_grouping_table_within_the_grouping_page()
@@ -464,7 +467,7 @@ public class Sprint_Eight_And_Tenth_Steps {
 			new Actions(Driver.webdriver).moveToElement(homePage.groupingTab).click().build().perform();
 			Thread.sleep(12000);
 			UtilityMethods.select_view_on_viewDropdown_on_Grouping_Tab("CaCCSS English Language Arts");
-			
+
 			new Actions(Driver.webdriver).moveToElement(homePage.selectStrandsOnGroupingTab).click().build().perform();
 			Thread.sleep(1000);
 			new Actions(Driver.webdriver).moveToElement(homePage.selectStrandsListInDropdownGroupingTab.get(0)).click()
@@ -492,7 +495,9 @@ public class Sprint_Eight_And_Tenth_Steps {
 				Assert.assertTrue(homePage.groupingTableHeaderList.get(i).getText().equals(strandsList.get(i)));
 			}
 			Assert.assertTrue(homePage.avgperScoreOnGroupingTable.isDisplayed());
-			Assert.assertTrue(homePage.groupAndStudentInfoOnGroupingTabPage.getText().equalsIgnoreCase("Groups("+homePage.groupHeaderListonGroupingTabPage.size()+") / Students("+homePage.studentListonGroupingTabPage.size()+")"));
+			Assert.assertTrue(homePage.groupAndStudentInfoOnGroupingTabPage.getText()
+					.equalsIgnoreCase("Groups(" + homePage.groupHeaderListonGroupingTabPage.size() + ") / Students("
+							+ homePage.studentListonGroupingTabPage.size() + ")"));
 			CBTConfiguration.score = "pass";
 		} catch (Exception e) {
 			UtilityMethods.processException(e);

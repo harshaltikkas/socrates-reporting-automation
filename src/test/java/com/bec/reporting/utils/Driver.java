@@ -321,8 +321,12 @@ public class Driver {
 				destinationPath = new File(System.getProperty("user.dir") + "/target/cucumber-reports/screenshots/"
 						+ dateFormat.format(date) + ".png");
 			} else {
-				destinationPath = new File(System.getProperty("user.dir") + "\\target\\cucumber-reports\\screenshots\\"
-						+ dateFormat.format(date) + ".png");
+				/*
+				 * destinationPath = new File(System.getProperty("user.dir") +
+				 * "\\target\\cucumber-reports\\screenshots\\" + dateFormat.format(date) +
+				 * ".png");
+				 */
+				destinationPath = new File("..\\screenshots\\" + dateFormat.format(date) + ".png");
 			}
 			FileUtils.copyFile(sourcePath, destinationPath);
 			Reporter.addScreenCaptureFromPath(destinationPath.toString());
