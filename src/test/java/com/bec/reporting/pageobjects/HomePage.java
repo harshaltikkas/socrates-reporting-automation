@@ -30,7 +30,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 public class HomePage {
-	
+
 	@FindBy(xpath = "//div[@class='menu-title' and contains(text(),'School')]/span[@class='data-refresh']//i[@class='material-icons' and contains(text(),'autorenew')]")
 	public WebElement schoolRefreshIcon;
 
@@ -466,22 +466,22 @@ public class HomePage {
 	public WebElement statab;
 
 	@FindBy(xpath = "//div[@class='footer-indicate-title' and contains(text(),'Achievement Levels')]")
-	public WebElement achievmentlevelslabel;
+	public WebElement key_achievmentlevelslabel;
 
 	@FindBy(xpath = "//div[@class='footer-key-bar grey']/ancestor::div[@class='footer-single-indicator']/following-sibling::div[@class='footer-single-indicator-title' and contains(text(),'No Data Available')]")
-	public WebElement nodatawithgraycolor;
+	public WebElement key_al_graycolor;
 
-	@FindBy(xpath = "//div[@class='footer-key-bar red']/ancestor::div[@class='footer-single-indicator']/following-sibling::div[@class='footer-single-indicator-title' and contains(text(),'Below 40%')]")
-	public WebElement albelow40withredcolor;
+	@FindBy(xpath = "//div[@class='footer-key-bar red']/ancestor::div[@class='footer-single-indicator']/following-sibling::div[@class='footer-single-indicator-title']")
+	public WebElement key_al_redcolor;
 
-	@FindBy(xpath = "//div[@class='footer-key-bar orange']/ancestor::div[@class='footer-single-indicator']/following-sibling::div[@class='footer-single-indicator-title' and contains(text(),'40-59%')]")
-	public WebElement al40_59withorangecolor;
+	@FindBy(xpath = "//div[@class='footer-key-bar orange']/ancestor::div[@class='footer-single-indicator']/following-sibling::div[@class='footer-single-indicator-title']")
+	public WebElement key_al_orangecolor;
 
-	@FindBy(xpath = "//div[@class='footer-key-bar yellow']/ancestor::div[@class='footer-single-indicator']/following-sibling::div[@class='footer-single-indicator-title' and contains(text(),'60-79%')]")
-	public WebElement al60_79withyellowcolor;
+	@FindBy(xpath = "//div[@class='footer-key-bar yellow']/ancestor::div[@class='footer-single-indicator']/following-sibling::div[@class='footer-single-indicator-title']")
+	public WebElement key_al_yellowcolor;
 
-	@FindBy(xpath = "//div[@class='footer-key-bar green']/ancestor::div[@class='footer-single-indicator']/following-sibling::div[@class='footer-single-indicator-title' and contains(text(),'80%+')]")
-	public WebElement al80pluswithgreencolor;
+	@FindBy(xpath = "//div[@class='footer-key-bar green']/ancestor::div[@class='footer-single-indicator']/following-sibling::div[@class='footer-single-indicator-title']")
+	public WebElement key_al_greencolor;
 
 	@FindBy(xpath = "//li[contains(text(),'Overview')]")
 	public WebElement overviewtext;
@@ -572,7 +572,7 @@ public class HomePage {
 	@FindBy(xpath = "//span[contains(text(),'Test Score Detail')]/ancestor::div[@class='class_widget_title ']/following-sibling::div//div[@class='selector-pagination']")
 	public WebElement paginator_on_tsd;
 
-	@FindBy(xpath = "//span[contains(text(),'Test Score Detail')]/ancestor::div[@class='class_widget_title ']/following-sibling::div//div[@class='selector-pagination']//ul[@class='page-circle-list']//span")
+	@FindBy(xpath = "//span[contains(text(),'Test Score Detail')]/ancestor::div[@class='class_widget_title']/following-sibling::div//div[@class='selector-pagination']//ul[@class='page-circle-list']//span")
 	public List<WebElement> circle_list_on_paginator_on_tsd;
 
 	@FindBy(xpath = "//span[contains(text(),'Test Score Detail')]/ancestor::div[@class='class_widget_title ']/following-sibling::div//div[@class='selector-pagination']//span[@class='scroll-right scroll-active float-right']/i")
@@ -639,13 +639,13 @@ public class HomePage {
 	@FindBy(xpath = "//div[@class='class_test_overview_table_header_left']//div[@class='bec_tooltip_content']")
 	public WebElement tooltip_text_of_test_name_on_tsd;
 
-	@FindBy(xpath = "//div[@class='class_widget_title test_score_overtime']/following-sibling::div//*[name()='circle' and @fill]/following-sibling::*[name()='text']")
+	@FindBy(xpath = "//div[contains(@class,'class_widget_title test_score_overtime')]/following-sibling::div//*[name()='circle' and @fill]/following-sibling::*[name()='text']")
 	public List<WebElement> testScoresonPerPage_onlinechart;
 
 	@FindBy(xpath = "//span[contains(text(),'Performance Over Time')]/ancestor::div[contains(@class,'sidewidget-header')]/following-sibling::div/div/div[@style]//*[name()='circle' and @fill]/following-sibling::*[name()='text']")
 	public List<WebElement> testScoresonPerPage_on_pot;
 
-	@FindBy(xpath = "//div[@class='class_widget_title test_score_overtime']/following-sibling::div//*[name()='circle' and @fill]")
+	@FindBy(xpath = "//div[contains(@class,'class_widget_title test_score_overtime')]/following-sibling::div//*[name()='circle' and @fill]")
 	public List<WebElement> testScoreCircleClronPerPage_onlinechart;
 
 	@FindBy(xpath = "//span[contains(text(),'Performance Over Time')]/ancestor::div[contains(@class,'sidewidget-header')]/following-sibling::div/div/div[@style]//*[name()='circle' and @fill]")
@@ -658,16 +658,16 @@ public class HomePage {
 	public WebElement yaxislabelonstndrdperformanceinclass;
 
 	@FindBy(xpath = "//div[@class='performance-indicator']/ancestor::div[@class='overview-table-col greenBg']/preceding-sibling::div/span")
-	public WebElement achlvl80ormorewithgreenclr;
+	public WebElement al_sp_green_color;
 
 	@FindBy(xpath = "//div[@class='performance-indicator']/ancestor::div[@class='overview-table-col yellowBg']/preceding-sibling::div/span")
-	public WebElement achlvl60_79withyellowclr;
+	public WebElement al_sp_yellow_color;
 
 	@FindBy(xpath = "//div[@class='performance-indicator']/ancestor::div[@class='overview-table-col orangeBg']/preceding-sibling::div/span")
-	public WebElement achlvl40_59withorangeclr;
+	public WebElement al_sp_orange_color;
 
 	@FindBy(xpath = "//div[@class='performance-indicator']/ancestor::div[@class='overview-table-col redBg']/preceding-sibling::div/span")
-	public WebElement achlvlbelow40withredclr;
+	public WebElement al_sp_red_color;
 
 	@FindBy(xpath = "//span[@class='greenColor']/i[@class='material-icons' and contains(text(),'arrow_drop_up')]")
 	public WebElement greenuparrow;
@@ -924,7 +924,7 @@ public class HomePage {
 	@FindBy(xpath = "//div[@class='bec_compare_multi_list']//div[@class='bec_compare_multi_list_header_label' and text()='Tests']")
 	public WebElement comparison_tab_tests_text;
 
-	@FindBy(xpath = "//div[@class='bec_compare_multi_list_header_label']/span")
+	@FindBy(xpath = "//div[@class='bec_compare_multi_list_header_label']")
 	public WebElement comparison_tab_sp_text;
 
 	@FindBy(xpath = "//div[@class='standard-grid-filter-view']/div[@class='standard-grid-filter-view-label' and contains(text(),'Test(s) assessed for:')]/following-sibling::div/button")
@@ -1133,6 +1133,9 @@ public class HomePage {
 	@FindBy(xpath = "//div[@class='bec_singleTest_multi_list_Data_row']//div[@class='bec_singleTest_multi_list_single_compareBox']/div[contains(@class,'bec_singleTest_multi_list_single_score')]")
 	public List<WebElement> district_avg_list_for_question_on_sta;
 
+	@FindBy(xpath = "//div[@class='bec_singleTest_multi_list_single_compareBox']/div")
+	public List<WebElement> avg_list_for_question_on_sta;
+
 	@FindBy(xpath = "//span[@class='bec_singleTest_multi_list_name' and contains(text(),'District')]/ancestor::div[@class='bec_singleTest_multi_list_single_compareBox']/span/i[.='expand_more']")
 	public WebElement district_expand_more_in_sta;
 
@@ -1210,8 +1213,7 @@ public class HomePage {
 
 	@FindBy(xpath = "//div[@class='bec_singleTest_multi_list_Data_row']//span[@class='bec_singleTest_singleQuestion_Number']")
 	public List<WebElement> single_question_in_question_column_on_table_on_sta;
-
-	/** TODO xpaths for Test Status **/
+	
 	@FindBy(xpath = "//div[@class='testStatus_detail_body']")
 	public WebElement table_body_in_detail_in_ts;
 
@@ -1327,7 +1329,6 @@ public class HomePage {
 	public WebElement due_date_down_arrow;
 
 	// TODO Xpaths for STA Batch-Print
-
 	@FindBy(xpath = "//*[@class='print_pdf_batch']/span/img")
 	public WebElement print_pdf_batch_button;
 
@@ -1341,7 +1342,7 @@ public class HomePage {
 	public WebElement print_Report_Overlay_on_print_popup;
 
 	@FindBy(xpath = "//button[text()='Cancel']")
-	public WebElement cancel_button_on_popup;	
+	public WebElement cancel_button_on_popup;
 
 	@FindBy(xpath = "//div[@class='batchPrintContainer_bodyList']/ul/li/span[contains(@class,'batchPrint_radio')]")
 	public List<WebElement> radio_buttons_under_batch_print;
@@ -1387,9 +1388,6 @@ public class HomePage {
 
 	@FindBy(xpath = "//button[@class='bec_compares_popup_dropdown_selector']")
 	public List<WebElement> dropDowns_on_edit_standards_on_pop_up;
-
-	
-	
 
 	@FindBy(xpath = "//div[@class='bec_summary_taxonomy_standard-grid-filter-single-item']")
 	public List<WebElement> viewDropDownList_on_summary;

@@ -171,10 +171,13 @@ public class Standard_Overview_Table_Steps {
 	@Then("^The Y-axis should have the groupings strip of colours with the respective ranges in %$")
 	public void the_Y_axis_should_have_the_groupings_strip_of_colours_with_the_respective_ranges_in() throws Throwable {
 		try {
-			Assert.assertTrue(homePage.achlvl80ormorewithgreenclr.getText().equals("≥ 80%"));
-			Assert.assertTrue(homePage.achlvl60_79withyellowclr.getText().equals("60-79%"));
-			Assert.assertTrue(homePage.achlvl40_59withorangeclr.getText().equals("40-59%"));
-			Assert.assertTrue(homePage.achlvlbelow40withredclr.getText().equals("< 40%"));
+			List<String> list = API_Connection.get_Achievement_Levels();
+			Assert.assertTrue(homePage.al_sp_green_color.getText()
+					.equals("≥ " + list.get(3).substring(0, list.get(3).indexOf("-")) + "%"));
+			Assert.assertTrue(homePage.al_sp_yellow_color.getText().equals(list.get(2) + "%"));
+			Assert.assertTrue(homePage.al_sp_orange_color.getText().equals(list.get(1) + "%"));
+			Assert.assertTrue(homePage.al_sp_red_color.getText()
+					.equals("< " + (Integer.parseInt(list.get(0).substring(list.get(0).indexOf("-") + 1)) + 1) + "%"));
 			CBTConfiguration.score = "pass";
 		} catch (Exception e) {
 			UtilityMethods.processException(e);
@@ -383,14 +386,23 @@ public class Standard_Overview_Table_Steps {
 
 			} while (enabledRightArrowFound);
 			// Verifying average score with colour group
+			List<String> list = API_Connection.get_Achievement_Levels();
 			for (int i = 0; i < averageList.size(); i++) {
-				if (averageList.get(i) < 40) {
+				if (averageList.get(i) >= Integer.parseInt(list.get(0).substring(0, list.get(0).indexOf("-")))
+						&& averageList.get(i) <= Integer
+								.parseInt(list.get(0).substring(list.get(0).indexOf("-") + 1))) {
 					Assert.assertTrue(groupingStripClrList.get(i).trim().equals("red"));
-				} else if (averageList.get(i) >= 40 && averageList.get(i) <= 59) {
+				} else if (averageList.get(i) >= Integer.parseInt(list.get(1).substring(0, list.get(1).indexOf("-")))
+						&& averageList.get(i) <= Integer
+								.parseInt(list.get(1).substring(list.get(1).indexOf("-") + 1))) {
 					Assert.assertTrue(groupingStripClrList.get(i).trim().equals("orange"));
-				} else if (averageList.get(i) >= 60 && averageList.get(i) <= 79) {
+				} else if (averageList.get(i) >= Integer.parseInt(list.get(2).substring(0, list.get(2).indexOf("-")))
+						&& averageList.get(i) <= Integer
+								.parseInt(list.get(2).substring(list.get(2).indexOf("-") + 1))) {
 					Assert.assertTrue(groupingStripClrList.get(i).trim().equals("yellow"));
-				} else if (averageList.get(i) >= 80) {
+				} else if (averageList.get(i) >= Integer.parseInt(list.get(3).substring(0, list.get(3).indexOf("-")))
+						&& averageList.get(i) <= Integer
+								.parseInt(list.get(3).substring(list.get(3).indexOf("-") + 1))) {
 					Assert.assertTrue(groupingStripClrList.get(i).trim().equals("green"));
 				}
 			}
@@ -790,6 +802,7 @@ public class Standard_Overview_Table_Steps {
 	public void verify_x_axis_labeled_with_Test_Names_and_show_tooltip_on_test_names_and_if_more_than_tests_are_there_then_paginator_should_be_display_on_performance_over_time(
 			int arg1) throws Throwable {
 		try {
+			List<String> list = API_Connection.get_Achievement_Levels();
 			Standard_Overview_Table_Steps.paginationontesttab();
 			click_on_the_icon_to_maximize_the_Chart();
 			UtilityMethods.scrollPageDown(Driver.webdriver, 7);
@@ -807,7 +820,7 @@ public class Standard_Overview_Table_Steps {
 						PaginationUtility_for_Pages.verifyTestNamesAndToolTipText(j);
 						new Actions(Driver.webdriver).moveToElement(homePage.testScoresPercentage).build().perform();
 						UtilityMethods.verifyColorAndScoreOnLineChart(homePage.testScoreCircleClronPerPage_pot.get(j),
-								Integer.parseInt(homePage.testScoresonPerPage_on_pot.get(j).getText()));
+								Integer.parseInt(homePage.testScoresonPerPage_on_pot.get(j).getText()), list);
 					}
 				}
 				// check for left arrow enabled and click on it and click on first circle and
@@ -828,7 +841,7 @@ public class Standard_Overview_Table_Steps {
 									.perform();
 							UtilityMethods.verifyColorAndScoreOnLineChart(
 									homePage.testScoreCircleClronPerPage_pot.get(j),
-									Integer.parseInt(homePage.testScoresonPerPage_on_pot.get(j).getText()));
+									Integer.parseInt(homePage.testScoresonPerPage_on_pot.get(j).getText()), list);
 						}
 					}
 				} while (PaginationUtility_for_Pages
@@ -841,7 +854,7 @@ public class Standard_Overview_Table_Steps {
 					PaginationUtility_for_Pages.verifyTestNamesAndToolTipText(j);
 					new Actions(Driver.webdriver).moveToElement(homePage.testScoresPercentage).build().perform();
 					UtilityMethods.verifyColorAndScoreOnLineChart(homePage.testScoreCircleClronPerPage_pot.get(j),
-							Integer.parseInt(homePage.testScoresonPerPage_on_pot.get(j).getText()));
+							Integer.parseInt(homePage.testScoresonPerPage_on_pot.get(j).getText()), list);
 				}
 			}
 			CBTConfiguration.score = "pass";
@@ -1056,6 +1069,7 @@ public class Standard_Overview_Table_Steps {
 	public void user_click_on_the_circle_within_the_line_chart_and_should_able_to_see_the_overlay_of_Tool_tip_which_have_following_items_on_performace_over_time()
 			throws Throwable {
 		try {
+			List<String> list = API_Connection.get_Achievement_Levels();
 			if (Standard_Overview_Table_Steps.performanceMenuClicked
 					&& Standard_Overview_Table_Steps.underClassContext) {
 				homePage.performance_overtime_icon.click();
@@ -1065,7 +1079,7 @@ public class Standard_Overview_Table_Steps {
 				Thread.sleep(500);
 			}
 			if (Standard_Overview_Table_Steps.performanceMenuClicked
-					&& Standard_Overview_Table_Steps.underClassContext) {
+					&& Standard_Overview_Table_Steps.underStudentContext) {
 				UtilityMethods.scrollPageDown(Driver.webdriver, 4);
 				Thread.sleep(500);
 			}
@@ -1083,7 +1097,7 @@ public class Standard_Overview_Table_Steps {
 						PaginationUtility_for_Pages.verify_TestName_ToolTip_Details_on_Test_Score_Overview(j);
 
 						UtilityMethods.verifyColorAndScoreOnLineChart(homePage.testScoreCircleClronPerPage_pot.get(j),
-								Integer.parseInt(homePage.testScoresonPerPage_on_pot.get(j).getText()));
+								Integer.parseInt(homePage.testScoresonPerPage_on_pot.get(j).getText()), list);
 					}
 				}
 				// check for left arrow enabled and click on it and click on first circle and
@@ -1103,7 +1117,7 @@ public class Standard_Overview_Table_Steps {
 
 							UtilityMethods.verifyColorAndScoreOnLineChart(
 									homePage.testScoreCircleClronPerPage_pot.get(j),
-									Integer.parseInt(homePage.testScoresonPerPage_on_pot.get(j).getText()));
+									Integer.parseInt(homePage.testScoresonPerPage_on_pot.get(j).getText()), list);
 						}
 					}
 				} while (PaginationUtility_for_Pages
@@ -1116,7 +1130,7 @@ public class Standard_Overview_Table_Steps {
 					PaginationUtility_for_Pages.verify_TestName_ToolTip_Details_on_Test_Score_Overview(j);
 
 					UtilityMethods.verifyColorAndScoreOnLineChart(homePage.testScoreCircleClronPerPage_pot.get(j),
-							Integer.parseInt(homePage.testScoresonPerPage_on_pot.get(j).getText()));
+							Integer.parseInt(homePage.testScoresonPerPage_on_pot.get(j).getText()), list);
 				}
 			}
 			UtilityMethods.scrollPageUp(Driver.webdriver);
@@ -1138,10 +1152,12 @@ public class Standard_Overview_Table_Steps {
 		try {
 			List<String> list = API_Connection.get_Achievement_Levels();
 			Assert.assertTrue(homePage.textoutgraystripinstudentlist.getText().equals("All"));
-			Assert.assertTrue(homePage.textoutredstripinstudentlist.getText().equals("< "+(Integer.parseInt(list.get(0).substring(list.get(0).indexOf("-") + 1))+1)+"%"));
-			Assert.assertTrue(homePage.textoutorangestripinstudentlist.getText().equals(list.get(1)+"%"));
-			Assert.assertTrue(homePage.textoutyellowstripinstudentlist.getText().equals(list.get(2)+"%"));
-			Assert.assertTrue(homePage.textoutgreenstripinstudentlist.getText().equals("≥ "+list.get(3).substring(0, list.get(3).indexOf("-"))+"%"));
+			Assert.assertTrue(homePage.textoutredstripinstudentlist.getText()
+					.equals("< " + (Integer.parseInt(list.get(0).substring(list.get(0).indexOf("-") + 1)) + 1) + "%"));
+			Assert.assertTrue(homePage.textoutorangestripinstudentlist.getText().equals(list.get(1) + "%"));
+			Assert.assertTrue(homePage.textoutyellowstripinstudentlist.getText().equals(list.get(2) + "%"));
+			Assert.assertTrue(homePage.textoutgreenstripinstudentlist.getText()
+					.equals("≥ " + list.get(3).substring(0, list.get(3).indexOf("-")) + "%"));
 			CBTConfiguration.score = "pass";
 		} catch (Exception e) {
 			UtilityMethods.processException(e);
@@ -1160,7 +1176,6 @@ public class Standard_Overview_Table_Steps {
 	public void click_on_different_coloured_strips_blue_strip_should_be_display_under_the_clicked_strip_and_the_no_of_student_records_with_that_colour_should_be_display()
 			throws Throwable {
 		try {
-			
 			int recordsOnClickedStrip = 0, totalCount = 0;
 			for (int x = 0; x < homePage.avg_score_colouredStripOnStudentList.size(); x++) {
 				if (!(homePage.TextInStripOnStudentList.get(x).getText().equals("0"))) {
@@ -1183,7 +1198,6 @@ public class Standard_Overview_Table_Steps {
 									homePage.circle_list_on_paginator_on_list_under_sp, i);
 							Assert.assertTrue(homePage.student_list_on_list.size() <= 10);
 							totalCount += homePage.noofstudentsinlist.size();
-
 						}
 						// check for left arrow enabled and click on it and click on first circle and
 						// validate
@@ -1260,16 +1274,15 @@ public class Standard_Overview_Table_Steps {
 	@When("^Click or select strand and standard from the standard table$")
 	public void click_or_select_strand_and_standard_from_the_standard_table() throws Throwable {
 		try {
-			int randomNumber = 1;		
-			new Actions(Driver.webdriver).moveToElement(homePage.standardnameslist.get(randomNumber)).build().perform();
+			new Actions(Driver.webdriver).moveToElement(homePage.standardnameslist.get(1)).build().perform();
 			Thread.sleep(500);
-			headerOnToolTip = homePage.stranddefinitionlist.get(randomNumber).getText();
-			subHeaderOnToolTip = homePage.standarddescriptionlist.get(randomNumber).getText();
+			headerOnToolTip = homePage.stranddefinitionlist.get(1).getText();
+			subHeaderOnToolTip = homePage.standarddescriptionlist.get(1).getText();
 			subHeaderOnToolTip = subHeaderOnToolTip.substring(0, subHeaderOnToolTip.indexOf(":") - 1)
 					+ subHeaderOnToolTip.substring(subHeaderOnToolTip.indexOf(":"));
-			homePage.standardnameslist.get(randomNumber).click();
+			homePage.standardnameslist.get(1).click();
 			UtilityMethods.wait_For_Performance_Over_Time_Line_Chart_Section_Load();
-			new Actions(Driver.webdriver).moveToElement(homePage.achievmentlevelslabel).build().perform();
+			new Actions(Driver.webdriver).moveToElement(homePage.key_achievmentlevelslabel).build().perform();
 		} catch (Exception e) {
 			UtilityMethods.processException(e);
 		}
@@ -1333,12 +1346,12 @@ public class Standard_Overview_Table_Steps {
 	public void select_the_student_within_the_student_list_and_Student_context_with_information_for_that_individual_student_should_be_shown()
 			throws Throwable {
 		try {
-			String className=UtilityMethods.getClassNameonUI();						
+			String className = UtilityMethods.getClassNameonUI();
 			int randomNumber = 0;
-			String StudentName = homePage.studentnameslistinstudentlist.get(randomNumber).getText();			
+			String StudentName = homePage.studentnameslistinstudentlist.get(randomNumber).getText();
 			new Actions(Driver.webdriver).moveToElement(homePage.studentnameslistinstudentlist.get(randomNumber))
 					.click().build().perform();
-			UtilityMethods.wait_For_Performance_Over_Time_Line_Chart_Section_Load();			
+			UtilityMethods.wait_For_Performance_Over_Time_Line_Chart_Section_Load();
 			String studentNameonContext = UtilityMethods.getStudentNameonUI();
 			Assert.assertTrue(homePage.activestudentmenu.isDisplayed());
 			Assert.assertTrue(studentNameonContext.contains(StudentName));
@@ -1439,22 +1452,26 @@ public class Standard_Overview_Table_Steps {
 		log.info("Scenario 43_4 completed");
 	}
 
-	public void verifying_method_TSD() {
+	@Then("^verify test score and background color on student list on test score detail$")
+	public void verify_test_score_and_background_color_on_student_list_on_test_score_detail() throws Throwable {
 		try {
 			int score = 0;
 			WebElement scoreElement = null;
-
+			List<String> list = API_Connection.get_Achievement_Levels();
 			// checking for paginator
 			if (PaginationUtility_for_Pages.checkPaginator_on_tsd()) {
 				// this lool will execute for the no. of circle available on paginator
-				for (int i = homePage.circle_list_on_paginator_on_tsd.size() - 1; i >= 0; i--) {
+				for (int i = 0; i < homePage.circle_list_on_paginator_on_tsd.size(); i++) {
 					PaginationUtility_for_Pages
 							.clicking_on_indexed_circle_of_paginator(homePage.circle_list_on_paginator_on_tsd, i);
+					Thread.sleep(500);
 					Assert.assertTrue(homePage.student_list_on_list.size() <= 10);
 					for (int j = 0; j <= homePage.student_list_on_list.size() - 1; j++) {
 						score = Integer.parseInt(homePage.studentscorelistinstudentlist.get(j).getText());
 						scoreElement = homePage.studentscorelistinstudentlist.get(j);
-						UtilityMethods.verifyColorAndScoreOnStudentList(scoreElement, score);
+						UtilityMethods.verifyColorAndScoreOnStudentList(scoreElement, score, list);
+						UtilityMethods.scrollPageUp(Driver.webdriver, 5);
+						Thread.sleep(500);
 					}
 				}
 				// check for left arrow enabled and click on it and click on first circle and
@@ -1468,7 +1485,7 @@ public class Standard_Overview_Table_Steps {
 						for (int i = 0; i <= homePage.student_list_on_list.size() - 1; i++) {
 							score = Integer.parseInt(homePage.studentscorelistinstudentlist.get(i).getText());
 							scoreElement = homePage.studentscorelistinstudentlist.get(i);
-							UtilityMethods.verifyColorAndScoreOnStudentList(scoreElement, score);
+							UtilityMethods.verifyColorAndScoreOnStudentList(scoreElement, score, list);
 						}
 					}
 				} while (PaginationUtility_for_Pages.check_Enabled_Right_Arrow_on_Paginator_on_tsd());
@@ -1478,7 +1495,7 @@ public class Standard_Overview_Table_Steps {
 				for (int i = 0; i <= homePage.student_list_on_list.size() - 1; i++) {
 					score = Integer.parseInt(homePage.studentscorelistinstudentlist.get(i).getText());
 					scoreElement = homePage.studentscorelistinstudentlist.get(i);
-					UtilityMethods.verifyColorAndScoreOnStudentList(scoreElement, score);
+					UtilityMethods.verifyColorAndScoreOnStudentList(scoreElement, score, list);
 				}
 			}
 			CBTConfiguration.score = "pass";
@@ -1498,7 +1515,7 @@ public class Standard_Overview_Table_Steps {
 					"//div[@class='menu-title' and contains(text(),'District Term')]/following-sibling::div//ul/li[contains(text(),'2018-2019')]"))
 					.click();
 			Thread.sleep(500);
-			homePage.dateapplybtn.click();			
+			homePage.dateapplybtn.click();
 			IWait.explicit_wait(Driver.webdriver, homePage.studentmenu);
 		} catch (Exception e) {
 			UtilityMethods.processException(e);
