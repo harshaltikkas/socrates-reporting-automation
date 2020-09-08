@@ -33,6 +33,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.PageFactory;
 import com.bec.reporting.pageobjects.HomePage;
+import com.bec.reporting.utils.API_Connection;
 import com.bec.reporting.utils.CBTConfiguration;
 import com.bec.reporting.utils.Driver;
 import com.bec.reporting.utils.UtilityMethods;
@@ -43,14 +44,16 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class PageSelectorAndStudentClassFilterSteps {
-	
+
 	/**
-	 *This is used to initialize webelement of the webpages 
+	 * This is used to initialize webelement of the webpages
 	 */
 	HomePage homePage = PageFactory.initElements(Driver.webdriver, HomePage.class);
-	
+
 	/**
-	 * This method used to check default selection of standard performance and class context selection
+	 * This method used to check default selection of standard performance and class
+	 * context selection
+	 * 
 	 * @throws Throwable
 	 */
 	@When("^default Standards Performance button should be selected with the Class context$")
@@ -65,95 +68,107 @@ public class PageSelectorAndStudentClassFilterSteps {
 
 	/**
 	 * This is used to check only one button will be select at a time.
+	 * 
 	 * @throws Throwable
 	 */
 	@Then("^user selects Test Scores button within the page selector then also the context will remain same$")
-	public void user_selects_Test_Scores_button_within_the_page_selector_then_also_the_context_will_remain_same() throws Throwable {
+	public void user_selects_Test_Scores_button_within_the_page_selector_then_also_the_context_will_remain_same()
+			throws Throwable {
 		try {
-			JavascriptExecutor jse2 = (JavascriptExecutor)Driver.webdriver;
-			UtilityMethods.scrollPageUp(Driver.webdriver);Thread.sleep(500);
+			JavascriptExecutor jse2 = (JavascriptExecutor) Driver.webdriver;
+			UtilityMethods.scrollPageUp(Driver.webdriver);
+			Thread.sleep(500);
 			UtilityMethods.wait_For_Context_Header_Section();
 			jse2.executeScript("arguments[0].click();", homePage.test_scores_btn);
 			Thread.sleep(3000);
 			Assert.assertTrue(homePage.activeclassmenu.getAttribute("class").contains("active"));
 			try {
-				Assert.assertEquals(false,homePage.activestandardperformancebtn.isDisplayed());
+				Assert.assertEquals(false, homePage.activestandardperformancebtn.isDisplayed());
 				UtilityMethods.processException(new Exception());
-			}
-			catch(NoSuchElementException nse) {
+			} catch (NoSuchElementException nse) {
 				log.info("Only one button is enable/selectable at a time");
 				CBTConfiguration.score = "pass";
-			}			
+			}
 		} catch (Exception e) {
 			UtilityMethods.processException(e);
 		}
 		log.info("Scenario 22 Completed");
 	}
-	
+
 	/**
-	 * This method is used to open reporting key 
+	 * This method is used to open reporting key
+	 * 
 	 * @throws Throwable
 	 */
 	@When("^User click on fly in key to open reporing key$")
 	public void user_click_on_fly_in_key_to_open_reporing_key() throws Throwable {
-	try {
-		Actions action=new Actions(Driver.webdriver);
-		action.moveToElement(homePage.footer).build().perform();
-		Thread.sleep(1000);
-		homePage.reportingkey.click();
-	}catch (Exception e) {
-		UtilityMethods.processException(e);
-	}
+		try {
+			Actions action = new Actions(Driver.webdriver);
+			action.moveToElement(homePage.footer).build().perform();
+			Thread.sleep(1000);
+			homePage.reportingkey.click();
+		} catch (Exception e) {
+			UtilityMethods.processException(e);
+		}
 	}
 
 	/**
-	 * This method used to verify the achievement levels with different colour on reporting key
+	 * This method used to verify the achievement levels with different colour on
+	 * reporting key
+	 * 
 	 * @throws Throwable
 	 */
 	@Then("^verify the achievement leves with different colour codes and click on fly in key to close it\\.$")
-	public void verify_the_achievement_leves_with_different_colour_codes_and_click_on_fly_in_key_to_close_it() throws Throwable {
+	public void verify_the_achievement_leves_with_different_colour_codes_and_click_on_fly_in_key_to_close_it()
+			throws Throwable {
 		try {
 			Thread.sleep(500);
-			Assert.assertTrue(homePage.achievmentlevelslabel.isDisplayed());
-			Assert.assertTrue(homePage.albelow40withredcolor.isDisplayed());
-			Assert.assertTrue(homePage.al40_59withorangecolor.isDisplayed());
-			Assert.assertTrue(homePage.al60_79withyellowcolor.isDisplayed());
-			Assert.assertTrue(homePage.al80pluswithgreencolor.isDisplayed());
-			Assert.assertTrue(homePage.nodatawithgraycolor.isDisplayed());
+			List<String> list = API_Connection.get_Achievement_Levels();
+			Assert.assertTrue(homePage.key_achievmentlevelslabel.isDisplayed());
+			Assert.assertTrue(homePage.key_al_redcolor.getText().equals(
+					"Below " + (Integer.parseInt(list.get(0).substring(list.get(0).indexOf("-") + 1)) + 1) + "%"));
+			Assert.assertTrue(homePage.key_al_orangecolor.getText().equals(list.get(1) + "%"));
+			Assert.assertTrue(homePage.key_al_yellowcolor.getText().equals(list.get(2) + "%"));
+			Assert.assertTrue(homePage.key_al_greencolor.getText()
+					.equals(list.get(3).substring(0, list.get(3).indexOf("-"))+"%+")   );
+			Assert.assertTrue(homePage.key_al_graycolor.getText().equals("No Data Available"));
 			homePage.reportingkey.click();
-			CBTConfiguration.score="pass";
+			CBTConfiguration.score = "pass";
 			Standard_Overview_Table_Steps.resetStatus();
-		}catch (Exception e) {
+		} catch (Exception e) {
 			UtilityMethods.processException(e);
 		}
 		log.info("Scenario 23 Completed");
 	}
-	
+
 	/**
-	 *  This method is used to verify footer left hand side and right hand side text 
+	 * This method is used to verify footer left hand side and right hand side text
+	 * 
 	 * @throws Throwable
 	 */
 	@Then("^Verify left side footer text and right side footer text$")
 	public void verify_left_side_footer_text_and_right_side_footer_text() throws Throwable {
 		try {
-			Actions action=new Actions(Driver.webdriver);
+			Actions action = new Actions(Driver.webdriver);
 			action.moveToElement(homePage.footer).build().perform();
 			Thread.sleep(500);
-			Assert.assertTrue(homePage.footerleftside.getText().equals("© Benchmark Education Company LLC All rights reserved."));
+			Assert.assertTrue(
+					homePage.footerleftside.getText().equals("© Benchmark Education Company LLC All rights reserved."));
 			Assert.assertTrue(homePage.footerrightside.getText().equals("Privacy Policy"));
-			String privacyUrl="http://help.benchmarkuniverse.com/bustudent/#Student%20Customer%20Support/Privacy%20Policy.htm";
+			String privacyUrl = "http://help.benchmarkuniverse.com/bustudent/#Student%20Customer%20Support/Privacy%20Policy.htm";
 			Assert.assertTrue(homePage.footerrightside.getAttribute("href").equals(privacyUrl));
-			CBTConfiguration.score="pass";
+			CBTConfiguration.score = "pass";
 			Standard_Overview_Table_Steps.resetStatus();
-		}catch (Exception e) {
+		} catch (Exception e) {
 			UtilityMethods.processException(e);
 		}
 		log.info("Scenario 24 Completed");
 	}
-	
 
 	/**
-	 * This method is used to verify the heading on context header Based on page selector and menu
+	 * This method is used to verify the heading on context header Based on page
+	 * selector and menu
+	 * 
 	 * @throws Throwable
 	 */
 	@Then("^Verify labels on context header based on selection of menus$")
@@ -169,21 +184,22 @@ public class PageSelectorAndStudentClassFilterSteps {
 				Assert.assertTrue(headerList.get(2).getText().equals("Teacher:"));
 				Assert.assertTrue(headerList.get(3).getText().equals("Tests:"));
 				Assert.assertTrue(headerList.get(4).getText().equals("Dates:"));
-			}
-			else if (Standard_Overview_Table_Steps.underClassContext && (Standard_Overview_Table_Steps.performanceMenuClicked
-					|| Standard_Overview_Table_Steps.testScoreMenuClicked)) {
+			} else if (Standard_Overview_Table_Steps.underClassContext
+					&& (Standard_Overview_Table_Steps.performanceMenuClicked
+							|| Standard_Overview_Table_Steps.testScoreMenuClicked)) {
 				Assert.assertTrue(headerList.get(0).getText().equals("Class:"));
 				Assert.assertTrue(headerList.get(1).getText().equals("Teacher:"));
 				Assert.assertTrue(headerList.get(2).getText().equals("Grade:"));
 				Assert.assertTrue(headerList.get(3).getText().equals("Tests:"));
 				Assert.assertTrue(headerList.get(4).getText().equals("Dates:"));
 			}
-			
-			String compareText,tooltiptext;
-			for (int i = 0,tooltipcount=0; i < homePage.contextheader_text_list.size(); i++) {
+
+			String compareText, tooltiptext;
+			for (int i = 0, tooltipcount = 0; i < homePage.contextheader_text_list.size(); i++) {
 				if (homePage.contextheader_text_list.get(i).getText().contains("...")) {
-					new Actions(Driver.webdriver).moveToElement(homePage.contextheader_text_list.get(i)).build().perform();
-					tooltiptext=homePage.contextheadertooltiplist.get(tooltipcount).getText();
+					new Actions(Driver.webdriver).moveToElement(homePage.contextheader_text_list.get(i)).build()
+							.perform();
+					tooltiptext = homePage.contextheadertooltiplist.get(tooltipcount).getText();
 					new Actions(Driver.webdriver).moveToElement(homePage.overviewtext).build().perform();
 					Thread.sleep(500);
 					compareText = UtilityMethods.elipsisRemoval(homePage.contextheader_text_list.get(i).getText());
@@ -192,11 +208,12 @@ public class PageSelectorAndStudentClassFilterSteps {
 					tooltipcount++;
 				}
 			}
-			
+
 			String headerText;
 			for (int i = 0; i < homePage.contextheader_text_list.size(); i++) {
 				headerText = homePage.contextheader_title_list.get(i).getText();
-				new Actions(Driver.webdriver).moveToElement(homePage.contextheader_text_list.get(i)).click().build().perform();
+				new Actions(Driver.webdriver).moveToElement(homePage.contextheader_text_list.get(i)).click().build()
+						.perform();
 				Thread.sleep(1000);
 				if (headerText.equals("Class:") || headerText.equals("Student:")) {
 					Assert.assertTrue(homePage.rostertab.isDisplayed());
@@ -205,8 +222,8 @@ public class PageSelectorAndStudentClassFilterSteps {
 					Assert.assertTrue(homePage.testtab.isDisplayed());
 					Verify.verify(homePage.searchbarontesttab.isDisplayed());
 				} else if (headerText.equals("Dates:") && Standard_Overview_Table_Steps.underClassContext) {
-					  Assert.assertTrue(homePage.datetab.isDisplayed());
-					  Verify.verify(homePage.districtNameOnSliderMenu.isDisplayed());					 
+					Assert.assertTrue(homePage.datetab.isDisplayed());
+					Verify.verify(homePage.districtNameOnSliderMenu.isDisplayed());
 				} else {
 					log.info("Nothing should be verify while clicking on Grade/Teacher");
 				}

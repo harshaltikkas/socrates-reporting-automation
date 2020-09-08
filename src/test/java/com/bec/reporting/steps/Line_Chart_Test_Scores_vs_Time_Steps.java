@@ -30,6 +30,7 @@ import org.junit.Assert;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 import com.bec.reporting.pageobjects.HomePage;
+import com.bec.reporting.utils.API_Connection;
 import com.bec.reporting.utils.CBTConfiguration;
 import com.bec.reporting.utils.Driver;
 import com.bec.reporting.utils.PaginationUtility_for_Pages;
@@ -61,11 +62,10 @@ public class Line_Chart_Test_Scores_vs_Time_Steps {
 			UtilityMethods.scrollPageDown(Driver.webdriver, 2);
 			Thread.sleep(500);
 			try {
-			Assert.assertTrue(homePage.yaxistexton_linechart_tsot.getText().equals("Test Scores (%)"));
-			Assert.assertTrue(homePage.horizontalline_onlinechart_tsot.size() == 11);
-			list = homePage.yaxislabelsonhorizontalline_onlinechart;
-			}
-			catch(Exception e) {
+				Assert.assertTrue(homePage.yaxistexton_linechart_tsot.getText().equals("Test Scores (%)"));
+				Assert.assertTrue(homePage.horizontalline_onlinechart_tsot.size() == 11);
+				list = homePage.yaxislabelsonhorizontalline_onlinechart;
+			} catch (Exception e) {
 				Assert.assertTrue(homePage.yaxistexton_linechart_tsot_withsmallo.getText().equals("Test Scores (%)"));
 				Assert.assertTrue(homePage.horizontalline_onlinechart_tsot_withsmallo.size() == 11);
 				list = homePage.yaxislabelsonhorizontalline_onlinechart_withsmallo;
@@ -91,7 +91,7 @@ public class Line_Chart_Test_Scores_vs_Time_Steps {
 	public void verify_x_axis_labeled_with_Test_Names_and_show_tooltip_if_elipsis_in_test_names_and_if_more_than_tests_are_there_then_paginator_should_be_display(
 			int arg1) throws Throwable {
 		try {
-			
+
 			UtilityMethods.scrollPageDown(Driver.webdriver, 5);
 			Thread.sleep(500);
 			Assert.assertTrue(homePage.testnameslabel_onlinechart_tsot.getText().equals("Test Names"));
@@ -99,7 +99,8 @@ public class Line_Chart_Test_Scores_vs_Time_Steps {
 			if (PaginationUtility_for_Pages.checkPaginator_on_tsot()) {
 				// this lool will execute for the no. of circle available on paginator
 				for (int i = homePage.circle_list_on_paginator_on_tsot.size() - 1; i >= 0; i--) {
-					PaginationUtility_for_Pages.clicking_on_indexed_circle_of_paginator(homePage.circle_list_on_paginator_on_tsot,i);
+					PaginationUtility_for_Pages
+							.clicking_on_indexed_circle_of_paginator(homePage.circle_list_on_paginator_on_tsot, i);
 					Assert.assertTrue(homePage.testNamesonPerPage_onlinechart.size() <= 10);
 					for (int j = homePage.testNamesonPerPage_onlinechart.size() - 1; j >= 0; j--) {
 						PaginationUtility_for_Pages.verifyTestNamesAndToolTipText(j);
@@ -110,12 +111,13 @@ public class Line_Chart_Test_Scores_vs_Time_Steps {
 				do {
 					if (PaginationUtility_for_Pages.check_Enabled_Left_Arrow_on_Paginator_on_tsot()) {
 						PaginationUtility_for_Pages.clicking_on_enabled_left_Arrow_of_paginator_on_tsot();
-						PaginationUtility_for_Pages.clicking_on_first_circle_of_paginator(homePage.circle_list_on_paginator_on_tsot);
+						PaginationUtility_for_Pages
+								.clicking_on_first_circle_of_paginator(homePage.circle_list_on_paginator_on_tsot);
 						Assert.assertTrue(homePage.testNamesonPerPage_onlinechart.size() <= 10);
 						for (int j = homePage.testNamesonPerPage_onlinechart.size() - 1; j >= 0; j--) {
 							PaginationUtility_for_Pages.verifyTestNamesAndToolTipText(j);
 						}
-					} 
+					}
 				} while (PaginationUtility_for_Pages.check_Enabled_Left_Arrow_on_Paginator_on_tsot());
 			} else {
 				// when paginator is not found
@@ -140,19 +142,21 @@ public class Line_Chart_Test_Scores_vs_Time_Steps {
 	@Then("^verify The points on the chart should be circles that are color-coordinated according to achievement level$")
 	public void verify_The_points_on_the_chart_should_be_circles_that_are_color_coordinated_according_to_achievement_level()
 			throws Throwable {
-		try {			
+		try {
+			List<String> list = API_Connection.get_Achievement_Levels();
 			UtilityMethods.scrollPageDown(Driver.webdriver, 5);
 			Thread.sleep(500);
 			// checking for paginator
 			if (PaginationUtility_for_Pages.checkPaginator_on_tsot()) {
 				// this lool will execute for the no. of circle available on paginator
 				for (int i = homePage.circle_list_on_paginator_on_tsot.size() - 1; i >= 0; i--) {
-					PaginationUtility_for_Pages.clicking_on_indexed_circle_of_paginator(homePage.circle_list_on_paginator_on_tsot,i);
+					PaginationUtility_for_Pages
+							.clicking_on_indexed_circle_of_paginator(homePage.circle_list_on_paginator_on_tsot, i);
 					Assert.assertTrue(homePage.testNamesonPerPage_onlinechart.size() <= 10);
 					for (int j = homePage.testNamesonPerPage_onlinechart.size() - 1; j >= 0; j--) {
 						UtilityMethods.verifyColorAndScoreOnLineChart(
 								homePage.testScoreCircleClronPerPage_onlinechart.get(j),
-								Integer.parseInt(homePage.testScoresonPerPage_onlinechart.get(j).getText()));
+								Integer.parseInt(homePage.testScoresonPerPage_onlinechart.get(j).getText()), list);
 					}
 				}
 				// check for left arrow enabled and click on it and click on first circle and
@@ -160,22 +164,22 @@ public class Line_Chart_Test_Scores_vs_Time_Steps {
 				do {
 					if (PaginationUtility_for_Pages.check_Enabled_Left_Arrow_on_Paginator_on_tsot()) {
 						PaginationUtility_for_Pages.clicking_on_enabled_left_Arrow_of_paginator_on_tsot();
-						PaginationUtility_for_Pages.clicking_on_first_circle_of_paginator(homePage.circle_list_on_paginator_on_tsot);
+						PaginationUtility_for_Pages
+								.clicking_on_first_circle_of_paginator(homePage.circle_list_on_paginator_on_tsot);
 						Assert.assertTrue(homePage.testNamesonPerPage_onlinechart.size() <= 10);
 						for (int j = homePage.testNamesonPerPage_onlinechart.size() - 1; j >= 0; j--) {
 							UtilityMethods.verifyColorAndScoreOnLineChart(
 									homePage.testScoreCircleClronPerPage_onlinechart.get(j),
-									Integer.parseInt(homePage.testScoresonPerPage_onlinechart.get(j).getText()));
+									Integer.parseInt(homePage.testScoresonPerPage_onlinechart.get(j).getText()), list);
 						}
-					} 
+					}
 				} while (PaginationUtility_for_Pages.check_Enabled_Left_Arrow_on_Paginator_on_tsot());
-			}
-			else {
+			} else {
 				// when paginator is not found
 				for (int i = 0; i < homePage.testNamesonPerPage_onlinechart.size(); i++) {
 					UtilityMethods.verifyColorAndScoreOnLineChart(
 							homePage.testScoreCircleClronPerPage_onlinechart.get(i),
-							Integer.parseInt(homePage.testScoresonPerPage_onlinechart.get(i).getText()));
+							Integer.parseInt(homePage.testScoresonPerPage_onlinechart.get(i).getText()), list);
 				}
 			}
 			CBTConfiguration.score = "pass";
@@ -200,7 +204,8 @@ public class Line_Chart_Test_Scores_vs_Time_Steps {
 			if (PaginationUtility_for_Pages.checkPaginator_on_tsot()) {
 				// this lool will execute for the no. of circle available on paginator
 				for (int i = homePage.circle_list_on_paginator_on_tsot.size() - 1; i >= 0; i--) {
-					PaginationUtility_for_Pages.clicking_on_indexed_circle_of_paginator(homePage.circle_list_on_paginator_on_tsot,i);
+					PaginationUtility_for_Pages
+							.clicking_on_indexed_circle_of_paginator(homePage.circle_list_on_paginator_on_tsot, i);
 					Assert.assertTrue(homePage.testNamesonPerPage_onlinechart.size() <= 10);
 					for (int j = homePage.testNamesonPerPage_onlinechart.size() - 1; j >= 0; j--) {
 						PaginationUtility_for_Pages.verifyTestScorePerAndPerOnToolTip(j);
@@ -211,12 +216,13 @@ public class Line_Chart_Test_Scores_vs_Time_Steps {
 				do {
 					if (PaginationUtility_for_Pages.check_Enabled_Left_Arrow_on_Paginator_on_tsot()) {
 						PaginationUtility_for_Pages.clicking_on_enabled_left_Arrow_of_paginator_on_tsot();
-						PaginationUtility_for_Pages.clicking_on_first_circle_of_paginator(homePage.circle_list_on_paginator_on_tsot);
+						PaginationUtility_for_Pages
+								.clicking_on_first_circle_of_paginator(homePage.circle_list_on_paginator_on_tsot);
 						Assert.assertTrue(homePage.testNamesonPerPage_onlinechart.size() <= 10);
 						for (int j = homePage.testNamesonPerPage_onlinechart.size() - 1; j >= 0; j--) {
 							PaginationUtility_for_Pages.verifyTestScorePerAndPerOnToolTip(j);
 						}
-					} 
+					}
 				} while (PaginationUtility_for_Pages.check_Enabled_Left_Arrow_on_Paginator_on_tsot());
 			} else {
 				// when paginator is not found

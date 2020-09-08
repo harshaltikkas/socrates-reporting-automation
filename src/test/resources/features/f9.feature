@@ -10,15 +10,14 @@ Feature: Standard Overview Table and Chart
     ## TC-1
     Then The Y-axis of the table should be labeled as "Achievement Level"
     ## TC-2
-    And The Y-axis should have the groupings strip of colours with the respective ranges in %
-    ##<40%” (red), "40-59%” (orange), "60-79%” (yellow) and "≥80%” (green)
+    And The Y-axis should have the groupings strip of colours with the respective ranges in %   
     ##TC-6
     And user should able to see sort arrows with the red and green colours and when the user clicks on that arrow sorting should happen
 
   ##STORY 5b) Strand Averages and table X axis &
   ##STORY 5c) Cells by Student vs. Class Buttons	&
   ##STORY 5d) Standards Table’s effect on Performance over Time Line Chart and Student List
-  @Scenario37 @TC_0012 @TC_0013_DB @TC_0014 @TC_0015 @TC_0016 @TC_0017 @5C-TC-21 @5d-TC-22
+  @Scenario37 @TC_0012 @TC_0013_DB @TC_0014 @TC_0015 @TC_0016 @TC_0017 @5C-TC-21 @5d-TC-22 @BU-12531
   Scenario: Verify The X-Axis UI Representation
     Given User is on portal's login screen with username as "school_admin_one" and password as "password" and usertype as "realm_one"  
     When User Click on Standard Performance tab within the Class Context
@@ -63,7 +62,7 @@ Feature: Standard Overview Table and Chart
   ##STORY 6f) Relationship between Line Chart for Test Scores at the Class Level and Student List module & STORY AND
   ##STORY 7a) Standards and Test Score Detail
   ##STORY 6c) Student and Class level
-	@Scenario40 @TC_0029 @TC_0030_DB @TC_0031 @TC_0032 @TC_005 @TC_006
+	@Scenario40 @TC_0029 @TC_0030_DB @TC_0031 @TC_0032 @TC_005 @TC_006 @BU-12350
   Scenario: Verify The appearance of the student list and the line chart, when viewing the class context for the Test Scores Overview
     Given User is on portal's login screen with username as "school_admin_one" and password as "password" and usertype as "realm_one"
     When User click on Class Context and Test Score button
@@ -72,7 +71,10 @@ Feature: Standard Overview Table and Chart
     When User click on Class Context and Test Score button
     And User click on Student Context and Test Score button
     Then line chart of Test score over time should be displayed of that student but Student list should not be displayed on test score overview
-   
+    Given User is on portal's login screen with username as "teacher_two" and password as "password" and usertype as "realm_one"
+    When User click on Class Context and Test Score button
+    Then verify test score and background color on student list on test score detail
+    
     ##STORY 6d) Overlays
    @Scenario41 @TC_0015 @TC_0016 @TC_0017 @TC_0018
   Scenario: Verify Overlays Performance Over Time 
@@ -86,12 +88,14 @@ Feature: Standard Overview Table and Chart
     Then User click on the circle within the line chart and should able to see the overlay of Tool tip which have following items on performace over time
    
   ##STORY 7b) Achievement Filter and Sorting
-  @Scenario42 @TC_0015 @TC_0016 @TC_0017
+  @Scenario42 @TC_0015 @TC_0016 @TC_0017 @BU-12533
   Scenario: Verify The top of the table contains colored sections that can be selected to filter which students are displayed in the chart & The blue line appearing under the selected section
     Given User is on portal's login screen with username as "school_admin_one" and password as "password" and usertype as "realm_one"
     When User Click on Standard Performance tab within the Class Context
     Then different coloured strips should be displayed   
     And click on different coloured strips,blue strip should be display under the clicked strip and the no. of student records with that colour should be display
+    And User click on Class Context and Test Score button
+		And click on different coloured strips,blue strip should be display under the clicked strip and the no. of student records with that colour should be display    
 		Given User is on portal's login screen with username as "ls_teacher_one" and password as "password" and usertype as "realm_ls_dodea"
     When User Click on Standard Performance tab within the Class Context
     Then different coloured strips should be displayed 

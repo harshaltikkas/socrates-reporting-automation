@@ -198,40 +198,22 @@ public class UtilityMethods {
 	 * @param scoreValue
 	 * @return
 	 */
-	public static boolean verifyColorAndScoreOnLineChart(WebElement element, int scoreValue) {
+	public static boolean verifyColorAndScoreOnLineChart(WebElement element, int scoreValue, List<String> list) {
 		try {
-			if (scoreValue < 40) {
+			if (scoreValue >= Integer.parseInt(list.get(0).substring(0, list.get(0).indexOf("-")))
+					&& scoreValue <= Integer.parseInt(list.get(0).substring(list.get(0).indexOf("-") + 1))) {
 				Assert.assertTrue(element.getAttribute("fill").equalsIgnoreCase("#FF5B5B"));
-			} else if (scoreValue >= 40 && scoreValue <= 59) {
+			} else if (scoreValue >= Integer.parseInt(list.get(1).substring(0, list.get(1).indexOf("-")))
+					&& scoreValue <= Integer.parseInt(list.get(1).substring(list.get(1).indexOf("-") + 1))) {
 				Assert.assertTrue(element.getAttribute("fill").equalsIgnoreCase("#FF8E2D"));
-			} else if (scoreValue >= 60 && scoreValue <= 79) {
+			} else if (scoreValue >= Integer.parseInt(list.get(2).substring(0, list.get(2).indexOf("-")))
+					&& scoreValue <= Integer.parseInt(list.get(2).substring(list.get(2).indexOf("-") + 1))) {
 				Assert.assertTrue(element.getAttribute("fill").equalsIgnoreCase("#FFC52D"));
-			} else {
+			} else if (scoreValue >= Integer.parseInt(list.get(3).substring(0, list.get(3).indexOf("-")))
+					&& scoreValue <= Integer.parseInt(list.get(3).substring(list.get(3).indexOf("-") + 1))) {
 				Assert.assertTrue(element.getAttribute("fill").equalsIgnoreCase("#32AC41"));
 			}
-			// TODO This section will uncomment when POT graph has new changes with
-			// customize band
-			/*
-			 * List<String> list=API_Connection.get_Achievement_Levels();
-			 * 
-			 * if (scoreValue >= Integer.parseInt(list.get(0).substring(0,
-			 * list.get(0).indexOf("-"))) && scoreValue <=
-			 * Integer.parseInt(list.get(0).substring(list.get(0).indexOf("-") + 1))) {
-			 * Assert.assertTrue(element.getAttribute("fill").equalsIgnoreCase("#FF5B5B"));
-			 * } else if (scoreValue >= Integer.parseInt(list.get(1).substring(0,
-			 * list.get(1).indexOf("-"))) && scoreValue <=
-			 * Integer.parseInt(list.get(1).substring(list.get(1).indexOf("-") + 1))) {
-			 * Assert.assertTrue(element.getAttribute("fill").equalsIgnoreCase("#FF8E2D"));
-			 * } else if (scoreValue >= Integer.parseInt(list.get(2).substring(0,
-			 * list.get(2).indexOf("-"))) && scoreValue <=
-			 * Integer.parseInt(list.get(2).substring(list.get(2).indexOf("-") + 1))) {
-			 * Assert.assertTrue(element.getAttribute("fill").equalsIgnoreCase("#FFC52D"));
-			 * } else if (scoreValue >= Integer.parseInt(list.get(3).substring(0,
-			 * list.get(3).indexOf("-"))) && scoreValue <=
-			 * Integer.parseInt(list.get(3).substring(list.get(3).indexOf("-") + 1))) {
-			 * Assert.assertTrue(element.getAttribute("fill").equalsIgnoreCase("#32AC41"));
-			 * }
-			 */
+
 		} catch (Exception e) {
 			UtilityMethods.processException(e);
 		}
@@ -246,9 +228,8 @@ public class UtilityMethods {
 	 * @param scoreValue
 	 * @return
 	 */
-	public static boolean verifyColorAndScoreOnStudentList(WebElement element, int scoreValue) {
+	public static boolean verifyColorAndScoreOnStudentList(WebElement element, int scoreValue, List<String> list) {
 		try {
-			List<String> list = API_Connection.get_Achievement_Levels();
 			if (scoreValue >= Integer.parseInt(list.get(0).substring(0, list.get(0).indexOf("-")))
 					&& scoreValue <= Integer.parseInt(list.get(0).substring(list.get(0).indexOf("-") + 1))) {
 				Assert.assertTrue(element.getAttribute("class").equalsIgnoreCase("student-list-grade red"));
@@ -261,6 +242,86 @@ public class UtilityMethods {
 			} else if (scoreValue >= Integer.parseInt(list.get(3).substring(0, list.get(3).indexOf("-")))
 					&& scoreValue <= Integer.parseInt(list.get(3).substring(list.get(3).indexOf("-") + 1))) {
 				Assert.assertTrue(element.getAttribute("class").equalsIgnoreCase("student-list-grade green"));
+			}
+			return true;
+		} catch (Exception e) {
+			processException(e);
+			return false;
+		}
+	}
+
+	/**
+	 * This method is used to verify the class attribute of the webelement with the
+	 * score belong to it on STA Table
+	 * 
+	 * @param element
+	 * @param scoreValue
+	 * @return
+	 */
+	public static boolean verifyColorAndScoreOnSTA(WebElement element, int scoreValue,
+			List<String> achievement_Levels_list) {
+		try {
+			if (scoreValue >= Integer
+					.parseInt(achievement_Levels_list.get(0).substring(0, achievement_Levels_list.get(0).indexOf("-")))
+					&& scoreValue <= Integer.parseInt(achievement_Levels_list.get(0)
+							.substring(achievement_Levels_list.get(0).indexOf("-") + 1))) {
+				Assert.assertTrue(element.getAttribute("class").contains("redBgColor"));
+			} else if (scoreValue >= Integer
+					.parseInt(achievement_Levels_list.get(1).substring(0, achievement_Levels_list.get(1).indexOf("-")))
+					&& scoreValue <= Integer.parseInt(achievement_Levels_list.get(1)
+							.substring(achievement_Levels_list.get(1).indexOf("-") + 1))) {
+				Assert.assertTrue(element.getAttribute("class").contains("orangeBgColor"));
+			} else if (scoreValue >= Integer
+					.parseInt(achievement_Levels_list.get(2).substring(0, achievement_Levels_list.get(2).indexOf("-")))
+					&& scoreValue <= Integer.parseInt(achievement_Levels_list.get(2)
+							.substring(achievement_Levels_list.get(2).indexOf("-") + 1))) {
+				Assert.assertTrue(element.getAttribute("class").contains("yellowBgColor"));
+			} else if (scoreValue >= Integer
+					.parseInt(achievement_Levels_list.get(3).substring(0, achievement_Levels_list.get(3).indexOf("-")))
+					&& scoreValue <= Integer.parseInt(achievement_Levels_list.get(3)
+							.substring(achievement_Levels_list.get(3).indexOf("-") + 1))) {
+				Assert.assertTrue(element.getAttribute("class").contains("greenBgColor"));
+			}
+			return true;
+		} catch (Exception e) {
+			processException(e);
+			return false;
+		}
+	}
+
+	/**
+	 * This method is used to verify the class attribute of the webelement with the
+	 * score belong to it on Grouping Table
+	 * 
+	 * @param element
+	 * @param scoreValue
+	 * @return
+	 */
+	public static boolean verifyColorAndScoreOn_Different_Table(WebElement element, String scoreValue,
+			List<String> achievement_Levels_list) {
+		try {
+			if (scoreValue.equals("-")) {
+				Assert.assertTrue(element.getAttribute("class").contains("grey"));
+			} else if (Integer.parseInt(scoreValue) >= Integer
+					.parseInt(achievement_Levels_list.get(0).substring(0, achievement_Levels_list.get(0).indexOf("-")))
+					&& Integer.parseInt(scoreValue) <= Integer.parseInt(achievement_Levels_list.get(0)
+							.substring(achievement_Levels_list.get(0).indexOf("-") + 1))) {
+				Assert.assertTrue(element.getAttribute("class").contains("red"));
+			} else if (Integer.parseInt(scoreValue) >= Integer
+					.parseInt(achievement_Levels_list.get(1).substring(0, achievement_Levels_list.get(1).indexOf("-")))
+					&& Integer.parseInt(scoreValue) <= Integer.parseInt(achievement_Levels_list.get(1)
+							.substring(achievement_Levels_list.get(1).indexOf("-") + 1))) {
+				Assert.assertTrue(element.getAttribute("class").contains("orange"));
+			} else if (Integer.parseInt(scoreValue) >= Integer
+					.parseInt(achievement_Levels_list.get(2).substring(0, achievement_Levels_list.get(2).indexOf("-")))
+					&& Integer.parseInt(scoreValue) <= Integer.parseInt(achievement_Levels_list.get(2)
+							.substring(achievement_Levels_list.get(2).indexOf("-") + 1))) {
+				Assert.assertTrue(element.getAttribute("class").contains("yellow"));
+			} else if (Integer.parseInt(scoreValue) >= Integer
+					.parseInt(achievement_Levels_list.get(3).substring(0, achievement_Levels_list.get(3).indexOf("-")))
+					&& Integer.parseInt(scoreValue) <= Integer.parseInt(achievement_Levels_list.get(3)
+							.substring(achievement_Levels_list.get(3).indexOf("-") + 1))) {
+				Assert.assertTrue(element.getAttribute("class").contains("green"));
 			}
 			return true;
 		} catch (Exception e) {
@@ -303,32 +364,6 @@ public class UtilityMethods {
 		} catch (Exception e) {
 			log.error("Invalid Date format");
 			UtilityMethods.processException(e);
-		}
-	}
-
-	/**
-	 * This method is used to Veriy the Colour of the Standards records belong to
-	 * that average percentage
-	 * 
-	 * @param element
-	 * @param avgPer
-	 * @return
-	 */
-	public static boolean verifyColorAndStandardAvgPercentage(WebElement element, int avgPer) {
-		try {
-			if (avgPer < 40) {
-				Assert.assertTrue(element.getAttribute("class").equalsIgnoreCase("redBg"));
-			} else if (avgPer >= 40 && avgPer <= 59) {
-				Assert.assertTrue(element.getAttribute("class").equalsIgnoreCase("orangeBg"));
-			} else if (avgPer >= 60 && avgPer <= 79) {
-				Assert.assertTrue(element.getAttribute("class").equalsIgnoreCase("yellowBg"));
-			} else {
-				Assert.assertTrue(element.getAttribute("class").equalsIgnoreCase("greenBg"));
-			}
-			return true;
-		} catch (Exception e) {
-			processException(e);
-			return false;
 		}
 	}
 
@@ -732,15 +767,11 @@ public class UtilityMethods {
 				isSectionLoad = true;
 			} catch (Exception e1) {
 				log.info("Waiting for List Section on Standard Performance Loading");
-				try {
-					Thread.sleep(2000);
-					list_on_sp_ctr++;
-				} catch (InterruptedException e) {
-				}
+				list_on_sp_ctr++;
 			}
-		} while (isSectionLoad == false && list_on_sp_ctr <= 15);
+		} while (isSectionLoad == false && list_on_sp_ctr < 3);
 
-		if (isSectionLoad == false && list_on_sp_ctr > 15) {
+		if (isSectionLoad == false && list_on_sp_ctr == 3) {
 			log.info("List Section on Standard Performance is not loaded in 30 seconds..");
 			processException(new Exception());
 		}
@@ -784,15 +815,11 @@ public class UtilityMethods {
 				isSectionLoad = true;
 			} catch (Exception e1) {
 				log.info("Waiting for Single Test Analysis Section");
-				try {
-					Thread.sleep(2000);
-					sta_ctr++;
-				} catch (InterruptedException e) {
-				}
+				sta_ctr++;
 			}
-		} while (isSectionLoad == false && sta_ctr <= 15);
+		} while (isSectionLoad == false && sta_ctr < 3);
 
-		if (isSectionLoad == false && sta_ctr > 15) {
+		if (isSectionLoad == false && sta_ctr == 3) {
 			log.info("Single Test Analysis Section is not loaded in 30 seconds..");
 			processException(new Exception());
 		}
@@ -815,7 +842,7 @@ public class UtilityMethods {
 			}
 		} while (isSectionLoad == false && test_stts_ctr <= 3);
 
-		if (isSectionLoad == false && test_stts_ctr > 3) {
+		if (isSectionLoad == false && test_stts_ctr == 3) {
 			log.info("Test Status Section is not loaded in 30 seconds..");
 			processException(new Exception());
 		}
@@ -837,9 +864,9 @@ public class UtilityMethods {
 				log.info("Waiting for Test Status Section under student context");
 				test_stts_ctr_sc++;
 			}
-		} while (isSectionLoad == false && test_stts_ctr_sc <= 3);
+		} while (isSectionLoad == false && test_stts_ctr_sc < 3);
 
-		if (isSectionLoad == false && test_stts_ctr_sc > 3) {
+		if (isSectionLoad == false && test_stts_ctr_sc == 3) {
 			log.info("Test Status Section under student context is not loaded in 30 seconds..");
 			processException(new Exception());
 		}
@@ -864,7 +891,7 @@ public class UtilityMethods {
 				log.info("Waiting for Performance Over Time Line Chart Loading");
 				pot_ctr++;
 			}
-		} while (isSectionLoad == false && pot_ctr <= 6);
+		} while (isSectionLoad == false && pot_ctr < 6);
 
 		if (isSectionLoad == false && pot_ctr == 6) {
 			log.info("Perfomance Over Time Line Chart is not loaded in 60 seconds..");
@@ -885,15 +912,11 @@ public class UtilityMethods {
 				isSectionLoad = true;
 			} catch (Exception e1) {
 				log.info("Waiting for Test Score Overview Section Loading");
-				try {
-					Thread.sleep(2000);
-					tso_ctr++;
-				} catch (InterruptedException e) {
-				}
+				tso_ctr++;
 			}
-		} while (isSectionLoad == false && tso_ctr <= 15);
+		} while (isSectionLoad == false && tso_ctr < 3);
 
-		if (isSectionLoad == false && tso_ctr > 15) {
+		if (isSectionLoad == false && tso_ctr == 3) {
 			log.info("Test Score Overview Section is not loaded in 30 seconds..");
 			processException(new Exception());
 		}
@@ -912,15 +935,11 @@ public class UtilityMethods {
 				isSectionLoad = true;
 			} catch (Exception e1) {
 				log.info("Waiting for Summary Tab Section Loading...");
-				try {
-					Thread.sleep(2000);
-					smmry_ctr++;
-				} catch (InterruptedException e) {
-				}
+				smmry_ctr++;
 			}
-		} while (isSectionLoad == false && smmry_ctr <= 15);
+		} while (isSectionLoad == false && smmry_ctr < 3);
 
-		if (isSectionLoad == false && smmry_ctr > 15) {
+		if (isSectionLoad == false && smmry_ctr == 3) {
 			log.info("Summary Tab Section is not loaded in 30 seconds..");
 			processException(new Exception());
 		}
@@ -940,15 +959,11 @@ public class UtilityMethods {
 				isSectionLoad = true;
 			} catch (Exception e1) {
 				log.info("Waiting for Comparison Tab Section under Test Score Loading");
-				try {
-					Thread.sleep(2000);
-					cmprson_ctr++;
-				} catch (InterruptedException e) {
-				}
+				cmprson_ctr++;
 			}
-		} while (isSectionLoad == false && cmprson_ctr <= 15);
+		} while (isSectionLoad == false && cmprson_ctr < 3);
 
-		if (isSectionLoad == false && cmprson_ctr > 15) {
+		if (isSectionLoad == false && cmprson_ctr == 3) {
 			log.info("Comparison Tab Section under Test Score is not loaded in 30 seconds..");
 			processException(new Exception());
 		}
@@ -968,37 +983,15 @@ public class UtilityMethods {
 				isSectionLoad = true;
 			} catch (Exception e1) {
 				log.info("Waiting for Comparison Tab Section Loading");
-				try {
-					Thread.sleep(2000);
-					cmprson_ctr++;
-				} catch (InterruptedException e) {
-				}
+				cmprson_ctr++;
 			}
-		} while (isSectionLoad == false && cmprson_ctr <= 15);
+		} while (isSectionLoad == false && cmprson_ctr < 3);
 
-		if (isSectionLoad == false && cmprson_ctr > 15) {
+		if (isSectionLoad == false && cmprson_ctr == 3) {
 			log.info("Comparison Tab Section is not loaded in 30 seconds..");
 			processException(new Exception());
 		}
 	}
-
-	/**
-	 * This method is used to wait till the loading of comparison section
-	 */
-	/*
-	 * public static void wait_For_Standards_Pop_up_Load() { boolean isSectionLoad =
-	 * false; int cmprson_ctr = 0; do { try {
-	 * Assert.assertTrue(homePage.beneath_strands_on_standards_pop_up.isDisplayed())
-	 * ; log.info("Edit Standard Tab Section is now Displaying"); isSectionLoad =
-	 * true; } catch (Exception e1) {
-	 * log.info("Waiting for Edit Standard Tab Section Loading"); try {
-	 * Thread.sleep(2000); cmprson_ctr++; } catch (InterruptedException e) { } } }
-	 * while (isSectionLoad == false && cmprson_ctr <= 15);
-	 * 
-	 * if (isSectionLoad == false && cmprson_ctr > 15) {
-	 * log.info("Edit Standard Tab Section is not loaded in 30 seconds..");
-	 * processException(new Exception()); } }
-	 */
 
 	/**
 	 * This method is used to wait till the loading of Test Score Detail section
@@ -1013,15 +1006,11 @@ public class UtilityMethods {
 				isSectionLoad = true;
 			} catch (Exception e1) {
 				log.info("Waiting for Test Score Detail Section Loading");
-				try {
-					Thread.sleep(2000);
-					tsd_ctr++;
-				} catch (InterruptedException e) {
-				}
+				tsd_ctr++;
 			}
-		} while (isSectionLoad == false && tsd_ctr <= 15);
+		} while (isSectionLoad == false && tsd_ctr < 3);
 
-		if (isSectionLoad == false && tsd_ctr > 15) {
+		if (isSectionLoad == false && tsd_ctr == 3) {
 			log.info("Test Score Detail Section is not loaded in 30 seconds..");
 			processException(new Exception());
 		}
@@ -1041,15 +1030,11 @@ public class UtilityMethods {
 				isSectionLoad = true;
 			} catch (Exception e1) {
 				log.info("Waiting for Standard Performance Table Section Loading");
-				try {
-					Thread.sleep(2000);
-					sp_table_ctr++;
-				} catch (InterruptedException e) {
-				}
+				sp_table_ctr++;
 			}
-		} while (isSectionLoad == false && sp_table_ctr <= 15);
+		} while (isSectionLoad == false && sp_table_ctr < 3);
 
-		if (isSectionLoad == false && sp_table_ctr > 15) {
+		if (isSectionLoad == false && sp_table_ctr == 3) {
 			log.info("Standard Performance Table Section is not loaded in 30 seconds..");
 			processException(new Exception());
 		}
@@ -1260,7 +1245,8 @@ public class UtilityMethods {
 
 	/**
 	 * This method is used to wait till the loading of context header section
-	 * @throws InterruptedException 
+	 * 
+	 * @throws InterruptedException
 	 */
 	public static void wait_For_Context_Header_Section() throws InterruptedException {
 		String firstData;
@@ -1429,9 +1415,6 @@ public class UtilityMethods {
 			Thread.sleep(500);
 			UtilityMethods.scrollPageDown(Driver.webdriver, 7);
 			Thread.sleep(500);
-			// int ran_no =
-			// generateRandomNumberBySkippingIndex(homePage.testnameslist_on_test_tab.size(),
-			// 0);
 			int ran_no = 1;
 			new Actions(Driver.webdriver).moveToElement(homePage.testnameslist_on_test_tab.get(ran_no)).build()
 					.perform();
@@ -1772,6 +1755,22 @@ public class UtilityMethods {
 			Thread.sleep(500);
 			WebElement el = Driver.webdriver.findElement(By
 					.xpath("//div[@class='bec_groups_popup_dropdown_selectorList']/ul/li[text()='" + view_txt + "']"));
+
+			el.click();
+			Thread.sleep(3000);
+
+		} catch (Exception e) {
+			processException(e);
+		}
+	}
+
+	public static void select_view_on_viewDropdown_on_Edit_Standards_comparison_popup(String view_txt) {
+		try {
+			Thread.sleep(500);
+			homePage.dropDowns_on_edit_standards_on_pop_up.get(0).click();
+			Thread.sleep(500);
+			WebElement el = Driver.webdriver.findElement(By.xpath(
+					"//div[@class='bec_compares_popup_dropdown_selectorList']/ul/li[text()='" + view_txt + "']"));
 
 			el.click();
 			Thread.sleep(3000);

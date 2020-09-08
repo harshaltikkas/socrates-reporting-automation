@@ -316,17 +316,13 @@ public class Driver {
 			File sourcePath = ts.getScreenshotAs(OutputType.FILE);
 			File destinationPath;
 			DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy h-m-s");
-	        Date date = new Date();
+			Date date = new Date();
 			if (os.equalsIgnoreCase("linux")) {
 				destinationPath = new File(System.getProperty("user.dir") + "/target/cucumber-reports/screenshots/"
 						+ dateFormat.format(date) + ".png");
 			} else {
-				/*
-				 * destinationPath = new File(System.getProperty("user.dir") +
-				 * "\\target\\cucumber-reports\\screenshots\\" + dateFormat.format(date) +
-				 * ".png");
-				 */
-				destinationPath = new File("..\\screenshots\\" + dateFormat.format(date) + ".png");
+				destinationPath = new File(System.getProperty("user.dir") + "\\target\\cucumber-reports\\screenshots\\"
+						+ dateFormat.format(date) + ".png");
 			}
 			FileUtils.copyFile(sourcePath, destinationPath);
 			Reporter.addScreenCaptureFromPath(destinationPath.toString());

@@ -34,6 +34,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.PageFactory;
 import com.bec.reporting.pageobjects.HomePage;
+import com.bec.reporting.utils.API_Connection;
 import com.bec.reporting.utils.CBTConfiguration;
 import com.bec.reporting.utils.Driver;
 import com.bec.reporting.utils.Driver.BrowserCleanup;
@@ -142,7 +143,7 @@ public class Sprint_Eleven_And_Twelve_Steps {
 			Assert.assertTrue(homePage.activeClassListPage.isDisplayed());
 			UtilityMethods.scrollPageDown(Driver.webdriver, 9);
 			Thread.sleep(500);
-
+			List<String> list = API_Connection.get_Achievement_Levels();
 			Assert.assertTrue(homePage.classORSchoolListPageHeadersList.get(0).getText().contains("Classes"));
 			Assert.assertTrue(homePage.classORSchoolListPageHeadersList.get(1).getText().equals("No. of Qns"));
 			Assert.assertTrue(homePage.classORSchoolListPageHeadersList.get(2).getText().equals("% Students Complete"));
@@ -169,7 +170,7 @@ public class Sprint_Eleven_And_Twelve_Steps {
 			for (int j = 0; j < homePage.studentscorelistinstudentlist.size(); j++) {
 				score = Integer.parseInt(homePage.studentscorelistinstudentlist.get(j).getText());
 				scoreElement = homePage.studentscorelistinstudentlist.get(j);
-				UtilityMethods.verifyColorAndScoreOnStudentList(scoreElement, score);
+				UtilityMethods.verifyColorAndScoreOnStudentList(scoreElement, score,list);
 			}
 
 			CBTConfiguration.score = "pass";
@@ -192,7 +193,7 @@ public class Sprint_Eleven_And_Twelve_Steps {
 			Assert.assertTrue(homePage.classORSchoolListPageHeadersList.get(1).getText().equals("No. of Qns"));
 			Assert.assertTrue(homePage.classORSchoolListPageHeadersList.get(2).getText().equals("% Students Complete"));
 			Assert.assertTrue(homePage.classORSchoolListPageHeadersList.get(3).getText().equals("Score"));
-
+			List<String> list = API_Connection.get_Achievement_Levels();
 			new Actions(Driver.webdriver).moveToElement(homePage.classORSchoolListPageHeadersList.get(0)).build()
 					.perform();
 
@@ -216,7 +217,7 @@ public class Sprint_Eleven_And_Twelve_Steps {
 			for (int j = 0; j < homePage.studentscorelistinstudentlist.size(); j++) {
 				score = Integer.parseInt(homePage.studentscorelistinstudentlist.get(j).getText());
 				scoreElement = homePage.studentscorelistinstudentlist.get(j);
-				UtilityMethods.verifyColorAndScoreOnStudentList(scoreElement, score);
+				UtilityMethods.verifyColorAndScoreOnStudentList(scoreElement, score,list);
 			}
 
 			CBTConfiguration.score = "pass";
