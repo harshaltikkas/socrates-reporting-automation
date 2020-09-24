@@ -407,6 +407,7 @@ public class UtilityMethods {
 	 * @param scrollPoints
 	 * @return
 	 */
+
 	public static boolean scroll_Div(WebElement webelement, int scrollPoints) {
 		try {
 			Actions dragger = new Actions(Driver.webdriver);
@@ -427,7 +428,7 @@ public class UtilityMethods {
 		}
 		ctr = 0;
 		return true;
-	}
+	}	 
 
 	/**
 	 * This method is used to scroll up the div(vertical scroll bar) in

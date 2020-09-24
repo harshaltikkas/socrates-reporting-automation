@@ -1,5 +1,5 @@
 @Feature
-Feature: Customize Achievement Levels in Reports - sprint 51 & 52
+Feature: Customize Achievement Levels in Reports - sprint 51 & 52 & 53
 
   @BU-12347
   Scenario: verify Custom Achievement Levels - Single Test Analysis Reports Table for Student, Class, School, and District Levels
@@ -30,3 +30,18 @@ Feature: Customize Achievement Levels in Reports - sprint 51 & 52
   Scenario: verify Custom Achievement Levels - Standards Summary Report for the Student, Class, School, and District Levels
     Given User is on portal's login screen with username as "district_admin_one" and password as "password" and usertype as "realm_one"
     Then verify custom achievement levels on standard summary report for different levels
+
+  @BU-12687
+  Scenario: verify Custom Achievement Levels - Standards Performance Over Time line chart for the Student, Class, School, and District Levels
+    Given User is on portal's login screen with username as "district_admin_one" and password as "password" and usertype as "realm_one"
+    Then verify custom achievement levels on standard performance over time line chart report for different levels
+
+  @BU-12689
+  Scenario: verify Custom Achievement Levels - Test Scores Comparison Report for the Student, Class, School, and District Levels
+    Given User is on portal's login screen with username as "district_admin_one" and password as "password" and usertype as "realm_one"
+    Then verify custom achievement levels on test scores comparison report for different levels
+
+  @BU-12752
+  Scenario: verify Comparison reports behaviour on filtering changes from roster tab and test tab being in comparison context
+    Given User is on portal's login screen with username as "teacher_two" and password as "password" and usertype as "realm_one"
+    Then verify Comparison reports behaviour on filtering changes from roster tab and test tab being in comparison context

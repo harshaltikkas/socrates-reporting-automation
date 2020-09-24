@@ -158,10 +158,7 @@ public class PaginationOfDropDownListSteps {
 			homePage.teachersdropdownbtn.click();
 			Thread.sleep(500);
 			check_paginator_on_Roster("Teacher", 20);
-			/*
-			 * UtilityMethods.uncheck_check_All("Teacher");
-			 * homePage.teacherslist.get(1).click();
-			 */
+
 			Thread.sleep(500);
 			homePage.teachersdropdownbtn.click();
 			Thread.sleep(500);
@@ -171,9 +168,6 @@ public class PaginationOfDropDownListSteps {
 			homePage.classdropdownbtn.click();
 			Thread.sleep(500);
 			check_paginator_on_Roster("Class", 20);
-			/*
-			 * UtilityMethods.uncheck_check_All("Class"); homePage.classlist.get(1).click();
-			 */
 			Thread.sleep(500);
 			homePage.classdropdownbtn.click();
 			Thread.sleep(500);
@@ -181,10 +175,6 @@ public class PaginationOfDropDownListSteps {
 			homePage.studentdropdownbtn.click();
 			Thread.sleep(500);
 			check_paginator_on_Roster("Student", 20);
-			/*
-			 * UtilityMethods.uncheck_check_All("Student");
-			 * homePage.studentlistondropdown.get(1).click();
-			 */
 			Thread.sleep(500);
 			homePage.studentdropdownbtn.click();
 			Thread.sleep(500);

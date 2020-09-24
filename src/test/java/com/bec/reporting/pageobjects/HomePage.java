@@ -721,7 +721,7 @@ public class HomePage {
 	public WebElement performance_overtime_icon;
 
 	@FindBy(xpath = "//i[@class='material-icons' and contains(text(),'show_chart')]/ancestor::span/following-sibling::span[@class='sidewidget-header-title']")
-	public WebElement performanceovrtimeheader;
+	public WebElement pot_toggle_band;
 
 	@FindBy(xpath = "//span//img[contains(@style,'margin-top: -4px') or contains(@style,'margin-top: -3px') or contains(@style,'margin-top: -5px') or @class='widget-base-sub-title-img']")
 	public WebElement info_icon_on_performance_over_time_header;
@@ -826,7 +826,7 @@ public class HomePage {
 	public WebElement pot_header;
 
 	@FindBy(xpath = "//div[@class='widget-base-sub-title text-center']")
-	public WebElement performanceovertimeheader;
+	public WebElement avg_score_label_on_pot_list;
 
 	@FindBy(xpath = "//div[@class='widget-base-sub-title text-center']/preceding-sibling::div[1]/span[contains(@style,'text-align')]")
 	public WebElement pot_subheader;
@@ -1188,10 +1188,7 @@ public class HomePage {
 	public List<WebElement> compare_cb_list_on_summary;
 
 	@FindBy(xpath = "//span[@class='bec_singleTest_checkbox_label']")
-	public List<WebElement> compare_cb_list_on_sta;
-
-	@FindBy(xpath = "//label[contains(@class,'bec_compare_checkbox_check')]")
-	public List<WebElement> compare_cb_list_on_comparison;
+	public List<WebElement> compare_cb_list_on_sta;	
 
 	@FindBy(xpath = "//div[contains(@class,'bec_singleTest_multi_list_single_taxonomy')]")
 	public List<WebElement> view_text_in_sta_table_header;

@@ -202,7 +202,7 @@ public class FlyInMenuBehaviourSteps {
 		try {
 			String selectedSchool = "", selectedClass = "", selectedStudent = "", selectedGrade = "",
 					selectedTeacher = "";
-			int customSize = 0, randomIndex = 0;
+			int customSize = 0;
 			// selecting school from dropdown
 			selectedSchool = sc;
 			selectedGrade = grade;
@@ -246,14 +246,10 @@ public class FlyInMenuBehaviourSteps {
 				// de-selecting first time"all" students
 				// This is to unselect all student from dropdown,as default is all selected
 				RosterTabUtilityMethods.uncheck_check_All("Student");
-				//randomIndex = UtilityMethods.generateRandomNumberBySkippingIndex(homePage.studentlistwithall.size(), 0);
-				randomIndex=1;
-				UtilityMethods.scroll_Div(homePage.studentlistwithall.get(randomIndex), 20);
-				Thread.sleep(500);
-				selectedStudent = homePage.studentlistwithall.get(randomIndex).getText();
+				selectedStudent = homePage.studentlistwithall.get(1).getText();
 				UtilityMethods.scrollPageDown(Driver.webdriver, 2);
 				Thread.sleep(500);
-				homePage.studentlistwithall.get(randomIndex).click();
+				homePage.studentlistwithall.get(1).click();
 				Thread.sleep(500);
 				log.info("Selected Student is:" + selectedStudent);
 				homePage.studentdropdownbtn.click();
@@ -439,7 +435,7 @@ public class FlyInMenuBehaviourSteps {
 	 */
 	@When("^User Click on Test tab within the Universal Selector Tab$")
 	public void user_Click_on_Test_tab_within_the_Universal_Selector_Tab() throws Throwable {
-		try {			
+		try {
 			homePage.testtab.click();
 			Thread.sleep(1000);
 		} catch (Exception e) {
@@ -657,6 +653,7 @@ public class FlyInMenuBehaviourSteps {
 				if (homePage.schoollist.get(i).getText().equals("")) {
 					UtilityMethods.scroll_Div(homePage.schoollist.get(i), 20);
 				}
+				Thread.sleep(500);
 				homePage.schoollist.get(i).click();
 				count++;
 				Thread.sleep(500);

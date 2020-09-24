@@ -587,7 +587,7 @@ public class Standard_Overview_Table_Steps {
 			// verifying for student context
 			jse.executeScript("arguments[0].click();", homePage.studentmenu);
 			UtilityMethods.wait_For_Performance_Over_Time_Line_Chart_Section_Load();
-			Assert.assertTrue(homePage.performanceovrtimeheader.getText().equals("Performance Over Time"));
+			Assert.assertTrue(homePage.pot_toggle_band.getText().equals("Performance Over Time"));
 			new Actions(Driver.webdriver).moveToElement(homePage.info_icon_on_performance_over_time).click().build()
 					.perform();
 			Thread.sleep(500);
@@ -1070,22 +1070,9 @@ public class Standard_Overview_Table_Steps {
 			throws Throwable {
 		try {
 			List<String> list = API_Connection.get_Achievement_Levels();
-			if (Standard_Overview_Table_Steps.performanceMenuClicked
-					&& Standard_Overview_Table_Steps.underClassContext) {
-				homePage.performance_overtime_icon.click();
-				Thread.sleep(500);
-				UtilityMethods.wait_For_Performance_Over_Time_Line_Chart_Section_Load();
-				UtilityMethods.scrollPageDown(Driver.webdriver, 4);
-				Thread.sleep(500);
-			}
-			if (Standard_Overview_Table_Steps.performanceMenuClicked
-					&& Standard_Overview_Table_Steps.underStudentContext) {
-				UtilityMethods.scrollPageDown(Driver.webdriver, 4);
-				Thread.sleep(500);
-			}
-			/*
-			 * UtilityMethods.scrollPageDown(Driver.webdriver, 8); Thread.sleep(500);
-			 */
+			UtilityMethods.scrollPageDown(Driver.webdriver, 4);
+			Thread.sleep(500);
+
 			if (PaginationUtility_for_Pages.checkPaginator_on_pot_under_standard_performance()) {
 				// this lool will execute for the no. of circle available on paginator
 				for (int i = homePage.circle_list_on_paginator_on_pot_under_sp.size() - 1; i >= 0; i--) {
@@ -1462,6 +1449,9 @@ public class Standard_Overview_Table_Steps {
 			if (PaginationUtility_for_Pages.checkPaginator_on_tsd()) {
 				// this lool will execute for the no. of circle available on paginator
 				for (int i = 0; i < homePage.circle_list_on_paginator_on_tsd.size(); i++) {
+					new Actions(Driver.webdriver).moveToElement(homePage.circle_list_on_paginator_on_tsd.get(0)).build()
+							.perform();
+					Thread.sleep(500);
 					PaginationUtility_for_Pages
 							.clicking_on_indexed_circle_of_paginator(homePage.circle_list_on_paginator_on_tsd, i);
 					Thread.sleep(500);
@@ -1470,8 +1460,6 @@ public class Standard_Overview_Table_Steps {
 						score = Integer.parseInt(homePage.studentscorelistinstudentlist.get(j).getText());
 						scoreElement = homePage.studentscorelistinstudentlist.get(j);
 						UtilityMethods.verifyColorAndScoreOnStudentList(scoreElement, score, list);
-						UtilityMethods.scrollPageUp(Driver.webdriver, 5);
-						Thread.sleep(500);
 					}
 				}
 				// check for left arrow enabled and click on it and click on first circle and

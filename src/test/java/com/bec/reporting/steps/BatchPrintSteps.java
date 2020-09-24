@@ -204,12 +204,9 @@ public class BatchPrintSteps {
 		try {
 			new Actions(Driver.webdriver).moveToElement(homePage.viewDropDown_on_summary).click().build().perform();
 			Thread.sleep(1000);
-			//int x = UtilityMethods.generateRandomNumberBySkippingIndex(homePage.viewDropDownList_on_summary.size(), 0);
-			int x=0;
-			new Actions(Driver.webdriver).moveToElement(homePage.viewDropDownList_on_summary.get(x)).click().build()
+			new Actions(Driver.webdriver).moveToElement(homePage.viewDropDownList_on_summary.get(1)).click().build()
 					.perform();
 			Thread.sleep(1000);
-
 		} catch (Exception e) {
 			UtilityMethods.processException(e);
 		}

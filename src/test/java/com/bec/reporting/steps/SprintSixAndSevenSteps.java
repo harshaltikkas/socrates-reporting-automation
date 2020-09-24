@@ -144,7 +144,6 @@ public class SprintSixAndSevenSteps {
 		try {
 			if ((Standard_Overview_Table_Steps.underClassContext)
 					&& Standard_Overview_Table_Steps.performanceMenuClicked) {
-				// UtilityMethods.wait_For_Page_Section_Load();
 				homePage.performance_overtime_icon.click();
 				UtilityMethods.wait_For_Performance_Over_Time_Line_Chart_Section_Load();
 
@@ -240,8 +239,7 @@ public class SprintSixAndSevenSteps {
 			homePage.strandnameslist.get(no).click();
 			if (Standard_Overview_Table_Steps.underStudentContext) {
 				UtilityMethods.wait_For_Performance_Over_Time_Line_Chart_Section_Load();
-			}
-			else {
+			} else {
 				UtilityMethods.wait_For_Student_List_AND_OR_Class_List_Section_Load();
 			}
 

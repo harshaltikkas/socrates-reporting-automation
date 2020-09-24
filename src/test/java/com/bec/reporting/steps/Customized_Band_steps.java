@@ -10,6 +10,8 @@ import com.bec.reporting.pageobjects.HomePage;
 import com.bec.reporting.utils.API_Connection;
 import com.bec.reporting.utils.CBTConfiguration;
 import com.bec.reporting.utils.Driver;
+import com.bec.reporting.utils.PaginationUtility_for_Pages;
+import com.bec.reporting.utils.RosterTabUtilityMethods;
 import com.bec.reporting.utils.UtilityMethods;
 import cucumber.api.java.en.Then;
 import lombok.extern.slf4j.Slf4j;
@@ -173,7 +175,7 @@ public class Customized_Band_steps {
 			List<String> list = API_Connection.get_Achievement_Levels();
 			log.info("Verifying comparison table score and color value under district menu");
 			js.executeScript("arguments[0].click();", homePage.comparisontab);
-			Thread.sleep(15000);
+			Thread.sleep(10000);
 			UtilityMethods
 					.select_view_on_viewDropdown_on_Edit_Standards_comparison_popup("CaCCSS English Language Arts");
 			homePage.applyBtnOnstandardTab.click();
@@ -553,8 +555,8 @@ public class Customized_Band_steps {
 			js.executeScript("arguments[0].click();", homePage.summarytab);
 			UtilityMethods.wait_For_Summary_Tab_Section_Load();
 			verify_color_and_avg_score_of_Summary(list);
-			
-			js.executeScript("arguments[0].click();", homePage.schoolmenu);		
+
+			js.executeScript("arguments[0].click();", homePage.schoolmenu);
 			log.info("Verifying score and color on School Menu");
 			UtilityMethods.wait_For_Summary_Tab_Section_Load();
 			verify_color_and_avg_score_of_Summary(list);
@@ -627,4 +629,315 @@ public class Customized_Band_steps {
 		}
 	}
 
+	@Then("^verify custom achievement levels on standard performance over time line chart report for different levels$")
+	public void verify_custom_achievement_levels_on_standard_performance_over_time_line_chart_report_for_different_levels()
+			throws Throwable {
+		try {
+			List<String> list = API_Connection.get_Achievement_Levels();
+			Assert.assertTrue(homePage.activestandardperformancebtn.isDisplayed());
+			log.info("verifying sp over time linechart on district-SP");
+			verify_color_and_avg_score_of_pot(list);
+
+			log.info("verifying key toggle color range on school-SP tab");
+			js.executeScript("arguments[0].click();", homePage.schoolmenu);
+			UtilityMethods.wait_For_Student_List_AND_OR_Class_List_Section_Load();
+			verify_color_and_avg_score_of_pot(list);
+
+			log.info("verifying key toggle color range on class-SP tab");
+			js.executeScript("arguments[0].click();", homePage.classmenu);
+			UtilityMethods.wait_For_Student_List_AND_OR_Class_List_Section_Load();
+			verify_color_and_avg_score_of_pot(list);
+
+			log.info("verifying key toggle color range on student-SP tab");
+			js.executeScript("arguments[0].click();", homePage.studentmenu);
+			UtilityMethods.wait_For_Performance_Over_Time_Line_Chart_Section_Load();
+			verify_color_and_avg_score_of_pot(list);
+
+			CBTConfiguration.score = "pass";
+		} catch (Exception e) {
+			UtilityMethods.processException(e);
+		}
+		log.info("Scenario BU-12687 completed");
+	}
+
+	public void verify_color_and_avg_score_of_pot(List<String> list) {
+		try {
+			js.executeScript("arguments[0].click();", homePage.performance_overtime_icon);
+			UtilityMethods.wait_For_Performance_Over_Time_Line_Chart_Section_Load();
+			UtilityMethods.scrollPageDown(Driver.webdriver, 4);
+			Thread.sleep(500);
+
+			if (PaginationUtility_for_Pages.checkPaginator_on_pot_under_standard_performance()) {
+				// this lool will execute for the no. of circle available on paginator
+				for (int i = homePage.circle_list_on_paginator_on_pot_under_sp.size() - 1; i >= 0; i--) {
+					PaginationUtility_for_Pages.clicking_on_indexed_circle_of_paginator(
+							homePage.circle_list_on_paginator_on_pot_under_sp, i);
+					Assert.assertTrue(homePage.testNamesonPerPage_onlinechart.size() <= 10);
+					for (int j = homePage.testNamesonPerPage_onlinechart.size() - 1; j >= 0; j--) {
+
+						UtilityMethods.verifyColorAndScoreOnLineChart(homePage.testScoreCircleClronPerPage_pot.get(j),
+								Integer.parseInt(homePage.testScoresonPerPage_on_pot.get(j).getText()), list);
+					}
+				}
+				// check for left arrow enabled and click on it and click on first circle and
+				// validate
+				do {
+					if (PaginationUtility_for_Pages
+							.check_Enabled_Left_Arrow_on_Paginator_under_standard_performance()) {
+						PaginationUtility_for_Pages
+								.clicking_on_enabled_left_Arrow_of_paginator_under_standard_performance();
+						PaginationUtility_for_Pages.clicking_on_first_circle_of_paginator(
+								homePage.circle_list_on_paginator_on_pot_under_sp);
+						Assert.assertTrue(homePage.testNamesonPerPage_onlinechart.size() <= 10);
+						for (int j = homePage.testNamesonPerPage_onlinechart.size() - 1; j >= 0; j--) {
+							UtilityMethods.verifyColorAndScoreOnLineChart(
+									homePage.testScoreCircleClronPerPage_pot.get(j),
+									Integer.parseInt(homePage.testScoresonPerPage_on_pot.get(j).getText()), list);
+						}
+					}
+				} while (PaginationUtility_for_Pages
+						.check_Enabled_Left_Arrow_on_Paginator_under_standard_performance());
+			} else {
+				// when paginator is not found
+				Assert.assertTrue(homePage.testNamesonPerPage_onlinechart.size() <= 10);
+				for (int j = homePage.testNamesonPerPage_onlinechart.size() - 1; j >= 0; j--) {
+
+					UtilityMethods.verifyColorAndScoreOnLineChart(homePage.testScoreCircleClronPerPage_pot.get(j),
+							Integer.parseInt(homePage.testScoresonPerPage_on_pot.get(j).getText()), list);
+				}
+			}
+			UtilityMethods.scrollPageUp(Driver.webdriver);
+			Thread.sleep(500);
+		} catch (Exception e) {
+			UtilityMethods.processException(e);
+		}
+	}
+
+	@Then("^verify custom achievement levels on test scores comparison report for different levels$")
+	public void verify_custom_achievement_levels_on_test_scores_comparison_report_for_different_levels()
+			throws Throwable {
+		try {
+			List<String> list = API_Connection.get_Achievement_Levels();
+			Assert.assertTrue(homePage.activestandardperformancebtn.isDisplayed());
+			log.info("verifying test score comparison on district-Test Score-Comparison");
+			js.executeScript("arguments[0].click();", homePage.test_scores_btn);
+			UtilityMethods.wait_For_Test_Score_Detail_Section();
+			js.executeScript("arguments[0].click();", homePage.comparisontab);
+			UtilityMethods.wait_For_Comparison_Tab_Section_Load_under_test_score();
+			homePage.compare_cb_list_on_comparison_tab.get(0).click();
+			Thread.sleep(500);
+
+			WebElement scoreElement = null;
+			String per = "";
+			List<WebElement> avg_score_list = Driver.webdriver.findElements(
+					By.xpath("//div[@class='bec_compare_multi_list_Single_compare_body_row_avg_score']/span"));
+
+			for (int j = 0; j < avg_score_list.size(); j++) {
+				scoreElement = avg_score_list.get(j);
+				per = avg_score_list.get(j).getText();
+				if (per.contains("%")) {
+					per = per.substring(0, per.indexOf("%"));
+				}
+				UtilityMethods.verifyColorAndScoreOn_Different_Table(scoreElement, per, list);
+			}
+			List<WebElement> test_one_list = Driver.webdriver.findElements(By.xpath(
+					"//div[@class='bec_compare_multi_list_Single_compare_body_row_strand_score_list']/div[1]//span/div"));
+			for (int j = 0; j < test_one_list.size(); j++) {
+				scoreElement = test_one_list.get(j).findElement(By.xpath(".."));
+				UtilityMethods.verifyColorAndScoreOn_Different_Table(scoreElement, test_one_list.get(j).getText(),
+						list);
+			}
+
+			List<WebElement> test_two_list = Driver.webdriver.findElements(By.xpath(
+					"//div[@class='bec_compare_multi_list_Single_compare_body_row_strand_score_list']/div[2]//span/div"));
+			for (int j = 0; j < test_two_list.size(); j++) {
+				scoreElement = test_two_list.get(j).findElement(By.xpath(".."));
+				UtilityMethods.verifyColorAndScoreOn_Different_Table(scoreElement, test_two_list.get(j).getText(),
+						list);
+			}
+
+			List<WebElement> test_three_list = Driver.webdriver.findElements(By.xpath(
+					"//div[@class='bec_compare_multi_list_Single_compare_body_row_strand_score_list']/div[3]//span/div"));
+			for (int j = 0; j < test_three_list.size(); j++) {
+				scoreElement = test_three_list.get(j).findElement(By.xpath(".."));
+				UtilityMethods.verifyColorAndScoreOn_Different_Table(scoreElement, test_three_list.get(j).getText(),
+						list);
+			}
+
+			List<WebElement> test_four_list = Driver.webdriver.findElements(By.xpath(
+					"//div[@class='bec_compare_multi_list_Single_compare_body_row_strand_score_list']/div[4]//span/div"));
+			for (int j = 0; j < test_four_list.size(); j++) {
+				scoreElement = test_four_list.get(j).findElement(By.xpath(".."));
+				UtilityMethods.verifyColorAndScoreOn_Different_Table(scoreElement, test_four_list.get(j).getText(),
+						list);
+			}
+
+			List<WebElement> test_five_list = Driver.webdriver.findElements(By.xpath(
+					"//div[@class='bec_compare_multi_list_Single_compare_body_row_strand_score_list']/div[5]//span/div"));
+			for (int j = 0; j < test_five_list.size(); j++) {
+				scoreElement = test_five_list.get(j).findElement(By.xpath(".."));
+				UtilityMethods.verifyColorAndScoreOn_Different_Table(scoreElement, test_five_list.get(j).getText(),
+						list);
+			}
+			homePage.enabled_right_arrow_on_comparison_tab.click();
+			Thread.sleep(500);
+
+			List<WebElement> test_six_list = Driver.webdriver.findElements(By.xpath(
+					"//div[@class='bec_compare_multi_list_Single_compare_body_row_strand_score_list']/div[5]//span/div"));
+			for (int j = 0; j < test_six_list.size(); j++) {
+				scoreElement = test_six_list.get(j).findElement(By.xpath(".."));
+				UtilityMethods.verifyColorAndScoreOn_Different_Table(scoreElement, test_six_list.get(j).getText(),
+						list);
+			}
+
+			js.executeScript("arguments[0].click();", homePage.schoolmenu);
+			UtilityMethods.wait_For_Comparison_Tab_Section_Load_under_test_score();
+			homePage.compare_cb_list_on_comparison_tab.get(0).click();
+			Thread.sleep(500);
+
+			avg_score_list = Driver.webdriver.findElements(
+					By.xpath("//div[@class='bec_compare_multi_list_Single_compare_body_row_avg_score']/span"));
+
+			for (int j = 0; j < avg_score_list.size(); j++) {
+				scoreElement = avg_score_list.get(j);
+				per = avg_score_list.get(j).getText();
+				if (per.contains("%")) {
+					per = per.substring(0, per.indexOf("%"));
+				}
+				UtilityMethods.verifyColorAndScoreOn_Different_Table(scoreElement, per, list);
+			}
+			test_one_list = Driver.webdriver.findElements(By.xpath(
+					"//div[@class='bec_compare_multi_list_Single_compare_body_row_strand_score_list']/div[1]//span/div"));
+			for (int j = 0; j < test_one_list.size(); j++) {
+				scoreElement = test_one_list.get(j).findElement(By.xpath(".."));
+				UtilityMethods.verifyColorAndScoreOn_Different_Table(scoreElement, test_one_list.get(j).getText(),
+						list);
+			}
+
+			js.executeScript("arguments[0].click();", homePage.classmenu);
+			UtilityMethods.wait_For_Comparison_Tab_Section_Load_under_test_score();
+			homePage.compare_cb_list_on_comparison_tab.get(0).click();
+			Thread.sleep(500);
+
+			avg_score_list = Driver.webdriver.findElements(
+					By.xpath("//div[@class='bec_compare_multi_list_Single_compare_body_row_avg_score']/span"));
+
+			for (int j = 0; j < avg_score_list.size(); j++) {
+				scoreElement = avg_score_list.get(j);
+				per = avg_score_list.get(j).getText();
+				if (per.contains("%")) {
+					per = per.substring(0, per.indexOf("%"));
+				}
+				UtilityMethods.verifyColorAndScoreOn_Different_Table(scoreElement, per, list);
+			}
+			test_one_list = Driver.webdriver.findElements(By.xpath(
+					"//div[@class='bec_compare_multi_list_Single_compare_body_row_strand_score_list']/div[1]//span/div"));
+			for (int j = 0; j < test_one_list.size(); j++) {
+				scoreElement = test_one_list.get(j).findElement(By.xpath(".."));
+				UtilityMethods.verifyColorAndScoreOn_Different_Table(scoreElement, test_one_list.get(j).getText(),
+						list);
+			}
+
+			js.executeScript("arguments[0].click();", homePage.studentmenu);
+			UtilityMethods.wait_For_Comparison_Tab_Section_Load_under_test_score();
+			homePage.compare_cb_list_on_comparison_tab.get(0).click();
+			Thread.sleep(500);
+
+			avg_score_list = Driver.webdriver.findElements(
+					By.xpath("//div[@class='bec_compare_multi_list_Single_compare_body_row_avg_score']/span"));
+
+			for (int j = 0; j < avg_score_list.size(); j++) {
+				scoreElement = avg_score_list.get(j);
+				per = avg_score_list.get(j).getText();
+				if (per.contains("%")) {
+					per = per.substring(0, per.indexOf("%"));
+				}
+				UtilityMethods.verifyColorAndScoreOn_Different_Table(scoreElement, per, list);
+			}
+			test_one_list = Driver.webdriver.findElements(By.xpath(
+					"//div[@class='bec_compare_multi_list_Single_compare_body_row_strand_score_list']/div[1]//span/div"));
+			for (int j = 0; j < test_one_list.size(); j++) {
+				scoreElement = test_one_list.get(j).findElement(By.xpath(".."));
+				UtilityMethods.verifyColorAndScoreOn_Different_Table(scoreElement, test_one_list.get(j).getText(),
+						list);
+			}
+
+			CBTConfiguration.score = "pass";
+		} catch (Exception e) {
+			UtilityMethods.processException(e);
+		}
+		log.info("Scenario BU-12689 completed");
+	}
+
+	@Then("^verify Comparison reports behaviour on filtering changes from roster tab and test tab being in comparison context$")
+	public void verify_Comparison_reports_behaviour_on_filtering_changes_from_roster_tab_and_test_tab_being_in_comparison_context()
+			throws Throwable {
+		try {
+			Assert.assertTrue(homePage.activestandardperformancebtn.isDisplayed());
+			Assert.assertTrue(homePage.activeclassmenu.isDisplayed());
+			js.executeScript("arguments[0].click();", homePage.comparisontab);
+			Thread.sleep(10000);
+			homePage.applyBtnOnstandardTab.click();
+			UtilityMethods.wait_For_Comparison_Tab_Section_Load_under_standard_performance();
+			homePage.compare_cb_list_on_comparison_tab.get(0).click();
+			Thread.sleep(500);
+			homePage.compare_cb_list_on_comparison_tab.get(1).click();
+			Thread.sleep(500);
+			homePage.compare_cb_list_on_comparison_tab.get(2).click();
+			Thread.sleep(500);
+			Assert.assertTrue(
+					homePage.compare_list_of_avg_on_comparison_tab.get(0).getText().equals("District Average"));
+			Assert.assertTrue(homePage.compare_list_of_avg_on_comparison_tab.get(1).getText().equals("School Average"));
+			Assert.assertTrue(homePage.compare_list_of_avg_on_comparison_tab.get(2).getText().equals("Class Average"));
+			String view_name_of_table = homePage.comparison_tab_sp_text.getText();
+			js.executeScript("arguments[0].click();", homePage.studentmenu);
+			UtilityMethods.wait_For_Comparison_Tab_Section_Load_under_standard_performance();
+			Assert.assertTrue(view_name_of_table.equals(homePage.comparison_tab_sp_text.getText()));
+			Assert.assertTrue(
+					homePage.compare_list_of_avg_on_comparison_tab.get(0).getText().equals("District Average"));
+			Assert.assertTrue(homePage.compare_list_of_avg_on_comparison_tab.get(1).getText().equals("School Average"));
+			Assert.assertTrue(homePage.compare_list_of_avg_on_comparison_tab.get(2).getText().equals("Class Average"));
+
+			UtilityMethods.scrollPageDown(Driver.webdriver, 3);
+			homePage.rostertab.click();
+			Thread.sleep(1000);
+			
+			homePage.studentdropdownbtn.click();
+			Thread.sleep(500);
+			
+			RosterTabUtilityMethods.uncheck_check_All("Student");
+			RosterTabUtilityMethods.uncheck_check_All("Student");
+			int customSize=0;		
+			for (int i = 1; i < homePage.studentlistondropdown.size(); i = i + 2) {
+				if (homePage.studentlistondropdown.get(i).getText().equals("")) {
+					UtilityMethods.scroll_Div(homePage.studentlistondropdown.get(i), 20);
+				}
+				homePage.studentlistondropdown.get(i).click();
+				Thread.sleep(500);
+				customSize++;
+			}
+			homePage.studentdropdownbtn.click();
+			Thread.sleep(500);
+			homePage.rosterapplybtn.click();
+			Thread.sleep(15000);
+			Assert.assertTrue(homePage.dropDowns_on_edit_standards_on_pop_up.get(0).isDisplayed());
+			homePage.applyBtnOnstandardTab.click();
+			UtilityMethods.wait_For_Comparison_Tab_Section_Load_under_standard_performance();
+			Assert.assertTrue(homePage.activeclassmenu.isDisplayed());
+			Assert.assertTrue(homePage.contextheader_text_list.get(0).getText().equals("Custom ("+customSize+")"));			
+			
+			homePage.testtab.click();Thread.sleep(500);
+			homePage.testnameslist_on_test_tab.get(0).click();Thread.sleep(500);
+			homePage.testapplybtn.click();
+			Thread.sleep(12000);
+			Assert.assertTrue(homePage.dropDowns_on_edit_standards_on_pop_up.get(0).isDisplayed());
+			homePage.applyBtnOnstandardTab.click();
+			UtilityMethods.wait_For_Comparison_Tab_Section_Load_under_standard_performance();
+			
+			CBTConfiguration.score = "pass";
+		} catch (Exception e) {
+			UtilityMethods.processException(e);
+		}
+		log.info("Scenario BU-12752 completed");
+	}
 }

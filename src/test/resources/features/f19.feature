@@ -57,7 +57,7 @@ Feature: Validate local/state standards UI functionality
     Given User is on portal's login screen with username as "ls_da_one" and password as "password" and usertype as "realm_ls_dodea"
     Then Verify local state standards for school standards summary
 
-  @BU-11673 @BU-11862
+  @BU-11673 @BU-11862 
   Scenario: Verify Local/State Standards - SCHOOL/DISTRICT: Standards Comparison
     Given User is on portal's login screen with username as "ls_sa_one" and password as "password" and usertype as "realm_ls_dodea"
     Then Verify local state standards for school standards comparison

@@ -130,7 +130,7 @@ public class PageSelectorAndStudentClassFilterSteps {
 			Assert.assertTrue(homePage.key_al_orangecolor.getText().equals(list.get(1) + "%"));
 			Assert.assertTrue(homePage.key_al_yellowcolor.getText().equals(list.get(2) + "%"));
 			Assert.assertTrue(homePage.key_al_greencolor.getText()
-					.equals(list.get(3).substring(0, list.get(3).indexOf("-"))+"%+")   );
+					.equals(list.get(3).substring(0, list.get(3).indexOf("-")) + "%+"));
 			Assert.assertTrue(homePage.key_al_graycolor.getText().equals("No Data Available"));
 			homePage.reportingkey.click();
 			CBTConfiguration.score = "pass";

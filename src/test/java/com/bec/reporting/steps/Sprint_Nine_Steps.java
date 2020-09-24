@@ -63,7 +63,7 @@ public class Sprint_Nine_Steps {
 		try {
 			if (Standard_Overview_Table_Steps.underClassContext
 					&& Standard_Overview_Table_Steps.performanceMenuClicked) {
-				UtilityMethods.wait_For_Performance_Over_Time_Line_Chart_Section_Load();
+				UtilityMethods.wait_For_Student_List_AND_OR_Class_List_Section_Load();
 				new Actions(Driver.webdriver).moveToElement(homePage.performance_overtime_icon).click().build()
 						.perform();
 				UtilityMethods.wait_For_Performance_Over_Time_Line_Chart_Section_Load();
@@ -71,9 +71,9 @@ public class Sprint_Nine_Steps {
 				log.info("This will execute with student context");
 			}
 
-			String percentage = homePage.performanceovertimeheader.getText();
+			String percentage = homePage.avg_score_label_on_pot_list.getText();
 			percentage = percentage.substring(percentage.indexOf(":") + 2, percentage.indexOf("%"));
-			String no_of_questions = homePage.performanceovertimeheader.getText();
+			String no_of_questions = homePage.avg_score_label_on_pot_list.getText();
 			no_of_questions = no_of_questions.substring(no_of_questions.indexOf("on") + 2,
 					no_of_questions.lastIndexOf(" "));
 			UtilityMethods.scrollPageDown(Driver.webdriver, 6);
@@ -163,7 +163,7 @@ public class Sprint_Nine_Steps {
 			String school, classN, district, tests, dates, assessedWith, teacherN, studentName, grade;
 			new Actions(Driver.webdriver).moveToElement(homePage.overviewtext).click().build().perform();
 			Thread.sleep(500);
-		
+
 			school = UtilityMethods.getSchoolNameonUI();
 			district = UtilityMethods.getDistrictNameonUI();
 			grade = UtilityMethods.getGradeNameonUI();
@@ -289,7 +289,8 @@ public class Sprint_Nine_Steps {
 	 */
 	@Then("^verify View Texonomy on Standard Performance$")
 	public void verify_View_Texonomy_on_Standard_Performance() throws Throwable {
-		String output = "fail", viewDDText = "";boolean found=false;
+		String output = "fail", viewDDText = "";
+		boolean found = false;
 		try {
 			if (Standard_Overview_Table_Steps.performanceMenuClicked) {
 				Assert.assertTrue(homePage.viewDropDown.isDisplayed());
@@ -300,10 +301,10 @@ public class Sprint_Nine_Steps {
 				} else {
 					viewDDText = homePage.viewDropDown.getText();
 				}
-				Map<Integer,String> map=API_Connection.getViewDetails();
+				Map<Integer, String> map = API_Connection.getViewDetails();
 				for (Map.Entry<Integer, String> data : map.entrySet()) {
-					if(data.getValue().equalsIgnoreCase(viewDDText)) {
-						found=true;
+					if (data.getValue().equalsIgnoreCase(viewDDText)) {
+						found = true;
 					}
 				}
 				Assert.assertTrue(found);
@@ -332,30 +333,13 @@ public class Sprint_Nine_Steps {
 			String user = System.getProperty("user.name");
 			String folder = "C:\\Users\\" + user + "\\Downloads";
 			String fileName = null;
-			//to delete if previous files are not deleted
+			// to delete if previous files are not deleted
 			UtilityMethods.Delete_CSV(folder);
-			/*
-			 * String sp_ts_list[] = new String[] { "District Name", "School Name","Grade",
-			 * "Teacher Name", "Class Name", "Student Name", "Student ID(SIS)", "Test Type",
-			 * "Test Name", "Test Submitted", "Test Graded", "Question Numbers",
-			 * "Points Earned", "Total Points", "TestScore %", "Standard", "DOK",
-			 * "ELD Domain", "ELD Task", "ELD Standard" };
-			 * 
-			 * String test_status[] = new String[] { "District Name", "School Name",
-			 * "Grade", "Teacher Name", "Class Name", "Student Name", "Student ID(SIS)",
-			 * "Test Type", "Test Name", "Assignment Name", "Test Status", "Start Date",
-			 * "Due Date", "Submit Date" };
-			 */
 
 			IWait.explicit_wait(Driver.webdriver, homePage.csvDownloadIcon);
 			homePage.csvDownloadIcon.click();
 			Thread.sleep(1000);
-			/*
-			 * if (API_Connection.getUserRole().equalsIgnoreCase("DISTRICT_ADMIN")) {
-			 * test_status = new String[] { "School Name", "Grade", "Teacher Name",
-			 * "Class Name", "Test Type", "Test Name", "Assignment Name", "Total Students",
-			 * "Not Started", "In Progress", "Needs to Be Graded", "Complete" }; }
-			 */
+
 			if (API_Connection.getUserRole().equalsIgnoreCase("SCHOOL_ADMIN")) {
 				IWait.explicit_wait(Driver.webdriver, homePage.csv_download_text_on_model);
 				Assert.assertTrue(homePage.csv_download_btn_on_model.isDisplayed());
@@ -368,17 +352,17 @@ public class Sprint_Nine_Steps {
 				fileName = "ar_report_csv.csv";
 				file = new File(folder + "\\" + fileName);
 				UtilityMethods.wait_For_CSV_File_Download(file);
-				//UtilityMethods.Verify_Columns_Header_of_CSV(sp_ts_list, file);
+
 			} else if (Standard_Overview_Table_Steps.testScoreMenuClicked) {
 				fileName = "ar_report_csv.csv";
 				file = new File(folder + "\\" + fileName);
 				UtilityMethods.wait_For_CSV_File_Download(file);
-				//UtilityMethods.Verify_Columns_Header_of_CSV(sp_ts_list, file);
+
 			} else if (Standard_Overview_Table_Steps.test_status_Menu_Clicked) {
 				fileName = "test_status.csv";
 				file = new File(folder + "\\" + fileName);
 				UtilityMethods.wait_For_CSV_File_Download(file);
-				//UtilityMethods.Verify_Columns_Header_of_CSV(test_status, file);
+
 			}
 			log.info("After Downloading, deleting the file :" + file.getAbsoluteFile().getName());
 			UtilityMethods.Delete_CSV(folder);

@@ -190,7 +190,7 @@ public class local_state_standards_Steps {
 			UtilityMethods.wait_For_STA_Section_Load();
 			homePage.filter_in_sta_for_district.click();
 			Thread.sleep(2000);
-			Assert.assertTrue(homePage.chkbox_list_text_under_view_on_sta_filter.get(2).getText().startsWith("AZ"));
+			Assert.assertTrue(homePage.chkbox_list_text_under_view_on_sta_filter.get(3).getText().startsWith("AZ"));
 			homePage.cancel_button_on_filter_in_sta.click();
 			Thread.sleep(1000);
 			Assert.assertTrue(homePage.view_text_in_sta_table_header.get(0).getText().startsWith("AZ"));
@@ -411,7 +411,7 @@ public class local_state_standards_Steps {
 			UtilityMethods.wait_For_STA_Section_Load();
 			homePage.filter_in_sta_for_district.click();
 			Thread.sleep(2000);
-			Assert.assertTrue(homePage.chkbox_list_text_under_view_on_sta_filter.get(2).getText().startsWith("AZ"));
+			Assert.assertTrue(homePage.chkbox_list_text_under_view_on_sta_filter.get(3).getText().startsWith("AZ"));
 			homePage.cancel_button_on_filter_in_sta.click();
 			Thread.sleep(1000);
 			Assert.assertTrue(homePage.view_text_in_sta_table_header.get(0).getText().startsWith("AZ"));
@@ -540,9 +540,11 @@ public class local_state_standards_Steps {
 
 			// selecting custom School from dropdown
 			for (int i = 1; i < homePage.schoollist.size(); i = i + 2) {
+
 				if (homePage.schoollist.get(i).getText().equals("")) {
 					UtilityMethods.scroll_Div(homePage.schoollist.get(i), 20);
 				}
+
 				homePage.schoollist.get(i).click();
 				Thread.sleep(500);
 			}
