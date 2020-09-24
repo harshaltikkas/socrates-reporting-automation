@@ -100,7 +100,7 @@ public class Test_Status_Steps {
 			count_on_header = count_on_header.substring(count_on_header.indexOf("(") + 1, count_on_header.indexOf(")"));
 			Assert.assertTrue(total_no_of_test.equals(count_on_header));
 
-			int rand_no = 5;			
+			int rand_no = 5;
 			log.info("Test Status Number:" + homePage.test_status_number_in_summary_in_ts.get(rand_no).getText());
 			homePage.test_status_number_in_summary_in_ts.get(rand_no).click();
 			UtilityMethods.wait_For_Test_Status_Section_Load();
@@ -538,7 +538,7 @@ public class Test_Status_Steps {
 			}
 			Assert.assertTrue(UtilityMethods.isDatesSortedInAscendingOrder(date_list));
 			date_list.clear();
-
+			// TODO: NOTE submit date sorting is notthe part of requirement.
 			// clicking on submit Date up arrow
 
 			/*
@@ -833,7 +833,6 @@ public class Test_Status_Steps {
 						.build().perform();
 				Thread.sleep(1000);
 				log.info("Is STA tab display:" + homePage.active_sta_tab.isDisplayed());
-				// Assert.assertTrue(homePage.active_sta_tab.isDisplayed());
 			}
 
 			CBTConfiguration.score = "pass";
@@ -939,7 +938,7 @@ public class Test_Status_Steps {
 			homePage.ntb_graded_list_in_table_under_sc.get(0).click();
 			Thread.sleep(500);
 			verify_new_window_url(currentHandle, "grading");
-			close_all_new_window_url();//
+			close_all_new_window_url();
 			Thread.sleep(1000);
 			new Actions(Driver.webdriver).moveToElement(homePage.test_status_filter_list_under_sc.get(4)).click()
 					.build().perform();
@@ -1254,9 +1253,6 @@ public class Test_Status_Steps {
 
 			homePage.studentdatadropdownbtn.click();
 			Thread.sleep(500);
-			// this is for selecting 'all'
-			// Driver.webdriver.findElement(By.xpath("//span[contains(text(),'Student
-			// Data')]/ancestor::div[@class='menu-title']/following-sibling::div/button/following-sibling::div//li[text()='All']")).click();Thread.sleep(500);
 			Driver.webdriver.findElement(By.xpath("//li[.='GRADE 4 - ALVARADO - 1']")).click();
 			Thread.sleep(500);
 			homePage.studentdatadropdownbtn.click();

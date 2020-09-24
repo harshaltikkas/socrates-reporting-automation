@@ -150,7 +150,8 @@ public class TestTabDesignAndBehaviourSteps {
 			homePage.testscheckboxlist.get(selectcheckbox).click();
 			Thread.sleep(500);
 
-			Assert.assertTrue(homePage.testscheckboxlistwithinput.get(selectcheckbox).getAttribute("value").equals("true"));
+			Assert.assertTrue(
+					homePage.testscheckboxlistwithinput.get(selectcheckbox).getAttribute("value").equals("true"));
 			homePage.testscheckboxlist.get(selectcheckbox).click();
 			Thread.sleep(500);
 			Assert.assertEquals("false",

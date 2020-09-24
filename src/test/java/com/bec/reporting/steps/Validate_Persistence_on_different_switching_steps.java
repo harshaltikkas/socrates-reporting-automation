@@ -809,16 +809,18 @@ public class Validate_Persistence_on_different_switching_steps {
 		try {
 			Assert.assertTrue(homePage.activedistrictmenu.isDisplayed());
 			Assert.assertTrue(homePage.activestandardperformancebtn.isDisplayed());
+			log.info("On district menu");
 			jse.executeScript("arguments[0].click();", homePage.comparisontab);
-			Thread.sleep(15000);
+			Thread.sleep(10000);
 			String view_name_on_pop_up = homePage.dropDowns_on_edit_standards_on_pop_up.get(0).getText();
 			log.info("view name from popup on District menu:" + view_name_on_pop_up);
 			new Actions(Driver.webdriver).moveToElement(homePage.applyBtnOnstandardTab).click().build().perform();
 			UtilityMethods.wait_For_Comparison_Tab_Section_Load_under_standard_performance();
-			log.info("view on comparison table: " + homePage.comparison_tab_sp_text.getText());
-			Assert.assertTrue(view_name_on_pop_up.equals(homePage.comparison_tab_sp_text.getText()));
-			log.info("selected view from popup on DA menu and view name on table are same on school context");
-			homePage.compare_cb_list_on_comparison.get(0).click();
+			String view_name_of_table = homePage.comparison_tab_sp_text.getText();
+			log.info("view on comparison table: " + view_name_of_table);
+			Assert.assertTrue(view_name_on_pop_up.equals(view_name_of_table));
+			log.info("selected view from popup on DA menu and view name on table are same on district context");
+			homePage.compare_cb_list_on_comparison_tab.get(0).click();
 			Thread.sleep(500);
 			Assert.assertTrue(
 					homePage.compare_list_of_avg_on_comparison_tab.get(0).getText().equals("District Average"));
@@ -826,19 +828,11 @@ public class Validate_Persistence_on_different_switching_steps {
 			// clicking on school menu
 			jse.executeScript("arguments[0].click();", homePage.schoolmenu);
 			log.info("clicked on school menu");
-			Thread.sleep(15000);
-			log.info("previously selected view name from popup on district menu:" + view_name_on_pop_up);
-
-			log.info("selected view name on popup on school menu:"
-					+ homePage.dropDowns_on_edit_standards_on_pop_up.get(0).getText());
-			Assert.assertTrue(
-					view_name_on_pop_up.equals(homePage.dropDowns_on_edit_standards_on_pop_up.get(0).getText()));
-
-			new Actions(Driver.webdriver).moveToElement(homePage.applyBtnOnstandardTab).click().build().perform();
 			UtilityMethods.wait_For_Comparison_Tab_Section_Load_under_standard_performance();
+
 			log.info("view on comparison table: " + homePage.comparison_tab_sp_text.getText());
-			Assert.assertTrue(view_name_on_pop_up.equals(homePage.comparison_tab_sp_text.getText()));
-			homePage.compare_cb_list_on_comparison.get(0).click();
+			Assert.assertTrue(view_name_of_table.equals(homePage.comparison_tab_sp_text.getText()));
+			homePage.compare_cb_list_on_comparison_tab.get(0).click();
 			Thread.sleep(500);
 			Assert.assertTrue(
 					homePage.compare_list_of_avg_on_comparison_tab.get(0).getText().equals("District Average"));
@@ -847,16 +841,11 @@ public class Validate_Persistence_on_different_switching_steps {
 			// clicking on class menu
 			jse.executeScript("arguments[0].click();", homePage.classmenu);
 			log.info("clicked on class menu");
-			Thread.sleep(15000);
-			log.info("view name from popup on class menu:" + view_name_on_pop_up);
-			Assert.assertTrue(
-					view_name_on_pop_up.equals(homePage.dropDowns_on_edit_standards_on_pop_up.get(0).getText()));
-
-			new Actions(Driver.webdriver).moveToElement(homePage.applyBtnOnstandardTab).click().build().perform();
 			UtilityMethods.wait_For_Comparison_Tab_Section_Load_under_standard_performance();
+
 			log.info("view on comparison table: " + homePage.comparison_tab_sp_text.getText());
-			Assert.assertTrue(view_name_on_pop_up.equals(homePage.comparison_tab_sp_text.getText()));
-			homePage.compare_cb_list_on_comparison.get(0).click();
+			Assert.assertTrue(view_name_of_table.equals(homePage.comparison_tab_sp_text.getText()));
+			homePage.compare_cb_list_on_comparison_tab.get(0).click();
 			Thread.sleep(500);
 			Assert.assertTrue(
 					homePage.compare_list_of_avg_on_comparison_tab.get(0).getText().equals("District Average"));
@@ -865,15 +854,10 @@ public class Validate_Persistence_on_different_switching_steps {
 
 			// clicking on student menu
 			jse.executeScript("arguments[0].click();", homePage.studentmenu);
-			Thread.sleep(15000);
-			log.info("view name from popup on student menu:" + view_name_on_pop_up);
-			Assert.assertTrue(
-					view_name_on_pop_up.equals(homePage.dropDowns_on_edit_standards_on_pop_up.get(0).getText()));
-
-			new Actions(Driver.webdriver).moveToElement(homePage.applyBtnOnstandardTab).click().build().perform();
+			log.info("clicked on student menu");
 			UtilityMethods.wait_For_Comparison_Tab_Section_Load_under_standard_performance();
 			log.info("view on comparison table: " + homePage.comparison_tab_sp_text.getText());
-			Assert.assertTrue(view_name_on_pop_up.equals(homePage.comparison_tab_sp_text.getText()));
+			Assert.assertTrue(view_name_of_table.equals(homePage.comparison_tab_sp_text.getText()));
 
 			Assert.assertTrue(
 					homePage.compare_list_of_avg_on_comparison_tab.get(0).getText().equals("District Average"));
@@ -881,6 +865,7 @@ public class Validate_Persistence_on_different_switching_steps {
 			Assert.assertTrue(homePage.compare_list_of_avg_on_comparison_tab.get(2).getText().equals("Class Average"));
 
 			jse.executeScript("arguments[0].click();", homePage.classmenu);
+			log.info("clicked on class menu");
 			UtilityMethods.wait_For_Comparison_Tab_Section_Load_under_standard_performance();
 			Assert.assertTrue(view_name_on_pop_up.equals(homePage.comparison_tab_sp_text.getText()));
 			Assert.assertTrue(
@@ -889,6 +874,7 @@ public class Validate_Persistence_on_different_switching_steps {
 			Assert.assertTrue(homePage.compare_list_of_avg_on_comparison_tab.get(2).getText().equals("Class Average"));
 
 			jse.executeScript("arguments[0].click();", homePage.schoolmenu);
+			log.info("clicked on school menu");
 			UtilityMethods.wait_For_Comparison_Tab_Section_Load_under_standard_performance();
 			Assert.assertTrue(view_name_on_pop_up.equals(homePage.comparison_tab_sp_text.getText()));
 			Assert.assertTrue(
@@ -896,6 +882,7 @@ public class Validate_Persistence_on_different_switching_steps {
 			Assert.assertTrue(homePage.compare_list_of_avg_on_comparison_tab.get(1).getText().equals("School Average"));
 
 			jse.executeScript("arguments[0].click();", homePage.districtmenu);
+			log.info("clicked on district menu");
 			UtilityMethods.wait_For_Comparison_Tab_Section_Load_under_standard_performance();
 			Assert.assertTrue(view_name_on_pop_up.equals(homePage.comparison_tab_sp_text.getText()));
 			Assert.assertTrue(
@@ -905,7 +892,7 @@ public class Validate_Persistence_on_different_switching_steps {
 			UtilityMethods.processException(e);
 		}
 		CBTConfiguration.score = "pass";
-		log.info("Scenario BE-2320 completed");
+		log.info("Scenario BE-2320,BU-12751 completed");
 	}
 
 	@Then("^User Click on School subway navigation and verify reports for the first school from the list is displayed$")

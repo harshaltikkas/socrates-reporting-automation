@@ -167,6 +167,7 @@ public class Driver {
 	 * @param browserName
 	 * @return
 	 */
+	@SuppressWarnings("deprecation")
 	public static RemoteWebDriver selectLocalBrowser(String browserName) {
 		String os = System.getProperty("os.name");
 		log.info("OS " + os);
@@ -241,8 +242,10 @@ public class Driver {
 				webdriver.manage().window().setPosition(new Point(0, 0));
 				webdriver.manage().window().setSize(new Dimension(1440, 900));
 				webdriver.switchTo().window(webdriver.getWindowHandle());
+				webdriver.manage().deleteAllCookies();
 			} else {
 				webdriver.manage().window().maximize();
+				webdriver.manage().deleteAllCookies();
 			}
 		} catch (Exception e) {
 			return false;

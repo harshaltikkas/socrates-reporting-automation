@@ -78,7 +78,6 @@ public class Hooks {
 	 * @param scenario
 	 * @throws FileNotFoundException
 	 * @throws IOException
-	 * @throws SQLException
 	 */
 	@After
 	public void after(Scenario scenario) throws FileNotFoundException, IOException {

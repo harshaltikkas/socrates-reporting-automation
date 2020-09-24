@@ -299,7 +299,7 @@ public class Sprint_Eight_And_Tenth_Steps {
 			UtilityMethods.wait_For_Student_List_AND_OR_Class_List_Section_Load();
 			UtilityMethods.scrollPageUp(Driver.webdriver);
 			Thread.sleep(500);
-			
+
 			if (Integer.parseInt(noOfTestSelected) == 1) {
 				if (homePage.testsNameoncontextheader.getText().contains("...")) {
 					new Actions(Driver.webdriver).moveToElement(homePage.testsNameoncontextheader).build().perform();
@@ -392,7 +392,6 @@ public class Sprint_Eight_And_Tenth_Steps {
 				robot.keyRelease(KeyEvent.VK_SUBTRACT);
 				robot.keyRelease(KeyEvent.VK_CONTROL);
 				Thread.sleep(1000);
-				// homePage.selectAllchkboxOnGroupingTab.click();Thread.sleep(500);-
 
 			} catch (NoSuchElementException nse) {
 			}

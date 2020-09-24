@@ -52,7 +52,7 @@ public class RosterTabDropDownBehaviour {
 	HomePage homePage = PageFactory.initElements(Driver.webdriver, HomePage.class);
 	public static String selectedSchoolName, selectedclassText, selectedStudentText;
 	int schoolcount = 0, selectedschoolIndex = 0, classcount = 0, selectedclassIndex = 0, studentcount = 0,
-			selectedstudent = 0;	
+			selectedstudent = 0;
 
 	/**
 	 * This method is used to click on roster and verify the school and class name
@@ -304,12 +304,17 @@ public class RosterTabDropDownBehaviour {
 			Thread.sleep(500);
 			homePage.studentdropdownbtn.click();
 			Thread.sleep(500);
-			UtilityMethods.scrollPageDown(Driver.webdriver, 8);Thread.sleep(500);
+			UtilityMethods.scrollPageDown(Driver.webdriver, 8);
+			Thread.sleep(500);
 			// verifying after applying result,selected student names are on top
-			UtilityMethods.scroll_Div_UP(homePage.studentlistondropdownwithinput.get(0), -20);Thread.sleep(500);
-			homePage.rostertab.click();Thread.sleep(1000);
-			homePage.rostertab.click();Thread.sleep(500);
-			UtilityMethods.scrollPageDown(Driver.webdriver, 8);Thread.sleep(500);
+			UtilityMethods.scroll_Div_UP(homePage.studentlistondropdownwithinput.get(0), -20);
+			Thread.sleep(500);
+			homePage.rostertab.click();
+			Thread.sleep(1000);
+			homePage.rostertab.click();
+			Thread.sleep(500);
+			UtilityMethods.scrollPageDown(Driver.webdriver, 8);
+			Thread.sleep(500);
 			homePage.studentdropdownbtn.click();
 			Thread.sleep(500);
 			for (int i = 0; i < customSize; i++) {

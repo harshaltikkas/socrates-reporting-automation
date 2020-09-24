@@ -105,7 +105,7 @@ public class Single_Test_Analysis_Steps {
 			throws Throwable {
 		try {
 			List<Integer> list = new ArrayList<Integer>();
-			
+
 			js.executeScript("arguments[0].click();", homePage.statab);
 			UtilityMethods.wait_For_STA_Section_Load();
 			String testNameOnCH = UtilityMethods.getTestsNameonUI();
@@ -129,28 +129,23 @@ public class Single_Test_Analysis_Steps {
 			Thread.sleep(500);
 			UtilityMethods.scrollPageDown(Driver.webdriver, 8);
 			Thread.sleep(1000);
-			/*
-			 * int testCount = homePage.testnameslist_on_test_tab.size(); int
-			 * index=UtilityMethods.generateRandomNumberBySkippingIndex(testCount, 0);
-			 */
-			int index=1;
-			log.info("new selected test is:"+homePage.testnameslist_on_test_tab.get(index).getText());
-			homePage.testnameslist_on_test_tab.get(index).click();
+			log.info("new selected test is:" + homePage.testnameslist_on_test_tab.get(1).getText());
+			homePage.testnameslist_on_test_tab.get(1).click();
 			Thread.sleep(500);
 			Assert.assertTrue(homePage.testscheckboxlistwithinput.get(0).getAttribute("value").equals("false"));
 			Thread.sleep(500);
 
-			homePage.testapplybtn.click();		
+			homePage.testapplybtn.click();
 			UtilityMethods.scrollPageUp(Driver.webdriver);
 			UtilityMethods.wait_For_STA_Section_Load();
 			testNameOnCH = UtilityMethods.getTestsNameonUI();
 
 			homePage.district_expand_less_in_sta.click();
 			Thread.sleep(500);
-			String per="";
+			String per = "";
 			for (int i = 0; i < homePage.district_avg_list_for_question_on_sta.size(); i++) {
-				per=homePage.district_avg_list_for_question_on_sta.get(i).getText();
-				list.add(Integer.parseInt(per.substring(0,per.length()-1)));
+				per = homePage.district_avg_list_for_question_on_sta.get(i).getText();
+				list.add(Integer.parseInt(per.substring(0, per.length() - 1)));
 			}
 			Assert.assertTrue(Ordering.natural().isOrdered(list));
 			log.info("Average List in District Column are in ascending order");
@@ -160,13 +155,12 @@ public class Single_Test_Analysis_Steps {
 			Thread.sleep(500);
 
 			for (int i = 0; i < homePage.district_avg_list_for_question_on_sta.size(); i++) {
-				per=homePage.district_avg_list_for_question_on_sta.get(i).getText();
-				list.add(Integer.parseInt(per.substring(0,per.length()-1)));
+				per = homePage.district_avg_list_for_question_on_sta.get(i).getText();
+				list.add(Integer.parseInt(per.substring(0, per.length() - 1)));
 			}
 			Assert.assertTrue(Ordering.natural().reverse().isOrdered(list));
 			log.info("Average List in District Column are in Descending order");
 			list.clear();
-			/* This logic is to validate the table data in view with db */
 			Thread.sleep(2000);
 			homePage.filter_in_sta_for_district.click();
 			Thread.sleep(1000);
@@ -192,19 +186,20 @@ public class Single_Test_Analysis_Steps {
 			if (PaginationUtility_for_Pages.checkPaginator_on_sta()) {
 				// this loop will execute for the no. of circle available on paginator
 				for (int i = 0; i < homePage.circle_list_on_paginator_on_sta.size(); i++) {
-					new Actions(Driver.webdriver).moveToElement(homePage.circle_list_on_paginator_on_sta.get(i)).build().perform();
+					new Actions(Driver.webdriver).moveToElement(homePage.circle_list_on_paginator_on_sta.get(i)).build()
+							.perform();
 					Thread.sleep(500);
-					
+
 					PaginationUtility_for_Pages
 							.clicking_on_indexed_circle_of_paginator(homePage.circle_list_on_paginator_on_sta, i);
-					
+
 					for (int j = 0; j < homePage.records_on_sta.size(); j++) {
 						ui_short_value_list.add(homePage.short_values_on_sta.get(j).getText());
 						ui_question_list.add(homePage.questions_values_on_sta.get(j).getText());
 						ui_test_score_avg_list.add(homePage.test_score_values_on_sta.get(j).getText());
 					}
 				}
-				
+
 				// check for right arrow enabled and click on it and click on first circle and
 				// validate
 				do {
@@ -212,7 +207,7 @@ public class Single_Test_Analysis_Steps {
 						PaginationUtility_for_Pages.clicking_on_enabled_right_Arrow_of_paginator_on__sta();
 						PaginationUtility_for_Pages
 								.clicking_on_last_circle_of_paginator(homePage.circle_list_on_paginator_on_sta);
-						
+
 						for (int j = 0; j < homePage.records_on_sta.size(); j++) {
 							ui_short_value_list.add(homePage.short_values_on_sta.get(j).getText());
 							ui_question_list.add(homePage.questions_values_on_sta.get(j).getText());
@@ -222,14 +217,14 @@ public class Single_Test_Analysis_Steps {
 				} while (PaginationUtility_for_Pages.check_Enabled_Right_Arrow_on_Paginator_on_sta());
 			} else {
 				// when paginator is not found
-				
+
 				for (int i = 0; i < homePage.records_on_sta.size(); i++) {
 					ui_short_value_list.add(homePage.short_values_on_sta.get(i).getText());
 					ui_question_list.add(homePage.questions_values_on_sta.get(i).getText());
 					ui_test_score_avg_list.add(homePage.test_score_values_on_sta.get(i).getText());
 				}
 			}
-		
+
 			Assert.assertTrue(ui_short_value_list.size() >= 1);
 			Assert.assertTrue(ui_test_score_avg_list.size() >= 1);
 			Assert.assertTrue(ui_question_list.size() >= 1);
@@ -288,7 +283,7 @@ public class Single_Test_Analysis_Steps {
 			Thread.sleep(1000);
 			homePage.teachersdropdownbtn.click();
 			Thread.sleep(1000);
-			
+
 			homePage.rosterapplybtn.click();
 			UtilityMethods.wait_For_Student_List_AND_OR_Class_List_Section_Load();
 			UtilityMethods.scrollPageUp(Driver.webdriver);
@@ -303,9 +298,10 @@ public class Single_Test_Analysis_Steps {
 			Assert.assertTrue(homePage.compare_cb_list_on_sta.get(0).getText().equals("Class"));
 			Assert.assertTrue(homePage.compare_cb_list_on_sta.get(1).getText().equals("School"));
 			Assert.assertTrue(homePage.compare_cb_list_on_sta.get(2).getText().equals("District"));
-			
+
 			for (int i = 0; i < homePage.compare_cb_list_on_sta.size(); i++) {
-				new Actions(Driver.webdriver).moveToElement(homePage.compare_cb_list_on_sta.get(i)).click().build().perform();
+				new Actions(Driver.webdriver).moveToElement(homePage.compare_cb_list_on_sta.get(i)).click().build()
+						.perform();
 				Thread.sleep(1000);
 			}
 
@@ -320,7 +316,6 @@ public class Single_Test_Analysis_Steps {
 			UtilityMethods.wait_For_STA_Section_Load();
 			Assert.assertTrue(homePage.compare_cb_list_on_sta.get(0).getText().equals("School"));
 			Assert.assertTrue(homePage.compare_cb_list_on_sta.get(1).getText().equals("District"));
-			
 
 			Assert.assertTrue(homePage.compared_columns_list_on_table_on_sta.get(0).getText().equals("Class"));
 			Assert.assertTrue(homePage.compared_columns_list_on_table_on_sta.get(1).getText().equals("School"));
@@ -330,8 +325,8 @@ public class Single_Test_Analysis_Steps {
 
 			homePage.schoolmenu.click();
 			UtilityMethods.wait_For_STA_Section_Load();
-			Assert.assertTrue(homePage.compare_cb_list_on_sta.get(0).getText().equals("District"));			
-			
+			Assert.assertTrue(homePage.compare_cb_list_on_sta.get(0).getText().equals("District"));
+
 			Assert.assertTrue(homePage.compared_columns_list_on_table_on_sta.get(0).getText().equals("School"));
 			Assert.assertTrue(homePage.compared_columns_list_on_table_on_sta.get(1).getText().equals("District"));
 
