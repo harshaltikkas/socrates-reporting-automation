@@ -96,7 +96,7 @@ public class local_state_standards_Steps {
 			Thread.sleep(1000);
 			String view_name = homePage.viewDropDownToolTipText.getText();
 			js.executeScript("arguments[0].click();", homePage.comparisontab);
-			Thread.sleep(25000);
+			UtilityMethods.wait_For_content_loading_on_Comparison_Model();
 			Assert.assertTrue(homePage.dropDowns_on_edit_standards_on_pop_up.get(0).getText().equals(view_name));
 			for (int i = 0; i < strand_names_on_sp.size(); i++) {
 				Assert.assertTrue(strand_names_on_sp.get(i)
@@ -190,7 +190,7 @@ public class local_state_standards_Steps {
 			UtilityMethods.wait_For_STA_Section_Load();
 			homePage.filter_in_sta_for_district.click();
 			Thread.sleep(2000);
-			Assert.assertTrue(homePage.chkbox_list_text_under_view_on_sta_filter.get(3).getText().startsWith("AZ"));
+			Assert.assertTrue(homePage.chkbox_list_text_under_view_on_sta_filter.get(1).getText().startsWith("AZ"));
 			homePage.cancel_button_on_filter_in_sta.click();
 			Thread.sleep(1000);
 			Assert.assertTrue(homePage.view_text_in_sta_table_header.get(0).getText().startsWith("AZ"));
@@ -411,7 +411,7 @@ public class local_state_standards_Steps {
 			UtilityMethods.wait_For_STA_Section_Load();
 			homePage.filter_in_sta_for_district.click();
 			Thread.sleep(2000);
-			Assert.assertTrue(homePage.chkbox_list_text_under_view_on_sta_filter.get(3).getText().startsWith("AZ"));
+			Assert.assertTrue(homePage.chkbox_list_text_under_view_on_sta_filter.get(1).getText().startsWith("AZ"));
 			homePage.cancel_button_on_filter_in_sta.click();
 			Thread.sleep(1000);
 			Assert.assertTrue(homePage.view_text_in_sta_table_header.get(0).getText().startsWith("AZ"));
@@ -491,7 +491,7 @@ public class local_state_standards_Steps {
 			Thread.sleep(1000);
 			String view_name = homePage.viewDropDownToolTipText.getText();
 			js.executeScript("arguments[0].click();", homePage.comparisontab);
-			Thread.sleep(20000);
+			UtilityMethods.wait_For_content_loading_on_Comparison_Model();
 			Assert.assertTrue(homePage.dropDowns_on_edit_standards_on_pop_up.get(0).getText().equals(view_name));
 			for (int i = 0; i < strand_names_on_sp.size(); i++) {
 				Assert.assertTrue(strand_names_on_sp.get(i)

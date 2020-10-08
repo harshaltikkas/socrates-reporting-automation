@@ -39,6 +39,9 @@ public class HomePage {
 
 	@FindBy(xpath = "//div[@class='download_csv']/span[@class='csv_download_icon']/img")
 	public WebElement csvDownloadIcon;
+	
+	@FindBy(xpath = "//div[@class='bec_compares_popup_modal_row_label' and contains(text(),'View')]/ancestor::div[@class='bec_compares_popup_modal_row']/span[@class='compare-data-reload']/i")
+	public WebElement viewRefreshIcon_on_comparison_model;
 
 	@FindBy(xpath = "//button[@class='csv_popup_download_btn']")
 	public WebElement csv_download_btn_on_model;
@@ -389,6 +392,15 @@ public class HomePage {
 
 	@FindBy(xpath = "//li[@class='active' and contains(text(),'Assessments')]")
 	public WebElement activeAssessementsbtn;
+	
+	@FindBy(xpath = "//div[@class='page-selectors-inr']//li[contains(text(),'Assessments')]")
+	public WebElement assessements_context;
+	
+	@FindBy(xpath = "//div[@class='page-selectors-inr']//li/span[contains(text(),'Summary')]")
+	public WebElement summary_context;
+	
+	@FindBy(xpath = "//div[@class='ar_summary-tab-tooltip-context']")
+	public WebElement tooltip_on_summary_context;
 
 	@FindBy(xpath = "//li[@class='active_tab']/span[contains(text(),'Summary')]")
 	public WebElement active_summary_tab;
@@ -416,6 +428,9 @@ public class HomePage {
 
 	@FindBy(xpath = "//span[contains(text(),'District')]/ancestor::div[contains(@class,'single-filter text-center active-filter')]")
 	public WebElement activedistrictmenu;
+	
+	@FindBy(xpath = "//div[@class='page-selectors-inr']//li[contains(@class,'active')]/span[contains(text(),'Summary')]")
+	public WebElement active_summary_context;
 
 	@FindBy(xpath = "//span[contains(text(),'Student')]/ancestor::div[contains(@class,'single-filter text-center active-filter')]")
 	public WebElement activestudentmenu;
@@ -634,7 +649,7 @@ public class HomePage {
 	public WebElement highlightedtestName_onlinechart_on_pot;
 
 	@FindBy(xpath = "//div[@class='graph_tooltip_content']")
-	public WebElement testNametooltip_onlinechart;
+	public WebElement tooltip_on_test_name_on_linechart;
 
 	@FindBy(xpath = "//div[@class='class_test_overview_table_header_left']//div[@class='bec_tooltip_content']")
 	public WebElement tooltip_text_of_test_name_on_tsd;
@@ -769,7 +784,10 @@ public class HomePage {
 	public WebElement testScoresPercentageon_tso;
 
 	@FindBy(xpath = "//div[@class='tooltip_main']//div[@class='tooltip_title']")
-	public WebElement testnameontooltip;
+	public WebElement testname_on_test_score_value_tooltip;
+	
+	@FindBy(xpath = "//div[@class='line_chart_graph' and not(@style)]//*[name()='g']//*[name()='polygon']/following-sibling::*[name()='text']")
+	public List<WebElement> testnames_on_pot;
 
 	@FindBy(xpath = "//div[@class='class_test_overview_table_header_right']//span")
 	public WebElement submitteddateon_tsd;
@@ -1124,7 +1142,7 @@ public class HomePage {
 	@FindBy(xpath = "//div[contains(@class,'bec_singleTest_multi_list_single_label') and contains(text(),'Test Average Score:')]")
 	public WebElement test_avg_score_text_on_sta_table;
 
-	@FindBy(xpath = "//div[@class='bec_singleTest_multi_list_single_q_number']")
+	@FindBy(xpath = "//div[contains(@class,'bec_singleTest_multi_list_single_q_number')]")
 	public List<WebElement> question_list_on_sta;
 
 	@FindBy(xpath = "//div[@class='bec_singleTest_multi_list_single_compareBox']//div[contains(@class,'bec_singleTest_multi_list_single_score ')]")
@@ -1132,6 +1150,12 @@ public class HomePage {
 
 	@FindBy(xpath = "//div[@class='bec_singleTest_multi_list_Data_row']//div[@class='bec_singleTest_multi_list_single_compareBox']/div[contains(@class,'bec_singleTest_multi_list_single_score')]")
 	public List<WebElement> district_avg_list_for_question_on_sta;
+	
+	@FindBy(xpath = "//img[@class='bec_singleTest_multi_list_sum-span-img']")
+	public WebElement info_icon_on_deleted_qauestion_in_sta;
+	
+	@FindBy(xpath = "//div[@class='bec_singleTest_multi_list_sum-tooltip']//span[not(@class)]")
+	public WebElement tool_tip_on_info_icon_on_deleted_qauestion_in_sta;
 
 	@FindBy(xpath = "//div[@class='bec_singleTest_multi_list_single_compareBox']/div")
 	public List<WebElement> avg_list_for_question_on_sta;
@@ -1162,6 +1186,9 @@ public class HomePage {
 
 	@FindBy(xpath = "//span[@class='bec_singleTest_filter_radio_label text-capitalize' and .='raw']")
 	public WebElement raw_rb_on_filter_in_sta;
+	
+	@FindBy(xpath = "//span[@class='bec_singleTest_filter_radio_label text-capitalize' and .='percentage']")
+	public WebElement percentage_rb_on_filter_in_sta;
 
 	@FindBy(xpath = "//button[@class='btn bec_singleTest_popup_apply_filter_apply' and .='Apply']")
 	public WebElement apply_button_on_filter_in_sta;
@@ -1448,4 +1475,8 @@ public class HomePage {
 
 	@FindBy(xpath = "//div[@class='menu-title' and contains(text(),'School')]/following-sibling::div//div[@class='menu-dropdown-list-inr']/ul/li'")
 	public List<WebElement> schooldropdownallcheckbox;
+	
+	@FindBy(xpath = "//span[@class='arSummaryWidgetTitle']")
+	public List<WebElement> summary_context_table_titles;
+	
 }

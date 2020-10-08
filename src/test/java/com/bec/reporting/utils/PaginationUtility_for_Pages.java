@@ -326,7 +326,7 @@ public class PaginationUtility_for_Pages {
 					.elipsisRemoval(homePage.testNamesonPerPage_onlinechart.get(index).getText());
 			new Actions(Driver.webdriver).moveToElement(homePage.testNamesonPerPage_onlinechart.get(index)).build()
 					.perform();
-			String tooltiptextOfTSOT = homePage.testNametooltip_onlinechart.getText();
+			String tooltiptextOfTSOT = homePage.tooltip_on_test_name_on_linechart.getText();
 			Assert.assertTrue(tooltiptextOfTSOT.contains(testName));
 			Thread.sleep(500);			
 		} catch (InterruptedException e) {
@@ -378,7 +378,7 @@ public class PaginationUtility_for_Pages {
 			new Actions(Driver.webdriver).moveToElement(homePage.testNamesonPerPage_onlinechart.get(index)).build()
 					.perform();
 			if (homePage.testNamesonPerPage_onlinechart.get(index).getText().contains("...")) {
-				tooltiptext_on_test_name_on_line_chart = homePage.testNametooltip_onlinechart.getText();
+				tooltiptext_on_test_name_on_line_chart = homePage.tooltip_on_test_name_on_linechart.getText();
 			} else {
 				tooltiptext_on_test_name_on_line_chart = homePage.testNamesonPerPage_onlinechart.get(index).getText();
 			}
@@ -412,7 +412,7 @@ public class PaginationUtility_for_Pages {
 			new Actions(Driver.webdriver).moveToElement(homePage.testNamesonPerPage_onlinechart.get(index)).build()
 					.perform();
 			if (homePage.testNamesonPerPage_onlinechart.get(index).getText().contains("...")) {
-				tooltiptext_on_test_name_on_line_chart = homePage.testNametooltip_onlinechart.getText();
+				tooltiptext_on_test_name_on_line_chart = homePage.tooltip_on_test_name_on_linechart.getText();
 			} else {
 				tooltiptext_on_test_name_on_line_chart = homePage.testNamesonPerPage_onlinechart.get(index).getText();
 			}
@@ -421,7 +421,7 @@ public class PaginationUtility_for_Pages {
 				percentage_on_circle = homePage.testScoreValueInCircle_onlinechart_tso.get(index).getText();
 				homePage.testScoreValueInCircle_onlinechart_tso.get(index).click();
 				Thread.sleep(500);
-				test_name_on_tooltip_model = homePage.testnameontooltip.getText();
+				test_name_on_tooltip_model = homePage.testname_on_test_score_value_tooltip.getText();
 				Assert.assertTrue(test_name_on_tooltip_model.equals(tooltiptext_on_test_name_on_line_chart));
 				String tool_Tip_percentage = homePage.tooltiprowpercent_onlinechart.getText();
 				tool_Tip_percentage = tool_Tip_percentage.substring(0, tool_Tip_percentage.indexOf("%"));
@@ -432,7 +432,7 @@ public class PaginationUtility_for_Pages {
 				percentage_on_circle = homePage.testScoreValueInCircle_onlinechart_pot.get(index).getText();
 				homePage.testScoreValueInCircle_onlinechart_pot.get(index).click();
 				Thread.sleep(500);
-				test_name_on_tooltip_model = homePage.testnameontooltip.getText();
+				test_name_on_tooltip_model = homePage.testname_on_test_score_value_tooltip.getText();
 				Assert.assertTrue(test_name_on_tooltip_model.equals(tooltiptext_on_test_name_on_line_chart));
 				String tool_Tip_percentage = homePage.tooltiprowpercent_onlinechart.getText();
 				tool_Tip_percentage = tool_Tip_percentage.substring(0, tool_Tip_percentage.indexOf("%"));

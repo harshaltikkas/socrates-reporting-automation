@@ -229,7 +229,7 @@ public class RosterTabUtilityMethods {
 		try {
 			new Actions(Driver.webdriver).moveToElement(homePage.testNamesonPerPage_onlinechart.get(index)).build()
 					.perform();
-			testName = homePage.testNametooltip_onlinechart.getText();
+			testName = homePage.tooltip_on_test_name_on_linechart.getText();
 			new Actions(Driver.webdriver).moveToElement(homePage.testScoresPercentage).build().perform();
 			Thread.sleep(500);
 			Thread.sleep(500);

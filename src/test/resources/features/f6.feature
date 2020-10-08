@@ -34,7 +34,7 @@ Feature: Sprint 6 and Sprint 7 Stories
     When User click on Student Context and Test Score button
     Then verify the diamond shape stroke on the x-axis and Color changes within the Line Charts within test score menu for student
 
-  ## BE-666,685,677,686  
+  ## BE-666,685,677,686
   Scenario: Verify Selection and Deselection of the Comparison options within the Line Charts for Particular Strand and standard
     Given User is on portal's login screen with username as "teacher_one" and password as "password" and usertype as "realm_one"
     When User Click on Standard Performance tab within the Student Context

@@ -42,9 +42,9 @@ Feature: Validate Test Status Section - Sprint 30 to 33
     Given User is on portal's login screen with username as "school_admin_two" and password as "password" and usertype as "realm_one"
     When User Click on Test Status tab within the School Context
     Then verify csv download functionality
-    Given User is on portal's login screen with username as "district_admin_one" and password as "password" and usertype as "realm_one"
-    When User Click on Test Status tab within the District Context
-    Then verify csv download functionality
+    #Given User is on portal's login screen with username as "district_admin_one" and password as "password" and usertype as "realm_one"
+    #When User Click on Test Status tab within the District Context
+    #Then verify csv download functionality
 
   @TestStatus8 @BE-2118 @BE-2119 @BE-2126 @BE-2127 @BE-2218 @BE-2219
   Scenario: Verify the Print PDF of Test Status District

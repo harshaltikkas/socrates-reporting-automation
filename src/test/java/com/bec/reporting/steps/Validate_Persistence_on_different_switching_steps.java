@@ -811,7 +811,7 @@ public class Validate_Persistence_on_different_switching_steps {
 			Assert.assertTrue(homePage.activestandardperformancebtn.isDisplayed());
 			log.info("On district menu");
 			jse.executeScript("arguments[0].click();", homePage.comparisontab);
-			Thread.sleep(10000);
+			UtilityMethods.wait_For_content_loading_on_Comparison_Model();
 			String view_name_on_pop_up = homePage.dropDowns_on_edit_standards_on_pop_up.get(0).getText();
 			log.info("view name from popup on District menu:" + view_name_on_pop_up);
 			new Actions(Driver.webdriver).moveToElement(homePage.applyBtnOnstandardTab).click().build().perform();

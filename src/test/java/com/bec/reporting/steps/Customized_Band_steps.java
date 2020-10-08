@@ -175,7 +175,7 @@ public class Customized_Band_steps {
 			List<String> list = API_Connection.get_Achievement_Levels();
 			log.info("Verifying comparison table score and color value under district menu");
 			js.executeScript("arguments[0].click();", homePage.comparisontab);
-			Thread.sleep(10000);
+			UtilityMethods.wait_For_content_loading_on_Comparison_Model();
 			UtilityMethods
 					.select_view_on_viewDropdown_on_Edit_Standards_comparison_popup("CaCCSS English Language Arts");
 			homePage.applyBtnOnstandardTab.click();
@@ -232,9 +232,6 @@ public class Customized_Band_steps {
 			}
 			log.info("Verifying comparison table score and color value under school menu");
 			js.executeScript("arguments[0].click();", homePage.schoolmenu);
-			Thread.sleep(15000);
-			UtilityMethods.select_view_on_viewDropdown_on_Edit_Standards_comparison_popup("Claims and Targets");
-			homePage.applyBtnOnstandardTab.click();
 			UtilityMethods.wait_For_Comparison_Tab_Section_Load_under_standard_performance();
 
 			avg_score_list = Driver.webdriver.findElements(
@@ -263,9 +260,6 @@ public class Customized_Band_steps {
 			}
 			log.info("Verifying comparison table score and color value under class menu");
 			js.executeScript("arguments[0].click();", homePage.classmenu);
-			Thread.sleep(15000);
-			UtilityMethods.select_view_on_viewDropdown_on_Edit_Standards_comparison_popup("Depth of Knowledge");
-			homePage.applyBtnOnstandardTab.click();
 			UtilityMethods.wait_For_Comparison_Tab_Section_Load_under_standard_performance();
 
 			avg_score_list = Driver.webdriver.findElements(
@@ -311,9 +305,6 @@ public class Customized_Band_steps {
 
 			log.info("Verifying comparison table score and color value under student menu");
 			js.executeScript("arguments[0].click();", homePage.studentmenu);
-			Thread.sleep(15000);
-			UtilityMethods.select_view_on_viewDropdown_on_Edit_Standards_comparison_popup("Claims and Targets");
-			homePage.applyBtnOnstandardTab.click();
 			UtilityMethods.wait_For_Comparison_Tab_Section_Load_under_standard_performance();
 
 			avg_score_list = Driver.webdriver.findElements(
@@ -400,7 +391,7 @@ public class Customized_Band_steps {
 
 			log.info("verifying key toggle color range on district-SP-comparison tab");
 			js.executeScript("arguments[0].click();", homePage.comparisontab);
-			Thread.sleep(7000);
+			UtilityMethods.wait_For_content_loading_on_Comparison_Model();
 			homePage.applyBtnOnstandardTab.click();
 			UtilityMethods.wait_For_Comparison_Tab_Section_Load_under_standard_performance();
 			verify_key_toggle_achievement_level(list);
@@ -446,9 +437,7 @@ public class Customized_Band_steps {
 			verify_key_toggle_achievement_level(list);
 
 			log.info("verifying key toggle color range on school-SP-comparison tab");
-			js.executeScript("arguments[0].click();", homePage.comparisontab);
-			Thread.sleep(7000);
-			homePage.applyBtnOnstandardTab.click();
+			js.executeScript("arguments[0].click();", homePage.comparisontab);			
 			UtilityMethods.wait_For_Comparison_Tab_Section_Load_under_standard_performance();
 			verify_key_toggle_achievement_level(list);
 
@@ -463,9 +452,7 @@ public class Customized_Band_steps {
 			verify_key_toggle_achievement_level(list);
 
 			log.info("verifying key toggle color range on class-SP-comparison tab");
-			js.executeScript("arguments[0].click();", homePage.comparisontab);
-			Thread.sleep(10000);
-			homePage.applyBtnOnstandardTab.click();
+			js.executeScript("arguments[0].click();", homePage.comparisontab);			
 			UtilityMethods.wait_For_Comparison_Tab_Section_Load_under_standard_performance();
 			verify_key_toggle_achievement_level(list);
 
@@ -511,7 +498,7 @@ public class Customized_Band_steps {
 
 			log.info("verifying key toggle color range on student-SP-comparison tab");
 			js.executeScript("arguments[0].click();", homePage.comparisontab);
-			Thread.sleep(7000);
+			UtilityMethods.wait_For_content_loading_on_Comparison_Model();
 			homePage.applyBtnOnstandardTab.click();
 			UtilityMethods.wait_For_Comparison_Tab_Section_Load_under_standard_performance();
 			verify_key_toggle_achievement_level(list);
@@ -876,7 +863,7 @@ public class Customized_Band_steps {
 			Assert.assertTrue(homePage.activestandardperformancebtn.isDisplayed());
 			Assert.assertTrue(homePage.activeclassmenu.isDisplayed());
 			js.executeScript("arguments[0].click();", homePage.comparisontab);
-			Thread.sleep(10000);
+			UtilityMethods.wait_For_content_loading_on_Comparison_Model();
 			homePage.applyBtnOnstandardTab.click();
 			UtilityMethods.wait_For_Comparison_Tab_Section_Load_under_standard_performance();
 			homePage.compare_cb_list_on_comparison_tab.get(0).click();
@@ -929,7 +916,7 @@ public class Customized_Band_steps {
 			homePage.testtab.click();Thread.sleep(500);
 			homePage.testnameslist_on_test_tab.get(0).click();Thread.sleep(500);
 			homePage.testapplybtn.click();
-			Thread.sleep(12000);
+			Thread.sleep(20000);
 			Assert.assertTrue(homePage.dropDowns_on_edit_standards_on_pop_up.get(0).isDisplayed());
 			homePage.applyBtnOnstandardTab.click();
 			UtilityMethods.wait_For_Comparison_Tab_Section_Load_under_standard_performance();

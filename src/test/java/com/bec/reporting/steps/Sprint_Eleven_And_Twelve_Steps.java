@@ -438,7 +438,7 @@ public class Sprint_Eleven_And_Twelve_Steps {
 			new Actions(Driver.webdriver).moveToElement(homePage.testNamesonPerPage_onlinechart.get(randNo)).build()
 					.perform();
 			Thread.sleep(500);
-			String testNameOnleftSide = homePage.testNametooltip_onlinechart.getText();
+			String testNameOnleftSide = homePage.tooltip_on_test_name_on_linechart.getText();
 			Thread.sleep(500);
 			new Actions(Driver.webdriver).moveToElement(homePage.testScoresPercentage).build().perform();
 			Thread.sleep(500);
