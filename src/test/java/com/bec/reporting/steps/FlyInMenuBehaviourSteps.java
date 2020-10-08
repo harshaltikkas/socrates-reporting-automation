@@ -117,8 +117,15 @@ public class FlyInMenuBehaviourSteps {
 			}
 			Instant start = Instant.now();
 			log.info("Current Time after clicking on login button: " + java.time.LocalTime.now());
+			token = API_Connection.getToken();
 			if (env.equalsIgnoreCase("dev") || env.equalsIgnoreCase("uat")) {
 				IWait.explicit_wait(Driver.webdriver, homePage.studentmenu);
+				if (API_Connection.getUserRole().equalsIgnoreCase("DISTRICT_ADMIN")) {
+					Assert.assertTrue(homePage.activedistrictmenu.isDisplayed());
+					Assert.assertTrue(homePage.active_summary_context.isDisplayed());
+					jse.executeScript("arguments[0].click();", homePage.assessements_context);
+					UtilityMethods.wait_For_Student_List_AND_OR_Class_List_Section_Load();
+				}
 			} else if (env.equalsIgnoreCase("staging") || env.equalsIgnoreCase("prod")) {
 				IWait.explicit_wait(Driver.webdriver, homePage.resources_txt_on_dashboard);
 				homePage.report_link_on_dashboard.click();
@@ -127,7 +134,6 @@ public class FlyInMenuBehaviourSteps {
 			Instant end = Instant.now();
 			Duration timeElapsed = Duration.between(start, end);
 			log.info("Time taken for page load: " + timeElapsed.toMillis() / 1000 + " seconds");
-			token = API_Connection.getToken();
 		} catch (Exception e) {
 			log.error("failed to login");
 			UtilityMethods.processException(e);

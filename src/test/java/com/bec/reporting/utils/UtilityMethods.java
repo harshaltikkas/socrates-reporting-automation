@@ -428,7 +428,7 @@ public class UtilityMethods {
 		}
 		ctr = 0;
 		return true;
-	}	 
+	}
 
 	/**
 	 * This method is used to scroll up the div(vertical scroll bar) in
@@ -770,10 +770,10 @@ public class UtilityMethods {
 				log.info("Waiting for List Section on Standard Performance Loading");
 				list_on_sp_ctr++;
 			}
-		} while (isSectionLoad == false && list_on_sp_ctr < 3);
+		} while (isSectionLoad == false && list_on_sp_ctr < 6);
 
-		if (isSectionLoad == false && list_on_sp_ctr == 3) {
-			log.info("List Section on Standard Performance is not loaded in 30 seconds..");
+		if (isSectionLoad == false && list_on_sp_ctr == 6) {
+			log.info("List Section on Standard Performance is not loaded in 60 seconds..");
 			processException(new Exception());
 		}
 	}
@@ -795,10 +795,37 @@ public class UtilityMethods {
 				log.info("wait for strands Text on table header After Apply Btn On Grouping Tab ...");
 				grouping_table_ctr++;
 			}
-		} while (isSectionLoad == false && grouping_table_ctr < 3);
+		} while (isSectionLoad == false && grouping_table_ctr < 6);
 
-		if (isSectionLoad == false && grouping_table_ctr == 3) {
-			log.info("Strands_Text_After_Apply_BtnOn_GroupingTab is not loaded in 30 seconds..");
+		if (isSectionLoad == false && grouping_table_ctr == 6) {
+			log.info("Strands_Text_After_Apply_BtnOn_GroupingTab is not loaded in 60 seconds..");
+			processException(new Exception());
+		}
+	}
+
+	/**
+	 * This method is used to wait till the loading of Comparison Model Section
+	 * 
+	 * @throws InterruptedException
+	 */
+	public static void wait_For_content_loading_on_Comparison_Model() throws InterruptedException {
+		boolean isSectionLoad = false;
+		int comp_model_ctr = 0;
+		Thread.sleep(1000);
+		do {
+			try{
+				Assert.assertTrue(homePage.viewRefreshIcon_on_comparison_model.isDisplayed()); 				
+				Thread.sleep(2000);
+				log.info("Waiting for view dropdown loading on comparison model...");
+				comp_model_ctr++;
+			} catch(Exception e) {
+				log.info("View Dropdown loaded on comparison model...");
+				isSectionLoad = true;
+			}
+		} while (isSectionLoad == false && comp_model_ctr < 15);
+
+		if (isSectionLoad == false && comp_model_ctr == 15) {
+			log.info("View Dropdown is not loaded in 30 seconds..");
 			processException(new Exception());
 		}
 	}
@@ -818,10 +845,10 @@ public class UtilityMethods {
 				log.info("Waiting for Single Test Analysis Section");
 				sta_ctr++;
 			}
-		} while (isSectionLoad == false && sta_ctr < 3);
+		} while (isSectionLoad == false && sta_ctr < 6);
 
-		if (isSectionLoad == false && sta_ctr == 3) {
-			log.info("Single Test Analysis Section is not loaded in 30 seconds..");
+		if (isSectionLoad == false && sta_ctr == 6) {
+			log.info("Single Test Analysis Section is not loaded in 60 seconds..");
 			processException(new Exception());
 		}
 	}
@@ -841,10 +868,10 @@ public class UtilityMethods {
 				log.info("Waiting for Test Status Section");
 				test_stts_ctr++;
 			}
-		} while (isSectionLoad == false && test_stts_ctr <= 3);
+		} while (isSectionLoad == false && test_stts_ctr < 6);
 
-		if (isSectionLoad == false && test_stts_ctr == 3) {
-			log.info("Test Status Section is not loaded in 30 seconds..");
+		if (isSectionLoad == false && test_stts_ctr == 6) {
+			log.info("Test Status Section is not loaded in 60 seconds..");
 			processException(new Exception());
 		}
 	}
@@ -865,10 +892,10 @@ public class UtilityMethods {
 				log.info("Waiting for Test Status Section under student context");
 				test_stts_ctr_sc++;
 			}
-		} while (isSectionLoad == false && test_stts_ctr_sc < 3);
+		} while (isSectionLoad == false && test_stts_ctr_sc < 6);
 
-		if (isSectionLoad == false && test_stts_ctr_sc == 3) {
-			log.info("Test Status Section under student context is not loaded in 30 seconds..");
+		if (isSectionLoad == false && test_stts_ctr_sc == 6) {
+			log.info("Test Status Section under student context is not loaded in 60 seconds..");
 			processException(new Exception());
 		}
 	}
@@ -915,10 +942,10 @@ public class UtilityMethods {
 				log.info("Waiting for Test Score Overview Section Loading");
 				tso_ctr++;
 			}
-		} while (isSectionLoad == false && tso_ctr < 3);
+		} while (isSectionLoad == false && tso_ctr < 6);
 
-		if (isSectionLoad == false && tso_ctr == 3) {
-			log.info("Test Score Overview Section is not loaded in 30 seconds..");
+		if (isSectionLoad == false && tso_ctr == 6) {
+			log.info("Test Score Overview Section is not loaded in 60 seconds..");
 			processException(new Exception());
 		}
 	}
@@ -938,10 +965,10 @@ public class UtilityMethods {
 				log.info("Waiting for Summary Tab Section Loading...");
 				smmry_ctr++;
 			}
-		} while (isSectionLoad == false && smmry_ctr < 3);
+		} while (isSectionLoad == false && smmry_ctr < 6);
 
-		if (isSectionLoad == false && smmry_ctr == 3) {
-			log.info("Summary Tab Section is not loaded in 30 seconds..");
+		if (isSectionLoad == false && smmry_ctr == 6) {
+			log.info("Summary Tab Section is not loaded in 60 seconds..");
 			processException(new Exception());
 		}
 	}
@@ -962,10 +989,10 @@ public class UtilityMethods {
 				log.info("Waiting for Comparison Tab Section under Test Score Loading");
 				cmprson_ctr++;
 			}
-		} while (isSectionLoad == false && cmprson_ctr < 3);
+		} while (isSectionLoad == false && cmprson_ctr < 6);
 
-		if (isSectionLoad == false && cmprson_ctr == 3) {
-			log.info("Comparison Tab Section under Test Score is not loaded in 30 seconds..");
+		if (isSectionLoad == false && cmprson_ctr == 6) {
+			log.info("Comparison Tab Section under Test Score is not loaded in 60 seconds..");
 			processException(new Exception());
 		}
 	}
@@ -986,10 +1013,10 @@ public class UtilityMethods {
 				log.info("Waiting for Comparison Tab Section Loading");
 				cmprson_ctr++;
 			}
-		} while (isSectionLoad == false && cmprson_ctr < 3);
+		} while (isSectionLoad == false && cmprson_ctr < 6);
 
-		if (isSectionLoad == false && cmprson_ctr == 3) {
-			log.info("Comparison Tab Section is not loaded in 30 seconds..");
+		if (isSectionLoad == false && cmprson_ctr == 6) {
+			log.info("Comparison Tab Section is not loaded in 60 seconds..");
 			processException(new Exception());
 		}
 	}
@@ -1009,10 +1036,10 @@ public class UtilityMethods {
 				log.info("Waiting for Test Score Detail Section Loading");
 				tsd_ctr++;
 			}
-		} while (isSectionLoad == false && tsd_ctr < 3);
+		} while (isSectionLoad == false && tsd_ctr < 6);
 
-		if (isSectionLoad == false && tsd_ctr == 3) {
-			log.info("Test Score Detail Section is not loaded in 30 seconds..");
+		if (isSectionLoad == false && tsd_ctr == 6) {
+			log.info("Test Score Detail Section is not loaded in 60 seconds..");
 			processException(new Exception());
 		}
 	}
@@ -1024,6 +1051,7 @@ public class UtilityMethods {
 	public static void wait_For_Standard_Performance_Table_Section() {
 		boolean isSectionLoad = false;
 		int sp_table_ctr = 0;
+		new Actions(Driver.webdriver).moveByOffset(20, 20).build().perform();
 		do {
 			try {
 				Assert.assertTrue(homePage.standardnameslist.get(0).isDisplayed());
@@ -1033,10 +1061,10 @@ public class UtilityMethods {
 				log.info("Waiting for Standard Performance Table Section Loading");
 				sp_table_ctr++;
 			}
-		} while (isSectionLoad == false && sp_table_ctr < 3);
+		} while (isSectionLoad == false && sp_table_ctr < 6);
 
-		if (isSectionLoad == false && sp_table_ctr == 3) {
-			log.info("Standard Performance Table Section is not loaded in 30 seconds..");
+		if (isSectionLoad == false && sp_table_ctr == 6) {
+			log.info("Standard Performance Table Section is not loaded in 60 seconds..");
 			processException(new Exception());
 		}
 	}
@@ -1100,6 +1128,22 @@ public class UtilityMethods {
 			homePage.gradedropdownbtn.click();
 			Thread.sleep(500);
 			Driver.webdriver.findElement(By.xpath("//li[.='Grade 4']")).click();
+			Thread.sleep(500);
+			homePage.rosterapplybtn.click();
+			UtilityMethods.wait_For_Student_List_AND_OR_Class_List_Section_Load();
+		} catch (Exception e) {
+			UtilityMethods.processException(e);
+		}
+	}
+	
+	/* This is method to select Specific Grade on Roster*/
+	public static void select_Specific_Grade_From_Roster(String grade_Name) {
+		try {
+			homePage.rostertab.click();
+			Thread.sleep(500);			
+			homePage.gradedropdownbtn.click();
+			Thread.sleep(500);
+			Driver.webdriver.findElement(By.xpath("//li[.='"+grade_Name+"']")).click();
 			Thread.sleep(500);
 			homePage.rosterapplybtn.click();
 			UtilityMethods.wait_For_Student_List_AND_OR_Class_List_Section_Load();

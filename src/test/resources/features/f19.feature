@@ -10,6 +10,7 @@ Feature: Validate local/state standards UI functionality
   Scenario: Verify Local/State Standards - CLASS/STUDENT: Standards Comparison
     Given User is on portal's login screen with username as "ls_teacher_one" and password as "password" and usertype as "realm_ls_dodea"
     Then Verify local state standards for class and or student standards comparison
+    Given User is on portal's login screen with username as "ls_teacher_one" and password as "password" and usertype as "realm_ls_dodea"
     When User Click on Standard Performance tab within the Student Context
     Then Verify local state standards for class and or student standards comparison
 

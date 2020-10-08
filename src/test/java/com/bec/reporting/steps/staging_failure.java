@@ -44,7 +44,7 @@ public class staging_failure {
 	public void verify_to_click_on_the_Class_subway_nav_filter_in_test_status() throws Throwable {
 		try {
 			js.executeScript("arguments[0].click();", homePage.comparisontab);
-			Thread.sleep(10000);
+			UtilityMethods.wait_For_content_loading_on_Comparison_Model();
 			js.executeScript("arguments[0].click();", homePage.applyBtnOnstandardTab);
 			UtilityMethods.wait_For_Comparison_Tab_Section_Load_under_standard_performance();
 			Assert.assertTrue(homePage.activedistrictmenu.isDisplayed());

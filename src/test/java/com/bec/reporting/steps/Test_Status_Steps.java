@@ -538,7 +538,7 @@ public class Test_Status_Steps {
 			}
 			Assert.assertTrue(UtilityMethods.isDatesSortedInAscendingOrder(date_list));
 			date_list.clear();
-			// TODO: NOTE submit date sorting is notthe part of requirement.
+			// TODO: NOTE submit date sorting is not the part of requirement.
 			// clicking on submit Date up arrow
 
 			/*
