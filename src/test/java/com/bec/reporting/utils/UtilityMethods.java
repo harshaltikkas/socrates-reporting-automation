@@ -1050,8 +1050,7 @@ public class UtilityMethods {
 	 */
 	public static void wait_For_Standard_Performance_Table_Section() {
 		boolean isSectionLoad = false;
-		int sp_table_ctr = 0;
-		new Actions(Driver.webdriver).moveByOffset(20, 20).build().perform();
+		int sp_table_ctr = 0;		
 		do {
 			try {
 				Assert.assertTrue(homePage.standardnameslist.get(0).isDisplayed());

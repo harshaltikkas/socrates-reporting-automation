@@ -437,11 +437,11 @@ public class local_state_standards_Steps {
 			RosterTabUtilityMethods.select_Grade_In_Grades_DropDown("Grade 1");
 			homePage.rosterapplybtn.click();
 			UtilityMethods.wait_For_Student_List_AND_OR_Class_List_Section_Load();
-			new Actions(Driver.webdriver).moveToElement(homePage.viewDropDown).click().build().perform();
+			homePage.viewDropDown.click();
 			Thread.sleep(500);
 			Assert.assertTrue(homePage.viewDropDownList.get(0).getText().startsWith("AZ"));
-			homePage.viewDropDownList.get(0).click();
-			UtilityMethods.wait_For_Student_List_AND_OR_Class_List_Section_Load();
+			homePage.viewDropDown.click();
+			Thread.sleep(500);
 
 			Set<String> standard_names_list = UtilityMethods.get_Standard_Names_From_Standard_Performance_Tabel();
 			js.executeScript("arguments[0].click();", homePage.summarytab);
