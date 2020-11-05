@@ -29,13 +29,16 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.PageFactory;
+
 import com.bec.reporting.pageobjects.HomePage;
 import com.bec.reporting.utils.CBTConfiguration;
 import com.bec.reporting.utils.Driver;
@@ -44,6 +47,7 @@ import com.bec.reporting.utils.PaginationUtility_for_Universal_Tab;
 import com.bec.reporting.utils.UtilityMethods;
 import com.google.common.base.Verify;
 import com.google.common.collect.Ordering;
+
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import lombok.extern.slf4j.Slf4j;
@@ -209,11 +213,10 @@ public class TestTabDesignAndBehaviourSteps {
 			Thread.sleep(500);
 			List<String> listItem = new ArrayList<String>();
 
-			for (int i = 0; i < homePage.testnameslist_on_test_tab.size(); i++) {
-				if (homePage.testnameslist_on_test_tab.get(i).getText().equals("")) {
-					UtilityMethods.scroll_Div(homePage.testnameslist_on_test_tab.get(i), 20);
-				}
+			for (int i = 0; i < homePage.testnameslist_on_test_tab.size(); i++) {				
 				listItem.add(homePage.testnameslist_on_test_tab.get(i).getText());
+				new Actions(Driver.webdriver).sendKeys(Keys.ARROW_DOWN).build().perform();
+				Thread.sleep(500);
 			}
 			Assert.assertTrue(Ordering.natural().isOrdered(listItem));
 			listItem.clear();
@@ -225,11 +228,10 @@ public class TestTabDesignAndBehaviourSteps {
 			js.executeScript("arguments[0].click();", homePage.namedownarrow);
 			Thread.sleep(500);
 
-			for (int i = 0; i < homePage.testnameslist_on_test_tab.size(); i++) {
-				if (homePage.testnameslist_on_test_tab.get(i).getText().equals("")) {
-					UtilityMethods.scroll_Div(homePage.testnameslist_on_test_tab.get(i), 20);
-				}
+			for (int i = 0; i < homePage.testnameslist_on_test_tab.size(); i++) {			
 				listItem.add(homePage.testnameslist_on_test_tab.get(i).getText());
+				new Actions(Driver.webdriver).sendKeys(Keys.ARROW_DOWN).build().perform();
+				Thread.sleep(500);
 			}
 			Assert.assertTrue(Ordering.natural().reverse().isOrdered(listItem));
 			listItem.clear();
@@ -238,11 +240,10 @@ public class TestTabDesignAndBehaviourSteps {
 			new Actions(Driver.webdriver).moveToElement(homePage.noofresultuparrow).click().perform();
 			Thread.sleep(500);
 
-			for (int i = 0; i < homePage.testnoofresultlist.size(); i++) {
-				if (homePage.testnoofresultlist.get(i).getText().equals("")) {
-					UtilityMethods.scroll_Div(homePage.testnoofresultlist.get(i), 20);
-				}
+			for (int i = 0; i < homePage.testnoofresultlist.size(); i++) {			
 				listItem.add(homePage.testnoofresultlist.get(i).getText());
+				new Actions(Driver.webdriver).sendKeys(Keys.ARROW_DOWN).build().perform();
+				Thread.sleep(500);
 			}
 			Assert.assertTrue(Ordering.natural().isOrdered(listItem));
 			listItem.clear();
@@ -253,10 +254,9 @@ public class TestTabDesignAndBehaviourSteps {
 			Thread.sleep(500);
 
 			for (int i = 0; i < homePage.testnoofresultlist.size(); i++) {
-				if (homePage.testnoofresultlist.get(i).getText().equals("")) {
-					UtilityMethods.scroll_Div(homePage.testnoofresultlist.get(i), 20);
-				}
 				listItem.add(homePage.testnoofresultlist.get(i).getText());
+				new Actions(Driver.webdriver).sendKeys(Keys.ARROW_DOWN).build().perform();
+				Thread.sleep(500);
 			}
 			Assert.assertTrue(Ordering.natural().reverse().isOrdered(listItem));
 			listItem.clear();
@@ -270,11 +270,10 @@ public class TestTabDesignAndBehaviourSteps {
 			new Actions(Driver.webdriver).moveToElement(homePage.earliestdateuparrow).click().perform();
 			Thread.sleep(500);
 
-			for (int i = 0; i < homePage.earliestdatelist.size(); i++) {
-				if (homePage.earliestdatelist.get(i).getText().equals("")) {
-					UtilityMethods.scroll_Div(homePage.earliestdatelist.get(i), 20);
-				}
+			for (int i = 0; i < homePage.earliestdatelist.size(); i++) {				
 				dateItem.add(sdf.parse(homePage.earliestdatelist.get(i).getText()));
+				new Actions(Driver.webdriver).sendKeys(Keys.ARROW_DOWN).build().perform();
+				Thread.sleep(500);
 			}
 
 			Assert.assertTrue(UtilityMethods.isDatesSortedInAscendingOrder(dateItem));
@@ -284,11 +283,10 @@ public class TestTabDesignAndBehaviourSteps {
 			js.executeScript("arguments[0].click();", homePage.earliestdatedownarrow);
 			Thread.sleep(500);
 
-			for (int i = 0; i < homePage.earliestdatelist.size(); i++) {
-				if (homePage.earliestdatelist.get(i).getText().equals("")) {
-					UtilityMethods.scroll_Div(homePage.earliestdatelist.get(i), 20);
-				}
+			for (int i = 0; i < homePage.earliestdatelist.size(); i++) {				
 				dateItem.add(sdf.parse(homePage.earliestdatelist.get(i).getText()));
+				new Actions(Driver.webdriver).sendKeys(Keys.ARROW_DOWN).build().perform();
+				Thread.sleep(500);
 			}
 
 			Assert.assertTrue(UtilityMethods.isDatesSortedInDecendingOrder(dateItem));
@@ -299,10 +297,9 @@ public class TestTabDesignAndBehaviourSteps {
 			Thread.sleep(500);
 
 			for (int i = 0; i < homePage.latestdatelist.size(); i++) {
-				if (homePage.latestdatelist.get(i).getText().equals("")) {
-					UtilityMethods.scroll_Div(homePage.latestdatelist.get(i), 20);
-				}
 				dateItem.add(sdf.parse(homePage.earliestdatelist.get(i).getText()));
+				new Actions(Driver.webdriver).sendKeys(Keys.ARROW_DOWN).build().perform();
+				Thread.sleep(500);
 			}
 			Assert.assertTrue(UtilityMethods.isDatesSortedInAscendingOrder(dateItem));
 			dateItem.clear();
@@ -312,11 +309,10 @@ public class TestTabDesignAndBehaviourSteps {
 			js.executeScript("arguments[0].click();", homePage.latestdatedownarrow);
 			Thread.sleep(500);
 
-			for (int i = 0; i < homePage.latestdatelist.size(); i++) {
-				if (homePage.latestdatelist.get(i).getText().equals("")) {
-					UtilityMethods.scroll_Div(homePage.latestdatelist.get(i), 20);
-				}
+			for (int i = 0; i < homePage.latestdatelist.size(); i++) {			
 				dateItem.add(sdf.parse(homePage.earliestdatelist.get(i).getText()));
+				new Actions(Driver.webdriver).sendKeys(Keys.ARROW_DOWN).build().perform();
+				Thread.sleep(500);
 			}
 			Assert.assertTrue(UtilityMethods.isDatesSortedInDecendingOrder(dateItem));
 			dateItem.clear();
@@ -343,11 +339,10 @@ public class TestTabDesignAndBehaviourSteps {
 			// Create a Date list.
 			List<Date> dateItem = new ArrayList<Date>();
 
-			for (int i = 0; i < homePage.earliestdatelist.size(); i++) {
-				if (homePage.earliestdatelist.get(i).getText().equals("")) {
-					UtilityMethods.scroll_Div(homePage.earliestdatelist.get(i), 20);
-				}
+			for (int i = 0; i < homePage.earliestdatelist.size(); i++) {				
 				dateItem.add(sdf.parse(homePage.earliestdatelist.get(i).getText()));
+				new Actions(Driver.webdriver).sendKeys(Keys.ARROW_DOWN).build().perform();
+				Thread.sleep(500);
 			}
 
 			Assert.assertTrue(UtilityMethods.isDatesSortedInDecendingOrder(dateItem));
@@ -384,7 +379,8 @@ public class TestTabDesignAndBehaviourSteps {
 			} catch (NoSuchElementException ne) {
 				testcount = homePage.testnameslist_on_test_tab.size();
 				selectedTest = (int) (Math.random() * testcount);
-				UtilityMethods.scroll_Div(homePage.testnameslist_on_test_tab.get(selectedTest), 20);
+				new Actions(Driver.webdriver).sendKeys(Keys.ARROW_DOWN).build().perform();
+				Thread.sleep(500);
 				Thread.sleep(500);
 				homePage.testnameslist_on_test_tab.get(selectedTest).click();
 				Thread.sleep(500);

@@ -30,6 +30,7 @@ import java.util.List;
 
 import org.junit.Assert;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.PageFactory;
 import com.bec.reporting.pageobjects.HomePage;
@@ -284,10 +285,9 @@ public class RosterTabDropDownBehaviour {
 			Thread.sleep(500);
 
 			for (int i = 1; i < homePage.studentlistondropdown.size(); i = i + 2) {
-				if (homePage.studentlistondropdown.get(i).getText().equals("")) {
-					UtilityMethods.scroll_Div(homePage.studentlistondropdown.get(i), 20);
-				}
 				homePage.studentlistondropdown.get(i).click();
+				Thread.sleep(500);
+				new Actions(Driver.webdriver).sendKeys(Keys.ARROW_DOWN).build().perform();
 				Thread.sleep(500);
 				customSize++;
 			}
@@ -318,21 +318,16 @@ public class RosterTabDropDownBehaviour {
 			homePage.studentdropdownbtn.click();
 			Thread.sleep(500);
 			for (int i = 0; i < customSize; i++) {
-				if (homePage.studentlistondropdown.get(i).getText().equals("")) {
-					UtilityMethods.scroll_Div(homePage.studentlistondropdown.get(i), 20);
-				}
 				Assert.assertTrue(homePage.studentlistondropdownwithinput.get(i).isSelected());
+				new Actions(Driver.webdriver).sendKeys(Keys.ARROW_DOWN).build().perform();
 				Thread.sleep(500);
 			}
 			Thread.sleep(500);
 			// now,delselecting the selected student and verify with content select student
 			// on dropdown
 			for (int i = 0; i < customSize; i++) {
-				if (homePage.studentlistondropdown.get(i).getText().equals("")) {
-					UtilityMethods.scroll_Div(homePage.studentlistondropdown.get(i), 20);
-				}
-				Thread.sleep(200);
 				homePage.studentlistondropdown.get(i).click();
+				new Actions(Driver.webdriver).sendKeys(Keys.ARROW_DOWN).build().perform();
 				Thread.sleep(500);
 			}
 

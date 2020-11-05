@@ -116,7 +116,7 @@ public class HomePage {
 	public WebElement datetab;
 
 	@FindBy(xpath = "//div[@class='menu-title' and contains(text(),'School')]/following-sibling::div/button")
-	public WebElement schooldropdownbtn;
+	public WebElement schooldropdownbtn;	
 
 	@FindBy(xpath = "//div[@class='menu-title' and contains(text(),'Teacher')]/following-sibling::div/button")
 	public WebElement teachersdropdownbtn;
@@ -785,6 +785,9 @@ public class HomePage {
 
 	@FindBy(xpath = "//div[@class='tooltip_main']//div[@class='tooltip_title']")
 	public WebElement testname_on_test_score_value_tooltip;
+	
+	@FindBy(xpath = "//div[@class='tooltip_main']//div[@class='tooltip_submitted_date']")
+	public WebElement submitted_date_on_test_score_value_tooltip;
 	
 	@FindBy(xpath = "//div[@class='line_chart_graph' and not(@style)]//*[name()='g']//*[name()='polygon']/following-sibling::*[name()='text']")
 	public List<WebElement> testnames_on_pot;

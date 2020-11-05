@@ -4,7 +4,9 @@ import java.util.List;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.PageFactory;
 import com.bec.reporting.pageobjects.HomePage;
 import com.bec.reporting.utils.API_Connection;
@@ -524,7 +526,7 @@ public class Customized_Band_steps {
 			Assert.assertTrue(homePage.key_al_orangecolor.getText().equals(list.get(1) + "%"));
 			Assert.assertTrue(homePage.key_al_yellowcolor.getText().equals(list.get(2) + "%"));
 			Assert.assertTrue(homePage.key_al_greencolor.getText()
-					.equals(list.get(3).substring(0, list.get(3).indexOf("-")) + "%+"));
+					.equals(list.get(2).substring(list.get(2).indexOf("-")+1) + "%+"));
 			Assert.assertTrue(homePage.key_al_graycolor.getText().equals("No Data Available"));
 			homePage.reportingkey.click();
 			Thread.sleep(1000);
@@ -895,11 +897,10 @@ public class Customized_Band_steps {
 			RosterTabUtilityMethods.uncheck_check_All("Student");
 			RosterTabUtilityMethods.uncheck_check_All("Student");
 			int customSize=0;		
-			for (int i = 1; i < homePage.studentlistondropdown.size(); i = i + 2) {
-				if (homePage.studentlistondropdown.get(i).getText().equals("")) {
-					UtilityMethods.scroll_Div(homePage.studentlistondropdown.get(i), 20);
-				}
+			for (int i = 1; i < homePage.studentlistondropdown.size(); i = i + 2) {				
 				homePage.studentlistondropdown.get(i).click();
+				Thread.sleep(500);
+				new Actions(Driver.webdriver).sendKeys(Keys.ARROW_DOWN).build().perform();
 				Thread.sleep(500);
 				customSize++;
 			}

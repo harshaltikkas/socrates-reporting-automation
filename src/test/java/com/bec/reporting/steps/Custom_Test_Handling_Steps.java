@@ -9,6 +9,7 @@ import org.openqa.selenium.support.PageFactory;
 import com.bec.reporting.pageobjects.HomePage;
 import com.bec.reporting.utils.CBTConfiguration;
 import com.bec.reporting.utils.Driver;
+import com.bec.reporting.utils.IWait;
 import com.bec.reporting.utils.UtilityMethods;
 import cucumber.api.java.en.Then;
 import lombok.extern.slf4j.Slf4j;
@@ -260,6 +261,7 @@ public class Custom_Test_Handling_Steps {
 			homePage.summary_context.click();
 			Thread.sleep(2000);
 			UtilityMethods.select_specific_district_term("2018-2019");
+			IWait.explicit_wait(Driver.webdriver, homePage.studentmenu);
 			Thread.sleep(2000);
 			Assert.assertTrue(
 					homePage.summary_context.getAttribute("class").contains("ar_summary_deactivate_lable_opacity"));

@@ -397,7 +397,7 @@ public class UtilityMethods {
 			number = generateRandomNumberBySkippingIndex(numberLength, skipIndex);
 		}
 		return number;
-	}
+	}	
 
 	/**
 	 * This method is used to scroll down the div(vertical scroll bar) in
@@ -430,6 +430,7 @@ public class UtilityMethods {
 		return true;
 	}
 
+	
 	/**
 	 * This method is used to scroll up the div(vertical scroll bar) in
 	 * Student,class and student Dropdown
@@ -813,12 +814,12 @@ public class UtilityMethods {
 		int comp_model_ctr = 0;
 		Thread.sleep(1000);
 		do {
-			try{
-				Assert.assertTrue(homePage.viewRefreshIcon_on_comparison_model.isDisplayed()); 				
+			try {
+				Assert.assertTrue(homePage.viewRefreshIcon_on_comparison_model.isDisplayed());
 				Thread.sleep(2000);
 				log.info("Waiting for view dropdown loading on comparison model...");
 				comp_model_ctr++;
-			} catch(Exception e) {
+			} catch (Exception e) {
 				log.info("View Dropdown loaded on comparison model...");
 				isSectionLoad = true;
 			}
@@ -842,7 +843,7 @@ public class UtilityMethods {
 				log.info("Single Test Analysis Section is now Displaying");
 				isSectionLoad = true;
 			} catch (Exception e1) {
-				log.info("Waiting for Single Test Analysis Section");
+				log.info("Waiting for Single Test Analysis Section");				
 				sta_ctr++;
 			}
 		} while (isSectionLoad == false && sta_ctr < 6);
@@ -1050,7 +1051,7 @@ public class UtilityMethods {
 	 */
 	public static void wait_For_Standard_Performance_Table_Section() {
 		boolean isSectionLoad = false;
-		int sp_table_ctr = 0;		
+		int sp_table_ctr = 0;
 		do {
 			try {
 				Assert.assertTrue(homePage.standardnameslist.get(0).isDisplayed());
@@ -1089,12 +1090,11 @@ public class UtilityMethods {
 	}
 
 	public static void wait_For_CSV_File_Download(File file) throws InterruptedException {
-
 		boolean isFileSaved = false;
 		int wait_for_csv = 0;
 		do {
 			log.info("Waiting for CSV file to be saved...");
-			Thread.sleep(2000);
+			Thread.sleep(4000);
 			if (file.exists()) {
 				Thread.sleep(1000);
 				log.info(file.getAbsoluteFile().getName() + " is saved successfully..");
@@ -1102,10 +1102,10 @@ public class UtilityMethods {
 				break;
 			}
 			wait_for_csv++;
-		} while (wait_for_csv <= 15);
+		} while (wait_for_csv < 15);
 
-		if (isFileSaved == false && wait_for_csv > 15) {
-			log.error("csv file not saved in 30 seconds...");
+		if (isFileSaved == false && wait_for_csv == 15) {
+			log.error("csv file not saved in 60 seconds...");
 			processException(new Exception());
 		}
 	}
@@ -1134,15 +1134,15 @@ public class UtilityMethods {
 			UtilityMethods.processException(e);
 		}
 	}
-	
-	/* This is method to select Specific Grade on Roster*/
+
+	/* This is method to select Specific Grade on Roster */
 	public static void select_Specific_Grade_From_Roster(String grade_Name) {
 		try {
 			homePage.rostertab.click();
-			Thread.sleep(500);			
+			Thread.sleep(500);
 			homePage.gradedropdownbtn.click();
 			Thread.sleep(500);
-			Driver.webdriver.findElement(By.xpath("//li[.='"+grade_Name+"']")).click();
+			Driver.webdriver.findElement(By.xpath("//li[.='" + grade_Name + "']")).click();
 			Thread.sleep(500);
 			homePage.rosterapplybtn.click();
 			UtilityMethods.wait_For_Student_List_AND_OR_Class_List_Section_Load();
@@ -1714,9 +1714,8 @@ public class UtilityMethods {
 			UtilityMethods.wait_For_Student_List_AND_OR_Class_List_Section_Load();
 		}
 
-		js.executeScript("arguments[0].click();", homePage.comparisontab);
-		Thread.sleep(20000);
-
+		js.executeScript("arguments[0].click();", homePage.comparisontab);		
+		wait_For_Comparison_Tab_Section_Load_under_standard_performance();
 		js.executeScript("arguments[0].click();", homePage.applyBtnOnstandardTab);
 		UtilityMethods.wait_For_Comparison_Tab_Section_Load_under_standard_performance();
 	}
@@ -1835,8 +1834,7 @@ public class UtilityMethods {
 							+ range + "')]"))
 					.click();
 			Thread.sleep(500);
-			homePage.dateapplybtn.click();
-			IWait.explicit_wait(Driver.webdriver, homePage.studentmenu);
+			homePage.dateapplybtn.click();			
 		} catch (Exception e) {
 			UtilityMethods.processException(e);
 		}

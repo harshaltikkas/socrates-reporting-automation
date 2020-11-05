@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Set;
 import org.junit.Assert;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.PageFactory;
 import com.bec.reporting.pageobjects.HomePage;
@@ -283,12 +284,10 @@ public class local_state_standards_Steps {
 			RosterTabUtilityMethods.uncheck_check_All("School");
 
 			// selecting custom School from dropdown
-			for (int i = 1; i < homePage.schoollist.size(); i = i + 2) {
-				if (homePage.schoollist.get(i).getText().equals("")) {
-					UtilityMethods.scroll_Div(homePage.schoollist.get(i), 20);
-					Thread.sleep(500);
-				}
+			for (int i = 1; i < homePage.schoollist.size(); i = i + 2) {				
 				homePage.schoollist.get(i).click();
+				Thread.sleep(500);
+				new Actions(Driver.webdriver).sendKeys(Keys.ARROW_DOWN).build().perform();
 				Thread.sleep(500);
 			}
 			homePage.schooldropdownbtn.click();
@@ -540,12 +539,9 @@ public class local_state_standards_Steps {
 
 			// selecting custom School from dropdown
 			for (int i = 1; i < homePage.schoollist.size(); i = i + 2) {
-
-				if (homePage.schoollist.get(i).getText().equals("")) {
-					UtilityMethods.scroll_Div(homePage.schoollist.get(i), 20);
-				}
-
 				homePage.schoollist.get(i).click();
+				Thread.sleep(500);
+				new Actions(Driver.webdriver).sendKeys(Keys.ARROW_DOWN).build().perform();
 				Thread.sleep(500);
 			}
 			homePage.schooldropdownbtn.click();
@@ -599,11 +595,10 @@ public class local_state_standards_Steps {
 			RosterTabUtilityMethods.uncheck_check_All("Class");
 
 			// selecting custom Class from dropdown
-			for (int i = 1; i < homePage.classlist.size(); i = i + 2) {
-				if (homePage.classlist.get(i).getText().equals("")) {
-					UtilityMethods.scroll_Div(homePage.classlist.get(i), 20);
-				}
+			for (int i = 1; i < homePage.classlist.size(); i = i + 2) {				
 				homePage.classlist.get(i).click();
+				Thread.sleep(500);
+				new Actions(Driver.webdriver).sendKeys(Keys.ARROW_DOWN).build().perform();
 				Thread.sleep(500);
 			}
 			homePage.classdropdownbtn.click();
@@ -659,11 +654,10 @@ public class local_state_standards_Steps {
 			RosterTabUtilityMethods.uncheck_check_All("Student");
 
 			// selecting custom Student from dropdown
-			for (int i = 1; i < homePage.studentlistwithall.size(); i = i + 2) {
-				if (homePage.studentlistwithall.get(i).getText().equals("")) {
-					UtilityMethods.scroll_Div(homePage.studentlistwithall.get(i), 20);
-				}
+			for (int i = 1; i < homePage.studentlistwithall.size(); i = i + 2) {				
 				homePage.studentlistwithall.get(i).click();
+				Thread.sleep(500);
+				new Actions(Driver.webdriver).sendKeys(Keys.ARROW_DOWN).build().perform();
 				Thread.sleep(500);
 			}
 			homePage.studentdropdownbtn.click();
