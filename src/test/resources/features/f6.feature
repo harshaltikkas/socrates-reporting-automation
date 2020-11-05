@@ -2,13 +2,13 @@
 Feature: Sprint 6 and Sprint 7 Stories
 
   ##Note: BE-630,659,660,661 all are already covered previously
-  ## BE-649,662
+  @BE-649 @BE-662
   Scenario: Verify comparison band in class context in test score page selector
     Given User is on portal's login screen with username as "school_admin_one" and password as "password" and usertype as "realm_one"
     When User click on Class Context and Test Score button
     Then Verify the comparison band for school and district
 
-   ##BE-653,BE-681,654  
+  @BE-653 @BE-681 @BE-654
   Scenario: Verify tooltip icon and text of tooltip icon beside avg info
     Given User is on portal's login screen with username as "teacher_one" and password as "password" and usertype as "realm_one"
     When User Click on Standard Performance tab within the Class Context
@@ -17,8 +17,8 @@ Feature: Sprint 6 and Sprint 7 Stories
     Then Verify the tooltipicon in performance over time line chart
     When User click on Class Context and Test Score button
     Then Verify the tooltipicon is not present
-   
-  ##BE-650,682
+
+  @BE-650 @BE-682
   Scenario: Verify The diamond shape stroke on the x-axis and Color changes within the Line Charts
     Given User is on portal's login screen with username as "teacher_one" and password as "password" and usertype as "realm_one"
     When User Click on Standard Performance tab within the Class Context
@@ -26,7 +26,7 @@ Feature: Sprint 6 and Sprint 7 Stories
     When User Click on Standard Performance tab within the Student Context
     Then verify the diamond shape stroke on the x-axis and Color changes within the Line Charts
 
-  ##BE-683,684
+  @BE-683 @BE-684
   Scenario: Verify The diamond shape stroke on the x-axis and Color changes within the Line Charts within test score menu
     Given User is on portal's login screen with username as "teacher_one" and password as "password" and usertype as "realm_one"
     When User click on Class Context and Test Score button
@@ -34,7 +34,7 @@ Feature: Sprint 6 and Sprint 7 Stories
     When User click on Student Context and Test Score button
     Then verify the diamond shape stroke on the x-axis and Color changes within the Line Charts within test score menu for student
 
-  ## BE-666,685,677,686
+  @BE-666 @BE-685 @BE-677 @BE-686
   Scenario: Verify Selection and Deselection of the Comparison options within the Line Charts for Particular Strand and standard
     Given User is on portal's login screen with username as "teacher_one" and password as "password" and usertype as "realm_one"
     When User Click on Standard Performance tab within the Student Context

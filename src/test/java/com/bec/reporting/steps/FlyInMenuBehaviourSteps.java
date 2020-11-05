@@ -31,6 +31,7 @@ import java.util.Properties;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.PageFactory;
@@ -120,12 +121,13 @@ public class FlyInMenuBehaviourSteps {
 			token = API_Connection.getToken();
 			if (env.equalsIgnoreCase("dev") || env.equalsIgnoreCase("uat")) {
 				IWait.explicit_wait(Driver.webdriver, homePage.studentmenu);
-				if (API_Connection.getUserRole().equalsIgnoreCase("DISTRICT_ADMIN")) {
-					Assert.assertTrue(homePage.activedistrictmenu.isDisplayed());
-					Assert.assertTrue(homePage.active_summary_context.isDisplayed());
-					jse.executeScript("arguments[0].click();", homePage.assessements_context);
-					UtilityMethods.wait_For_Student_List_AND_OR_Class_List_Section_Load();
-				}
+				/*
+				 * if (API_Connection.getUserRole().equalsIgnoreCase("DISTRICT_ADMIN")) {
+				 * Assert.assertTrue(homePage.activedistrictmenu.isDisplayed());
+				 * Assert.assertTrue(homePage.active_summary_context.isDisplayed());
+				 * jse.executeScript("arguments[0].click();", homePage.assessements_context);
+				 * UtilityMethods.wait_For_Student_List_AND_OR_Class_List_Section_Load(); }
+				 */
 			} else if (env.equalsIgnoreCase("staging") || env.equalsIgnoreCase("prod")) {
 				IWait.explicit_wait(Driver.webdriver, homePage.resources_txt_on_dashboard);
 				homePage.report_link_on_dashboard.click();
@@ -290,10 +292,9 @@ public class FlyInMenuBehaviourSteps {
 				RosterTabUtilityMethods.uncheck_check_All("Student");
 				// selecting custom Teacher from dropdown
 				for (int i = 1; i < homePage.studentlistondropdown.size(); i = i + 2) {
-					if (homePage.studentlistondropdown.get(i).getText().equals("")) {
-						UtilityMethods.scroll_Div(homePage.studentlistondropdown.get(i), 20);
-					}
 					homePage.studentlistondropdown.get(i).click();
+					Thread.sleep(500);
+					new Actions(Driver.webdriver).sendKeys(Keys.ARROW_DOWN).build().perform();
 					Thread.sleep(500);
 					customSize++;
 				}
@@ -655,14 +656,13 @@ public class FlyInMenuBehaviourSteps {
 			homePage.schooldropdownbtn.click();
 			Thread.sleep(1000);
 			RosterTabUtilityMethods.uncheck_check_All("School");
-			for (int i = 1; i < homePage.schoollist.size(); i = i + 2) {
-				if (homePage.schoollist.get(i).getText().equals("")) {
-					UtilityMethods.scroll_Div(homePage.schoollist.get(i), 20);
-				}
+			for (int i = 1; i < homePage.schoollist.size(); i = i + 2) {			
 				Thread.sleep(500);
 				homePage.schoollist.get(i).click();
-				count++;
 				Thread.sleep(500);
+				new Actions(Driver.webdriver).sendKeys(Keys.ARROW_DOWN).build().perform();
+				Thread.sleep(500);
+				count++;				
 			}
 			homePage.schooldropdownbtn.click();
 			Thread.sleep(500);

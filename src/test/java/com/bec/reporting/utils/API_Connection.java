@@ -1,7 +1,10 @@
 package com.bec.reporting.utils;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.Hashtable;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -42,8 +45,8 @@ public class API_Connection {
 					+ FlyInMenuBehaviourSteps.realm + "\"\n" + "}";
 
 			/*
-			 * String payload = "{\n" + "  \"username\": \"Drind1999348274\",\n" +
-			 * "  \"password\": \"password\",\n" + "  \"realm\": \"sulphur\"\n" + "}";
+			 * String payload = "{\n" + "  \"username\": \"Mothasaim461556\",\n" +
+			 * "  \"password\": \"password\",\n" + "  \"realm\": \"dodea\"\n" + "}";
 			 */
 
 			if (prop.getProperty("app_env").equalsIgnoreCase("staging")
@@ -52,8 +55,8 @@ public class API_Connection {
 			} else {
 				apiUrl = prop.getProperty("atlantis_api_url");
 			}
-			Response response = RestAssured.given().header("Content-Type", "application/json")
-					.body(payload).post(apiUrl);
+			Response response = RestAssured.given().header("Content-Type", "application/json").body(payload)
+					.post(apiUrl);
 			if (response.getStatusCode() != 200) {
 				log.info("Error occurred. status code : " + response.getStatusCode());
 				return null;
@@ -102,8 +105,51 @@ public class API_Connection {
 		return user_role;
 	}
 
+	/**
+	 * This method is used to get Future Submit date in test tab based on default
+	 * overview api
+	 * 
+	 * @return
+	 */
+	public static String getFutureDate() {
+		String future_date = "", apiUrl = "";
+		try {
+			prop = FileRead.readProperties();
+			if (prop.getProperty("app_env").equalsIgnoreCase("staging")
+					|| prop.getProperty("app_env").equalsIgnoreCase("prod")) {
+				apiUrl = prop.getProperty("stg_apiURL") + "/district/standardperformance/overtime";
+			} else if (prop.getProperty("app_env").equalsIgnoreCase("dev")) {
+				apiUrl = prop.getProperty("dev_apiURL") + "/district/standardperformance/overtime";
+			} else if (prop.getProperty("app_env").equalsIgnoreCase("uat")) {
+				apiUrl = prop.getProperty("master_apiURL") + "/district/standardperformance/overtime";
+			}
+
+			String payload = "{\n" + "\"assessedQuestionsNo\":1,\n" + "\"grade\":\"grade_1\",\n" + "\"schoolIds\":[],\n"
+					+ "\"districtId\":900979,\n" + "\"componentCodeList\":[\"X52990\"],\n"
+					+ "\"startDate\":\"2019-07-22 00:00:00\",\n" + "\"endDate\":\"2020-12-31 18:29:59\",\n"
+					+ "\"standardIds\":[\"CCSS.ELA-Literacy.L.1.4a\"],\n" + "\"classIds\":[],\n"
+					+ "\"studentIds\":[],\n" + "\"rosterGrade\":\"grade_1\",\n" + "\"termId\":\"4848\",\n"
+					+ "\"isPastDistrictTerm\":false,\n" + "\"currentTermId\":\"4848\"\n}";
+
+			Response response = RestAssured.given().header("Authorization", "Bearer " + FlyInMenuBehaviourSteps.token)
+					.contentType("application/json").body(payload).post(apiUrl);
+
+			if (response.getStatusCode() != 200) {
+				log.info("Error occurred in getting Future Date for the Test Name. status code : "
+						+ response.getStatusCode());
+				return null;
+			} else {
+				future_date = (String) new JsonPath(response.asString()).getList("value.submitEnd").get(0);
+			}
+		} catch (Exception e) {
+			log.error("Unable to get future date ...");
+			UtilityMethods.processException(e);
+		}
+		return future_date;
+	}
+
 	public static List<String> get_Achievement_Levels() {
-		List<String> list = new ArrayList<String>();		
+		List<String> list = new ArrayList<String>();
 		try {
 			prop = FileRead.readProperties();
 			String apiUrl = "";
@@ -132,7 +178,7 @@ public class API_Connection {
 				for (Map.Entry<Object, Object> map : tm.entrySet()) {
 					list.add(String.valueOf(map.getValue()));
 				}
-			}		
+			}
 
 		} catch (Exception e) {
 			log.error(e.getMessage());
@@ -141,8 +187,23 @@ public class API_Connection {
 		return list;
 	}
 
-	public static void main(String args[]) {
-		get_Achievement_Levels();
+	public static void main(String args[]) throws ParseException {
+
+		String future_date = "11/10/2020";// getFutureDate();
+		String sys_date = new SimpleDateFormat("MM/dd/yyyy").format(new Date());
+
+		Date f_date = new SimpleDateFormat("MM/dd/yyyy").parse(future_date);
+
+		Date s_date = new SimpleDateFormat("MM/dd/yyyy").parse(sys_date);
+
+		if (s_date.after(f_date)) {
+			System.out.println("System date is after ,future date");
+		} else if (s_date.before(f_date)) {
+			System.out.println("System date is before,future date");
+			future_date = sys_date;
+		}
+		System.out.println(future_date);
+
 	}
 
 	/**

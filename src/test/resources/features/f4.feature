@@ -16,7 +16,8 @@ Feature: Roster Tab Dropdown Behaviour
     When User Click on Roster tab within the Universal Selector Tab
     Then select school as "Fair Oaks Ranch Community School" and 'All' option should be display at first position in student list and can not be scrollable
 
-  ##S6 & S7 , BE-630,660,659
+  ##S6 & S7 
+  @BE-630 @BE-660 @BE-659
   Scenario: Verify Selection/Deselection of Multiple Students from Student dropdown List within Roster tab
     Given User is on portal's login screen with username as "district_admin_one" and password as "password" and usertype as "realm_one"
     When User Click on Roster tab within the Universal Selector Tab

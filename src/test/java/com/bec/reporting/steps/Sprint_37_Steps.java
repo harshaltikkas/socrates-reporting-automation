@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.junit.Assert;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.PageFactory;
 
@@ -41,13 +42,11 @@ public class Sprint_37_Steps {
 			String schoolname = homePage.schooldropdownbtn.getText();
 			Assert.assertNotEquals(s, schoolname);
 			schoolcount = homePage.schoollist.size();
-			String scName;
-			for (int i = 0; i < schoolcount; i++) {
-				scName = homePage.schoollist.get(i).getText();
-				if (scName.equals("")) {
-					UtilityMethods.scroll_Div(homePage.schoollist.get(i), 5);
-				}
+			
+			for (int i = 0; i < schoolcount; i++) {				
 				schoolList.add(homePage.schoollist.get(i).getText());
+				new Actions(Driver.webdriver).sendKeys(Keys.ARROW_DOWN).build().perform();
+				Thread.sleep(500);
 			}
 			Assert.assertTrue(Ordering.natural().isOrdered(schoolList));
 			schoolList.clear();
