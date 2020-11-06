@@ -563,7 +563,7 @@ public class Sprint_fifty_steps {
 			Thread.sleep(500);
 			Assert.assertTrue(homePage.test_status_btn_tool_tip.getText().equals(tooltiptxt));
 			UtilityMethods.select_specific_district_term("2019-2020");
-			Thread.sleep(5000);
+			Thread.sleep(8000);
 			Assert.assertTrue(homePage.nodatavailableforyourselection.isDisplayed());
 			Assert.assertTrue(homePage.returntopreviousreport.isDisplayed());
 			homePage.returntopreviousreport.click();
