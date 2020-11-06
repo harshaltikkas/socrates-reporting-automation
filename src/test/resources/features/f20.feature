@@ -1,5 +1,5 @@
 @Feature
-Feature: Validate Past District Term - sprint 50 & 55
+Feature: Validate Past District Term - sprint 50 & 55 & 56
 
   @BU-11988 @BU-12062 @BU-16064
   Scenario: verify Test Status tab Inactive on viewing past district term reports
@@ -45,8 +45,7 @@ Feature: Validate Past District Term - sprint 50 & 55
     Given User is on portal's login screen with username as "school_admin_two" and password as "password" and usertype as "realm_one"
     Then verify the school admin current term and past term seeing the past district term reports with no data for your selection modal
 
-	##Failing as, while selecting current term,and apply.. it is not showing no data popup
-  @BU-13127
+	@BU-13127
   Scenario: verify School admin only past term seeing the past district term reports With No data for your selection modal
     Given User is on portal's login screen with username as "pdt_school_admin_one" and password as "password" and usertype as "realm_three"
     Then verify school admin only past term seeing the past district term reports with no data for your selection modal

@@ -945,17 +945,15 @@ public class Test_Status_Steps {
 			Thread.sleep(1000);
 			UtilityMethods.wait_For_Test_Status_Section_Load_under_student_context();
 			homePage.completed_list_in_table_under_sc.get(0).click();
-			Thread.sleep(1000);
+			Thread.sleep(3000);
 
-			try {
-				Assert.assertTrue(homePage.active_sta_tab.isDisplayed());
-			} catch (Exception e) {
-				log.info("This will call if no data available with STA");
-				Assert.assertTrue(homePage.nodatavailableforyourselection.isDisplayed());
-				Assert.assertTrue(homePage.returntopreviousreport.isDisplayed());
-				homePage.returntopreviousreport.click();
-				Thread.sleep(2000);
-			}
+			/*
+			 * try { Assert.assertTrue(homePage.active_sta_tab.isDisplayed()); } catch
+			 * (Exception e) { log.info("This will call if no data available with STA");
+			 * Assert.assertTrue(homePage.nodatavailableforyourselection.isDisplayed());
+			 * Assert.assertTrue(homePage.returntopreviousreport.isDisplayed());
+			 * homePage.returntopreviousreport.click(); Thread.sleep(2000); }
+			 */
 
 			CBTConfiguration.score = "pass";
 		} catch (Exception e) {
